@@ -129,139 +129,39 @@ class slowView extends Ui.WatchFace
         redrawAll =0;
     }
 
-    // draw hours marks and numbers
-//     function drawBackground (dc)
-//     {
-//         var hours = 0;
-//         for (var i=0; i<SinCosTableX.size(); i++)
-//         {
-//             var hourAngle = i * 60;
-// //            hourAngle += 12 * 60;
-//             hourAngle /= (12 * 60.0);
-//             hourAngle *= Math.PI;
-            
-//             var color = 0xffffff;
-//             if (i < clockTime.hour) { color = 0xff5500; }
-//             else if (i>clockTime.hour) { color=0xffaa00; }
-
-//             if (i == clockTime.hour)
-//             {
-//                 drawHand4px(dc, hourAngle, 81, 94, color);                
-//             }
-//             else if (i >= clockTime.hour) { drawHand2px(dc, hourAngle, 81, 90, color); }
-//             else if (0==i) { drawHand1px(dc, hourAngle, 81, 90, 0xffaa00); }
-
-//             if (0<hours)
-//             {
-//                 hours = (hours + 1) % 2;
-//                 continue;                
-//             }
-
-//             dc.setColor(color, Gfx.COLOR_TRANSPARENT);
-//             var str=i.format("%d");
-//             var x = (SinCosTableX[i] * 101);
-//             var y = (SinCosTableY[i] * 101);
-//             var fontHeight = (dc.getFontHeight(Gfx.FONT_TINY) >> 1)+1;
-//             dc.drawText(x+centerX,y+centerY-fontHeight,Gfx.FONT_TINY,str,Gfx.TEXT_JUSTIFY_CENTER);
-//             hours= (hours+1)%2;
-//         }
-//     }
-
     //! Draw the watch hand
     //! @param dc Device Context to Draw
     //! @param angle Angle to draw the watch hand
     //! @param length Length of the watch hand
     //! @param width Width of the watch hand
-    function drawHand1px (dc, angle, start, end, color)
-    {
+
+    function drawMinuteArc (dc){
+        var minutes = clockTime.min;
+        var angle =  minutes/60.0*2*Math.PI;
         var cos = Math.cos(angle);
         var sin = Math.sin(angle);
 
-        // Transform the coordinates and draw
-        dc.setColor(color, 0x00);
-        dc.drawLine(centerX + (start * sin),
-                    centerY - (start * cos),
-                    centerX + (end * sin),
-                    centerY - (end * cos));    
-    }
+        /*var wRoundRect = dc.getTextWidthInPixels(clockTime.hour.format("%0.1d")+":", fontGeneva22);
+        var hRoundRect = dc.getFontHeight(fontGeneva22)-3;
+        dc.setColor(itemsBackGroundcolor, 0);
+        dc.fillCircle(centerX + (yPos * sin), centerY - (yPos * cos), (wRoundRect>>1)+2);*/
 
-    function drawHand2px (dc, angle, start, end, color)
-    {
-        var cos = Math.cos(angle);
-        var sin = Math.sin(angle);
-        
-        dc.setPenWidth(2);
-
-        // Transform the coordinates and draw
-        if (0!=color)
-        {
-            var c2 = ((color>>16 & 0xff)>>1)<<16 | ((color>>8 & 0xff)>>1)<<8 | (color & 0xff)>>1;
-            dc.setColor(c2, 0x00);
-            dc.drawLine(centerX + (start * sin),
-                        centerY+1 - (start * cos),
-                        centerX + (end * sin),
-                        centerY+1 - (end * cos));    
-            dc.setColor(color, 0x00);
-            dc.drawLine(centerX + (start * sin),
-                        centerY-1 - (start * cos),
-                        centerX + (end * sin),
-                        centerY-1 - (end * cos));
+        if(minutes>0){
+            dc.setColor(0xff5500, 0);
+            dc.setPenWidth(3);
+            dc.drawArc(centerX, centerY, 50, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
         }
-        dc.setColor(color, 0x00);
-        dc.drawLine(centerX + (start * sin),
-                    centerY - (start * cos),
-                    centerX + (end * sin),
-                    centerY - (end * cos));    
-        dc.setPenWidth(1);
-    }
-
-    function drawHand4px (dc, angle, start, end, color)
-    {
-        var cos = Math.cos(angle);
-        var sin = Math.sin(angle);
-
-        dc.setPenWidth(3);
-        dc.setColor(0x555555, 0x00);
-        dc.drawLine(centerX + (start * sin),
-                    centerY - (start * cos),
-                    centerX + (end * sin),
-                    centerY - (end * cos));    
+        var fontHeight = (dc.getFontHeight(fontGeneva10) >> 1)+1;
+        dc.setColor(Gfx.COLOR_WHITE, 0);
+        dc.drawText(centerX + (50 * sin), centerY - (50 * cos) - fontHeight, fontGeneva10, clockTime.min.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
         
-        
-        // Transform the coordinates and draw
-        if (0!=color)
-        {
-            dc.setPenWidth(1);
-            var c2 = ((color>>16 & 0xff)>>1)<<16 | ((color>>8 & 0xff)>>1)<<8 | (color & 0xff)>>1;
-            dc.setColor(c2, 0x00);
-            dc.drawLine(centerX + (start * sin),
-                        centerY+1 - (start * cos),
-                        centerX + (end * sin),
-                        centerY+1 - (end * cos));    
-        }
-        dc.setColor(color, 0x00);
-        dc.setPenWidth(1);
-        dc.drawLine(centerX + (start * sin),
-                    centerY - (start * cos),
-                    centerX + (end * sin),
-                    centerY - (end * cos));    
-
-        // var yPos = start+((end - start) * 0.72);
-
-        // var wRoundRect = dc.getTextWidthInPixels(clockTime.hour.format("%0.1d")+":", fontGeneva22);
-        // var hRoundRect = dc.getFontHeight(fontGeneva22)-3;
-
-        // var posY = centerY - (yPos * cos)-hRoundRect>>1;
-        //dc.setColor(itemsBackGroundcolor, 0);
-        //dc.fillCircle(centerX + (yPos * sin), centerY - (yPos * cos), (wRoundRect>>1)+2);
-        //dc.setColor(0xaaFF00, -1);
-
-//      Draw hour on hand with background        
-//        dc.setColor(itemsBackGroundcolor, 0);
-//        dc.fillRoundedRectangle(centerX + (yPos * sin)-(wRoundRect>>1)-1, centerY - (yPos * cos)-hRoundRect>>1, wRoundRect, hRoundRect, 4);
-//        dc.setColor(0xaaFF00, -1);
-//        var posX = centerX + (yPos * sin)-wRoundRect>>1;
-//        dc.drawText(posX+1, posY-5, fontGeneva22, clockTime.hour.format("%0.1d")+":", Gfx.TEXT_JUSTIFY_LEFT);
+        /*dc.setColor(0xaaFF00, -1);
+        //Draw hour on hand with background        
+        dc.setColor(itemsBackGroundcolor, 0);
+        dc.fillRoundedRectangle(centerX + (yPos * sin)-(wRoundRect>>1)-1, centerY - (yPos * cos)-hRoundRect>>1, wRoundRect, hRoundRect, 4);
+        dc.setColor(0xaaFF00, -1);
+        var posX = centerX + (yPos * sin)-wRoundRect>>1;
+        dc.drawText(posX+1, posY-5, fontGeneva22, clockTime.hour.format("%0.1d")+":", Gfx.TEXT_JUSTIFY_LEFT);*/
     }
 
     // draw alarm, width=10px
@@ -299,51 +199,6 @@ class slowView extends Ui.WatchFace
         dc.drawLine(xPos+9, yPos+2, xPos+6, yPos-1);
         dc.drawLine(xPos, yPos+7, xPos+3, yPos+10);
         dc.drawLine(xPos+7, yPos+9, xPos+10, yPos+6);
-    }
-
-    // draw BlueTooth icon, width=15px
-    function drawBT (dc)
-    {
-        var btOn = Sys.getDeviceSettings().phoneConnected;
-        if (0 == btOn) { return; }
-        
-        dc.setColor(0x555555, 0);
-        
-        Sys.println("phoneConnected...");
-
-        var xPos = centerX + 20;
-        var yPos = centerY - 52;
-        
-        // draw the BT sign
-        dc.drawLine(xPos, yPos+1, xPos, yPos+14);
-        dc.drawLine(xPos, yPos+1, xPos+4, yPos+5);
-        dc.drawLine(xPos+1, yPos+1, xPos+5, yPos+5);
-        dc.drawLine(xPos+2, yPos+5, xPos-4, yPos+11);
-        dc.drawLine(xPos+3, yPos+5, xPos, yPos+8);
-        dc.drawLine(xPos-3, yPos+4, xPos+4, yPos+11);
-        dc.drawLine(xPos+2, yPos+8, xPos+5, yPos+11);
-        dc.drawLine(xPos+3, yPos+11, xPos, yPos+14);
-        dc.drawLine(xPos+2, yPos+11, xPos, yPos+12);
-
-        // draw the AA BT sign
-        dc.setColor(0x00, 0);
-        dc.drawPoint(xPos, yPos);
-        dc.drawPoint(xPos, yPos+14);
-
-        dc.drawLine(xPos+1, yPos+3, xPos+1, yPos+6);
-        dc.drawPoint(xPos + 4, yPos + 3);
-        dc.drawPoint(xPos + 4, yPos + 5);
-
-        dc.drawLine(xPos+1, yPos+9, xPos+1, yPos+12);
-        dc.drawPoint(xPos + 4, yPos + 9);
-        dc.drawPoint(xPos + 4, yPos + 11);
-
-        dc.drawPoint(xPos-4, yPos+3);
-        dc.drawLine(xPos - 2, yPos + 4, xPos, yPos + 5);
-        dc.drawLine(xPos-4, yPos+4, xPos, yPos+8);
-        dc.drawLine(xPos-2, yPos+8, xPos-5, yPos+11);
-        dc.drawPoint(xPos-4, yPos+11);
-        dc.drawLine(xPos-2, yPos+10, xPos, yPos+8);
     }
 
     // draw battery level w/ text
@@ -419,63 +274,6 @@ class slowView extends Ui.WatchFace
         }
     }
 
-    function drawHourHandle (dc, color, hour, bText)
-    {
-        var sunriseStr;
-        if (false==Sys.getDeviceSettings().is24Hour && hour>11)
-        { 
-            var h=hour-12;
-            if (0==h) { h=12; }
-            sunriseStr=h.toString()+"p";
-        }
-        else
-        {
-            sunriseStr=hour.toString();
-            if (false==Sys.getDeviceSettings().is24Hour && 0!=hour) { sunriseStr+="a"; }
-        }
-
-        if (false==bText) { return; }
-
-        var fontHeight = (dc.getFontHeight(fontGeneva10) >> 1)+1;
-        dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);
-        dc.drawText((SinCosTableX[hour] * 94)+centerX,(SinCosTableY[hour] * 95)+centerY-fontHeight,fontGeneva10,sunriseStr,Gfx.TEXT_JUSTIFY_CENTER);
-    }
-
-    // draw  sunrise/sunset hours
-    function drawSunHours (dc, sunR)
-    {
-        // draw tiny hands for sunrise/set times)
-        var hh=0;
-        /*drawHourHandle(dc, 0x555555, hh, true);
-        hh=12;*/
-        var hh2=hh%24;
-        /*drawHourHandle(dc, 0x555555, hh, true);
-        hh2*=60;
-        hh2 /= 12 * 60.0;
-        hh2 *= Math.PI;
-        drawHand2px(dc, hh2, 104, 109, 0xCCCCCC);*/
-
-        hh = sunR[SUNRISET_NOW].toNumber();
-        hh2=hh%24;
-
-        //drawHourHandle(dc, 0x555555, hh, true);
-
-        hh2*=60;
-        hh2 /= 12 * 60.0;
-        hh2 *= Math.PI;
-        drawHand2px(dc, hh2, 104, 109, sunR==sunset?0xCCCCCC:0xFF5500);
-
-        hh+=1; // next hour
-        hh%=24;
-
-        //drawHourHandle(dc, 0x555555, hh, false);
-
-        hh*=60;
-        hh /= 12 * 60.0;
-        hh *= Math.PI;
-        drawHand2px(dc, hh, 104, 109, sunR==sunset?0xFF5500:0xCCCCCC);
-    }
-
     function drawSunBitmaps (dc)
     {
         // SUNRISE (sun)
@@ -494,63 +292,6 @@ class slowView extends Ui.WatchFace
         cos = Math.cos(a);
         sin = Math.sin(a);
         dc.drawBitmap(centerX + (98 * sin)-2, centerY - (98 * cos)-4, moon);
-    }
-
-    // draw monochrome sunrise/sunset
-    function drawSun (dc)
-    {
-        var sunriseAngle = -((sunrise[SUNRISET_MAX].toNumber() % 24) -6) * (1.0 / 12.0);
-        sunriseAngle -= ((sunrise[SUNRISET_MAX] - sunrise[SUNRISET_MAX].toNumber()) * 60)*(1.0 / 12.0)*(1.0/60.0);
-        sunriseAngle *= Math.PI;
-
-        var sunsetAngle = -((sunrise[SUNRISET_NOW].toNumber() % 24) -6) * (1.0 / 12.0);
-        sunsetAngle -= ((sunrise[SUNRISET_NOW] - sunrise[SUNRISET_NOW].toNumber()) * 60)*(1.0 / 12.0)*(1.0/60.0);
-        sunsetAngle *= Math.PI;
-        
-        var Deg2Rad = 57.295779513082320876798154814105;
-        var srA = sunriseAngle * Deg2Rad;
-        var ssA = sunsetAngle * Deg2Rad;
-
-        // hour = ( ( ( clockTime.hour % 12 ) * 60 ) + clockTime.min );
-        // hour = hour / (12 * 60.0);
-        // hour = hour * Math.PI * 2;
-
-        dc.setColor(0xff5500, 0);
-//        if (srA < ssA)
-//        {
-             dc.drawArc(centerX, centerY, 107, Gfx.ARC_CLOCKWISE, srA, ssA); // bug in drawArc: around 3o'clock, only one pixel thin result after 2 calls @r=108 & r=109 
-             dc.drawArc(centerX, centerY, 108, Gfx.ARC_CLOCKWISE, srA, ssA);
-            // dc.drawArc(centerX, centerY, 109, Gfx.ARC_CLOCKWISE, srA, ssA);
-//        }
-
-        sunsetAngle = -((sunset[SUNRISET_NOW].toNumber() % 24) -6) * (1.0 / 12.0);
-        sunsetAngle -= ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60)*(1.0 / 12.0)*(1.0/60.0);
-        sunsetAngle *= Math.PI;
-
-        srA = ssA;
-        ssA = sunsetAngle * Deg2Rad;
-        
-        dc.setColor(0xaaaaaa, 0x00);
-        dc.drawArc(centerX, centerY, 107, Gfx.ARC_CLOCKWISE, srA, ssA);
-        dc.drawArc(centerX, centerY, 108, Gfx.ARC_CLOCKWISE, srA, ssA);
-
-        drawSunHours(dc, sunrise);
-        drawSunBitmaps(dc);
-
-        srA = ssA;
-        sunsetAngle = -((sunset[SUNRISET_MAX].toNumber() % 24) -6) * (1.0 / 12.0); // have to put +7 instead of -6 else graphic discrepancy on real hardware
-        sunsetAngle -= ((sunset[SUNRISET_MAX] - sunset[SUNRISET_MAX].toNumber()) * 60)*(1.0 / 12.0)*(1.0/60.0);
-        sunsetAngle *= Math.PI;
-
-        ssA = sunsetAngle * Deg2Rad;
-        
-//        if (srA < ssA)
-//        {
-             dc.setColor(0xFF5500, 0x00);
-             dc.drawArc(centerX, centerY, 107, Gfx.ARC_CLOCKWISE, srA, ssA);
-             dc.drawArc(centerX, centerY, 108, Gfx.ARC_CLOCKWISE, srA, ssA);
-//        }        
-        drawSunHours(dc, sunset);
     }
 
     //! Update the view
@@ -586,17 +327,17 @@ class slowView extends Ui.WatchFace
             dc.setColor(0x00, 0x00);
             dc.clear();
             lastRedrawMin=clockTime.min;
-
-            //drawSun(dc);
             drawSunBitmaps(dc);
            
             var now = Time.now();
             var info = Calendar.info(now, Time.FORMAT_MEDIUM);
-            var dateStr = Lang.format("$1$", [info.day_of_week]).toLower();
-            var dateStr2 = info.day.format("%0.1d");//Lang.format("$1$", [info.day]).toLower();
-            var txtWidth2 = dc.getTextWidthInPixels(dateStr2, fontGeneva15) >> 1;
-            var txtWidth = (dc.getTextWidthInPixels(dateStr, fontGeneva15) >> 1) + txtWidth2;
-            var txtWidthMin = (txtWidth < 31) ? 31 : txtWidth; // min size when beginning of month
+            var dateStr = Lang.format("$1$", [info.month]).toLower();
+            var dateStr2 = info.day.format("%0.1d");
+            var txtWidth = dc.getTextWidthInPixels(dateStr, fontGeneva15);
+            var txtWidth2 = dc.getTextWidthInPixels(dateStr+info.day.format("%0.1d"), fontGeneva15) >> 1;
+            var txtWidthFull = (dc.getTextWidthInPixels(dateStr, fontGeneva15) >> 1) + txtWidth2;
+
+            var txtWidthMin = (txtWidthFull < 31) ? 31 : txtWidthFull; // min size when beginning of month
 
             // ****************** draw how much of actual day has passed ******************
             // var hh = -((clockTime.hour)-6) * (1.0 / 12.0);
@@ -609,24 +350,14 @@ class slowView extends Ui.WatchFace
             //     dc.drawArc(centerX, centerY, 81 + i, Gfx.ARC_CLOCKWISE, 90, hh);
             // }
 
-            // *** Draw handle       
-            var hh = ( clockTime.min );
-            
-            var hh2 = hh;
-            hh /= 60.0;
-            hh *= 2*Math.PI;
-
-            var sriseMax = ((sunrise[SUNRISET_MAX].toNumber() % 24) * 60) + ((sunrise[SUNRISET_MAX] - sunrise[SUNRISET_MAX].toNumber()) * 60);
-            var ssetMax = ((sunset[SUNRISET_MAX].toNumber() % 24) * 60) + ((sunset[SUNRISET_MAX] - sunset[SUNRISET_MAX].toNumber()) * 60);
-            drawHand4px(dc, hh, 69, 108, 0xAAAAAA);
+            drawMinuteArc(dc);
             
             // Clear for middle info
-            //  dc.setColor(0xFF0000, 0);
+            // dc.setColor(0xFF0000, 0);
             // dc.fillEllipse(centerX, centerY, 42, 79);
-            //  dc.fillCircle(centerX, centerY, 69);
+            // dc.fillCircle(centerX, centerY, 69);
 
             var fontHeight = dc.getFontHeight(fontGeneva72) >> 1;
-            var minutes = clockTime.min.format("%0.1d");
 
             // draw hour
             var h=clockTime.hour;
@@ -637,45 +368,22 @@ class slowView extends Ui.WatchFace
             }
             var hour = h.format("%0.1d");
             // var txtWidthHour = dc.getTextWidthInPixels(hour, fontGeneva22)>>1;
-//        var posX = centerX + (yPos * sin)-wRoundRect>>1;
+            //        var posX = centerX + (yPos * sin)-wRoundRect>>1;
             // dc.drawText(centerX-txtWidthHour, centerY-(fontHeight<<1), fontGeneva22, hour + ":", Gfx.TEXT_JUSTIFY_LEFT);
 
             // draw big hours font
-            txtWidth = dc.getTextWidthInPixels(hour, fontGeneva72)>>1;
-            dc.setColor(0xffAA00, Gfx.COLOR_BLACK);
-            dc.drawText(centerX, centerY-fontHeight, fontGeneva72, hour, Gfx.TEXT_JUSTIFY_CENTER);
-            //dc.setColor(0xaaFF00, Gfx.COLOR_BLACK);
-            //dc.drawText(centerX-txtWidth, centerY-fontHeight-4, fontGeneva22, minutes, Gfx.TEXT_JUSTIFY_RIGHT);
-            
+            txtWidthFull = dc.getTextWidthInPixels(hour, fontGeneva72)>>1;
+            dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
+            dc.drawText(centerX, centerY-fontHeight, fontGeneva72, hour, Gfx.TEXT_JUSTIFY_CENTER);            
             var fontHeightS = dc.getFontHeight(fontGeneva15) >> 1;
 
             // draw Day info
-            var offsetY = 42 + centerY;
-
+            var offsetY = centerY-80;
             //dc.setColor(itemsBackGroundcolor, 0);
-            //dc.fillRoundedRectangle(centerX - txtWidth, offsetY - (fontHeightS), txtWidth, fontHeightS, 4);
-
+            //dc.fillRoundedRectangle(centerX - txtWidthFull, offsetY - (fontHeightS), txtWidthFull, fontHeightS, 4);
             dc.setColor(0x555555, Gfx.COLOR_BLACK);
-            dateStr = Lang.format("$1$", [info.day_of_week]).toLower();
-            txtWidth2 = dc.getTextWidthInPixels(dateStr+info.day.format("%0.1d"), fontGeneva15) >> 1;
             dc.drawText(centerX-txtWidth2, offsetY - (fontHeightS), fontGeneva15, dateStr, Gfx.TEXT_JUSTIFY_LEFT);
-            
-            var txtWidth3 = dc.getTextWidthInPixels(dateStr, fontGeneva15);
-            dc.setColor(0xaaaaaa, Gfx.COLOR_BLACK);
-            dateStr = info.day.format("%0.1d");
-            dc.drawText(centerX-txtWidth2+txtWidth3, offsetY - (fontHeightS), fontGeneva15, dateStr, Gfx.TEXT_JUSTIFY_LEFT);
-
-            /*// draw week info            
-            info = Calendar.info(now, Time.FORMAT_SHORT);
-            var weekNbr = getWeekNbr(info.year, info.month, info.day);
-            dc.setColor(0x555555, Gfx.COLOR_BLACK);
-            dateStr = "W.";
-            txtWidth2 = dc.getTextWidthInPixels(dateStr+weekNbr.format("%0.1d"), fontGeneva10) >> 1;
-            offsetY+=6+fontHeightS;
-            dc.drawText(centerX-txtWidth2, offsetY, fontGeneva10, dateStr, Gfx.TEXT_JUSTIFY_LEFT);
-            txtWidth3 = dc.getTextWidthInPixels(dateStr, fontGeneva10);
-            dc.setColor(0xaaaaaa, Gfx.COLOR_BLACK);
-            dc.drawText(centerX-txtWidth2+txtWidth3, offsetY, fontGeneva10, weekNbr.format("%0.1d"), Gfx.TEXT_JUSTIFY_LEFT);*/
+            dc.drawText(centerX-txtWidth2+txtWidth, offsetY - (fontHeightS), fontGeneva15, dateStr2, Gfx.TEXT_JUSTIFY_LEFT);
                          
         }// redrawAll
         
@@ -683,40 +391,12 @@ class slowView extends Ui.WatchFace
 //        dc.fillRoundedRectangle(centerX - 25, centerY - 49, 50, 16, 4);
 
         var bat = Sys.getSystemStats().battery;
-        if (5 >= bat || 0!=redrawAll)
-        {
+        if (5 >= bat || 0!=redrawAll){
             drawBatteryLevel(dc);
         }
-        drawAlarm(dc);
-        //drawBT(dc);
+        //drawAlarm(dc);
         
         if (0>redrawAll) { redrawAll--; }
-
-        //dc.setColor(0x00ff00, -1);
-        //dc.drawText(centerX-70, centerY - 40, fontGeneva10, lonW.format("%f"), Gfx.TEXT_JUSTIFY_LEFT);        
-        //dc.drawText(centerX-70, centerY - 29, fontGeneva10, latN.format("%f"), Gfx.TEXT_JUSTIFY_LEFT);        
-
-        // debug output to understand diffs between emu & watch
-        // dc.setColor(0x00ff00, -1);
-        // var str = sunrise[SUNRISET_MAX].toNumber().format("%d");
-        // dc.drawText(centerX-60, centerY - 20, fontGeneva10, str, Gfx.TEXT_JUSTIFY_LEFT);        
-        // str=sunrise[SUNRISET_NOW].toNumber().format("%d");
-        // dc.drawText(centerX-60, centerY - 9, fontGeneva10, str, Gfx.TEXT_JUSTIFY_LEFT);
-        // str=sunset[SUNRISET_NOW].toNumber().format("%d");
-        // dc.drawText(centerX-60, centerY + 2, fontGeneva10, str, Gfx.TEXT_JUSTIFY_LEFT);
-        // //str = (utcOffset.value()/3600).format("%d") + "h";
-        // str = "no DST";
-        // if (null!=clockTime.dst)
-        // {
-        //     var dst = clockTime.dst/3600;
-        //     for (var i = 0; i < SUNRISET_NBR; i++)
-        //     {
-        //         sunrise[i] += dst;
-        //         sunset[i] += dst;
-        //     }
-        //     str=("DST: "+ dst.format("%d")+"h");        
-        // }
-        // dc.drawText(centerX-60, centerY + 13, fontGeneva10, str, Gfx.TEXT_JUSTIFY_RIGHT);
 
         getLastActivity(dc);
         //  dc.setColor(0xaaFF00, 0);

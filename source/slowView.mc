@@ -32,7 +32,6 @@ class slowView extends Ui.WatchFace
 	var latN;
     var sunrise = new [SUNRISET_NBR];
     var sunset = new [SUNRISET_NBR];
-    var dayColor;
 
     // resources
     var moon = null;   
@@ -49,9 +48,7 @@ class slowView extends Ui.WatchFace
     var batBlinkCritical = true;
     var itemsBackGroundcolor = 0x00;
     
-    function initialize ()
-    {
-        Sys.println("slow watch started...");
+    function initialize (){
         var time=Sys.getTimer();
         _initCount++;
         WatchFace.initialize();
@@ -68,15 +65,6 @@ class slowView extends Ui.WatchFace
         var set=Sys.getDeviceSettings();
         centerX = set.screenWidth >> 1;
         centerY = set.screenHeight >> 1;
-        
-        // dayColor = new [7];
-        // dayColor[0] = 0x0000ff;
-        // dayColor[1] = 0x00aaff;
-        // dayColor[2] = 0x00aa00;
-        // dayColor[3] = 0x00ff00;
-        // dayColor[4] = 0xffaa00;
-        // dayColor[5] = 0xff5500;
-        // dayColor[6] = 0x0000ff;
         
         //sunrise/sunset stuff
         clockTime = Sys.getClockTime();
@@ -277,7 +265,8 @@ class slowView extends Ui.WatchFace
     function drawSunBitmaps (dc)
     {
         // SUNRISE (sun)
-        var a = ((sunrise[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunrise[SUNRISET_NOW] - sunrise[SUNRISET_NOW].toNumber()) * 60);
+        //var a = ((sunrise[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunrise[SUNRISET_NOW] - sunrise[SUNRISET_NOW].toNumber()) * 60);
+        var a = (((sunrise[SUNRISET_NOW].toNumber() +1 )% 24) * 60) + ((sunrise[SUNRISET_NOW] - sunrise[SUNRISET_NOW].toNumber()) * 60); // hack to show it now during summer day light saving time
         a /= 12 * 60.0;
         a *= Math.PI;
 
@@ -286,7 +275,8 @@ class slowView extends Ui.WatchFace
         dc.drawBitmap(centerX + (98 * sin)-6, centerY - (98 * cos)-6, sun);
 
         // SUNSET (moon)
-        a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60);
+        //a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
+        a = (((sunset[SUNRISET_NOW].toNumber() + 1) % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60);  // hack to show it now during summer day light saving time
         a /= 12 * 60.0;
         a *= Math.PI;
         cos = Math.cos(a);
@@ -301,26 +291,9 @@ class slowView extends Ui.WatchFace
         var time = Sys.getTimer();
         clockTime = Sys.getClockTime();
 
-        // debugHour+=1;
-        // if (debugHour >= 86400)
-        // {
-        //     debugHour = 0;
-        // }
-        
-        // clockTime.hour = debugHour / 60;
-        // clockTime.min =(debugHour-clockTime.hour*60);
-
         if (lastRedrawMin != clockTime.min) { redrawAll = 1; }
         
         _refreshCount++;
-
-        // hours
-        // 2.0=24h
-        // 1.0=12h
-        // 0.5=6h
-        // 0.25=3h
-        // 0.125=1.5h
-        // 1/12=60min
 
         if (0!=redrawAll)
         {
@@ -335,9 +308,6 @@ class slowView extends Ui.WatchFace
             var dateStr2 = info.day.format("%0.1d");
             var txtWidth = dc.getTextWidthInPixels(dateStr, fontGeneva15);
             var txtWidth2 = dc.getTextWidthInPixels(dateStr+info.day.format("%0.1d"), fontGeneva15) >> 1;
-            var txtWidthFull = (dc.getTextWidthInPixels(dateStr, fontGeneva15) >> 1) + txtWidth2;
-
-            var txtWidthMin = (txtWidthFull < 31) ? 31 : txtWidthFull; // min size when beginning of month
 
             // ****************** draw how much of actual day has passed ******************
             // var hh = -((clockTime.hour)-6) * (1.0 / 12.0);
@@ -361,18 +331,13 @@ class slowView extends Ui.WatchFace
 
             // draw hour
             var h=clockTime.hour;
-            if (false==Sys.getDeviceSettings().is24Hour && h>11)
-            {
+            if (false==Sys.getDeviceSettings().is24Hour && h>11){
                 h-=12;
                 if (0==h) { h=12; }
             }
             var hour = h.format("%0.1d");
-            // var txtWidthHour = dc.getTextWidthInPixels(hour, fontGeneva22)>>1;
-            //        var posX = centerX + (yPos * sin)-wRoundRect>>1;
-            // dc.drawText(centerX-txtWidthHour, centerY-(fontHeight<<1), fontGeneva22, hour + ":", Gfx.TEXT_JUSTIFY_LEFT);
 
             // draw big hours font
-            txtWidthFull = dc.getTextWidthInPixels(hour, fontGeneva72)>>1;
             dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
             dc.drawText(centerX, centerY-fontHeight, fontGeneva72, hour, Gfx.TEXT_JUSTIFY_CENTER);            
             var fontHeightS = dc.getFontHeight(fontGeneva15) >> 1;
@@ -380,52 +345,22 @@ class slowView extends Ui.WatchFace
             // draw Day info
             var offsetY = centerY-80;
             //dc.setColor(itemsBackGroundcolor, 0);
-            //dc.fillRoundedRectangle(centerX - txtWidthFull, offsetY - (fontHeightS), txtWidthFull, fontHeightS, 4);
             dc.setColor(0x555555, Gfx.COLOR_BLACK);
-            dc.drawText(centerX-txtWidth2, offsetY - (fontHeightS), fontGeneva15, dateStr, Gfx.TEXT_JUSTIFY_LEFT);
-            dc.drawText(centerX-txtWidth2+txtWidth, offsetY - (fontHeightS), fontGeneva15, dateStr2, Gfx.TEXT_JUSTIFY_LEFT);
+            dc.drawText(centerX-txtWidth2-2, offsetY - (fontHeightS), fontGeneva15, dateStr, Gfx.TEXT_JUSTIFY_LEFT);
+            dc.drawText(centerX-txtWidth2+txtWidth+2, offsetY - (fontHeightS), fontGeneva15, dateStr2, Gfx.TEXT_JUSTIFY_LEFT);
                          
         }// redrawAll
         
 //        dc.setColor(itemsBackGroundcolor, 0);
 //        dc.fillRoundedRectangle(centerX - 25, centerY - 49, 50, 16, 4);
 
-        var bat = Sys.getSystemStats().battery;
+        /*var bat = Sys.getSystemStats().battery;
         if (5 >= bat || 0!=redrawAll){
             drawBatteryLevel(dc);
-        }
+        }*/
         //drawAlarm(dc);
         
         if (0>redrawAll) { redrawAll--; }
-
-        getLastActivity(dc);
-        //  dc.setColor(0xaaFF00, 0);
-        //   dc.drawText(centerX, 33, fontGeneva22, "0123456789:", Gfx.TEXT_JUSTIFY_CENTER);
-    }
-
-    function getLastActivity(dc)
-    {
-        var info = Activity.getActivityInfo();
-        if (null == info)
-        {
-            Sys.println("no activity found...");
-            return;
-        }
-        var startTime = info.startTime;
-        if (null == startTime)
-        {
-            Sys.println("no activity.startTime found...");
-            return;
-        }
-
-        startTime.add(utcOffset);        
-        var nowTime = Time.now().add(utcOffset);
-        var detlaTime = nowTime.substract(startTime);
-        Sys.println("seconds since last activity:"+deltaTime.value);
-
-        dc.setColor(0x00ff00, -1);
-        var str = "la.:" + deltaTime.value.format("%d");
-        dc.drawText(centerX-60, centerY - 30, Gfx.FONT_TINY, str, Gfx.TEXT_JUSTIFY_LEFT);        
     }
 
     function computeSun()

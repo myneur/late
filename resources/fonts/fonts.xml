@@ -1,6 +1,4 @@
 <fonts>
-	<font id="Geneva10" filename="Geneva10.fnt" filter="0123456789:W.%ap" antialias="true" />
-	<font id="Geneva15" filename="futura15.fnt" filter="0123456789adefhimnorstuw." antialias="true" />
-	<font id="Geneva22" filename="geneva22b.fnt" filter="0123456789:" antialias="true" />
-	<font id="Geneva72" filename="geneva72.fnt" filter="0123456789:" antialias="true" />
+	<font id="Hours" filename="futura74.fnt" filter="0123456789:" antialias="true" />
+	<font id="Small" filename="futura22.fnt" filter="0123456789abcdefghijklmnoprstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ" antialias="true" />
 </fonts>

@@ -1,1 +1,1 @@
-monkeyc -o bin/slow.prg -y ../developer_key.der -z resources/drawables/drawables.xml:resources/fonts/fonts.xml:resources/strings/strings.xml -m manifest.xml source/*.mc -d round_watch_sim 
+monkeyc -o bin/late.prg -y ../developer_key.der -z resources/drawables/drawables.xml:resources/fonts/fonts.xml:resources/strings/strings.xml -m manifest.xml source/*.mc -d round_watch_sim 

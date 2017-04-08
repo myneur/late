@@ -57,7 +57,7 @@ class lateView extends Ui.WatchFace {
         //sunrise/sunset stuff
         clockTime = Sys.getClockTime();
     	utcOffset = new Time.Duration(clockTime.timeZoneOffset);
-        computeSun();
+        //computeSun();
 
         var dt=Sys.getTimer()-time;
         var str=dt.format("%d");
@@ -105,7 +105,7 @@ class lateView extends Ui.WatchFace {
             dc.setColor(0x00, 0x00);
             dc.clear();
             lastRedrawMin=clockTime.min;
-            drawSunBitmaps(dc);
+            //drawSunBitmaps(dc);
            
             var now = Time.now();
             var info = Calendar.info(now, Time.FORMAT_MEDIUM);
@@ -203,7 +203,7 @@ class lateView extends Ui.WatchFace {
         if (null!=clockTime.dst)
         {
             var dst = clockTime.dst;
-            Sys.println("DST: "+ dst.format("%d")+"s");        
+            //Sys.println("DST: "+ dst.format("%d")+"s");        
             for (var i = 0; i < SUNRISET_NBR; i++)
             {
                 sunrise[i] += dst/3600;
@@ -233,8 +233,8 @@ class lateView extends Ui.WatchFace {
         {
             sunriseInfoStr[i] = Lang.format("$1$:$2$", [sunrise[i].toNumber() % 24, ((sunrise[i] - sunrise[i].toNumber()) * 60).format("%.2d")]);
             sunsetInfoStr[i] = Lang.format("$1$:$2$", [sunset[i].toNumber() % 24, ((sunset[i] - sunset[i].toNumber()) * 60).format("%.2d")]);
-            var str = i+":"+ "sunrise:" + sunriseInfoStr[i] + " | sunset:" + sunsetInfoStr[i];
-            Sys.println(str);
+            //var str = i+":"+ "sunrise:" + sunriseInfoStr[i] + " | sunset:" + sunsetInfoStr[i];
+            //Sys.println(str);
         }
    }
 }

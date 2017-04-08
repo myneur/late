@@ -1,1 +1,1 @@
-cp bin/slow.prg /Volumes/GARMIN/GARMIN/APPS
+cp bin/late.prg /Volumes/GARMIN/GARMIN/APPS

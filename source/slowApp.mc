@@ -6,7 +6,7 @@
 
 using Toybox.Application as App;
 
-class slowApp extends App.AppBase
+class lateApp extends App.AppBase
 {
     function initialize()
     {
@@ -19,6 +19,6 @@ class slowApp extends App.AppBase
 
     function getInitialView()
     {
-        return [new slowView()];
+        return [new lateView()];
     }
 }

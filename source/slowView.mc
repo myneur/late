@@ -12,7 +12,9 @@ enum {
     SUNRISET_NBR
 }
 
-class slowView extends Ui.WatchFace {
+class lateView extends Ui.WatchFace {
+    hidden const CENTER = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
+
     var SinCosTableX = new [24];
     var SinCosTableY = new [24];
     var centerX;
@@ -36,8 +38,6 @@ class slowView extends Ui.WatchFace {
     // redraw full watchface
     var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
     var lastRedrawMin=-1;
-    
-    var itemsBackGroundcolor = 0x00;
     
     function initialize (){
         var time=Sys.getTimer();
@@ -72,16 +72,12 @@ class slowView extends Ui.WatchFace {
         fontSmall = Ui.loadResource(Rez.Fonts.Small);
     }
 
-    //! Called when this View is brought to the foreground. Restore
-    //! the state of this View and prepare it to be shown. This includes
-    //! loading resources into memory.
+    //! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
     function onShow() {
         redrawAll = 2;
     }
     
-    //! Called when this View is removed from the screen. Save the
-    //! state of this View here. This includes freeing resources from
-    //! memory.
+    //! Called when this View is removed from the screen. Save the state of this View here. This includes freeing resources from memory.
     function onHide(){
         redrawAll =0;
     }
@@ -130,9 +126,6 @@ class slowView extends Ui.WatchFace {
             dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, Lang.format("$1$", [info.month]) + " " + info.day.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
                          
         }
-        /*// redrawAll
-            dc.setColor(itemsBackGroundcolor, 0);
-            dc.fillRoundedRectangle(centerX - 25, centerY - 49, 50, 16, 4);*/
         
         if (0>redrawAll) { redrawAll--; }
     }
@@ -148,30 +141,23 @@ class slowView extends Ui.WatchFace {
             dc.setPenWidth(3);
             dc.drawArc(centerX, centerY, 55, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
         }
-        var fontHeight = (dc.getFontHeight(fontSmall) >> 1)+1;
         dc.setColor(Gfx.COLOR_WHITE, 0);
-        dc.drawText(centerX + (50 * sin), centerY - (50 * cos) - fontHeight, fontSmall, clockTime.min.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX + (50 * sin), centerY - (50 * cos) , fontSmall, clockTime.min.format("%0.1d"), CENTER);
     }
 
 
     function drawSunBitmaps (dc) {
         // SUNRISE (sun)
         var a = ((sunrise[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunrise[SUNRISET_NOW] - sunrise[SUNRISET_NOW].toNumber()) * 60);
-        a /= 12 * 60.0;
-        a *= Math.PI;
+        a *= Math.PI/(12 * 60.0);
         var r = centerX - 11;
 
-        var cos = Math.cos(a);
-        var sin = Math.sin(a);
-        dc.drawBitmap(centerX + (r * sin)-6, centerY - (r * cos)-6, sun);
+        dc.drawBitmap(centerX + (r * Math.sin(a))-6, centerY - (r * Math.cos(a))-6, sun);
 
         // SUNSET (moon)
         a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
-        a /= 12 * 60.0;
-        a *= Math.PI;
-        cos = Math.cos(a);
-        sin = Math.sin(a);
-        dc.drawBitmap(centerX + (r * sin)-5, centerY - (r * cos)-6, moon);
+        a *= Math.PI/(12 * 60.0);
+        dc.drawBitmap(centerX + (r * Math.sin(a))-5, centerY - (r * Math.cos(a))-6, moon);
     }
 
     function computeSun() {

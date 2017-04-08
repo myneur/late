@@ -14,42 +14,31 @@ enum {
 
 class lateView extends Ui.WatchFace {
     hidden const CENTER = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
+    hidden var centerX;
+    hidden var centerY;
 
-    var SinCosTableX = new [24];
-    var SinCosTableY = new [24];
-    var centerX;
-    var centerY;
-
-    var clockTime;
+    hidden var clockTime;
 
     // sunrise/sunset
-	var utcOffset;
-    var lonW;
-	var latN;
-    var sunrise = new [SUNRISET_NBR];
-    var sunset = new [SUNRISET_NBR];
+	hidden var utcOffset;
+    hidden var lonW;
+	hidden var latN;
+    hidden var sunrise = new [SUNRISET_NBR];
+    hidden var sunset = new [SUNRISET_NBR];
 
     // resources
-    var moon = null;   
-    var sun = null;   
-    var fontSmall = null; 
-    var fontHours = null; 
+    hidden var moon = null;   
+    hidden var sun = null;   
+    hidden var fontSmall = null; 
+    hidden var fontHours = null; 
     
     // redraw full watchface
-    var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
-    var lastRedrawMin=-1;
+    hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
+    hidden var lastRedrawMin=-1;
     
     function initialize (){
         var time=Sys.getTimer();
         WatchFace.initialize();
-        var size=SinCosTableX.size();
-        var val=36.0; // move '0 hour' at top of screen
-        for (var i=0; i<size; ++i){
-            var a = val * Math.PI * (1.0 / size) + 2.0;
-            
-            SinCosTableX[i] = Math.cos(a);
-            SinCosTableY[i] = Math.sin(a);
-        }
         var set=Sys.getDeviceSettings();
         centerX = set.screenWidth >> 1;
         centerY = set.screenHeight >> 1;
@@ -58,9 +47,6 @@ class lateView extends Ui.WatchFace {
         clockTime = Sys.getClockTime();
     	utcOffset = new Time.Duration(clockTime.timeZoneOffset);
         //computeSun();
-
-        var dt=Sys.getTimer()-time;
-        var str=dt.format("%d");
     }
 
     //! Load your resources here
@@ -94,8 +80,6 @@ class lateView extends Ui.WatchFace {
 
     //! Update the view
     function onUpdate (dc) {
-
-        var time = Sys.getTimer();
         clockTime = Sys.getClockTime();
 
         if (lastRedrawMin != clockTime.min) { redrawAll = 1; }
@@ -107,8 +91,7 @@ class lateView extends Ui.WatchFace {
             lastRedrawMin=clockTime.min;
             //drawSunBitmaps(dc);
            
-            var now = Time.now();
-            var info = Calendar.info(now, Time.FORMAT_MEDIUM);
+            var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
 
             // draw hour
             var h=clockTime.hour;
@@ -142,7 +125,7 @@ class lateView extends Ui.WatchFace {
             dc.drawArc(centerX, centerY, 55, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
         }
         dc.setColor(Gfx.COLOR_WHITE, 0);
-        dc.drawText(centerX + (50 * sin), centerY - (50 * cos) , fontSmall, clockTime.min.format("%0.1d"), CENTER);
+        dc.drawText(centerX + (55 * sin), centerY - (55 * cos) , fontSmall, clockTime.min.format("%0.1d"), CENTER);
     }
 
 

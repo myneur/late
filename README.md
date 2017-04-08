@@ -2,10 +2,10 @@
 
 ![concept teaser](/doc/tease.png) 
 
- * you rarely need to know an exact hour and minute in the day
- * you rather need to know what is a current hour quickly (here digital watches are great)
- * and get a sense where you are within the hour (here analog watches are great)
- * this concept combines the best from bost worlds
+* you rarely need to know an exact hour and minute in the day
+* you rather need to know what is a current hour quickly (here digital watches are great)
+* ...and get a sense of where you are within the hour (here analog watches are great)
+* this concept combines the best from both worlds
 
  Based on a [design concept](https://www.behance.net/gallery/33752138/Smart-watch-face-navigating-through-the-day) optimizing watch for daily usabilty. 
  

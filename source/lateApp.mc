@@ -1,15 +1,10 @@
-//
-// Copyright 2016 by Garmin Ltd. or its subsidiaries.
-// Subject to Garmin SDK License Agreement and Wearables
-// Application Developer Agreement.
-//
-
 using Toybox.Application as App;
+using Toybox.WatchUi as Ui;
 
-class lateApp extends App.AppBase
-{
-    function initialize()
-    {
+class lateApp extends App.AppBase{
+    var watch;
+
+    function initialize(){
         AppBase.initialize();
     }
 
@@ -17,8 +12,13 @@ class lateApp extends App.AppBase
 
     function onStop(state) { }
 
-    function getInitialView()
-    {
-        return [new lateView()];
+    function onSettingsChanged(){
+        watch.loadSettings();
+        Ui.requestUpdate();
+    }
+
+    function getInitialView(){
+        watch = new lateView();
+        return [watch];
     }
 }

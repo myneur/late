@@ -5,6 +5,7 @@ using Toybox.Lang as Lang;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Calendar;
 using Toybox.Activity as Activity;
+using Toybox.Application as App;
 
 enum {       
     SUNRISET_NOW=0,
@@ -16,6 +17,7 @@ class lateView extends Ui.WatchFace {
     hidden const CENTER = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
     hidden var centerX;
     hidden var centerY;
+    hidden var color = Graphics.COLOR_YELLOW;//0xff5500;
 
     hidden var clockTime;
 
@@ -56,6 +58,13 @@ class lateView extends Ui.WatchFace {
         sun = Ui.loadResource(Rez.Drawables.Sun);
         fontHours = Ui.loadResource(Rez.Fonts.Hours);        
         fontSmall = Ui.loadResource(Rez.Fonts.Small);
+        loadSettings();
+    }
+
+    function loadSettings(){
+        if(App.getApp().getProperty("color")!=null){
+            color = App.getApp().getProperty("color");
+        }
     }
 
     //! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
@@ -105,9 +114,10 @@ class lateView extends Ui.WatchFace {
             drawMinuteArc(dc);        
 
             // draw Day info
-            dc.setColor(0x555555, Gfx.COLOR_BLACK);
-            dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, Lang.format("$1$", [info.month]) + " " + info.day.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
-                         
+            if(centerY>90){
+                dc.setColor(0x555555, Gfx.COLOR_BLACK);
+                dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, Lang.format("$1$", [info.month]) + " " + info.day.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
+            }
         }
         
         if (0>redrawAll) { redrawAll--; }
@@ -120,7 +130,7 @@ class lateView extends Ui.WatchFace {
         var sin = Math.sin(angle);
 
         if(minutes>0){
-            dc.setColor(0xff5500, 0);
+            dc.setColor(color, 0);
             dc.setPenWidth(3);
             dc.drawArc(centerX, centerY, 55, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
         }

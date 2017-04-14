@@ -106,9 +106,9 @@ class lateView extends Ui.WatchFace {
 
             // draw hour
             var h=clockTime.hour;
-            if (false==Sys.getDeviceSettings().is24Hour && h>11){
-                h-=12;
-                if (0==h) { h=12; }
+            if(Sys.getDeviceSettings().is24Hour == false){
+                if(h>11){ h-=12;}
+                if(0==h){ h=12;}
             }
             dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
             dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);    
@@ -118,11 +118,11 @@ class lateView extends Ui.WatchFace {
             // draw Day info
             if(centerY>90){
                 dc.setColor(dateColor, Gfx.COLOR_BLACK);
-                /*var dateStr = "";
-                if(App.getApp().getProperty("dateFormat")!=null){
-                    dateStr = Lang.format("$1$ ", (App.getApp().getProperty("dateFormat") == 0) ? [info.month] : [info.day_of_week]);
-                }*/
-                var dateStr = Lang.format("$1$ ", [info.month]);
+                var dateStr = "";
+                var dateForm = App.getApp().getProperty("dateForm");
+                if(dateForm != null){
+                    dateStr = Lang.format("$1$ ", ((dateForm == 0) ? [info.month] : [info.day_of_week]) );
+                }
                 dateStr += info.day.format("%0.1d");
 
                 dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, dateStr, Gfx.TEXT_JUSTIFY_CENTER);

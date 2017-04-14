@@ -20,10 +20,10 @@
             <listEntry value="0x555555">@Strings.ColorDarkGray</listEntry> 
         </settingConfig>
     </setting>
-    <!--<setting propertyKey="@Properties.dateFormat" title="@Strings.DateFormatTitle">
+    <setting propertyKey="@Properties.dateForm" title="@Strings.DateFormTitle">
         <settingConfig type="list">
-            <listEntry value="0">@Strings.DateFormatMonth</listEntry>
-            <listEntry value="1">@Strings.DateFormatDayOfWeek</listEntry>
+            <listEntry value="0">@Strings.DateFormMonth</listEntry>
+            <listEntry value="1">@Strings.DateFormDayOfWeek</listEntry>
         </settingConfig>
-    </setting>-->
+    </setting>
 </settings>

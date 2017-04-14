@@ -6,16 +6,24 @@
     
     <setting propertyKey="@Properties.color" title="@Strings.ColorTitle">
         <settingConfig type="list">
+            <listEntry value="0xFFAA00">@Strings.ColorYellow</listEntry>                        
+            <listEntry value="0xFF5500">@Strings.ColorOrange</listEntry>
             <listEntry value="0x00AAFF">@Strings.ColorBlue</listEntry>
             <listEntry value="0x00AA00">@Strings.ColorDarkGreen</listEntry>
             <listEntry value="0x00FF00">@Strings.ColorGreen</listEntry>
-            <listEntry value="0xFF5500">@Strings.ColorOrange</listEntry>
-            <listEntry value="0xFFAA00">@Strings.ColorYellow</listEntry>                        
             <listEntry value="0xFF0000">@Strings.ColorRed</listEntry>
             <listEntry value="0xAA0000">@Strings.ColorDarkRed</listEntry>
+            <listEntry value="0xAA00FF">@Strings.ColorPurple</listEntry> 
+            <listEntry value="0xFF00FF">@Strings.ColorPink</listEntry> 
             <listEntry value="0xFFFFFF">@Strings.ColorWhite</listEntry> 
             <listEntry value="0xAAAAAA">@Strings.ColorGray</listEntry> 
             <listEntry value="0x555555">@Strings.ColorDarkGray</listEntry> 
         </settingConfig>
     </setting>
+    <!--<setting propertyKey="@Properties.dateFormat" title="@Strings.DateFormatTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.DateFormatMonth</listEntry>
+            <listEntry value="1">@Strings.DateFormatDayOfWeek</listEntry>
+        </settingConfig>
+    </setting>-->
 </settings>

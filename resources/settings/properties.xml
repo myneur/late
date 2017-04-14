@@ -1,4 +1,5 @@
 <properties>
 	<property id="appVersion" type="string">1</property>
     <property id="color" type="number">0xFFAA00</property>
+    <!--<property id="dateFormat" type="number">0</property>-->
 </properties>

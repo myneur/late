@@ -17,7 +17,8 @@ class lateView extends Ui.WatchFace {
     hidden const CENTER = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
     hidden var centerX;
     hidden var centerY;
-    hidden var color = Graphics.COLOR_YELLOW;//0xff5500;
+    hidden var color = Graphics.COLOR_YELLOW;
+    hidden var dateColor = 0x555555;
 
     hidden var clockTime;
 
@@ -65,6 +66,7 @@ class lateView extends Ui.WatchFace {
         if(App.getApp().getProperty("color")!=null){
             color = App.getApp().getProperty("color");
         }
+        redrawAll = 2;
     }
 
     //! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
@@ -115,8 +117,15 @@ class lateView extends Ui.WatchFace {
 
             // draw Day info
             if(centerY>90){
-                dc.setColor(0x555555, Gfx.COLOR_BLACK);
-                dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, Lang.format("$1$", [info.month]) + " " + info.day.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
+                dc.setColor(dateColor, Gfx.COLOR_BLACK);
+                /*var dateStr = "";
+                if(App.getApp().getProperty("dateFormat")!=null){
+                    dateStr = Lang.format("$1$ ", (App.getApp().getProperty("dateFormat") == 0) ? [info.month] : [info.day_of_week]);
+                }*/
+                var dateStr = Lang.format("$1$ ", [info.month]);
+                dateStr += info.day.format("%0.1d");
+
+                dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, dateStr, Gfx.TEXT_JUSTIFY_CENTER);
             }
         }
         

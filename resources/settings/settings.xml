@@ -1,9 +1,4 @@
 <settings>
-
-    <setting propertyKey="@Properties.appVersion" title="@Strings.AppVersionTitle">
-        <settingConfig type="alphaNumeric" readonly="true" />
-    </setting>
-    
     <setting propertyKey="@Properties.color" title="@Strings.ColorTitle">
         <settingConfig type="list">
             <listEntry value="0xFFAA00">@Strings.ColorYellow</listEntry>                        
@@ -20,10 +15,22 @@
             <listEntry value="0x555555">@Strings.ColorDarkGray</listEntry> 
         </settingConfig>
     </setting>
+    
     <setting propertyKey="@Properties.dateForm" title="@Strings.DateFormTitle">
         <settingConfig type="list">
             <listEntry value="0">@Strings.DateFormMonth</listEntry>
             <listEntry value="1">@Strings.DateFormDayOfWeek</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.activity" title="@Strings.ActivityTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.DnD</listEntry>
+            <listEntry value="1">@Strings.Steps</listEntry>
+            <listEntry value="2">@Strings.Calories</listEntry>
+            <!--<listEntry value="3">@Strings.ActiveMinutesDay</listEntry>
+            <listEntry value="4">@Strings.ActiveMinutesWeek</listEntry>
+            <listEntry value="5">@Strings.Floors</listEntry>-->
         </settingConfig>
     </setting>
 </settings>

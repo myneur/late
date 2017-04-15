@@ -5,6 +5,7 @@ using Toybox.Lang as Lang;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Calendar;
 using Toybox.Activity as Activity;
+//using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Application as App;
 
 enum {       
@@ -17,6 +18,7 @@ class lateView extends Ui.WatchFace {
     hidden const CENTER = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
     hidden var centerX;
     hidden var centerY;
+    hidden var height;
     hidden var color = Graphics.COLOR_YELLOW;
     hidden var dateColor = 0x555555;
 
@@ -43,8 +45,9 @@ class lateView extends Ui.WatchFace {
         var time=Sys.getTimer();
         WatchFace.initialize();
         var set=Sys.getDeviceSettings();
+        height = set.screenHeight;
         centerX = set.screenWidth >> 1;
-        centerY = set.screenHeight >> 1;
+        centerY = height >> 1;
         
         //sunrise/sunset stuff
         clockTime = Sys.getClockTime();
@@ -115,17 +118,34 @@ class lateView extends Ui.WatchFace {
 
             drawMinuteArc(dc);        
 
-            // draw Day info
+            
             if(centerY>90){
-                dc.setColor(dateColor, Gfx.COLOR_BLACK);
-                var dateStr = "";
-                var dateForm = App.getApp().getProperty("dateForm");
-                if(dateForm != null){
-                    dateStr = Lang.format("$1$ ", ((dateForm == 0) ? [info.month] : [info.day_of_week]) );
-                }
-                dateStr += info.day.format("%0.1d");
 
-                dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, dateStr, Gfx.TEXT_JUSTIFY_CENTER);
+                // draw Day info
+                dc.setColor(dateColor, Gfx.COLOR_BLACK);
+                var text = "";
+                var property = App.getApp().getProperty("dateForm");
+                if(property != null){
+                    text = Lang.format("$1$ ", ((property == 0) ? [info.month] : [info.day_of_week]) );
+                }
+                text += info.day.format("%0.1d");
+
+                dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
+
+
+                // activity 
+                property = App.getApp().getProperty("activity");
+                //System.println(ActivityMonitor.getInfo() has :activeMinutesDay);
+                if(property != null && property > 0){
+                    text = ActivityMonitor.getInfo();
+                    if(property == 1){ text = text.steps; }
+                    else if(property == 2){ text = text.calories; }
+                    else if(property == 3){ text = text.activeMinutesDay.total;} 
+                    else if(property == 4){ text = text.activeMinutesWeek.total; }
+                    else if(property == 5){ text = text.floorsClimbed; }
+                    else {text = "";}
+                    dc.drawText(centerX, height-dc.getFontHeight(fontSmall)-10, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER); 
+                }
             }
         }
         

@@ -5,6 +5,7 @@ using Toybox.Lang as Lang;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Calendar;
 using Toybox.Activity as Activity;
+using Toybox.Math as Math;
 //using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Application as App;
 
@@ -21,11 +22,15 @@ class lateView extends Ui.WatchFace {
     hidden var height;
     hidden var color = Graphics.COLOR_YELLOW;
     hidden var dateColor = 0x555555;
+    hidden var activityColor = 0x555555;
+    hidden var activity = 0;
+    hidden var dateForm;
+    hidden var showSunrise = false;
+    hidden var dstBug = false;
 
     hidden var clockTime;
-
     // sunrise/sunset
-	hidden var utcOffset;
+	hidden var utcOffset = null;
     hidden var lonW;
 	hidden var latN;
     hidden var sunrise = new [SUNRISET_NBR];
@@ -34,8 +39,10 @@ class lateView extends Ui.WatchFace {
     // resources
     hidden var moon = null;   
     hidden var sun = null;   
+    hidden var icon = null;
     hidden var fontSmall = null; 
     hidden var fontHours = null; 
+    hidden var fontCondensed = null;
     
     // redraw full watchface
     hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -50,25 +57,46 @@ class lateView extends Ui.WatchFace {
         centerY = height >> 1;
         
         //sunrise/sunset stuff
+
         clockTime = Sys.getClockTime();
-    	utcOffset = new Time.Duration(clockTime.timeZoneOffset);
-        //computeSun();
     }
 
     //! Load your resources here
     function onLayout (dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
-        moon = Ui.loadResource(Rez.Drawables.Moon);
-        sun = Ui.loadResource(Rez.Drawables.Sun);
         fontHours = Ui.loadResource(Rez.Fonts.Hours);        
         fontSmall = Ui.loadResource(Rez.Fonts.Small);
         loadSettings();
     }
 
     function loadSettings(){
-        if(App.getApp().getProperty("color")!=null){
-            color = App.getApp().getProperty("color");
+        color = App.getApp().getProperty("color");
+        dateForm = App.getApp().getProperty("dateForm");
+        activity = App.getApp().getProperty("activity");
+        showSunrise = App.getApp().getProperty("sunriset");
+        dstBug = App.getApp().getProperty("sunriset");
+
+        // when running for the first time: load resources and compute sun positions
+        if(showSunrise){ // TODO recalculate when position changes
+            moon = Ui.loadResource(Rez.Drawables.Moon);
+            sun = Ui.loadResource(Rez.Drawables.Sun);
+            utcOffset = new Time.Duration(clockTime.timeZoneOffset);
+            computeSun();
         }
+
+        if(activity>0){ 
+            fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
+            dateColor = 0xaaaaaa;
+            if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }
+            else if(activity == 2) { icon = Ui.loadResource(Rez.Drawables.Cal); }
+            else if(activity >= 3 && !(ActivityMonitor.getInfo() has :activeMinutesDay)){ 
+                activity = 0;   // reset not supported activities
+            } else if(activity <= 4) { icon = Ui.loadResource(Rez.Drawables.Minutes); }
+            else if(activity == 5) { icon = Ui.loadResource(Rez.Drawables.Floors); }
+        } else {
+            dateColor = 0x555555;
+        }
+
         redrawAll = 2;
     }
 
@@ -103,9 +131,12 @@ class lateView extends Ui.WatchFace {
             dc.setColor(0x00, 0x00);
             dc.clear();
             lastRedrawMin=clockTime.min;
-            //drawSunBitmaps(dc);
+            if(showSunrise){
+                drawSunBitmaps(dc);
+            }
            
             var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
+            // TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 
             // draw hour
             var h=clockTime.hour;
@@ -124,32 +155,51 @@ class lateView extends Ui.WatchFace {
                 // draw Day info
                 dc.setColor(dateColor, Gfx.COLOR_BLACK);
                 var text = "";
-                var property = App.getApp().getProperty("dateForm");
-                if(property != null){
-                    text = Lang.format("$1$ ", ((property == 0) ? [info.month] : [info.day_of_week]) );
+                if(dateForm != null){
+                    text = Lang.format("$1$ ", ((dateForm == 0) ? [info.month] : [info.day_of_week]) );
                 }
                 text += info.day.format("%0.1d");
 
                 dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
 
+                
+                /*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, CENTER);
+                dc.setPenWidth(2);
+                dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);
+                */
 
-                // activity 
-                property = App.getApp().getProperty("activity");
-                //System.println(ActivityMonitor.getInfo() has :activeMinutesDay);
-                if(property != null && property > 0){
+                // activity
+
+                if(activity > 0){
                     text = ActivityMonitor.getInfo();
-                    if(property == 1){ text = text.steps; }
-                    else if(property == 2){ text = text.calories; }
-                    else if(property == 3){ text = text.activeMinutesDay.total;} 
-                    else if(property == 4){ text = text.activeMinutesWeek.total; }
-                    else if(property == 5){ text = text.floorsClimbed; }
+                    if(activity == 1){ text = humanizeNumber(text.steps); }
+                    else if(activity == 2){ text = humanizeNumber(text.calories); }
+                    else if(activity == 3){ text = (text.activeMinutesDay.total);} // moderate + vigorous
+                    else if(activity == 4){ text = humanizeNumber(text.activeMinutesWeek.total); }
+                    else if(activity == 5){ text = (text.floorsClimbed); }
                     else {text = "";}
-                    dc.drawText(centerX, height-dc.getFontHeight(fontSmall)-10, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER); 
+                    dc.setColor(activityColor, Gfx.COLOR_BLACK);
+                
+                    if(!(ActivityMonitor.getInfo() has :activeMinutesDay)){
+                        dc.drawText(centerX + icon.getWidth()>>1, height-dc.getFontHeight(fontCondensed)-10, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
+                        dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, height-dc.getFontHeight(fontCondensed)-10+4, icon);
+                    } else {
+                        // WTF!! Fenix5 shows bitmaps wrong!!! So disabling for it! 
+                        dc.drawText(centerX , height-dc.getFontHeight(fontCondensed)-10, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
+                    }
                 }
             }
         }
         
         if (0>redrawAll) { redrawAll--; }
+    }
+
+    function humanizeNumber(number){
+        if(number>1000) {
+            return (number.toFloat()/1000).format("%1.1f")+"k";
+        } else {
+            return number.toString();
+        }
     }
 
     function drawMinuteArc (dc){
@@ -199,7 +249,7 @@ class lateView extends Ui.WatchFace {
         }
 
         // compute current date as day number from beg of year
-        var timeInfo = Calendar.info(Time.now().add(utcOffset), Calendar.FORMAT_SHORT);
+        var timeInfo = Calendar.info(Time.now().add(utcOffset), Calendar.FORMAT_SHORT); // TODO why not to compute utcOffset here? 
 
         var now = dayOfYear(timeInfo.day, timeInfo.month, timeInfo.year);
         //Sys.println("dayOfYear: " + now.format("%d"));
@@ -230,9 +280,13 @@ class lateView extends Ui.WatchFace {
             {
                 sunrise[i] += dst/3600;
                 sunset[i] += dst/3600;
+                
+
                 // hack because dst does not seem to work = is 0
-                sunrise[i] += 1;
-                sunset[i] += 1;
+                if(dstBug){
+                    sunrise[i] += 1;
+                    sunset[i] += 1;
+                }
                 
             }
         }

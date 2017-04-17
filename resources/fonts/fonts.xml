@@ -1,4 +1,5 @@
 <fonts>
 	<font id="Hours" filename="futura80.fnt" filter="0123456789:" antialias="true" />
 	<font id="Small" filename="futura22.fnt" filter="0123456789abcdefghijklmnoprstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ" antialias="true" />
+	<font id="Condensed" filename="futura-condensed22.fnt" filter="0123456789abcdefghijklmnoprstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ,.-+:_" antialias="true" />
 </fonts>

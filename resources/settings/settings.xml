@@ -28,9 +28,16 @@
             <listEntry value="0">@Strings.DnD</listEntry>
             <listEntry value="1">@Strings.Steps</listEntry>
             <listEntry value="2">@Strings.Calories</listEntry>
-            <!--<listEntry value="3">@Strings.ActiveMinutesDay</listEntry>
+            <listEntry value="3">@Strings.ActiveMinutesDay</listEntry>
             <listEntry value="4">@Strings.ActiveMinutesWeek</listEntry>
-            <listEntry value="5">@Strings.Floors</listEntry>-->
+            <listEntry value="5">@Strings.Floors</listEntry>
         </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
+        <settingConfig type="boolean" />
+    </setting>
+     <setting propertyKey="@Properties.dstBug" title="@Strings.enforceDST">
+        <settingConfig type="boolean" />
     </setting>
 </settings>

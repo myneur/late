@@ -29,8 +29,8 @@ class lateView extends Ui.WatchFace {
     hidden var dstBug = false;
 
     hidden var clockTime;
+    hidden var day = -1;
     // sunrise/sunset
-	hidden var utcOffset = null;
     hidden var lonW;
 	hidden var latN;
     hidden var sunrise = new [SUNRISET_NBR];
@@ -75,12 +75,11 @@ class lateView extends Ui.WatchFace {
         activity = App.getApp().getProperty("activity");
         showSunrise = App.getApp().getProperty("sunriset");
         dstBug = App.getApp().getProperty("sunriset");
-
+        
         // when running for the first time: load resources and compute sun positions
-        if(showSunrise){ // TODO recalculate when position changes
+        if(showSunrise ){ // TODO recalculate when day or position changes
             moon = Ui.loadResource(Rez.Drawables.Moon);
             sun = Ui.loadResource(Rez.Drawables.Sun);
-            utcOffset = new Time.Duration(clockTime.timeZoneOffset);
             computeSun();
         }
 
@@ -131,11 +130,14 @@ class lateView extends Ui.WatchFace {
             dc.setColor(0x00, 0x00);
             dc.clear();
             lastRedrawMin=clockTime.min;
+            var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
+
             if(showSunrise){
+                if(day != info.day){ // TODO should be recalculated rather when passing sunrise/sunset
+                    computeSun();
+                }
                 drawSunBitmaps(dc);
             }
-           
-            var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
             // TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 
             // draw hour
@@ -149,8 +151,7 @@ class lateView extends Ui.WatchFace {
 
             drawMinuteArc(dc);        
 
-            
-            if(centerY>90){
+            if(centerY>89){
 
                 // draw Day info
                 dc.setColor(dateColor, Gfx.COLOR_BLACK);
@@ -249,8 +250,8 @@ class lateView extends Ui.WatchFace {
         }
 
         // compute current date as day number from beg of year
-        var timeInfo = Calendar.info(Time.now().add(utcOffset), Calendar.FORMAT_SHORT); // TODO why not to compute utcOffset here? 
-
+        var timeInfo = Calendar.info(Time.now().add(new Time.Duration(clockTime.timeZoneOffset)), Calendar.FORMAT_SHORT);
+        day = timeInfo.day;
         var now = dayOfYear(timeInfo.day, timeInfo.month, timeInfo.year);
         //Sys.println("dayOfYear: " + now.format("%d"));
         sunrise[SUNRISET_NOW] = computeSunriset(now, lonW, latN, true);

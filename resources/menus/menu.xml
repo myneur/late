@@ -1,0 +1,14 @@
+<menu id="MainMenu">
+    <menu-item id="xFFAA00">@Strings.ColorYellow</menu-item>                        
+    <menu-item id="xFF5500">@Strings.ColorOrange</menu-item>
+    <menu-item id="x00AAFF">@Strings.ColorBlue</menu-item>
+    <menu-item id="x00AA00">@Strings.ColorDarkGreen</menu-item>
+    <menu-item id="x00FF00">@Strings.ColorGreen</menu-item>
+    <menu-item id="xFF0000">@Strings.ColorRed</menu-item>
+    <menu-item id="xAA0000">@Strings.ColorDarkRed</menu-item>
+    <menu-item id="xAA00FF">@Strings.ColorPurple</menu-item> 
+    <menu-item id="xFF00FF">@Strings.ColorPink</menu-item> 
+    <menu-item id="xFFFFFF">@Strings.ColorWhite</menu-item> 
+    <menu-item id="xAAAAAA">@Strings.ColorGray</menu-item> 
+    <menu-item id="x555555">@Strings.ColorDarkGray</menu-item> 
+</menu>

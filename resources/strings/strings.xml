@@ -17,18 +17,18 @@
     <string id="ColorDarkGray">Dark Gray</string>    
     <string id="ColorGray">Gray</string>    
     
-    <string id="DateFormTitle">Fenix3+: Date Format</string>
+    <string id="DateFormTitle">Date Format</string>
     <string id="DateFormMonth">Month</string>
     <string id="DateFormDayOfWeek">Day of week</string>
     
-    <string id="ActivityTitle">Experimental: Show Activity Info (HIC SVNT LEONES)</string>
+    <string id="ActivityTitle">Show Activity Info</string>
     <string id="DnD">Nothing: Do not disturb me!</string>
-    <string id="Calories">Fenix3+: Calories Burned</string>
-    <string id="Steps">Fenix3+: Steps</string>
-    <string id="Floors">Fenix5+: Floors Climbed</string>
-    <string id="ActiveMinutesDay">Fenix5+: Active Minutes Today</string>
-    <string id="ActiveMinutesWeek">Fenix5+: Active Minutes this Week</string>
+    <string id="Calories">Calories Burned</string>
+    <string id="Steps">Steps</string>
+    <string id="Floors">Fenix5: Floors Climbed</string>
+    <string id="ActiveMinutesDay">Fenix5: Active Minutes Today</string>
+    <string id="ActiveMinutesWeek">Fenix5: Active Minutes this Week</string>
 
-    <string id="showSunriseSunsetTitle">Experimental: buggy day-light-saving time and Fenix5: Show Sunrise and Sunset icons</string>
-    <string id="enforceDST">Experimental: Check if sun and moon shows in winter time instead of summer time</string>
+    <string id="showSunriseSunsetTitle">Experimental: buggy Fenix5: Show icons on positions where sunrise and sunset is in the 24h day</string>
+    <string id="enforceDST">Experimental: Check if sunrise and sunset shows in winter time instead of summer time</string>
 </strings>

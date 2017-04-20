@@ -15,6 +15,15 @@ enum {
     SUNRISET_NBR
 }
 
+
+/*class MenuDelegate extends Ui.MenuInputDelegate {
+    function onMenuItem(item){
+        System.println("menu");
+        App.getApp().setProperty("color", color);
+        lateView.loadSettings();
+    }
+}*/
+
 class lateView extends Ui.WatchFace {
     hidden const CENTER = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
     hidden var centerX;
@@ -75,14 +84,13 @@ class lateView extends Ui.WatchFace {
         activity = App.getApp().getProperty("activity");
         showSunrise = App.getApp().getProperty("sunriset");
         dstBug = App.getApp().getProperty("sunriset");
-        
+        showSunrise=true;
         // when running for the first time: load resources and compute sun positions
         if(showSunrise ){ // TODO recalculate when day or position changes
             moon = Ui.loadResource(Rez.Drawables.Moon);
             sun = Ui.loadResource(Rez.Drawables.Sun);
             computeSun();
         }
-
         if(activity>0){ 
             fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
             dateColor = 0xaaaaaa;
@@ -118,6 +126,11 @@ class lateView extends Ui.WatchFace {
     function onEnterSleep(){
         redrawAll =0;
     }
+
+    /*function openTheMenu(){
+        menu = new MainMenu(self);
+        Ui.pushView(new Rez.Menus.MainMenu(), new MyMenuDelegate(), Ui.SLIDE_UP);
+    }*/
 
     //! Update the view
     function onUpdate (dc) {
@@ -251,6 +264,7 @@ class lateView extends Ui.WatchFace {
 
         // compute current date as day number from beg of year
         var timeInfo = Calendar.info(Time.now().add(new Time.Duration(clockTime.timeZoneOffset)), Calendar.FORMAT_SHORT);
+
         day = timeInfo.day;
         var now = dayOfYear(timeInfo.day, timeInfo.month, timeInfo.year);
         //Sys.println("dayOfYear: " + now.format("%d"));

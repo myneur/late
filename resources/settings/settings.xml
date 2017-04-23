@@ -37,7 +37,4 @@
     <setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
         <settingConfig type="boolean" />
     </setting>
-     <setting propertyKey="@Properties.dstBug" title="@Strings.enforceDST">
-        <settingConfig type="boolean" />
-    </setting>
 </settings>

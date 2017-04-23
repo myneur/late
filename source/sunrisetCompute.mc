@@ -125,8 +125,5 @@ function computeSunriset (day, longitude, latitude, sunrise)
         UT = UT + 24;
     }
 
-    //convert UT value to local time zone of latitude/longitude
-    var localT = UT + 1;
-
-    return localT;
+    return UT;
 }

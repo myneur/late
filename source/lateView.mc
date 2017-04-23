@@ -35,7 +35,7 @@ class lateView extends Ui.WatchFace {
     hidden var activity = 0;
     hidden var dateForm;
     hidden var showSunrise = false;
-    hidden var dstBug = false;
+    hidden var utcOffset;
 
     hidden var clockTime;
     hidden var day = -1;
@@ -52,6 +52,8 @@ class lateView extends Ui.WatchFace {
     hidden var fontSmall = null; 
     hidden var fontHours = null; 
     hidden var fontCondensed = null;
+
+    hidden var activityY;
     
     // redraw full watchface
     hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -64,9 +66,7 @@ class lateView extends Ui.WatchFace {
         height = set.screenHeight;
         centerX = set.screenWidth >> 1;
         centerY = height >> 1;
-        
         //sunrise/sunset stuff
-
         clockTime = Sys.getClockTime();
     }
 
@@ -83,17 +83,20 @@ class lateView extends Ui.WatchFace {
         dateForm = App.getApp().getProperty("dateForm");
         activity = App.getApp().getProperty("activity");
         showSunrise = App.getApp().getProperty("sunriset");
-        dstBug = App.getApp().getProperty("sunriset");
-        showSunrise=true;
         // when running for the first time: load resources and compute sun positions
         if(showSunrise ){ // TODO recalculate when day or position changes
             moon = Ui.loadResource(Rez.Drawables.Moon);
             sun = Ui.loadResource(Rez.Drawables.Sun);
+            clockTime = Sys.getClockTime();
+            utcOffset = clockTime.timeZoneOffset;
             computeSun();
         }
+
         if(activity>0){ 
             fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
             dateColor = 0xaaaaaa;
+            activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
+
             if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }
             else if(activity == 2) { icon = Ui.loadResource(Rez.Drawables.Cal); }
             else if(activity >= 3 && !(ActivityMonitor.getInfo() has :activeMinutesDay)){ 
@@ -138,15 +141,14 @@ class lateView extends Ui.WatchFace {
 
         if (lastRedrawMin != clockTime.min) { redrawAll = 1; }
 
-        if (0!=redrawAll)
-        {
+        if (redrawAll!=0){
             dc.setColor(0x00, 0x00);
             dc.clear();
             lastRedrawMin=clockTime.min;
             var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
 
             if(showSunrise){
-                if(day != info.day){ // TODO should be recalculated rather when passing sunrise/sunset
+                if(day != info.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
                     computeSun();
                 }
                 drawSunBitmaps(dc);
@@ -193,14 +195,8 @@ class lateView extends Ui.WatchFace {
                     else if(activity == 5){ text = (text.floorsClimbed); }
                     else {text = "";}
                     dc.setColor(activityColor, Gfx.COLOR_BLACK);
-                
-                    if(!(ActivityMonitor.getInfo() has :activeMinutesDay)){
-                        dc.drawText(centerX + icon.getWidth()>>1, height-dc.getFontHeight(fontCondensed)-10, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
-                        dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, height-dc.getFontHeight(fontCondensed)-10+4, icon);
-                    } else {
-                        // WTF!! Fenix5 shows bitmaps wrong!!! So disabling for it! 
-                        dc.drawText(centerX , height-dc.getFontHeight(fontCondensed)-10, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
-                    }
+                    dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
+                    dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+4, icon);
                 }
             }
         }
@@ -238,12 +234,12 @@ class lateView extends Ui.WatchFace {
         a *= Math.PI/(12 * 60.0);
         var r = centerX - 11;
 
-        dc.drawBitmap(centerX + (r * Math.sin(a))-6, centerY - (r * Math.cos(a))-6, sun);
+        dc.drawBitmap(centerX + (r * Math.sin(a))-sun.getWidth()>>1, centerY - (r * Math.cos(a))-sun.getWidth()>>1, sun);
 
         // SUNSET (moon)
         a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
         a *= Math.PI/(12 * 60.0);
-        dc.drawBitmap(centerX + (r * Math.sin(a))-5, centerY - (r * Math.cos(a))-6, moon);
+        dc.drawBitmap(centerX + (r * Math.sin(a))-moon.getWidth()>>1, centerY - (r * Math.cos(a))-moon.getWidth()>>1, moon);
     }
 
     function computeSun() {
@@ -263,7 +259,8 @@ class lateView extends Ui.WatchFace {
         }
 
         // compute current date as day number from beg of year
-        var timeInfo = Calendar.info(Time.now().add(new Time.Duration(clockTime.timeZoneOffset)), Calendar.FORMAT_SHORT);
+        utcOffset = clockTime.timeZoneOffset;
+        var timeInfo = Calendar.info(Time.now().add(new Time.Duration(utcOffset)), Calendar.FORMAT_SHORT);
 
         day = timeInfo.day;
         var now = dayOfYear(timeInfo.day, timeInfo.month, timeInfo.year);
@@ -286,39 +283,26 @@ class lateView extends Ui.WatchFace {
         sunrise[SUNRISET_MAX] = computeSunriset(max, lonW, latN, true);
         sunset[SUNRISET_MAX] = computeSunriset(max, lonW, latN, false);
 
-        // adjust to daylight saving time if necessary
-        if (null!=clockTime.dst)
+        //adjust to timezone + dst when active
+        var offset=new Time.Duration(utcOffset).value()/3600;
+        for (var i = 0; i < SUNRISET_NBR; i++)
         {
-            var dst = clockTime.dst;
-            //Sys.println("DST: "+ dst.format("%d")+"s");        
-            for (var i = 0; i < SUNRISET_NBR; i++)
-            {
-                sunrise[i] += dst/3600;
-                sunset[i] += dst/3600;
-                
-
-                // hack because dst does not seem to work = is 0
-                if(dstBug){
-                    sunrise[i] += 1;
-                    sunset[i] += 1;
-                }
-                
-            }
+            sunrise[i] += offset;
+            sunset[i] += offset;
         }
+
 
         for (var i = 0; i < SUNRISET_NBR-1 && SUNRISET_NBR>1; i++)
         {
-            if (sunrise[i]<sunrise[i+1])
-            {
+            if (sunrise[i]<sunrise[i+1]){
                 sunrise[i+1]=sunrise[i];
             }
-            if (sunset[i]>sunset[i+1])
-            {
+            if (sunset[i]>sunset[i+1]){
                 sunset[i+1]=sunset[i];
             }
         }
 
-        var sunriseInfoStr = new [SUNRISET_NBR];
+        /*var sunriseInfoStr = new [SUNRISET_NBR];
         var sunsetInfoStr = new [SUNRISET_NBR];
         for (var i = 0; i < SUNRISET_NBR; i++)
         {
@@ -326,6 +310,6 @@ class lateView extends Ui.WatchFace {
             sunsetInfoStr[i] = Lang.format("$1$:$2$", [sunset[i].toNumber() % 24, ((sunset[i] - sunset[i].toNumber()) * 60).format("%.2d")]);
             //var str = i+":"+ "sunrise:" + sunriseInfoStr[i] + " | sunset:" + sunsetInfoStr[i];
             //Sys.println(str);
-        }
+        }*/
    }
 }

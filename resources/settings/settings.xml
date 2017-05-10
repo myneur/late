@@ -34,6 +34,17 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.bat" title="@Strings.BatteryTitle">
+        <settingConfig type="list">
+            <listEntry value="5">@Strings.BellowFive</listEntry>
+            <listEntry value="10">@Strings.BellowTen</listEntry>
+            <listEntry value="20">@Strings.BellowTwenty</listEntry>
+            <listEntry value="33">@Strings.BellowThird</listEntry>
+            <listEntry value="50">@Strings.BellowHalf</listEntry>
+            <listEntry value="100">@Strings.Always</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
         <settingConfig type="boolean" />
     </setting>

@@ -29,5 +29,13 @@
     <string id="ActiveMinutesDay">Fenix5: Active Minutes Today</string>
     <string id="ActiveMinutesWeek">Fenix5: Active Minutes this Week</string>
 
+    <string id="BatteryTitle">Show battery level</string>
+    <string id="BellowFive">below 5%</string>
+    <string id="BellowTen">below 10%</string>
+    <string id="BellowTwenty">below 20%</string>
+    <string id="BellowThird">below 33%</string>
+    <string id="BellowHalf">below 50%</string>
+    <string id="Always">Always show battery level</string>
+
     <string id="showSunriseSunsetTitle">Experimental: Show sunrise and sunset position on 24h day dial circle</string>
 </strings>

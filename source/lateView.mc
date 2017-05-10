@@ -50,10 +50,12 @@ class lateView extends Ui.WatchFace {
     hidden var sun = null;   
     hidden var icon = null;
     hidden var fontSmall = null; 
+    hidden var fontMinutes = null;
     hidden var fontHours = null; 
     hidden var fontCondensed = null;
 
     hidden var activityY;
+    hidden var batThreshold = 5;
     
     // redraw full watchface
     hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -74,7 +76,15 @@ class lateView extends Ui.WatchFace {
     function onLayout (dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
         fontHours = Ui.loadResource(Rez.Fonts.Hours);        
-        fontSmall = Ui.loadResource(Rez.Fonts.Small);
+        fontMinutes = Ui.loadResource(Rez.Fonts.Small);
+        var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
+        if(langTest.toNumber()<=382){ // supported latin fonts 
+            fontSmall = fontMinutes;
+        } else {
+            fontSmall = Gfx.FONT_SMALL;
+        }
+
+
         loadSettings();
     }
 
@@ -83,6 +93,8 @@ class lateView extends Ui.WatchFace {
         dateForm = App.getApp().getProperty("dateForm");
         activity = App.getApp().getProperty("activity");
         showSunrise = App.getApp().getProperty("sunriset");
+        batThreshold = App.getApp().getProperty("bat");
+
         // when running for the first time: load resources and compute sun positions
         if(showSunrise ){ // TODO recalculate when day or position changes
             moon = Ui.loadResource(Rez.Drawables.Moon);
@@ -186,6 +198,8 @@ class lateView extends Ui.WatchFace {
 
                 // activity
 
+                drawBatteryLevel(dc);
+
                 if(activity > 0){
                     text = ActivityMonitor.getInfo();
                     if(activity == 1){ text = humanizeNumber(text.steps); }
@@ -224,7 +238,41 @@ class lateView extends Ui.WatchFace {
             dc.drawArc(centerX, centerY, 55, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
         }
         dc.setColor(Gfx.COLOR_WHITE, 0);
-        dc.drawText(centerX + (55 * sin), centerY - (55 * cos) , fontSmall, clockTime.min.format("%0.1d"), CENTER);
+        dc.drawText(centerX + (55 * sin), centerY - (55 * cos) , fontMinutes, clockTime.min.format("%0.1d"), CENTER);
+    }
+
+    function drawBatteryLevel (dc){
+        var bat = Sys.getSystemStats().battery;
+
+        if(bat<=batThreshold){
+
+            var xPos = centerX-10;
+            var yPos = centerY+32;
+
+            // print the remaining %
+            //var str = bat.format("%d") + "%";
+            dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+            dc.setPenWidth(1);
+            dc.fillRectangle(xPos,yPos,24, 10);
+
+            if(bat<=20){
+                dc.setColor(Gfx.COLOR_DK_RED , Gfx.COLOR_BLACK);
+            } else {
+                dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_BLACK);
+            }
+                
+            // draw the battery
+
+            dc.drawRectangle(xPos, yPos, 19, 10);
+            dc.fillRectangle(xPos + 19, yPos + 3, 1, 4);
+
+            var lvl = floor((15.0 * (bat / 99.0)));
+            if (1.0 <= lvl) { dc.fillRectangle(xPos + 2, yPos + 2, lvl, 6); }
+            else {
+                dc.setColor(Gfx.COLOR_ORANGE, Gfx.COLOR_BLACK);
+                dc.fillRectangle(xPos + 1, yPos + 1, 1, 8);
+            }
+        }
     }
 
 
@@ -240,6 +288,15 @@ class lateView extends Ui.WatchFace {
         a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
         a *= Math.PI/(12 * 60.0);
         dc.drawBitmap(centerX + (r * Math.sin(a))-moon.getWidth()>>1, centerY - (r * Math.cos(a))-moon.getWidth()>>1, moon);
+        //System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"));
+        
+
+        /*dc.setColor(0x555555, 0);
+        dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*/
+
+        /*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360;
+        System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a))));
+        dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
     }
 
     function computeSun() {

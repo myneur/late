@@ -53,6 +53,10 @@ class lateView extends Ui.WatchFace {
     hidden var fontMinutes = null;
     hidden var fontHours = null; 
     hidden var fontCondensed = null;
+    
+    hidden var dateY = null;
+    hidden var radius;
+    hidden var batteryY;
 
     hidden var activityY;
     hidden var batThreshold = 5;
@@ -73,9 +77,10 @@ class lateView extends Ui.WatchFace {
     }
 
     //! Load your resources here
+    // F5: 240 > F3: 218 > Epix: 148 
     function onLayout (dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
-        fontHours = Ui.loadResource(Rez.Fonts.Hours);        
+        
         fontMinutes = Ui.loadResource(Rez.Fonts.Small);
         var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
         if(langTest.toNumber()<=382){ // supported latin fonts 
@@ -84,7 +89,18 @@ class lateView extends Ui.WatchFace {
             fontSmall = Gfx.FONT_SMALL;
         }
 
-
+        if(height>218){
+            fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
+            radius = 66;
+            dateY = centerY-95-(dc.getFontHeight(fontSmall)>>1);
+            batteryY = centerY+40;
+        } else {
+            fontHours = Ui.loadResource(Rez.Fonts.Hours);        
+            radius = 55;
+            dateY = centerY-80-(dc.getFontHeight(fontSmall)>>1);
+            batteryY = centerY+33;
+        }
+        
         loadSettings();
     }
 
@@ -104,10 +120,14 @@ class lateView extends Ui.WatchFace {
             computeSun();
         }
 
+        //activity = 1;
+        //dateForm = 1;
+
         if(activity>0){ 
             fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
             dateColor = 0xaaaaaa;
-            activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
+            
+            activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;    
 
             if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }
             else if(activity == 2) { icon = Ui.loadResource(Rez.Drawables.Cal); }
@@ -118,6 +138,7 @@ class lateView extends Ui.WatchFace {
         } else {
             dateColor = 0x555555;
         }
+
 
         redrawAll = 2;
     }
@@ -188,7 +209,7 @@ class lateView extends Ui.WatchFace {
                 }
                 text += info.day.format("%0.1d");
 
-                dc.drawText(centerX, centerY-80-(dc.getFontHeight(fontSmall)>>1), fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
+                dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
 
                 
                 /*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, CENTER);
@@ -235,19 +256,20 @@ class lateView extends Ui.WatchFace {
         if(minutes>0){
             dc.setColor(color, 0);
             dc.setPenWidth(3);
-            dc.drawArc(centerX, centerY, 55, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
+            dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
         }
         dc.setColor(Gfx.COLOR_WHITE, 0);
-        dc.drawText(centerX + (55 * sin), centerY - (55 * cos) , fontMinutes, clockTime.min.format("%0.1d"), CENTER);
+        dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontMinutes, minutes/*clockTime.min.format("%0.1d")*/, CENTER);
     }
 
     function drawBatteryLevel (dc){
         var bat = Sys.getSystemStats().battery;
+        //batThreshold=100;bat = 10;
 
         if(bat<=batThreshold){
 
             var xPos = centerX-10;
-            var yPos = centerY+32;
+            var yPos = batteryY;
 
             // print the remaining %
             //var str = bat.format("%d") + "%";
@@ -255,8 +277,8 @@ class lateView extends Ui.WatchFace {
             dc.setPenWidth(1);
             dc.fillRectangle(xPos,yPos,24, 10);
 
-            if(bat<=20){
-                dc.setColor(Gfx.COLOR_DK_RED , Gfx.COLOR_BLACK);
+            if(bat<=15){
+                dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_BLACK);
             } else {
                 dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_BLACK);
             }

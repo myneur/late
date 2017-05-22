@@ -12,8 +12,5 @@ Availabe in [Garmin Connect IQ Store](https://apps.garmin.com/en-US/apps/3532114
  
  If you can contribute to show calendar events in the watchface, that would be awesome! 
 
- The watchface also aims to show sunrise and sunset time, but it is commented because daylight saving time does not work, because Garmin has a bug in [clockTime.dst](https://developer.garmin.com/downloads/connect-iq/monkey-c/doc/Toybox/System/ClockTime.html#dst-instance_method). It is hardcoded for summer time there now. Whoever know how to fix it, please write me. 
-
 ## Special thanks
-* To Diego Fernandez Bravo
-* Thank you for sharing your code which was base to this watch face
+* To Diego Fernandez Bravo: Thank you for sharing your code which was base to this watch face

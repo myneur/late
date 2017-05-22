@@ -91,9 +91,9 @@ class lateView extends Ui.WatchFace {
 
         if(height>218){
             fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
-            radius = 66;
-            dateY = centerY-95-(dc.getFontHeight(fontSmall)>>1);
-            batteryY = centerY+40;
+            radius = 64;
+            dateY = centerY-97-(dc.getFontHeight(fontSmall)>>1);
+            batteryY = centerY+38;
         } else {
             fontHours = Ui.loadResource(Rez.Fonts.Hours);        
             radius = 55;
@@ -248,7 +248,7 @@ class lateView extends Ui.WatchFace {
     }
 
     function drawMinuteArc (dc){
-        var minutes = clockTime.min;
+        var minutes = clockTime.min; 
         var angle =  minutes/60.0*2*Math.PI;
         var cos = Math.cos(angle);
         var sin = Math.sin(angle);
@@ -299,39 +299,37 @@ class lateView extends Ui.WatchFace {
 
 
     function drawSunBitmaps (dc) {
-        // SUNRISE (sun)
-        var a = ((sunrise[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunrise[SUNRISET_NOW] - sunrise[SUNRISET_NOW].toNumber()) * 60);
-        a *= Math.PI/(12 * 60.0);
-        var r = centerX - 11;
+        if(sunrise[SUNRISET_NOW] != null) {
+            // SUNRISE (sun)
+            var a = ((sunrise[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunrise[SUNRISET_NOW] - sunrise[SUNRISET_NOW].toNumber()) * 60);
+            a *= Math.PI/(12 * 60.0);
+            var r = centerX - 11;
 
-        dc.drawBitmap(centerX + (r * Math.sin(a))-sun.getWidth()>>1, centerY - (r * Math.cos(a))-sun.getWidth()>>1, sun);
+            dc.drawBitmap(centerX + (r * Math.sin(a))-sun.getWidth()>>1, centerY - (r * Math.cos(a))-sun.getWidth()>>1, sun);
 
-        // SUNSET (moon)
-        a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
-        a *= Math.PI/(12 * 60.0);
-        dc.drawBitmap(centerX + (r * Math.sin(a))-moon.getWidth()>>1, centerY - (r * Math.cos(a))-moon.getWidth()>>1, moon);
-        //System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"));
-        
+            // SUNSET (moon)
+            a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
+            a *= Math.PI/(12 * 60.0);
+            dc.drawBitmap(centerX + (r * Math.sin(a))-moon.getWidth()>>1, centerY - (r * Math.cos(a))-moon.getWidth()>>1, moon);
+            //System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"));
+            
 
-        /*dc.setColor(0x555555, 0);
-        dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*/
+            /*dc.setColor(0x555555, 0);
+            dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*/
 
-        /*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360;
-        System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a))));
-        dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
+            /*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360;
+            System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a))));
+            dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
+        }
     }
 
     function computeSun() {
         var pos = Activity.getActivityInfo().currentLocation;
-        if (null == pos)
-        {
-            //Sys.println("Using Prague location as fallback:)");
-
-            lonW = 14.4468582;
-            latN = 50.1021213;
+        if (null == pos){
+            sunrise[SUNRISET_NOW] = null;
+            return;
         }
-        else
-        {
+        else {
             // use absolute to get west as positive
             lonW = pos.toDegrees()[1].toFloat();
             latN = pos.toDegrees()[0].toFloat();
@@ -390,5 +388,6 @@ class lateView extends Ui.WatchFace {
             //var str = i+":"+ "sunrise:" + sunriseInfoStr[i] + " | sunset:" + sunsetInfoStr[i];
             //Sys.println(str);
         }*/
+        return;
    }
 }

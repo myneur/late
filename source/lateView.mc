@@ -15,15 +15,6 @@ enum {
     SUNRISET_NBR
 }
 
-
-/*class MenuDelegate extends Ui.MenuInputDelegate {
-    function onMenuItem(item){
-        System.println("menu");
-        App.getApp().setProperty("color", color);
-        lateView.loadSettings();
-    }
-}*/
-
 class lateView extends Ui.WatchFace {
     hidden const CENTER = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
     hidden var centerX;
@@ -47,7 +38,9 @@ class lateView extends Ui.WatchFace {
 
     // resources
     hidden var moon = null;   
-    hidden var sun = null;   
+    hidden var sun = null; 
+    hidden var sunrs = null;   
+    hidden var sunst = null;   
     hidden var icon = null;
     hidden var fontSmall = null; 
     hidden var fontMinutes = null;
@@ -82,6 +75,7 @@ class lateView extends Ui.WatchFace {
         //setLayout(Rez.Layouts.WatchFace(dc));
         
         fontMinutes = Ui.loadResource(Rez.Fonts.Small);
+        
         var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
         if(langTest.toNumber()<=382){ // supported latin fonts 
             fontSmall = fontMinutes;
@@ -91,8 +85,8 @@ class lateView extends Ui.WatchFace {
 
         if(height>218){
             fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
-            radius = 64;
-            dateY = centerY-97-(dc.getFontHeight(fontSmall)>>1);
+            radius = 61;
+            dateY = centerY-90-(dc.getFontHeight(fontSmall)>>1);
             batteryY = centerY+38;
         } else {
             fontHours = Ui.loadResource(Rez.Fonts.Hours);        
@@ -111,10 +105,15 @@ class lateView extends Ui.WatchFace {
         showSunrise = App.getApp().getProperty("sunriset");
         batThreshold = App.getApp().getProperty("bat");
 
+        //activity = 1;
+        //showSunrise=true;
+
         // when running for the first time: load resources and compute sun positions
         if(showSunrise ){ // TODO recalculate when day or position changes
             moon = Ui.loadResource(Rez.Drawables.Moon);
             sun = Ui.loadResource(Rez.Drawables.Sun);
+            sunrs = Ui.loadResource(Rez.Drawables.Sunrise);
+            sunst = Ui.loadResource(Rez.Drawables.Sunset);
             clockTime = Sys.getClockTime();
             utcOffset = clockTime.timeZoneOffset;
             computeSun();
@@ -179,17 +178,31 @@ class lateView extends Ui.WatchFace {
             dc.clear();
             lastRedrawMin=clockTime.min;
             var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
+            var h=clockTime.hour;
 
             if(showSunrise){
                 if(day != info.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
                     computeSun();
                 }
                 drawSunBitmaps(dc);
+                // show now in a day
+                var a = Math.PI/(12*60.0) * (h*60+clockTime.min);
+                /*var bitmapNow = sun;
+                if(a<sunset[SUNRISET_NOW] || a>sunrise[SUNRISET_NOW]){
+                    bitmapNow = moon;
+                } 
+                var r = centerX - 11;
+                dc.drawBitmap(centerX + (r * Math.sin(a))-bitmapNow.getWidth()>>1, centerY - (r * Math.cos(a))-bitmapNow.getWidth()>>1, bitmapNow);*/
+                dc.setColor(0x555555, 0);
+                dc.setPenWidth(1);
+                var r = centerX-5;
+                //dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
+                dc.drawCircle(centerX+((r-5)*Math.sin(a)), centerY-((r-5)*Math.cos(a)),4);
+
             }
             // TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 
             // draw hour
-            var h=clockTime.hour;
             if(Sys.getDeviceSettings().is24Hour == false){
                 if(h>11){ h-=12;}
                 if(0==h){ h=12;}
@@ -219,7 +232,7 @@ class lateView extends Ui.WatchFace {
 
                 // activity
 
-                drawBatteryLevel(dc);
+                //System.println(method(:humanizeNumber).invoke(100000)); // TODO this is how to save and invoke method callback to get rid of ugly ifelse like below
 
                 if(activity > 0){
                     text = ActivityMonitor.getInfo();
@@ -234,6 +247,7 @@ class lateView extends Ui.WatchFace {
                     dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+4, icon);
                 }
             }
+            drawBatteryLevel(dc);
         }
         
         if (0>redrawAll) { redrawAll--; }
@@ -304,15 +318,13 @@ class lateView extends Ui.WatchFace {
             var a = ((sunrise[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunrise[SUNRISET_NOW] - sunrise[SUNRISET_NOW].toNumber()) * 60);
             a *= Math.PI/(12 * 60.0);
             var r = centerX - 11;
-
-            dc.drawBitmap(centerX + (r * Math.sin(a))-sun.getWidth()>>1, centerY - (r * Math.cos(a))-sun.getWidth()>>1, sun);
-
+            dc.drawBitmap(centerX + (r * Math.sin(a))-sunrs.getWidth()>>1, centerY - (r * Math.cos(a))-sunrs.getWidth()>>1, sunrs);
+            
             // SUNSET (moon)
             a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
             a *= Math.PI/(12 * 60.0);
-            dc.drawBitmap(centerX + (r * Math.sin(a))-moon.getWidth()>>1, centerY - (r * Math.cos(a))-moon.getWidth()>>1, moon);
+            dc.drawBitmap(centerX + (r * Math.sin(a))-sunst.getWidth()>>1, centerY - (r * Math.cos(a))-sunst.getWidth()>>1, sunst);
             //System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"));
-            
 
             /*dc.setColor(0x555555, 0);
             dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*/

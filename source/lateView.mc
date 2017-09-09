@@ -75,21 +75,26 @@ class lateView extends Ui.WatchFace {
     function onLayout (dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
         
-        fontMinutes = Ui.loadResource(Rez.Fonts.Small);
-        
+
         var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
         if(langTest.toNumber()<=382){ // supported latin fonts 
-            fontSmall = fontMinutes;
+            if(height>218){
+                fontSmall = Ui.loadResource(Rez.Fonts.Small240);
+            } else {
+                fontSmall = Ui.loadResource(Rez.Fonts.Small);
+            }
         } else {
             fontSmall = Gfx.FONT_SMALL;
         }
 
         if(height>218){
+            fontMinutes = Ui.loadResource(Rez.Fonts.Minute240);
             fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
             radius = 61;
             dateY = centerY-90-(dc.getFontHeight(fontSmall)>>1);
             batteryY = centerY+38;
         } else {
+            fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
             fontHours = Ui.loadResource(Rez.Fonts.Hours);        
             radius = 55;
             dateY = centerY-80-(dc.getFontHeight(fontSmall)>>1);

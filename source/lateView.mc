@@ -49,6 +49,7 @@ class lateView extends Ui.WatchFace {
     
     hidden var dateY = null;
     hidden var radius;
+    hidden var circleWidth = 3;
     hidden var batteryY;
 
     hidden var activityY;
@@ -94,6 +95,10 @@ class lateView extends Ui.WatchFace {
             dateY = centerY-80-(dc.getFontHeight(fontSmall)>>1);
             batteryY = centerY+33;
         }
+
+        /*circleWidth = 10;
+        radius = 80;
+        dateY = centerY-14-dc.getFontHeight(fontHours)>>1-dc.getFontHeight(fontSmall)>>1;*/
         
         loadSettings();
     }
@@ -104,8 +109,7 @@ class lateView extends Ui.WatchFace {
         activity = App.getApp().getProperty("activity");
         showSunrise = App.getApp().getProperty("sunriset");
         batThreshold = App.getApp().getProperty("bat");
-
-        //activity = 1;
+        
         //showSunrise=true;
 
         // when running for the first time: load resources and compute sun positions
@@ -233,14 +237,15 @@ class lateView extends Ui.WatchFace {
                 // activity
 
                 //System.println(method(:humanizeNumber).invoke(100000)); // TODO this is how to save and invoke method callback to get rid of ugly ifelse like below
+                // The best circle for activity percentages: dc.setPenWidth(2);dc.setColor(Gfx.COLOR_DK_GRAY, 0); dc.drawArc(centerX, 190, 10, Gfx.ARC_CLOCKWISE, 90, 90-49*6);
 
                 if(activity > 0){
                     text = ActivityMonitor.getInfo();
                     if(activity == 1){ text = humanizeNumber(text.steps); }
                     else if(activity == 2){ text = humanizeNumber(text.calories); }
-                    else if(activity == 3){ text = (text.activeMinutesDay.total);} // moderate + vigorous
+                    else if(activity == 3){ text = (text.activeMinutesDay.total.toString());} // moderate + vigorous
                     else if(activity == 4){ text = humanizeNumber(text.activeMinutesWeek.total); }
-                    else if(activity == 5){ text = (text.floorsClimbed); }
+                    else if(activity == 5){ text = (text.floorsClimbed.toString()); }
                     else {text = "";}
                     dc.setColor(activityColor, Gfx.COLOR_BLACK);
                     dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
@@ -266,14 +271,15 @@ class lateView extends Ui.WatchFace {
         var angle =  minutes/60.0*2*Math.PI;
         var cos = Math.cos(angle);
         var sin = Math.sin(angle);
-
+        
         if(minutes>0){
             dc.setColor(color, 0);
-            dc.setPenWidth(3);
+            dc.setPenWidth(circleWidth);
             dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
         }
         dc.setColor(Gfx.COLOR_WHITE, 0);
         dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontMinutes, minutes/*clockTime.min.format("%0.1d")*/, CENTER);
+        
     }
 
     function drawBatteryLevel (dc){

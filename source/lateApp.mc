@@ -18,6 +18,7 @@ class lateApp extends App.AppBase{
     }
 
     function getInitialView(){
-        return [new lateView()];
+        watch = new lateView();
+        return [watch];
     }
 }

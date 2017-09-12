@@ -45,6 +45,16 @@
         </settingConfig>
     </setting>
 
+   <setting propertyKey="@Properties.boldness" title="@Strings.Boldness">
+        <settingConfig type="list">
+            <listEntry value="3">@Strings.b3</listEntry>
+            <listEntry value="4">@Strings.b4</listEntry>
+            <listEntry value="5">@Strings.b5</listEntry>
+        </settingConfig>
+    </setting>
+
+
+
     <setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
         <settingConfig type="boolean" />
     </setting>

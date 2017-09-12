@@ -49,7 +49,7 @@ class lateView extends Ui.WatchFace {
     
     hidden var dateY = null;
     hidden var radius;
-    hidden var circleWidth = 3;
+    hidden var circleWidth = 3; // TODO 3-5 makes sense, 4 for Fenix 5
     hidden var batteryY;
 
     hidden var activityY;
@@ -90,7 +90,7 @@ class lateView extends Ui.WatchFace {
         if(height>218){
             fontMinutes = Ui.loadResource(Rez.Fonts.Minute240);
             fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
-            radius = 61;
+            radius = 63;
             dateY = centerY-90-(dc.getFontHeight(fontSmall)>>1);
             batteryY = centerY+38;
         } else {
@@ -114,8 +114,9 @@ class lateView extends Ui.WatchFace {
         activity = App.getApp().getProperty("activity");
         showSunrise = App.getApp().getProperty("sunriset");
         batThreshold = App.getApp().getProperty("bat");
+        circleWidth = App.getApp().getProperty("boldness");
         
-        //showSunrise=true;
+        showSunrise=true;
 
         // when running for the first time: load resources and compute sun positions
         if(showSunrise ){ // TODO recalculate when day or position changes
@@ -273,6 +274,7 @@ class lateView extends Ui.WatchFace {
 
     function drawMinuteArc (dc){
         var minutes = clockTime.min; 
+        //minutes = 40;
         var angle =  minutes/60.0*2*Math.PI;
         var cos = Math.cos(angle);
         var sin = Math.sin(angle);

@@ -90,7 +90,7 @@ class lateView extends Ui.WatchFace {
         if(height>218){
             fontMinutes = Ui.loadResource(Rez.Fonts.Minute240);
             fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
-            radius = 63;
+            radius = 63;    
             dateY = centerY-90-(dc.getFontHeight(fontSmall)>>1);
             batteryY = centerY+38;
         } else {
@@ -116,8 +116,7 @@ class lateView extends Ui.WatchFace {
         batThreshold = App.getApp().getProperty("bat");
         circleWidth = App.getApp().getProperty("boldness");
         
-        showSunrise=true;
-
+showSunrise=true;
         // when running for the first time: load resources and compute sun positions
         if(showSunrise ){ // TODO recalculate when day or position changes
             moon = Ui.loadResource(Rez.Drawables.Moon);
@@ -350,15 +349,22 @@ class lateView extends Ui.WatchFace {
 
     function computeSun() {
         var pos = Activity.getActivityInfo().currentLocation;
-        if (null == pos){
-            sunrise[SUNRISET_NOW] = null;
-            return;
+        if (pos == null){
+            pos = App.getApp().getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
+            if(pos == null){
+                sunrise[SUNRISET_NOW] = null;
+                return;
+            }
+
+            
+        } else {
+            pos = pos.toDegrees();
+            App.getApp().setProperty("location", pos); // save the location to fix a Fenix 5 bug that is loosing the location often
         }
-        else {
-            // use absolute to get west as positive
-            lonW = pos.toDegrees()[1].toFloat();
-            latN = pos.toDegrees()[0].toFloat();
-        }
+        // use absolute to get west as positive
+        lonW = pos[1].toFloat();
+        latN = pos[0].toFloat();
+
 
         // compute current date as day number from beg of year
         utcOffset = clockTime.timeZoneOffset;
@@ -372,13 +378,10 @@ class lateView extends Ui.WatchFace {
 
         // max
         var max;
-        if (latN >= 0)
-        {
+        if (latN >= 0){
             max = dayOfYear(21, 6, timeInfo.year);
             //Sys.println("We are in NORTH hemisphere");
-        } 
-        else
-        {
+        } else{
             max = dayOfYear(21,12,timeInfo.year);            
             //Sys.println("We are in SOUTH hemisphere");
         }
@@ -387,15 +390,13 @@ class lateView extends Ui.WatchFace {
 
         //adjust to timezone + dst when active
         var offset=new Time.Duration(utcOffset).value()/3600;
-        for (var i = 0; i < SUNRISET_NBR; i++)
-        {
+        for (var i = 0; i < SUNRISET_NBR; i++){
             sunrise[i] += offset;
             sunset[i] += offset;
         }
 
 
-        for (var i = 0; i < SUNRISET_NBR-1 && SUNRISET_NBR>1; i++)
-        {
+        for (var i = 0; i < SUNRISET_NBR-1 && SUNRISET_NBR>1; i++){
             if (sunrise[i]<sunrise[i+1]){
                 sunrise[i+1]=sunrise[i];
             }

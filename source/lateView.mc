@@ -116,7 +116,6 @@ class lateView extends Ui.WatchFace {
         batThreshold = App.getApp().getProperty("bat");
         circleWidth = App.getApp().getProperty("boldness");
         
-showSunrise=true;
         // when running for the first time: load resources and compute sun positions
         if(showSunrise ){ // TODO recalculate when day or position changes
             moon = Ui.loadResource(Rez.Drawables.Moon);

@@ -101,11 +101,18 @@ class lateView extends Ui.WatchFace {
             batteryY = centerY+33;
         }
 
-        /*circleWidth = 10;
-        radius = 80;
-        dateY = centerY-14-dc.getFontHeight(fontHours)>>1-dc.getFontHeight(fontSmall)>>1;*/
+
         
         loadSettings();
+
+        /*circleWidth = 10;
+        radius = radius*1.44;
+        dateY = centerY-30-dc.getFontHeight(fontHours)>>1-dc.getFontHeight(fontSmall)>>1;
+        fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig240);
+        fontSmall = Ui.loadResource(Rez.Fonts.SmallBig);
+        fontHours = Ui.loadResource(Rez.Fonts.HoursBig240px);
+*/
+
     }
 
     function loadSettings(){
@@ -276,12 +283,13 @@ class lateView extends Ui.WatchFace {
         var angle =  minutes/60.0*2*Math.PI;
         var cos = Math.cos(angle);
         var sin = Math.sin(angle);
-        
+
         if(minutes>0){
             dc.setColor(color, 0);
             dc.setPenWidth(circleWidth);
             dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
         }
+
         dc.setColor(Gfx.COLOR_WHITE, 0);
         dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontMinutes, minutes/*clockTime.min.format("%0.1d")*/, CENTER);
         

@@ -49,7 +49,8 @@ class lateView extends Ui.WatchFace {
     
     hidden var dateY = null;
     hidden var radius;
-    hidden var circleWidth = 3; // TODO 3-5 makes sense, 4 for Fenix 5
+    hidden var circleWidth = 3; 
+    hidden var dialSize = 0;
     hidden var batteryY;
 
     hidden var activityY;
@@ -71,48 +72,64 @@ class lateView extends Ui.WatchFace {
     }
 
     //! Load your resources here
-    // F5: 240 > F3: 218 > Epix: 148 
+    // F5: 240px > F3: 218px > Epix: 148px 
     function onLayout (dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
-        
+        loadSettings();
+    }
 
-        var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
-        if(langTest.toNumber()<=382){ // supported latin fonts 
-            if(height>218){
-                fontSmall = Ui.loadResource(Rez.Fonts.Small240);
+    function setLayoutVars(){
+        if(height>218){
+            if(activity>0){
+                fontCondensed = Ui.loadResource(Rez.Fonts.Condensed240);
+                activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
+            }
+            if(dialSize>0){
+                fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig240);
+                fontHours = Ui.loadResource(Rez.Fonts.HoursBig240px);
+                fontSmall = Ui.loadResource(Rez.Fonts.SmallBig240);
+                radius = 89;
+                dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-7;
+                batteryY=height-15 ;
+                circleWidth=circleWidth*3+1;
+                activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
             } else {
-                fontSmall = Ui.loadResource(Rez.Fonts.Small);
+                fontMinutes = Ui.loadResource(Rez.Fonts.Minute240);
+                fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
+                fontSmall = Ui.loadResource(Rez.Fonts.Small240);
+                radius = 63;    
+                dateY = centerY-90-(Gfx.getFontHeight(fontSmall)>>1);
+                batteryY = centerY+38;
             }
         } else {
+            if(activity>0){
+                fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
+                activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;    
+            }
+            if(dialSize>0){
+                fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig);
+                fontHours = Ui.loadResource(Rez.Fonts.HoursBig);        
+                fontSmall = Ui.loadResource(Rez.Fonts.SmallBig);
+                radius = 81;
+                dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-6;
+                batteryY=height-15;
+                circleWidth=circleWidth*3;
+                activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
+            } else {
+                fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
+                fontHours = Ui.loadResource(Rez.Fonts.Hours);     
+                fontSmall = Ui.loadResource(Rez.Fonts.Small);   
+                radius = 55;
+                dateY = centerY-80-(Gfx.getFontHeight(fontSmall)>>1);
+                batteryY = centerY+33;
+                
+            }
+        }
+        var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
+        if(langTest.toNumber()>382){ // fallback for not-supported latin fonts 
             fontSmall = Gfx.FONT_SMALL;
         }
-
-        if(height>218){
-            fontMinutes = Ui.loadResource(Rez.Fonts.Minute240);
-            fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
-            radius = 63;    
-            dateY = centerY-90-(dc.getFontHeight(fontSmall)>>1);
-            batteryY = centerY+38;
-        } else {
-            fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
-            fontHours = Ui.loadResource(Rez.Fonts.Hours);        
-            radius = 55;
-            dateY = centerY-80-(dc.getFontHeight(fontSmall)>>1);
-            batteryY = centerY+33;
-        }
-
-
-        
-        loadSettings();
-
-        /*circleWidth = 10;
-        radius = radius*1.44;
-        dateY = centerY-30-dc.getFontHeight(fontHours)>>1-dc.getFontHeight(fontSmall)>>1;
-        fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig240);
-        fontSmall = Ui.loadResource(Rez.Fonts.SmallBig);
-        fontHours = Ui.loadResource(Rez.Fonts.HoursBig240px);
-*/
-
+        dateColor = 0xaaaaaa;
     }
 
     function loadSettings(){
@@ -122,7 +139,15 @@ class lateView extends Ui.WatchFace {
         showSunrise = App.getApp().getProperty("sunriset");
         batThreshold = App.getApp().getProperty("bat");
         circleWidth = App.getApp().getProperty("boldness");
-        
+        dialSize = App.getApp().getProperty("dialSize");
+
+//color = 0x00AAFF;
+//activity = 2;
+//showSunrise = true;
+//batThreshold = 100;
+//dialSize = 1;
+//circleWidth = 3;
+
         // when running for the first time: load resources and compute sun positions
         if(showSunrise ){ // TODO recalculate when day or position changes
             moon = Ui.loadResource(Rez.Drawables.Moon);
@@ -134,15 +159,8 @@ class lateView extends Ui.WatchFace {
             computeSun();
         }
 
-        //activity = 1;
-        //dateForm = 1;
-
         if(activity>0){ 
-            fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
             dateColor = 0xaaaaaa;
-            
-            activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;    
-
             if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }
             else if(activity == 2) { icon = Ui.loadResource(Rez.Drawables.Cal); }
             else if(activity >= 3 && !(ActivityMonitor.getInfo() has :activeMinutesDay)){ 
@@ -155,6 +173,8 @@ class lateView extends Ui.WatchFace {
 
 
         redrawAll = 2;
+        setLayoutVars();
+
     }
 
     //! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
@@ -225,7 +245,6 @@ class lateView extends Ui.WatchFace {
             dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
             dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);    
 
-            drawMinuteArc(dc);        
 
             if(centerY>89){
 
@@ -236,7 +255,6 @@ class lateView extends Ui.WatchFace {
                     text = Lang.format("$1$ ", ((dateForm == 0) ? [info.month] : [info.day_of_week]) );
                 }
                 text += info.day.format("%0.1d");
-
                 dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
 
                 
@@ -260,10 +278,11 @@ class lateView extends Ui.WatchFace {
                     else {text = "";}
                     dc.setColor(activityColor, Gfx.COLOR_BLACK);
                     dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
-                    dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+4, icon);
+                    dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
                 }
             }
             drawBatteryLevel(dc);
+            drawMinuteArc(dc);
         }
         
         if (0>redrawAll) { redrawAll--; }
@@ -279,19 +298,59 @@ class lateView extends Ui.WatchFace {
 
     function drawMinuteArc (dc){
         var minutes = clockTime.min; 
-        //minutes = 40;
         var angle =  minutes/60.0*2*Math.PI;
         var cos = Math.cos(angle);
         var sin = Math.sin(angle);
+        var offset=0;
+        var gap=0;
+
+        dc.setColor(Gfx.COLOR_WHITE, 0);
+        dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontMinutes, minutes /*clockTime.min.format("%0.1d")*/, CENTER);
 
         if(minutes>0){
             dc.setColor(color, 0);
             dc.setPenWidth(circleWidth);
-            dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90, 90-minutes*6);
-        }
+            
+            /* kerning values not to have ugly gaps between arc and minutes
+            minute:padding px
+            1:4 
+            2-6:6 
+            7-9:8 
+            10-11:10 
+            12-22:9 
+            23-51:10 
+            52-59:12
+            59:-3*/
 
-        dc.setColor(Gfx.COLOR_WHITE, 0);
-        dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontMinutes, minutes/*clockTime.min.format("%0.1d")*/, CENTER);
+            // correct font kerning not to have wild gaps between arc and number
+            if(minutes>=10){
+                if(minutes>=52){
+                    offset=12;
+                    if(minutes==59){
+                        gap=4;    
+                    } 
+                } else {
+                    if(minutes>=12&&minutes<=22){
+                        offset=9;
+                    }
+                    else {
+                        offset=10;
+                    }
+                }
+            } else {
+                if(minutes>=7){
+                    offset=8;
+                } else {
+                    if(minutes==1){
+                        offset=4;
+                    } else {
+                        offset=6;
+                    }
+                }
+
+            }
+            dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
+        }
         
     }
 
@@ -308,7 +367,7 @@ class lateView extends Ui.WatchFace {
             //var str = bat.format("%d") + "%";
             dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
             dc.setPenWidth(1);
-            dc.fillRectangle(xPos,yPos,24, 10);
+            dc.fillRectangle(xPos,yPos,20, 10);
 
             if(bat<=15){
                 dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_BLACK);

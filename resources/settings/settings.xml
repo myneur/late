@@ -45,6 +45,13 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.dialSize" title="@Strings.DialSize">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.s0</listEntry>
+            <listEntry value="1">@Strings.s1</listEntry>
+        </settingConfig>
+    </setting>
+
    <setting propertyKey="@Properties.boldness" title="@Strings.Boldness">
         <settingConfig type="list">
             <listEntry value="3">@Strings.b3</listEntry>

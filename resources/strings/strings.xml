@@ -37,10 +37,15 @@
     <string id="BellowHalf">below 50%</string>
     <string id="Always">Always show battery level</string>
 
-    <string id="Boldness">Experimental: boldness</string>
+    <string id="Boldness">Boldness</string>
     <string id="b3">3</string>
     <string id="b4">4</string>
     <string id="b5">5</string>
+
+    <string id="DialSize">Experimental: Dial flavor</string>
+    <string id="s0">Elegant</string>
+    <string id="s1">Strong</string>
+    
 
     <string id="showSunriseSunsetTitle">Sunrise and sunset position on 24h dial</string>
 </strings>

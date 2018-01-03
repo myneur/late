@@ -6,10 +6,9 @@ using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Calendar;
 using Toybox.Activity as Activity;
 using Toybox.Math as Math;
-//using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Application as App;
 
-enum {       
+enum {
     SUNRISET_NOW=0,
     SUNRISET_MAX,
     SUNRISET_NBR
@@ -72,19 +71,17 @@ class lateView extends Ui.WatchFace {
     }
 
     //! Load your resources here
-    // F5: 240px > F3: 218px > Epix: 148px 
     function onLayout (dc) {
-        //setLayout(Rez.Layouts.WatchFace(dc));
         loadSettings();
     }
 
     function setLayoutVars(){
-        if(height>218){
-            if(activity>0){
+        if(height>218) {
+            if(activity>0) {
                 fontCondensed = Ui.loadResource(Rez.Fonts.Condensed240);
                 activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
             }
-            if(dialSize>0){
+            if(dialSize>0) {
                 fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig240);
                 fontHours = Ui.loadResource(Rez.Fonts.HoursBig240px);
                 fontSmall = Ui.loadResource(Rez.Fonts.SmallBig240);
@@ -102,11 +99,11 @@ class lateView extends Ui.WatchFace {
                 batteryY = centerY+38;
             }
         } else {
-            if(activity>0){
+            if(activity>0) {
                 fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
                 activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;    
             }
-            if(dialSize>0){
+            if(dialSize>0) {
                 fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig);
                 fontHours = Ui.loadResource(Rez.Fonts.HoursBig);        
                 fontSmall = Ui.loadResource(Rez.Fonts.SmallBig);
@@ -126,7 +123,7 @@ class lateView extends Ui.WatchFace {
             }
         }
         var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
-        if(langTest.toNumber()>382){ // fallback for not-supported latin fonts 
+        if(langTest.toNumber()>382) { // fallback for not-supported latin fonts 
             fontSmall = Gfx.FONT_SMALL;
         }
         dateColor = 0xaaaaaa;
@@ -141,15 +138,8 @@ class lateView extends Ui.WatchFace {
         circleWidth = App.getApp().getProperty("boldness");
         dialSize = App.getApp().getProperty("dialSize");
 
-//color = 0x00AAFF;
-//activity = 2;
-//showSunrise = true;
-//batThreshold = 100;
-//dialSize = 1;
-//circleWidth = 3;
-
         // when running for the first time: load resources and compute sun positions
-        if(showSunrise ){ // TODO recalculate when day or position changes
+        if (showSunrise) { // TODO recalculate when day or position changes
             moon = Ui.loadResource(Rez.Drawables.Moon);
             sun = Ui.loadResource(Rez.Drawables.Sun);
             sunrs = Ui.loadResource(Rez.Drawables.Sunrise);
@@ -159,18 +149,22 @@ class lateView extends Ui.WatchFace {
             computeSun();
         }
 
-        if(activity>0){ 
+        if (activity>0) {
             dateColor = 0xaaaaaa;
-            if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }
-            else if(activity == 2) { icon = Ui.loadResource(Rez.Drawables.Cal); }
-            else if(activity >= 3 && !(ActivityMonitor.getInfo() has :activeMinutesDay)){ 
+            if(activity == 1) {
+                icon = Ui.loadResource(Rez.Drawables.Steps);
+            } else if (activity == 2) { 
+                icon = Ui.loadResource(Rez.Drawables.Cal);
+            } else if (activity >= 3 && !(ActivityMonitor.getInfo() has :activeMinutesDay)) {
                 activity = 0;   // reset not supported activities
-            } else if(activity <= 4) { icon = Ui.loadResource(Rez.Drawables.Minutes); }
-            else if(activity == 5) { icon = Ui.loadResource(Rez.Drawables.Floors); }
+            } else if (activity <= 4) {
+                icon = Ui.loadResource(Rez.Drawables.Minutes);
+            } else if(activity == 5) {
+                icon = Ui.loadResource(Rez.Drawables.Floors);
+            }
         } else {
             dateColor = 0x555555;
         }
-
 
         redrawAll = 2;
         setLayoutVars();
@@ -181,12 +175,12 @@ class lateView extends Ui.WatchFace {
     function onShow() {
         redrawAll = 2;
     }
-    
+
     //! Called when this View is removed from the screen. Save the state of this View here. This includes freeing resources from memory.
     function onHide(){
         redrawAll =0;
     }
-    
+
     //! The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep(){
         redrawAll = 2;
@@ -197,41 +191,32 @@ class lateView extends Ui.WatchFace {
         redrawAll =0;
     }
 
-    /*function openTheMenu(){
-        menu = new MainMenu(self);
-        Ui.pushView(new Rez.Menus.MainMenu(), new MyMenuDelegate(), Ui.SLIDE_UP);
-    }*/
-
     //! Update the view
     function onUpdate (dc) {
         clockTime = Sys.getClockTime();
 
-        if (lastRedrawMin != clockTime.min) { redrawAll = 1; }
+        if (lastRedrawMin != clockTime.min) {
+            redrawAll = 1;
+        }
 
-        if (redrawAll!=0){
+        if (redrawAll!=0) {
             dc.setColor(0x00, 0x00);
             dc.clear();
             lastRedrawMin=clockTime.min;
             var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
             var h=clockTime.hour;
 
-            if(showSunrise){
-                if(day != info.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
+            if (showSunrise) {
+                if (day != info.day || utcOffset != clockTime.timeZoneOffset ) { // TODO should be recalculated rather when passing sunrise/sunset
                     computeSun();
                 }
                 drawSunBitmaps(dc);
                 // show now in a day
                 var a = Math.PI/(12*60.0) * (h*60+clockTime.min);
-                /*var bitmapNow = sun;
-                if(a<sunset[SUNRISET_NOW] || a>sunrise[SUNRISET_NOW]){
-                    bitmapNow = moon;
-                } 
-                var r = centerX - 11;
-                dc.drawBitmap(centerX + (r * Math.sin(a))-bitmapNow.getWidth()>>1, centerY - (r * Math.cos(a))-bitmapNow.getWidth()>>1, bitmapNow);*/
+                var r = centerX-5;
+
                 dc.setColor(0x555555, 0);
                 dc.setPenWidth(1);
-                var r = centerX-5;
-                //dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
                 dc.drawCircle(centerX+((r-5)*Math.sin(a)), centerY-((r-5)*Math.cos(a)),4);
 
             }
@@ -239,14 +224,18 @@ class lateView extends Ui.WatchFace {
 
             // draw hour
             if(Sys.getDeviceSettings().is24Hour == false){
-                if(h>11){ h-=12;}
-                if(0==h){ h=12;}
+                if (h>11) {
+                    h-=12;
+                }
+                if (0==h) {
+                    h=12;
+                }
             }
             dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
             dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);    
 
 
-            if(centerY>89){
+            if (centerY>89) {
 
                 // draw Day info
                 dc.setColor(dateColor, Gfx.COLOR_BLACK);
@@ -257,18 +246,8 @@ class lateView extends Ui.WatchFace {
                 text += info.day.format("%0.1d");
                 dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
 
-                
-                /*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, CENTER);
-                dc.setPenWidth(2);
-                dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);
-                */
-
                 // activity
-
-                //System.println(method(:humanizeNumber).invoke(100000)); // TODO this is how to save and invoke method callback to get rid of ugly ifelse like below
-                // The best circle for activity percentages: dc.setPenWidth(2);dc.setColor(Gfx.COLOR_DK_GRAY, 0); dc.drawArc(centerX, 190, 10, Gfx.ARC_CLOCKWISE, 90, 90-49*6);
-
-                if(activity > 0){
+                if (activity > 0) {
                     text = ActivityMonitor.getInfo();
                     if(activity == 1){ text = humanizeNumber(text.steps); }
                     else if(activity == 2){ text = humanizeNumber(text.calories); }
@@ -284,11 +263,13 @@ class lateView extends Ui.WatchFace {
             drawBatteryLevel(dc);
             drawMinuteArc(dc);
         }
-        
-        if (0>redrawAll) { redrawAll--; }
+
+        if (0>redrawAll) {
+            redrawAll--;
+        }
     }
 
-    function humanizeNumber(number){
+    function humanizeNumber(number) {
         if(number>1000) {
             return (number.toFloat()/1000).format("%1.1f")+"k";
         } else {
@@ -296,7 +277,7 @@ class lateView extends Ui.WatchFace {
         }
     }
 
-    function drawMinuteArc (dc){
+    function drawMinuteArc (dc) {
         var minutes = clockTime.min; 
         var angle =  minutes/60.0*2*Math.PI;
         var cos = Math.cos(angle);
@@ -310,7 +291,7 @@ class lateView extends Ui.WatchFace {
         if(minutes>0){
             dc.setColor(color, 0);
             dc.setPenWidth(circleWidth);
-            
+
             /* kerning values not to have ugly gaps between arc and minutes
             minute:padding px
             1:4 
@@ -320,7 +301,8 @@ class lateView extends Ui.WatchFace {
             12-22:9 
             23-51:10 
             52-59:12
-            59:-3*/
+            59:-3
+            */
 
             // correct font kerning not to have wild gaps between arc and number
             if(minutes>=10){
@@ -351,38 +333,35 @@ class lateView extends Ui.WatchFace {
             }
             dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
         }
-        
     }
 
     function drawBatteryLevel (dc){
         var bat = Sys.getSystemStats().battery;
-        //batThreshold=100;bat = 10;
 
         if(bat<=batThreshold){
 
             var xPos = centerX-10;
             var yPos = batteryY;
 
-            // print the remaining %
-            //var str = bat.format("%d") + "%";
             dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
             dc.setPenWidth(1);
             dc.fillRectangle(xPos,yPos,20, 10);
 
-            if(bat<=15){
+            if (bat<=15) {
                 dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_BLACK);
             } else {
                 dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_BLACK);
             }
-                
+
             // draw the battery
 
             dc.drawRectangle(xPos, yPos, 19, 10);
             dc.fillRectangle(xPos + 19, yPos + 3, 1, 4);
 
             var lvl = floor((15.0 * (bat / 99.0)));
-            if (1.0 <= lvl) { dc.fillRectangle(xPos + 2, yPos + 2, lvl, 6); }
-            else {
+            if (1.0 <= lvl) {
+                dc.fillRectangle(xPos + 2, yPos + 2, lvl, 6);
+            } else {
                 dc.setColor(Gfx.COLOR_ORANGE, Gfx.COLOR_BLACK);
                 dc.fillRectangle(xPos + 1, yPos + 1, 1, 8);
             }
@@ -397,32 +376,22 @@ class lateView extends Ui.WatchFace {
             a *= Math.PI/(12 * 60.0);
             var r = centerX - 11;
             dc.drawBitmap(centerX + (r * Math.sin(a))-sunrs.getWidth()>>1, centerY - (r * Math.cos(a))-sunrs.getWidth()>>1, sunrs);
-            
+
             // SUNSET (moon)
             a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
             a *= Math.PI/(12 * 60.0);
             dc.drawBitmap(centerX + (r * Math.sin(a))-sunst.getWidth()>>1, centerY - (r * Math.cos(a))-sunst.getWidth()>>1, sunst);
-            //System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"));
-
-            /*dc.setColor(0x555555, 0);
-            dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*/
-
-            /*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360;
-            System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a))));
-            dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
         }
     }
 
     function computeSun() {
         var pos = Activity.getActivityInfo().currentLocation;
-        if (pos == null){
+        if (pos == null) {
             pos = App.getApp().getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
-            if(pos == null){
+            if(pos == null) {
                 sunrise[SUNRISET_NOW] = null;
                 return;
             }
-
-            
         } else {
             pos = pos.toDegrees();
             App.getApp().setProperty("location", pos); // save the location to fix a Fenix 5 bug that is loosing the location often
@@ -438,18 +407,15 @@ class lateView extends Ui.WatchFace {
 
         day = timeInfo.day;
         var now = dayOfYear(timeInfo.day, timeInfo.month, timeInfo.year);
-        //Sys.println("dayOfYear: " + now.format("%d"));
         sunrise[SUNRISET_NOW] = computeSunriset(now, lonW, latN, true);
         sunset[SUNRISET_NOW] = computeSunriset(now, lonW, latN, false);
 
         // max
         var max;
-        if (latN >= 0){
+        if (latN >= 0) {
             max = dayOfYear(21, 6, timeInfo.year);
-            //Sys.println("We are in NORTH hemisphere");
         } else{
-            max = dayOfYear(21,12,timeInfo.year);            
-            //Sys.println("We are in SOUTH hemisphere");
+            max = dayOfYear(21,12,timeInfo.year);
         }
         sunrise[SUNRISET_MAX] = computeSunriset(max, lonW, latN, true);
         sunset[SUNRISET_MAX] = computeSunriset(max, lonW, latN, false);
@@ -462,24 +428,13 @@ class lateView extends Ui.WatchFace {
         }
 
 
-        for (var i = 0; i < SUNRISET_NBR-1 && SUNRISET_NBR>1; i++){
-            if (sunrise[i]<sunrise[i+1]){
+        for (var i = 0; i < SUNRISET_NBR-1 && SUNRISET_NBR>1; i++) {
+            if (sunrise[i]<sunrise[i+1]) {
                 sunrise[i+1]=sunrise[i];
             }
-            if (sunset[i]>sunset[i+1]){
+            if (sunset[i]>sunset[i+1]) {
                 sunset[i+1]=sunset[i];
             }
         }
-
-        /*var sunriseInfoStr = new [SUNRISET_NBR];
-        var sunsetInfoStr = new [SUNRISET_NBR];
-        for (var i = 0; i < SUNRISET_NBR; i++)
-        {
-            sunriseInfoStr[i] = Lang.format("$1$:$2$", [sunrise[i].toNumber() % 24, ((sunrise[i] - sunrise[i].toNumber()) * 60).format("%.2d")]);
-            sunsetInfoStr[i] = Lang.format("$1$:$2$", [sunset[i].toNumber() % 24, ((sunset[i] - sunset[i].toNumber()) * 60).format("%.2d")]);
-            //var str = i+":"+ "sunrise:" + sunriseInfoStr[i] + " | sunset:" + sunsetInfoStr[i];
-            //Sys.println(str);
-        }*/
-        return;
-   }
+    }
 }

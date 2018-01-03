@@ -1,23 +1,19 @@
 using Toybox.Application as App;
 using Toybox.WatchUi as Ui;
 
-class lateApp extends App.AppBase{
+class lateApp extends App.AppBase {
     var watch;
 
-    function initialize(){
+    function initialize() {
         AppBase.initialize();
     }
 
-    function onStart(state) { }
-
-    function onStop(state) { }
-
-    function onSettingsChanged(){
+    function onSettingsChanged() {
         watch.loadSettings();
         Ui.requestUpdate();
     }
 
-    function getInitialView(){
+    function getInitialView() {
         watch = new lateView();
         return [watch];
     }

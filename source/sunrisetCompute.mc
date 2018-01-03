@@ -13,13 +13,13 @@ Sunrise/Sunset Algorithm taken from
         sunrise = true for sunrise, false for sunset
     output:
         time of sunrise/sunset in hours
-        
-	zenith:                Sun's zenith for sunrise/sunset
+
+	zenith:        Sun's zenith for sunrise/sunset
 	  offical      = 90 degrees 50'
 	  civil        = 96 degrees
 	  nautical     = 102 degrees
 	  astronomical = 108 degrees
-        
+
 Check current sunrise/sunset time on : http://www.timeanddate.com/sun/
 
 code for computeDatNumber from https://alcor.concordia.ca/~gpkatch/gdate-algorithm.html
@@ -28,7 +28,7 @@ code for computeDatNumber from https://alcor.concordia.ca/~gpkatch/gdate-algorit
 
 function computeDayNumber (d, m, y)
 {
-    //Sys.println("calc:"+d+"/"+m+"/"+y);    
+    //Sys.println("calc:"+d+"/"+m+"/"+y);
     m = (m + 9) % 12;
     y = y - m / 10;
     return (365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1));

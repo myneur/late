@@ -2,34 +2,36 @@
     <iq:application entry="lateApp" id="d3295dc1-304b-485c-a6ea-3835e7f919ed" launcherIcon="@Drawables.LauncherIcon" name="@Strings.AppName" type="watchface">
 
         <iq:products>
+            <iq:product id="approachs60"/>
+            <iq:product id="d2bravo"/>
+            <iq:product id="d2bravo_titanium"/>
+            <iq:product id="d2charlie"/>
+            <iq:product id="descentmk1"/>
             <iq:product id="fenix3"/>
             <iq:product id="fenix3_hr"/>
             <iq:product id="fenix5"/>
+            <iq:product id="fenix5plus"/>
             <iq:product id="fenix5s"/>
+            <iq:product id="fenix5splus"/>
             <iq:product id="fenix5x"/>
-            <iq:product id="d2bravo"/>
-            <iq:product id="d2bravo_titanium"/>
-            <iq:product id="fr630"/>
-            <iq:product id="fr235"/>
+            <iq:product id="fenix5xplus"/>
+            <iq:product id="fenixchronos"/>
             <iq:product id="fr230"/>
+            <iq:product id="fr235"/>
+            <iq:product id="fr630"/>
+            <iq:product id="fr645"/>
+            <iq:product id="fr645m"/>
             <iq:product id="fr735xt"/>
             <iq:product id="fr935"/>
             <iq:product id="vivoactive"/>
-
-            <iq:product id="vivoactive_hr"/>
-            <iq:product id="fenixchronos"/>
-
             <iq:product id="vivoactive3"/>
-            <iq:product id="d2charlie"/>
-            <iq:product id="approachs60"/>
-
-            <!--<iq:product id="descent"/>
-            <iq:product id="quatix5"/>
-            <iq:product id="tactix_bravo"/>-->
+            <iq:product id="vivoactive3m"/>
+            <iq:product id="vivoactive_hr"/>
             
         </iq:products>
 
         <iq:permissions>
+            <iq:uses-permission id="Positioning"/>
         </iq:permissions>
 
         <iq:languages>

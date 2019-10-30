@@ -141,12 +141,13 @@ class lateView extends Ui.WatchFace {
         circleWidth = App.getApp().getProperty("boldness");
         dialSize = App.getApp().getProperty("dialSize");
 
-//color = 0x00AAFF;
-//activity = 2;
-//showSunrise = true;
-//batThreshold = 100;
-//dialSize = 1;
-//circleWidth = 3;
+
+        //color = 0x00AAFF;
+        //activity = 2;
+        //showSunrise = true;
+        //batThreshold = 100;
+        //dialSize = 1;
+        //circleWidth = 3;
 
         // when running for the first time: load resources and compute sun positions
         if(showSunrise ){ // TODO recalculate when day or position changes
@@ -256,7 +257,6 @@ class lateView extends Ui.WatchFace {
                 }
                 text += info.day.format("%0.1d");
                 dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
-
                 
                 /*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, CENTER);
                 dc.setPenWidth(2);

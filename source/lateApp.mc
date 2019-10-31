@@ -33,6 +33,7 @@ class lateApp extends App.AppBase {
     }
     
     function onBackgroundData(data) {
+System.println(data);
     	if (data.hasKey("events")) {
     		App.getApp().setProperty("code", data.get("code"));
     		App.getApp().setProperty("events", data.get("events"));

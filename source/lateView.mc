@@ -158,7 +158,6 @@ class lateView extends Ui.WatchFace {
             utcOffset = clockTime.timeZoneOffset;
             computeSun();
         }
-
         if(activity>0){ 
             dateColor = 0xaaaaaa;
             if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }

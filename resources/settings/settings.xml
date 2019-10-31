@@ -64,7 +64,11 @@
         <settingConfig type="boolean" />
     </setting>
     
+    <setting propertyKey="@Properties.calendar_index" title="@Strings.calendarIndex">
+        <settingConfig type="numeric" min="1" max="20" />
+    </setting>
+    
     <setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
-        <settingConfig type="numeric" />
+        <settingConfig type="numeric" min="5" max="1440" />
     </setting>
 </settings>

@@ -6,8 +6,6 @@ using Toybox.Application as App;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 
-const ClientId = "*";
-const ClientSecret = "*";
 const ServerToken = "https://oauth2.googleapis.com/token";
 const AuthUri = "https://accounts.google.com/o/oauth2/auth";
 const ApiUrl = "https://www.googleapis.com/calendar/v3/calendars/";
@@ -26,6 +24,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
     function onTemporalEvent() {
+		Sys.println(App.getApp().getProperty("code"));
 		if (App.getApp().getProperty("code") == null) {
 			initOAuth();
 		} else {
@@ -38,7 +37,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
        Communications.makeOAuthRequest(
            $.AuthUri,
            {
-               "client_id"=>$.ClientId,
+               "client_id"=>App.getApp().getProperty("client_id"),
                "response_type"=>"code",
                "scope"=>Communications.encodeURL($.Scopes),
                "redirect_uri"=>$.RedirectUri
@@ -53,8 +52,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
        Communications.makeWebRequest(
            $.ServerToken,
            {
-               "client_secret"=>$.ClientSecret,
-               "client_id"=>$.ClientId,
+               "client_secret"=>App.getApp().getProperty("client_secret"),
+               "client_id"=>App.getApp().getProperty("client_id"),
                "redirect_uri" => $.RedirectUri,
                "code"=>accessCode.data["value"],
                "grant_type"=>"authorization_code"
@@ -163,8 +162,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
        Communications.makeWebRequest(
            $.ServerToken,
            {
-               "client_secret"=>$.ClientSecret,
-               "client_id"=>$.ClientId,
+               "client_secret"=>App.getApp().getProperty("client_secret"),
+               "client_id"=>App.getApp().getProperty("client_id"),
                "refresh_token"=>refresh_token,
                "grant_type"=>"refresh_token"
            },

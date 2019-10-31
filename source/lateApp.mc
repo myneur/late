@@ -4,7 +4,6 @@ using Toybox.Background;
 using Toybox.System as Sys;
 using Toybox.Time as Time;
 
-(:background)
 class lateApp extends App.AppBase {
 
     var watch;
@@ -23,6 +22,9 @@ class lateApp extends App.AppBase {
     }
 
     function getInitialView() {
+    	var codes = App.getApp().loadResource(Rez.JsonData.credentials);
+    	App.getApp().setProperty("client_id", codes.get("installed").get("client_id"));
+    	App.getApp().setProperty("client_secret", codes.get("installed").get("client_secret"));
     	if(Toybox.System has :ServiceDelegate) {
     		var freq = App.getApp().getProperty("refresh_freq") * 60;
     		Background.registerForTemporalEvent(new Time.Duration(freq));
@@ -33,7 +35,6 @@ class lateApp extends App.AppBase {
     }
     
     function onBackgroundData(data) {
-System.println(data);
     	if (data.hasKey("events")) {
     		App.getApp().setProperty("code", data.get("code"));
     		App.getApp().setProperty("events", data.get("events"));

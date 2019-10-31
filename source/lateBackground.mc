@@ -24,7 +24,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
     function onTemporalEvent() {
-		Sys.println(App.getApp().getProperty("code"));
 		if (App.getApp().getProperty("code") == null) {
 			initOAuth();
 		} else {
@@ -78,7 +77,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     	Communications.makeWebRequest(
            $.ApiCalendarUrl,
            {
-           	"maxResults"=>"1",
+           	"maxResults"=>"20",
            	"fields"=>"items(id)"
            },
            {
@@ -91,7 +90,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     
     function parseCalendarData(responseCode, data) {
 		if (responseCode == 200) {
-			getCalendarEventData(data.get("items")[0].get("id"));
+			getCalendarEventData(data.get("items")[App.getApp().getProperty("calendar_index")-1].get("id"));
     	} else {
     		Background.exit(code);
     	}
@@ -114,7 +113,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		    [
 		        today.year,
 		        today.month,
-		        today.day
+		        today.day+1
 		    ]
 		);
  		Communications.makeWebRequest(

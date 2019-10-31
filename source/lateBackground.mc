@@ -108,12 +108,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		        today.min
 		    ]
 		);
+    today = Gregorian.info(Time.now().add(new Time.Duration(3600*24*4)), Time.FORMAT_SHORT); 
 		var dateEnd = Lang.format(
 		    "$1$-$2$-$3$T23:59:59Z",
 		    [
 		        today.year,
 		        today.month,
-		        today.day+1
+		        today.day
 		    ]
 		);
  		Communications.makeWebRequest(

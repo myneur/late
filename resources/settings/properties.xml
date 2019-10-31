@@ -6,5 +6,5 @@
     <property id="bat" type="number">5</property>
     <property id="dialSize" type="number">0</property>
     <property id="boldness" type="number">3</property>
-
+    <property id="refresh_freq" type="number">60</property>
 </properties>

@@ -11,13 +11,14 @@ const ClientSecret = "*";
 const ServerToken = "https://oauth2.googleapis.com/token";
 const AuthUri = "https://accounts.google.com/o/oauth2/auth";
 const ApiUrl = "https://www.googleapis.com/calendar/v3/calendars/";
-const CalendarId = "*";
-const RequestUrl = ApiUrl + CalendarId + "/events";
+const ApiCalendarUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
+const Scopes = "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly";
 const RedirectUri = "http://localhost";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
-	var code = "";
+
+	var code;
 
     function initialize() {
 		Sys.ServiceDelegate.initialize();
@@ -33,13 +34,116 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         }
     }
     
+    function initOAuth() {
+       Communications.makeOAuthRequest(
+           $.AuthUri,
+           {
+               "client_id"=>$.ClientId,
+               "response_type"=>"code",
+               "scope"=>Communications.encodeURL($.Scopes),
+               "redirect_uri"=>$.RedirectUri
+           },
+           $.RedirectUri,
+           Communications.OAUTH_RESULT_TYPE_URL,
+           {"code"=>"value"});
+    }
+    
+    function getAccessToken(accessCode) {
+       code = accessCode.data["value"];
+       Communications.makeWebRequest(
+           $.ServerToken,
+           {
+               "client_secret"=>$.ClientSecret,
+               "client_id"=>$.ClientId,
+               "redirect_uri" => $.RedirectUri,
+               "code"=>accessCode.data["value"],
+               "grant_type"=>"authorization_code"
+           },
+           {
+               :method => Communications.HTTP_REQUEST_METHOD_POST
+           },
+           method(:handleAccessResponse)
+       );
+    }
+    
+    function handleAccessResponse(responseCode, data) {
+    	if (responseCode == 200) {
+	       code = data;
+	       getCalendarData();
+    	} else {
+		   Background.exit(code);
+    	}
+    }
+    
+    function getCalendarData() {
+    	Communications.makeWebRequest(
+           $.ApiCalendarUrl,
+           {
+           	"maxResults"=>"1",
+           	"fields"=>"items(id)"
+           },
+           {
+               :method=>Communications.HTTP_REQUEST_METHOD_GET,
+               :headers=>{ "Authorization"=>"Bearer " + code.get("access_token") }
+           },
+           method(:parseCalendarData)
+       );
+    }
+    
     function parseCalendarData(responseCode, data) {
+		if (responseCode == 200) {
+			getCalendarEventData(data.get("items")[0].get("id"));
+    	} else {
+    		Background.exit(code);
+    	}
+    }
+    
+    function getCalendarEventData(calendar_id) {
+    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+		var dateStart = Lang.format(
+		    "$1$-$2$-$3$T$4$:$5$:00Z",
+		    [
+		        today.year,
+		        today.month,
+		        today.day,
+		        today.hour,
+		        today.min
+		    ]
+		);
+		var dateEnd = Lang.format(
+		    "$1$-$2$-$3$T23:59:59Z",
+		    [
+		        today.year,
+		        today.month,
+		        today.day
+		    ]
+		);
+ 		Communications.makeWebRequest(
+           $.ApiUrl + calendar_id + "/events",
+           {
+           	"maxResults"=>"6",
+           	"orderBy"=>"startTime",
+           	"singleEvents"=>"true",
+           	"timeMin"=>dateStart,
+           	"timeMax"=>dateEnd,
+           	"fields"=>"items(summary,location,start/dateTime,end/dateTime)"
+           },
+           {
+               :method=>Communications.HTTP_REQUEST_METHOD_GET,
+               :headers=>{ "Authorization"=>"Bearer " + code.get("access_token") }
+           },
+           method(:parseCalendarEventData)
+       );
+    }
+    
+    function parseCalendarEventData(responseCode, data) {
 		if (responseCode == 200) {
 			var events = [];
 			for (var i = 0; i < data.get("items").size(); i++) {
 				var event = data.get("items")[i];
 				var eventTrim = {
 					"name"=>event.get("summary"),
+					"location"=>event.get("location"),
 					"start"=>event.get("start").get("dateTime"),
 					"end"=>event.get("end").get("dateTime")
 				};
@@ -55,56 +159,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     	}
     }
     
-    function getCalendarData() {
-    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
-		var dateString = Lang.format(
-		    "$1$-$2$-$3$T00:00:00Z",
-		    [
-		        today.year,
-		        today.month,
-		        today.day
-		    ]
-		);
- 		Communications.makeWebRequest(
-           $.RequestUrl,
-           {
-           	"maxResults"=>"10",
-           	"orderBy"=>"startTime",
-           	"singleEvents"=>"true",
-           	"timeMin"=>dateString
-           },
-           {
-               :method=>Communications.HTTP_REQUEST_METHOD_GET,
-               :headers=>{ "Authorization"=>"Bearer " + code.get("access_token") }
-           },
-           method(:parseCalendarData)
-       );
-    }
-    
-    function handleAccessResponse(responseCode, data) {
-    	if (responseCode == 200) {
-	       code = data;
-	       getCalendarData();
-	       Background.exit(code);
-    	} else {
-			Background.exit(code);
-    	}
-    }
-    
-    function handleAccessResponseRefresh(responseCode, data) {
-    	if (responseCode == 200) {
-	       data.put("refresh_token", code.get("refresh_token"));
-	       code = data;
-	       getCalendarData();
-    	} else {
-			Background.exit(code);
-    	}
-    }
-    
     function getAccessTokenFromRefresh(refresh_token) {
        Communications.makeWebRequest(
            $.ServerToken,
-           // POST parameters
            {
                "client_secret"=>$.ClientSecret,
                "client_id"=>$.ClientId,
@@ -117,45 +174,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
            method(:handleAccessResponseRefresh)
        );
     }
-    
-    function getAccessToken(accessCode) {
-       code = accessCode.data["value"];
-       Communications.makeWebRequest(
-           $.ServerToken,
-           // POST parameters
-           {
-               "client_secret"=>$.ClientSecret,
-               "client_id"=>$.ClientId,
-               "redirect_uri" => $.RedirectUri,
-               "code"=>accessCode.data["value"],
-               "grant_type"=>"authorization_code"
-           },
-           {
-               :method => Communications.HTTP_REQUEST_METHOD_POST
-           },
-           method(:handleAccessResponse)
-       );
-    }
-    
-    function initOAuth() {
-       Communications.makeOAuthRequest(
-           $.AuthUri,
-           // POST parameters
-           {
-               "client_id"=> $.ClientId,
-               "response_type"=>"code",
-               "scope"=> Communications.encodeURL("https://www.googleapis.com/auth/calendar.events.readonly"),
-               "redirect_uri"=> $.RedirectUri
-           },
-           $.RedirectUri,
-           Communications.OAUTH_RESULT_TYPE_URL,
-           {"code"=>"value"});
-    }
-
-    function draw(dc) {
-        // Set the background color then call to clear the screen
-        dc.setColor(Graphics.COLOR_TRANSPARENT, Application.getApp().getProperty("BackgroundColor"));
-        dc.clear();
+        
+    function handleAccessResponseRefresh(responseCode, data) {
+    	if (responseCode == 200) {
+	       data.put("refresh_token", code.get("refresh_token"));
+	       code = data;
+	       getCalendarData();
+    	} else {
+		   Background.exit(code);
+    	}
     }
 
 }

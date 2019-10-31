@@ -60,9 +60,11 @@
         </settingConfig>
     </setting>
 
-
-
     <setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
         <settingConfig type="boolean" />
+    </setting>
+    
+    <setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
+        <settingConfig type="numeric" />
     </setting>
 </settings>

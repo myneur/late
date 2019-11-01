@@ -211,24 +211,26 @@ activity = 6;
         var data = App.getApp().getProperty("events");
         if(data != null) {
             var date;
-            for(var rr=0;rr<data.size();rr++){
-                date = parseISODate(data[rr].get("start"));
+            for(var i=0;i<data.size();i++){
+                date = parseISODate(data[i].get("start"));
                 if( date != null){
 
                     date = Gregorian.info(date, Time.FORMAT_SHORT);
-                    event = Lang.format(
-                        "$4$\n$2$:$3$ ",
-                        [
-                            date.day,
-                            date.hour,
-                            date.min, 
-                            data[rr].get("name").substring(0,25)
-                        ]
-                    );
-                    if(data[rr].get("location")){
-                        event += data[rr].get("location").substring(0,20);
+                    if(i == 0){
+                        event = Lang.format(
+                            "$4$\n$2$:$3$ ",
+                            [
+                                date.day,
+                                date.hour,
+                                date.min, 
+                                data[i].get("name").substring(0,25)
+                            ]
+                        );
+                        if(data[i].get("location")){
+                            event += data[i].get("location").substring(0,20);
+                        }
                     }
-                    Sys.println( event);
+                    Sys.println(Lang.format("$3$\n$1$:$2$ ",[date.hour, date.min, data[i].get("name").substring(0,25)]));
                 }
                 
             }

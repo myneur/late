@@ -319,7 +319,7 @@ activity = 6;
                         dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
                         dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
                     } else {
-                        dc.drawText(centerX, activityY-35, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
+                        dc.drawText(centerX, activityY-Gfx.getFontHeight(fontCondensed), fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
                     }
                 }
             }

@@ -22,7 +22,7 @@ class lateApp extends App.AppBase {
     }
 
     function getInitialView() {
-    	var codes = App.getApp().loadResource(Rez.JsonData.credentials);
+    	var codes = Ui.loadResource(Rez.JsonData.credentials);
     	App.getApp().setProperty("client_id", codes.get("installed").get("client_id"));
     	App.getApp().setProperty("client_secret", codes.get("installed").get("client_secret"));
     	if(Toybox.System has :ServiceDelegate) {

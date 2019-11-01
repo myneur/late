@@ -90,8 +90,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     
     function parseCalendarData(responseCode, data) {
 		if (responseCode == 200) {
-			getCalendarEventData(data.get("items")[App.getApp().getProperty("calendar_index")-1].get("id"));
-      //getCalendarEventData(data.get("items")[6].get("id"));
+			//getCalendarEventData(data.get("items")[App.getApp().getProperty("calendar_index")-1].get("id"));
+      getCalendarEventData(data.get("items")[6].get("id"));
     	} else {
     		Background.exit(code);
     	}

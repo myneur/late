@@ -90,8 +90,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     
     function parseCalendarData(responseCode, data) {
 		if (responseCode == 200) {
-			//getCalendarEventData(data.get("items")[App.getApp().getProperty("calendar_index")-1].get("id"));
-      getCalendarEventData(data.get("items")[6].get("id"));
+			getCalendarEventData(data.get("items")[App.getApp().getProperty("calendar_index")-1].get("id"));
     	} else {
     		Background.exit(code);
     	}
@@ -109,7 +108,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		        today.min
 		    ]
 		);
-    today = Gregorian.info(Time.now().add(new Time.Duration(3600*24*4)), Time.FORMAT_SHORT); 
+    	today = Gregorian.info(Time.now().add(new Time.Duration(3600*24)), Time.FORMAT_SHORT); 
 		var dateEnd = Lang.format(
 		    "$1$-$2$-$3$T23:59:59Z",
 		    [

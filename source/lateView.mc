@@ -56,6 +56,8 @@ class lateView extends Ui.WatchFace {
 
     hidden var activityY;
     hidden var batThreshold = 5;
+
+    hidden var event = "";
     
     // redraw full watchface
     hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -143,7 +145,7 @@ class lateView extends Ui.WatchFace {
         dialSize = App.getApp().getProperty("dialSize");
 
 //color = 0x00AAFF;
-//activity = 2;
+activity = 6;
 //showSunrise = true;
 //batThreshold = 100;
 //dialSize = 1;
@@ -167,6 +169,7 @@ class lateView extends Ui.WatchFace {
                 activity = 0;   // reset not supported activities
             } else if(activity <= 4) { icon = Ui.loadResource(Rez.Drawables.Minutes); }
             else if(activity == 5) { icon = Ui.loadResource(Rez.Drawables.Floors); }
+
         } else {
             dateColor = 0x555555;
         }
@@ -209,26 +212,25 @@ class lateView extends Ui.WatchFace {
         if(data != null) {
             var date;
             for(var rr=0;rr<data.size();rr++){
-                Sys.println(data[rr].get("name").substring(0,20));
-                
                 date = parseISODate(data[rr].get("start"));
                 if( date != null){
 
                     date = Gregorian.info(date, Time.FORMAT_SHORT);
-                    var dateStart = Lang.format(
-                        "$4$:$5$",
+                    event = Lang.format(
+                        "$4$\n$2$:$3$ ",
                         [
-                            date.year,
-                            date.month,
                             date.day,
                             date.hour,
-                            date.min
+                            date.min, 
+                            data[rr].get("name").substring(0,25)
                         ]
                     );
-                    Sys.println( dateStart + " @ " + data[rr].get("location").substring(0,20));
+                    if(data[rr].get("location")){
+                        event += data[rr].get("location").substring(0,20);
+                    }
+                    Sys.println( event);
                 }
                 
-                Sys.println("");
             }
 
             
@@ -305,10 +307,18 @@ class lateView extends Ui.WatchFace {
                     else if(activity == 3){ text = (text.activeMinutesDay.total.toString());} // moderate + vigorous
                     else if(activity == 4){ text = humanizeNumber(text.activeMinutesWeek.total); }
                     else if(activity == 5){ text = (text.floorsClimbed.toString()); }
+                    else if(activity == 6){ text = event;}
                     else {text = "";}
+
+                    Sys.println(text);
                     dc.setColor(activityColor, Gfx.COLOR_BLACK);
-                    dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
-                    dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
+                    
+                    if(activity < 6){
+                        dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
+                        dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
+                    } else {
+                        dc.drawText(centerX, activityY-35, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
+                    }
                 }
             }
             drawBatteryLevel(dc);

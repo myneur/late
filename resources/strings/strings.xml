@@ -48,6 +48,6 @@
 
     <string id="showSunriseSunsetTitle">Sunrise and sunset position on 24h dial</string>
     
-    <string id="calendarIndex">Calendar Index</string>
+    <string id="calendarIndexes">Calendar Indexes (comma seperated, min=1)</string>
     <string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
 </strings>

@@ -214,28 +214,22 @@ activity = 6;
             for(var i=0;i<data.size();i++){
                 date = parseISODate(data[i].get("start"));
                 if( date != null){
-
                     date = Gregorian.info(date, Time.FORMAT_SHORT);
                     if(i == 0){
-                        event = Lang.format(
-                            "$4$\n$2$:$3$ ",
-                            [
-                                date.day,
-                                date.hour,
-                                date.min, 
-                                data[i].get("name").substring(0,25)
-                            ]
-                        );
+                        event = data[i].get("name").substring(0,25) + "\n";
                         if(data[i].get("location")){
-                            event += data[i].get("location").substring(0,20);
+                            event += data[i].get("location").substring(0,20) + " ";
+                        }
+                        var today = new Time.Moment(Time.now().value());
+                        var duration = parseISODate(data[i].get("start")).subtract(today).value();
+                        if (duration < 60*60) {
+							event += "in " + duration/60 + "m";
+                        } else {
+                        	event += "in " + duration/3600 + "h " + duration%3600/60 + "m";
                         }
                     }
-                    Sys.println(Lang.format("$3$\n$1$:$2$ ",[date.hour, date.min, data[i].get("name").substring(0,25)]));
                 }
-                
             }
-
-            
         }
         
         clockTime = Sys.getClockTime();
@@ -312,19 +306,18 @@ activity = 6;
                     else if(activity == 6){ text = event;}
                     else {text = "";}
 
-                    Sys.println(text);
                     dc.setColor(activityColor, Gfx.COLOR_BLACK);
                     
                     if(activity < 6){
                         dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
                         dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
-                    } else {
-                        var y = activityY-Gfx.getFontHeight(fontCondensed);
-                        if(y < radius+centerY+5) {
+                    } else { 
+                    	var y = activityY-Gfx.getFontHeight(fontCondensed);
+                        if (y < radius+centerY+5) {
                             y = radius + centerY +5;
                         }
-                        dc.drawText(centerX, y, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
-                    }
+                        dc.drawText(centerX, y, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER);
+					}
                 }
             }
             drawBatteryLevel(dc);

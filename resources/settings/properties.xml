@@ -7,5 +7,5 @@
     <property id="dialSize" type="number">0</property>
     <property id="boldness" type="number">3</property>
     <property id="refresh_freq" type="number">5</property>
-    <property id="calendar_index" type="number">1</property>
+    <property id="calendar_indexes" type="string">1,2</property>
 </properties>

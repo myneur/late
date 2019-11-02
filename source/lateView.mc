@@ -43,6 +43,7 @@ class lateView extends Ui.WatchFace {
     hidden var sunrs = null;   
     hidden var sunst = null;   
     hidden var icon = null;
+
     hidden var fontSmall = null; 
     hidden var fontMinutes = null;
     hidden var fontHours = null; 
@@ -57,7 +58,7 @@ class lateView extends Ui.WatchFace {
     hidden var activityY;
     hidden var batThreshold = 5;
 
-    hidden var event = "";
+    hidden var event = {"name"=>"", "prefix"=>"in ", "start"=>0, "location"=>"", "mid"=>0, "height"=>25};
     
     // redraw full watchface
     hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -82,52 +83,65 @@ class lateView extends Ui.WatchFace {
     }
 
     function setLayoutVars(){
-        if(height>218){
-            if(activity>0){
-                fontCondensed = Ui.loadResource(Rez.Fonts.Condensed240);
-                activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
-            }
-            if(dialSize>0){
-                fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig240);
-                fontHours = Ui.loadResource(Rez.Fonts.HoursBig240px);
-                fontSmall = Ui.loadResource(Rez.Fonts.SmallBig240);
-                radius = 89;
-                dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-7;
-                batteryY=height-15 ;
-                circleWidth=circleWidth*3+1;
-                activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
+        try{
+            if(height>218){
+                if(dialSize>0){
+                    radius = 89;
+                    circleWidth=circleWidth*3+1;
+                    batteryY=height-15 ;
+                    fontHours = Ui.loadResource(Rez.Fonts.HoursBig240px);
+                    fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig240);
+                    fontSmall = Ui.loadResource(Rez.Fonts.SmallBig240);
+                    dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-7;
+                } else {
+                    radius = 63;    
+                    batteryY = centerY+38;
+                    fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
+                    fontMinutes = Ui.loadResource(Rez.Fonts.Minute240);
+                    fontSmall = Ui.loadResource(Rez.Fonts.Small240);
+                    dateY = centerY-90-(Gfx.getFontHeight(fontSmall)>>1);
+                }
             } else {
-                fontMinutes = Ui.loadResource(Rez.Fonts.Minute240);
-                fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
-                fontSmall = Ui.loadResource(Rez.Fonts.Small240);
-                radius = 63;    
-                dateY = centerY-90-(Gfx.getFontHeight(fontSmall)>>1);
-                batteryY = centerY+38;
+                if(dialSize>0){
+                    radius = 81;
+                    batteryY=height-15;
+                    circleWidth=circleWidth*3;
+                    fontHours = Ui.loadResource(Rez.Fonts.HoursBig);        
+                    fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig);
+                    fontSmall = Ui.loadResource(Rez.Fonts.SmallBig);
+                    dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-6;
+                } else {
+                    radius = 55;
+                    batteryY = centerY+33;
+                    fontHours = Ui.loadResource(Rez.Fonts.Hours);     
+                    fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
+                    fontSmall = Ui.loadResource(Rez.Fonts.Small);   
+                    dateY = centerY-80-(Gfx.getFontHeight(fontSmall)>>1);
+                }
             }
-        } else {
             if(activity>0){
-                fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
-                activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;    
+                fontCondensed = Ui.loadResource(height>218 ?Rez.Fonts.Condensed240 : Rez.Fonts.Condensed);
+                if(dialSize==0){
+                    activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
+                    if(activity == 6){
+                        if(Toybox.System has :ServiceDelegate){
+                            event["height"] = Gfx.getFontHeight(fontCondensed)-1;
+                            activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
+                        } else { 
+                            activity = 0;
+                        }
+                    }
+                } else {
+                    activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
+                }
             }
-            if(dialSize>0){
-                fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig);
-                fontHours = Ui.loadResource(Rez.Fonts.HoursBig);        
-                fontSmall = Ui.loadResource(Rez.Fonts.SmallBig);
-                radius = 81;
-                dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-6;
-                batteryY=height-15;
-                circleWidth=circleWidth*3;
-                activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
-            } else {
-                fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
-                fontHours = Ui.loadResource(Rez.Fonts.Hours);     
-                fontSmall = Ui.loadResource(Rez.Fonts.Small);   
-                radius = 55;
-                dateY = centerY-80-(Gfx.getFontHeight(fontSmall)>>1);
-                batteryY = centerY+33;
-                
-            }
+        } catch(ex){
+            Sys.println([fontSmall , fontMinutes , fontHours ,fontCondensed]);
+            activity = 0;
+            if(fontSmall == null ){ fontSmall = fontMinutes;}
         }
+
+
         var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
         if(langTest.toNumber()>382){ // fallback for not-supported latin fonts 
             fontSmall = Gfx.FONT_SMALL;
@@ -209,25 +223,40 @@ activity = 6;
     function onUpdate (dc) {
     	//Calendar Data
         var data = App.getApp().getProperty("events");
-        if(data != null) {
-            var date;
-            for(var i=0;i<data.size();i++){
-                date = parseISODate(data[i].get("start"));
+        event["start"]=null;
+        if(data instanceof Toybox.Lang.Array) {
+            for(var i=0; i<data.size() ;i++){
+                var date = parseISODate(data[i].get("start"));
                 if( date != null){
-                    date = Gregorian.info(date, Time.FORMAT_SHORT);
-                    if(i == 0){
-                        event = data[i].get("name").substring(0,25) + "\n";
-                        if(data[i].get("location")){
-                            event += data[i].get("location").substring(0,20) + " ";
-                        }
-                        var today = new Time.Moment(Time.now().value());
-                        var duration = parseISODate(data[i].get("start")).subtract(today).value();
+                    if(event["start"]!=null){
+                        break;
+                    }
+                    event["name"] = data[i].get("name");
+                    var duration = date.compare(new Time.Moment(Time.now().value()));
+                    if(duration < -300){
+                        Sys.println(duration);
+                      continue;  
+                    } else if( duration <0){
+                        event["start"] = "now!";
+                        event["prefix"] = "";
+                    } else {
+                        event["prefix"] = "in ";
                         if (duration < 60*60) {
-							event += "in " + duration/60 + "m";
+                            event["start"] = duration/60 + "m";
                         } else {
-                        	event += "in " + duration/3600 + "h " + duration%3600/60 + "m";
+                            event["start"] = duration/3600 + "h" + duration%3600/60 ;
                         }
                     }
+                    if(data[i].get("location")){
+                        event["location"] = ": " + data[i].get("location");
+                    } else {
+                        event["location"] = "";
+                    }
+                    // middle for renderring start and event in different colors
+                    event["mid"] = (
+                        dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
+                        -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
+                    );
                 }
             }
         }
@@ -303,20 +332,19 @@ activity = 6;
                     else if(activity == 3){ text = (text.activeMinutesDay.total.toString());} // moderate + vigorous
                     else if(activity == 4){ text = humanizeNumber(text.activeMinutesWeek.total); }
                     else if(activity == 5){ text = (text.floorsClimbed.toString()); }
-                    else if(activity == 6){ text = event;}
                     else {text = "";}
 
                     dc.setColor(activityColor, Gfx.COLOR_BLACK);
-                    
                     if(activity < 6){
                         dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
                         dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
-                    } else { 
-                    	var y = activityY-Gfx.getFontHeight(fontCondensed);
-                        if (y < radius+centerY+5) {
-                            y = radius + centerY +5;
-                        }
-                        dc.drawText(centerX, y, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER);
+                    } else if(event["start"] != null){ 
+                        dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
+                        dc.setColor(dateColor, 0);
+                        dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["prefix"]+event["start"], Gfx.TEXT_JUSTIFY_RIGHT);
+                        dc.setColor(activityColor, Gfx.COLOR_BLACK);
+                        dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["location"], Gfx.TEXT_JUSTIFY_LEFT);
+
 					}
                 }
             }
@@ -520,8 +548,9 @@ activity = 6;
             //Sys.println(str);
         }*/
         return;
-   }
-   // converts rfc3339 formatted timestamp to Time::Moment (null on error)
+    }
+
+    // converts rfc3339 formatted timestamp to Time::Moment (null on error)
     function parseISODate(date) {
         // assert(date instanceOf String)
 
@@ -578,8 +607,4 @@ activity = 6;
         }
         return moment.add(new Time.Duration(tzOffset));
     }
-
-
-
-
 }

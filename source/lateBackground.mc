@@ -95,6 +95,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     	var result_size = data.get("items").size();
 		if (responseCode == 200) {
 			var indexes = App.getApp().getProperty("calendar_indexes");
+indexes = "6,7";
 			indexes = indexes.toCharArray();
     		var index_list = [];
 			var cn = "";
@@ -136,27 +137,31 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     	var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
     	var to = (UTCdelta/3600).format("%02d") + ":00";
     	var sign = sys_time.timeZoneOffset < 0 ? "-" : "+";
-		var dateStart = Lang.format(
-		    "$1$-$2$-$3$T$4$:$5$:00",
-		    [
-		        today.year,
-		        today.month,
-		        today.day,
-		        today.hour,
-		        today.min
-		    ]
-		);
-		dateStart += sign + to;
-    	today = Gregorian.info(Time.now().add(new Time.Duration(3600*24)), Time.FORMAT_SHORT); 
-		var dateEnd = Lang.format(
-		    "$1$-$2$-$3$T23:59:59",
-		    [
-		        today.year,
-		        today.month,
-		        today.day
-		    ]
-		);
-		dateEnd += sign + to;
+  		var dateStart = Lang.format(
+  		    "$1$-$2$-$3$T$4$:$5$:00",
+  		    [
+  		        today.year,
+  		        today.month,
+  		        today.day,
+  		        today.hour,
+  		        today.min
+  		    ]
+  		);
+  		dateStart += sign + to;
+      	today = Gregorian.info(Time.now().add(new Time.Duration(3600*24)), Time.FORMAT_SHORT); 
+  		  var dateEnd = Lang.format(
+  		    "$1$-$2$-$3$T$4$:$5$:00",
+          [
+              today.year,
+              today.month,
+              today.day,
+              today.hour,
+              today.min
+          ]
+  		);
+  		dateEnd += sign + to;
+
+    Sys.println([dateStart, dateEnd]);
  		Communications.makeWebRequest(
            $.ApiUrl + calendar_id + "/events",
            {
@@ -177,36 +182,42 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     
 	var events_list = [];
     function parseCalendarEventData(responseCode, data) {
-    	Sys.println(responseCode);
-		if (responseCode == 200) {
-			for (var i = 0; i < data.get("items").size(); i++) {
-				var event = data.get("items")[i];
-				var eventTrim = {
-					"name"=>event.get("summary"),
-					"location"=>event.get("location"),
-					"start"=>event.get("start").get("dateTime"),
-					"end"=>event.get("end").get("dateTime")
-				};
-				events_list.add(eventTrim);
-			}
-			if (current_index == calendar_size-1) {
-				var code_events = {
-					"code"=>code,
-					"events"=>events_list
-				};
-				Background.exit(code_events);
-			} else {
-				current_index++;
-			}
-			repeater();
-    	} else {
-			var code_events = {
-				"code"=>code,
-				"events"=>events_list
-			};
-    		Background.exit(code_events);
-    	}
-    }
+    	if (responseCode == 200) {
+  			for (var i = 0; i < data.get("items").size(); i++) {
+  				var event = data.get("items")[i];
+  				var eventTrim = {
+  					"name"=>event.get("summary").substring(0,25),
+  					"location"=>event.get("location"),
+  					"start"=>event.get("start").get("dateTime"),
+  					"end"=>event.get("end").get("dateTime")
+  				};
+          if(eventTrim["location"]){  // trimming and event to fit the screen right 
+            eventTrim["location"] = eventTrim["location"].substring(0,15);
+            var split = eventTrim["location"].find(",");
+            if(split>0){
+                eventTrim["location"] = eventTrim["location"].substring(0,split);
+            }
+          }
+          events_list.add(eventTrim);
+  			}
+  			if (current_index == calendar_size-1) {
+  				var code_events = {
+  					"code"=>code,
+  					"events"=>events_list
+  				};
+  				Background.exit(code_events);
+  			} else {
+  				current_index++;
+  			}
+  			repeater();
+      	} else {
+  			var code_events = {
+  				"code"=>code,
+  				"events"=>events_list
+  			};
+      		Background.exit(code_events);
+      	}
+      }
     
     function getAccessTokenFromRefresh(refresh_token) {
        Communications.makeWebRequest(
@@ -233,5 +244,4 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		   Background.exit(code);
     	}
     }
-
 }

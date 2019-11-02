@@ -69,6 +69,10 @@
         <settingConfig type="alphaNumeric"/>
     </setting>
     
+    <setting propertyKey="@Properties.access_code" title="@Strings.accessCode">
+        <settingConfig type="alphaNumeric"/>
+    </setting>
+    
     <setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
         <settingConfig type="numeric" min="5" max="1440" />
     </setting>

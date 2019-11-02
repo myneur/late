@@ -285,8 +285,6 @@ Sys.println(clockTime);
                 //System.println(method(:humanizeNumber).invoke(100000)); // TODO this is how to save and invoke method callback to get rid of ugly ifelse like below
                 // The best circle for activity percentages: dc.setPenWidth(2);dc.setColor(Gfx.COLOR_DK_GRAY, 0); dc.drawArc(centerX, 190, 10, Gfx.ARC_CLOCKWISE, 90, 90-49*6);
 
-                System.println(method(:humanizeNumber);
-
                 if(activity > 0){
                     text = ActivityMonitor.getInfo();
                     if(activity == 1){ text = humanizeNumber(text.steps); }

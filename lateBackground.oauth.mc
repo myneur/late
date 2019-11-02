@@ -20,28 +20,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
     function initialize() {
 		Sys.ServiceDelegate.initialize();
+    	Communications.registerForOAuthMessages(method(:getAccessToken));
 	}
 	
     function onTemporalEvent() {
 		if (App.getApp().getProperty("code") == null) {
-			if (App.getApp().getProperty("access_code").equals("")) {
-				Background.exit(code);
-			}
-			code = {"access_code"=>App.getApp().getProperty("access_code")};
-			Communications.makeWebRequest(
-	           $.ServerToken,
-	           {
-	               "client_secret"=>App.getApp().getProperty("client_secret"),
-	               "client_id"=>App.getApp().getProperty("client_id"),
-	               "redirect_uri" => $.RedirectUri,
-	               "code"=>code.get("access_code"),
-	               "grant_type"=>"authorization_code"
-	           },
-	           {
-	               :method => Communications.HTTP_REQUEST_METHOD_POST
-	           },
-	           method(:handleAccessResponse)
-	       );
+			initOAuth();
 		} else {
 			code = App.getApp().getProperty("code");
 	        getAccessTokenFromRefresh(code.get("refresh_token"));
@@ -62,13 +46,29 @@ class lateBackground extends Toybox.System.ServiceDelegate {
            {"code"=>"value"});
     }
     
+    function getAccessToken(accessCode) {
+       code = accessCode.data["value"];
+       Communications.makeWebRequest(
+           $.ServerToken,
+           {
+               "client_secret"=>App.getApp().getProperty("client_secret"),
+               "client_id"=>App.getApp().getProperty("client_id"),
+               "redirect_uri" => $.RedirectUri,
+               "code"=>accessCode.data["value"],
+               "grant_type"=>"authorization_code"
+           },
+           {
+               :method => Communications.HTTP_REQUEST_METHOD_POST
+           },
+           method(:handleAccessResponse)
+       );
+    }
+    
     function handleAccessResponse(responseCode, data) {
     	if (responseCode == 200) {
-    	   Sys.println("AUTHORIZATION COMPLETE");
 	       code = data;
 	       getCalendarData();
     	} else {
-    	   Sys.println("AUTHORIZATION ERROR!!!");
 		   Background.exit(code);
     	}
     }
@@ -95,6 +95,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     	var result_size = data.get("items").size();
 		if (responseCode == 200) {
 			var indexes = App.getApp().getProperty("calendar_indexes");
+indexes = "6,7";
 			indexes = indexes.toCharArray();
     		var index_list = [];
 			var cn = "";
@@ -122,6 +123,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     var in_progress = -1;
     function repeater() {
 		if (in_progress < current_index) {
+			Sys.println(current_index);
+			Sys.println(id_list[current_index]);
 			in_progress++;
 			getCalendarEventData(id_list[current_index]);
 		}
@@ -157,6 +160,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           ]
   		);
   		dateEnd += sign + to;
+
+    Sys.println([dateStart, dateEnd]);
  		Communications.makeWebRequest(
            $.ApiUrl + calendar_id + "/events",
            {

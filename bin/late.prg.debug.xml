@@ -1,151 +1,151 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <debugInfo>
 <pcToLineNum>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="5" pc="268439097" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="7" pc="268439109" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="8" pc="268439116" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="9" pc="268439146" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="11" pc="268439164" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="12" pc="268439197" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="14" pc="268439204" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="16" pc="268439218" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="17" pc="268439244" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="19" pc="268439273" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="21" pc="268439287" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="22" pc="268439313" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="26" pc="268439342" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="27" pc="268439361" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="2" lineNum="30" pc="268439380" symbol="drawCircle1"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="37" pc="268439398" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="39" pc="268439410" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="41" pc="268439435" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="42" pc="268439454" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="43" pc="268439473" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="44" pc="268439492" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="45" pc="268439511" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="46" pc="268439533" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="47" pc="268439555" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="48" pc="268439577" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="50" pc="268439599" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="51" pc="268439609" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="52" pc="268439616" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="53" pc="268439626" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="54" pc="268439633" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="55" pc="268439649" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="57" pc="268439664" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="58" pc="268439674" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="60" pc="268439681" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="62" pc="268439689" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="63" pc="268439699" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="64" pc="268439709" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="67" pc="268439719" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="68" pc="268439741" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="70" pc="268439763" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="71" pc="268439785" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="73" pc="268439807" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="74" pc="268439829" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="76" pc="268439851" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="3" lineNum="77" pc="268439873" symbol="drawCircle2"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="84" pc="268439909" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="86" pc="268439921" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="87" pc="268439940" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="88" pc="268439959" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="89" pc="268439978" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="91" pc="268439997" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="92" pc="268440001" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="93" pc="268440008" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="94" pc="268440015" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="96" pc="268440023" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="97" pc="268440033" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="98" pc="268440043" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="99" pc="268440053" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="99" pc="268440064" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="99" pc="268440074" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="101" pc="268440084" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="102" pc="268440106" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="103" pc="268440128" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="104" pc="268440150" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="105" pc="268440172" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="106" pc="268440194" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="107" pc="268440216" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="4" lineNum="108" pc="268440238" symbol="drawCircle0"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="115" pc="268440264" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="117" pc="268440276" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="118" pc="268440292" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="119" pc="268440299" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="120" pc="268440315" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="121" pc="268440322" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="122" pc="268440326" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="124" pc="268440334" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="125" pc="268440356" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="126" pc="268440378" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="127" pc="268440400" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="128" pc="268440422" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="129" pc="268440444" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="130" pc="268440466" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="131" pc="268440488" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="132" pc="268440510" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="134" pc="268440521" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="135" pc="268440528" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="139" pc="268440541" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="140" pc="268440551" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="141" pc="268440558" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="143" pc="268440568" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="5" lineNum="144" pc="268440578" symbol="drawCircle4"/>
-<entry filename="source/cgDrawPrim.mc" id="6" lineNum="148" pc="268440592" symbol="drawFilledCircle"/>
-<entry filename="source/cgDrawPrim.mc" id="6" lineNum="150" pc="268440604" symbol="drawFilledCircle"/>
-<entry filename="source/cgDrawPrim.mc" id="6" lineNum="151" pc="268440611" symbol="drawFilledCircle"/>
-<entry filename="source/cgDrawPrim.mc" id="6" lineNum="153" pc="268440629" symbol="drawFilledCircle"/>
-<entry filename="source/cgDrawPrim.mc" id="6" lineNum="154" pc="268440662" symbol="drawFilledCircle"/>
-<entry filename="source/cgDrawPrim.mc" id="6" lineNum="156" pc="268440669" symbol="drawFilledCircle"/>
-<entry filename="source/cgTools.mc" id="7" lineNum="5" pc="268440709" symbol="floor"/>
-<entry filename="source/cgTools.mc" id="7" lineNum="7" pc="268440721" symbol="floor"/>
-<entry filename="source/cgTools.mc" id="7" lineNum="9" pc="268440747" symbol="floor"/>
-<entry filename="source/cgTools.mc" id="7" lineNum="11" pc="268440762" symbol="floor"/>
-<entry filename="source/cgTools.mc" id="8" lineNum="14" pc="268440769" symbol="ceil"/>
-<entry filename="source/cgTools.mc" id="8" lineNum="16" pc="268440781" symbol="ceil"/>
-<entry filename="source/cgTools.mc" id="8" lineNum="17" pc="268440791" symbol="ceil"/>
-<entry filename="source/cgTools.mc" id="8" lineNum="19" pc="268440817" symbol="ceil"/>
-<entry filename="source/cgTools.mc" id="8" lineNum="21" pc="268440832" symbol="ceil"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="25" pc="268440839" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="27" pc="268440851" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="28" pc="268440886" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="29" pc="268440928" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="30" pc="268440936" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="33" pc="268441100" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="36" pc="268441104" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="36" pc="268441121" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="37" pc="268441128" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="40" pc="268441132" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="40" pc="268441155" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="41" pc="268441162" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="44" pc="268441166" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="47" pc="268441182" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="47" pc="268441201" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="50" pc="268441214" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="51" pc="268441230" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="52" pc="268441243" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="53" pc="268441256" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="56" pc="268441293" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="57" pc="268441306" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="60" pc="268441328" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="62" pc="268441356" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="64" pc="268441366" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="64" pc="268441399" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="65" pc="268441409" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="69" pc="268441419" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="71" pc="268441427" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="71" pc="268441432" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="72" pc="268441442" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="74" pc="268441449" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="76" pc="268441466" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="77" pc="268441476" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="82" pc="268441489" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="84" pc="268441497" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="85" pc="268441519" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="87" pc="268441529" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="87" pc="268441540" symbol="getWeekNbr"/>
-<entry filename="source/cgTools.mc" id="9" lineNum="90" pc="268441556" symbol="getWeekNbr"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="5" pc="268439094" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="7" pc="268439106" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="8" pc="268439113" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="9" pc="268439143" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="11" pc="268439161" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="12" pc="268439194" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="14" pc="268439201" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="16" pc="268439215" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="17" pc="268439241" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="19" pc="268439270" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="21" pc="268439284" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="22" pc="268439310" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="26" pc="268439339" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="27" pc="268439358" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="2" lineNum="30" pc="268439377" symbol="drawCircle1"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="37" pc="268439395" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="39" pc="268439407" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="41" pc="268439432" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="42" pc="268439451" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="43" pc="268439470" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="44" pc="268439489" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="45" pc="268439508" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="46" pc="268439530" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="47" pc="268439552" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="48" pc="268439574" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="50" pc="268439596" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="51" pc="268439606" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="52" pc="268439613" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="53" pc="268439623" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="54" pc="268439630" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="55" pc="268439646" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="57" pc="268439661" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="58" pc="268439671" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="60" pc="268439678" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="62" pc="268439686" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="63" pc="268439696" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="64" pc="268439706" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="67" pc="268439716" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="68" pc="268439738" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="70" pc="268439760" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="71" pc="268439782" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="73" pc="268439804" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="74" pc="268439826" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="76" pc="268439848" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="3" lineNum="77" pc="268439870" symbol="drawCircle2"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="84" pc="268439906" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="86" pc="268439918" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="87" pc="268439937" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="88" pc="268439956" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="89" pc="268439975" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="91" pc="268439994" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="92" pc="268439998" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="93" pc="268440005" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="94" pc="268440012" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="96" pc="268440020" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="97" pc="268440030" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="98" pc="268440040" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="99" pc="268440050" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="99" pc="268440061" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="99" pc="268440071" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="101" pc="268440081" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="102" pc="268440103" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="103" pc="268440125" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="104" pc="268440147" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="105" pc="268440169" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="106" pc="268440191" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="107" pc="268440213" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="4" lineNum="108" pc="268440235" symbol="drawCircle0"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="115" pc="268440261" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="117" pc="268440273" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="118" pc="268440289" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="119" pc="268440296" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="120" pc="268440312" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="121" pc="268440319" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="122" pc="268440323" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="124" pc="268440331" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="125" pc="268440353" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="126" pc="268440375" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="127" pc="268440397" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="128" pc="268440419" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="129" pc="268440441" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="130" pc="268440463" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="131" pc="268440485" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="132" pc="268440507" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="134" pc="268440518" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="135" pc="268440525" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="139" pc="268440538" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="140" pc="268440548" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="141" pc="268440555" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="143" pc="268440565" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="5" lineNum="144" pc="268440575" symbol="drawCircle4"/>
+<entry filename="source/cgDrawPrim.mc" id="6" lineNum="148" pc="268440589" symbol="drawFilledCircle"/>
+<entry filename="source/cgDrawPrim.mc" id="6" lineNum="150" pc="268440601" symbol="drawFilledCircle"/>
+<entry filename="source/cgDrawPrim.mc" id="6" lineNum="151" pc="268440608" symbol="drawFilledCircle"/>
+<entry filename="source/cgDrawPrim.mc" id="6" lineNum="153" pc="268440626" symbol="drawFilledCircle"/>
+<entry filename="source/cgDrawPrim.mc" id="6" lineNum="154" pc="268440659" symbol="drawFilledCircle"/>
+<entry filename="source/cgDrawPrim.mc" id="6" lineNum="156" pc="268440666" symbol="drawFilledCircle"/>
+<entry filename="source/cgTools.mc" id="7" lineNum="5" pc="268440706" symbol="floor"/>
+<entry filename="source/cgTools.mc" id="7" lineNum="7" pc="268440718" symbol="floor"/>
+<entry filename="source/cgTools.mc" id="7" lineNum="9" pc="268440744" symbol="floor"/>
+<entry filename="source/cgTools.mc" id="7" lineNum="11" pc="268440759" symbol="floor"/>
+<entry filename="source/cgTools.mc" id="8" lineNum="14" pc="268440766" symbol="ceil"/>
+<entry filename="source/cgTools.mc" id="8" lineNum="16" pc="268440778" symbol="ceil"/>
+<entry filename="source/cgTools.mc" id="8" lineNum="17" pc="268440788" symbol="ceil"/>
+<entry filename="source/cgTools.mc" id="8" lineNum="19" pc="268440814" symbol="ceil"/>
+<entry filename="source/cgTools.mc" id="8" lineNum="21" pc="268440829" symbol="ceil"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="25" pc="268440836" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="27" pc="268440848" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="28" pc="268440883" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="29" pc="268440925" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="30" pc="268440933" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="33" pc="268441097" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="36" pc="268441101" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="36" pc="268441118" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="37" pc="268441125" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="40" pc="268441129" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="40" pc="268441152" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="41" pc="268441159" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="44" pc="268441163" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="47" pc="268441179" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="47" pc="268441198" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="50" pc="268441211" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="51" pc="268441227" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="52" pc="268441240" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="53" pc="268441253" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="56" pc="268441290" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="57" pc="268441303" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="60" pc="268441325" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="62" pc="268441353" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="64" pc="268441363" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="64" pc="268441396" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="65" pc="268441406" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="69" pc="268441416" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="71" pc="268441424" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="71" pc="268441429" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="72" pc="268441439" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="74" pc="268441446" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="76" pc="268441463" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="77" pc="268441473" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="82" pc="268441486" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="84" pc="268441494" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="85" pc="268441516" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="87" pc="268441526" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="87" pc="268441537" symbol="getWeekNbr"/>
+<entry filename="source/cgTools.mc" id="9" lineNum="90" pc="268441553" symbol="getWeekNbr"/>
 <entry filename="source/lateApp.mc" id="11" lineNum="11" pc="268435456" symbol="initialize"/>
 <entry filename="source/lateApp.mc" id="11" lineNum="12" pc="268435460" symbol="initialize"/>
 <entry filename="source/lateApp.mc" id="12" lineNum="15" pc="268435479" symbol="onStart"/>
@@ -172,494 +172,491 @@
 <entry filename="source/lateApp.mc" id="17" lineNum="48" pc="268436026" symbol="getServiceDelegate"/>
 <entry filename="source/lateBackground.mc" id="19" lineNum="21" pc="268436064" symbol="initialize"/>
 <entry filename="source/lateBackground.mc" id="19" lineNum="22" pc="268436068" symbol="initialize"/>
-<entry filename="source/lateBackground.mc" id="19" lineNum="23" pc="268436090" symbol="initialize"/>
-<entry filename="source/lateBackground.mc" id="20" lineNum="26" pc="268436123" symbol="onTemporalEvent"/>
-<entry filename="source/lateBackground.mc" id="20" lineNum="27" pc="268436127" symbol="onTemporalEvent"/>
-<entry filename="source/lateBackground.mc" id="20" lineNum="28" pc="268436161" symbol="onTemporalEvent"/>
-<entry filename="source/lateBackground.mc" id="20" lineNum="30" pc="268436176" symbol="onTemporalEvent"/>
-<entry filename="source/lateBackground.mc" id="20" lineNum="31" pc="268436213" symbol="onTemporalEvent"/>
-<entry filename="source/lateBackground.mc" id="21" lineNum="35" pc="268436248" symbol="initOAuth"/>
-<entry filename="source/lateBackground.mc" id="21" lineNum="36" pc="268436252" symbol="initOAuth"/>
-<entry filename="source/lateBackground.mc" id="22" lineNum="49" pc="268436435" symbol="getAccessToken"/>
-<entry filename="source/lateBackground.mc" id="22" lineNum="50" pc="268436439" symbol="getAccessToken"/>
-<entry filename="source/lateBackground.mc" id="22" lineNum="51" pc="268436461" symbol="getAccessToken"/>
-<entry filename="source/lateBackground.mc" id="23" lineNum="67" pc="268436667" symbol="handleAccessResponse"/>
-<entry filename="source/lateBackground.mc" id="23" lineNum="68" pc="268436671" symbol="handleAccessResponse"/>
-<entry filename="source/lateBackground.mc" id="23" lineNum="69" pc="268436682" symbol="handleAccessResponse"/>
-<entry filename="source/lateBackground.mc" id="23" lineNum="70" pc="268436692" symbol="handleAccessResponse"/>
-<entry filename="source/lateBackground.mc" id="23" lineNum="72" pc="268436707" symbol="handleAccessResponse"/>
-<entry filename="source/lateBackground.mc" id="24" lineNum="76" pc="268436732" symbol="getCalendarData"/>
-<entry filename="source/lateBackground.mc" id="24" lineNum="77" pc="268436736" symbol="getCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="94" pc="268436889" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="95" pc="268436893" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="96" pc="268436920" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="97" pc="268436931" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="98" pc="268436962" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="99" pc="268436969" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="100" pc="268436982" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="101" pc="268436990" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="102" pc="268436997" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="103" pc="268437021" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="104" pc="268437028" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="105" pc="268437039" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="105" pc="268437056" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="106" pc="268437082" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="108" pc="268437092" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="111" pc="268437112" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="111" pc="268437129" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="112" pc="268437155" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="114" pc="268437174" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="115" pc="268437198" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="117" pc="268437271" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="25" lineNum="119" pc="268437286" symbol="parseCalendarData"/>
-<entry filename="source/lateBackground.mc" id="26" lineNum="124" pc="268437311" symbol="repeater"/>
-<entry filename="source/lateBackground.mc" id="26" lineNum="125" pc="268437315" symbol="repeater"/>
-<entry filename="source/lateBackground.mc" id="26" lineNum="126" pc="268437335" symbol="repeater"/>
-<entry filename="source/lateBackground.mc" id="26" lineNum="127" pc="268437359" symbol="repeater"/>
-<entry filename="source/lateBackground.mc" id="26" lineNum="128" pc="268437392" symbol="repeater"/>
-<entry filename="source/lateBackground.mc" id="26" lineNum="129" pc="268437411" symbol="repeater"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="134" pc="268437444" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="135" pc="268437448" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="136" pc="268437492" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="137" pc="268437511" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="138" pc="268437555" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="139" pc="268437585" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="140" pc="268437617" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="150" pc="268437727" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="151" pc="268437737" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="152" pc="268437821" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="162" pc="268437931" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="164" pc="268437941" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="27" lineNum="165" pc="268437983" symbol="getCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="184" pc="268438191" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="185" pc="268438195" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="186" pc="268438206" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="187" pc="268438244" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="188" pc="268438265" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="194" pc="268438416" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="195" pc="268438427" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="196" pc="268438462" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="197" pc="268438486" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="198" pc="268438497" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="201" pc="268438535" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="203" pc="268438568" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="204" pc="268438594" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="208" pc="268438634" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="210" pc="268438655" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="212" pc="268438674" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="214" pc="268438689" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="28" lineNum="218" pc="268438729" symbol="parseCalendarEventData"/>
-<entry filename="source/lateBackground.mc" id="29" lineNum="222" pc="268438748" symbol="getAccessTokenFromRefresh"/>
-<entry filename="source/lateBackground.mc" id="29" lineNum="223" pc="268438752" symbol="getAccessTokenFromRefresh"/>
-<entry filename="source/lateBackground.mc" id="30" lineNum="238" pc="268438926" symbol="handleAccessResponseRefresh"/>
-<entry filename="source/lateBackground.mc" id="30" lineNum="239" pc="268438930" symbol="handleAccessResponseRefresh"/>
-<entry filename="source/lateBackground.mc" id="30" lineNum="240" pc="268438941" symbol="handleAccessResponseRefresh"/>
-<entry filename="source/lateBackground.mc" id="30" lineNum="241" pc="268438980" symbol="handleAccessResponseRefresh"/>
-<entry filename="source/lateBackground.mc" id="30" lineNum="242" pc="268438990" symbol="handleAccessResponseRefresh"/>
-<entry filename="source/lateBackground.mc" id="30" lineNum="244" pc="268439005" symbol="handleAccessResponseRefresh"/>
-<entry filename="source/lateView.mc" id="32" lineNum="67" pc="268441560" symbol="initialize"/>
-<entry filename="source/lateView.mc" id="32" lineNum="68" pc="268441564" symbol="initialize"/>
-<entry filename="source/lateView.mc" id="32" lineNum="69" pc="268441581" symbol="initialize"/>
-<entry filename="source/lateView.mc" id="32" lineNum="70" pc="268441599" symbol="initialize"/>
-<entry filename="source/lateView.mc" id="32" lineNum="71" pc="268441616" symbol="initialize"/>
-<entry filename="source/lateView.mc" id="32" lineNum="72" pc="268441632" symbol="initialize"/>
-<entry filename="source/lateView.mc" id="32" lineNum="73" pc="268441655" symbol="initialize"/>
-<entry filename="source/lateView.mc" id="32" lineNum="75" pc="268441678" symbol="initialize"/>
-<entry filename="source/lateView.mc" id="33" lineNum="80" pc="268441702" symbol="onLayout"/>
-<entry filename="source/lateView.mc" id="33" lineNum="82" pc="268441706" symbol="onLayout"/>
-<entry filename="source/lateView.mc" id="34" lineNum="85" pc="268441719" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="86" pc="268441723" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="87" pc="268441723" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="88" pc="268441740" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="89" pc="268441757" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="90" pc="268441770" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="91" pc="268441798" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="92" pc="268441820" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="93" pc="268441863" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="94" pc="268441906" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="95" pc="268441949" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="97" pc="268442029" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="98" pc="268442042" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="99" pc="268442064" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="100" pc="268442107" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="101" pc="268442150" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="102" pc="268442193" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="105" pc="268442249" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="106" pc="268442266" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="107" pc="268442279" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="108" pc="268442301" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="109" pc="268442323" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="110" pc="268442366" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="111" pc="268442409" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="112" pc="268442452" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="114" pc="268442532" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="115" pc="268442545" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="116" pc="268442567" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="117" pc="268442610" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="118" pc="268442653" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="119" pc="268442696" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="122" pc="268442749" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="123" pc="268442766" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="124" pc="268442849" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="125" pc="268442866" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="126" pc="268442977" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="127" pc="268442994" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="128" pc="268443017" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="129" pc="268443060" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="131" pc="268443140" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="135" pc="268443159" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="139" pc="268443225" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="140" pc="268443311" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="141" pc="268443324" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="141" pc="268443337" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="145" pc="268443368" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="146" pc="268443433" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="147" pc="268443453" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="34" lineNum="149" pc="268443476" symbol="setLayoutVars"/>
-<entry filename="source/lateView.mc" id="35" lineNum="152" pc="268443490" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="153" pc="268443494" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="154" pc="268443531" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="155" pc="268443568" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="156" pc="268443605" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="157" pc="268443642" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="158" pc="268443679" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="159" pc="268443716" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="162" pc="268443753" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="169" pc="268443766" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="170" pc="268443777" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="171" pc="268443820" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="172" pc="268443863" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="173" pc="268443906" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="174" pc="268443949" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="175" pc="268443972" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="176" pc="268443994" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="178" pc="268444009" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="179" pc="268444026" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="180" pc="268444039" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="180" pc="268444056" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="181" pc="268444102" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="181" pc="268444119" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="182" pc="268444165" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="183" pc="268444212" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="184" pc="268444228" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="184" pc="268444245" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="185" pc="268444291" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="185" pc="268444308" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="188" pc="268444357" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="192" pc="268444370" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="35" lineNum="193" pc="268444383" symbol="loadSettings"/>
-<entry filename="source/lateView.mc" id="36" lineNum="198" pc="268444396" symbol="onShow"/>
-<entry filename="source/lateView.mc" id="36" lineNum="199" pc="268444400" symbol="onShow"/>
-<entry filename="source/lateView.mc" id="37" lineNum="203" pc="268444414" symbol="onHide"/>
-<entry filename="source/lateView.mc" id="37" lineNum="204" pc="268444418" symbol="onHide"/>
-<entry filename="source/lateView.mc" id="38" lineNum="208" pc="268444432" symbol="onExitSleep"/>
-<entry filename="source/lateView.mc" id="38" lineNum="209" pc="268444436" symbol="onExitSleep"/>
-<entry filename="source/lateView.mc" id="39" lineNum="213" pc="268444450" symbol="onEnterSleep"/>
-<entry filename="source/lateView.mc" id="39" lineNum="214" pc="268444454" symbol="onEnterSleep"/>
-<entry filename="source/lateView.mc" id="40" lineNum="223" pc="268444468" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="224" pc="268444472" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="226" pc="268444495" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="226" pc="268444521" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="228" pc="268444537" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="229" pc="268444554" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="230" pc="268444576" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="231" pc="268444588" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="232" pc="268444610" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="233" pc="268444654" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="234" pc="268444670" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="235" pc="268444694" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="236" pc="268444705" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="237" pc="268444754" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="239" pc="268444769" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="241" pc="268444783" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="248" pc="268444827" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="249" pc="268444849" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="250" pc="268444866" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="252" pc="268444882" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="258" pc="268444972" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="259" pc="268444999" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="259" pc="268445010" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="260" pc="268445023" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="260" pc="268445034" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="262" pc="268445047" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="263" pc="268445083" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="266" pc="268445174" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="269" pc="268445191" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="270" pc="268445223" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="271" pc="268445230" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="272" pc="268445243" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="274" pc="268445332" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="275" pc="268445359" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="288" pc="268445409" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="289" pc="268445426" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="290" pc="268445445" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="290" pc="268445462" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="291" pc="268445486" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="291" pc="268445503" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="292" pc="268445527" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="292" pc="268445544" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="293" pc="268445572" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="293" pc="268445589" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="294" pc="268445619" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="294" pc="268445636" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="295" pc="268445658" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="297" pc="268445665" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="298" pc="268445697" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="299" pc="268445714" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="300" pc="268445789" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="302" pc="268445894" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="306" pc="268445914" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="307" pc="268445928" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="310" pc="268445945" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="40" lineNum="310" pc="268445962" symbol="onUpdate"/>
-<entry filename="source/lateView.mc" id="41" lineNum="312" pc="268445985" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="314" pc="268445989" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="315" pc="268446020" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="316" pc="268446035" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="317" pc="268446053" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="318" pc="268446079" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="319" pc="268446103" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="321" pc="268446135" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="322" pc="268446142" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="323" pc="268446161" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="325" pc="268446167" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="326" pc="268446200" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="327" pc="268446263" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="328" pc="268446293" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="329" pc="268446304" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="330" pc="268446310" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="331" pc="268446321" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="332" pc="268446340" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="334" pc="268446362" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="335" pc="268446381" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="336" pc="268446392" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="338" pc="268446423" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="341" pc="268446466" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="342" pc="268446488" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="344" pc="268446530" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="347" pc="268446549" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="351" pc="268446682" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="355" pc="268446725" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="356" pc="268446744" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="357" pc="268446806" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="358" pc="268446831" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="359" pc="268446938" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="41" lineNum="360" pc="268446970" symbol="showEvents"/>
-<entry filename="source/lateView.mc" id="42" lineNum="365" pc="268447066" symbol="humanizeNumber"/>
-<entry filename="source/lateView.mc" id="42" lineNum="366" pc="268447070" symbol="humanizeNumber"/>
-<entry filename="source/lateView.mc" id="42" lineNum="367" pc="268447081" symbol="humanizeNumber"/>
-<entry filename="source/lateView.mc" id="42" lineNum="369" pc="268447122" symbol="humanizeNumber"/>
-<entry filename="source/lateView.mc" id="43" lineNum="373" pc="268447135" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="374" pc="268447139" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="375" pc="268447155" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="376" pc="268447184" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="377" pc="268447203" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="378" pc="268447222" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="379" pc="268447229" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="381" pc="268447236" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="382" pc="268447265" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="384" pc="268447335" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="385" pc="268447346" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="386" pc="268447371" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="400" pc="268447391" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="401" pc="268447402" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="402" pc="268447413" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="403" pc="268447420" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="404" pc="268447431" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="407" pc="268447444" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="408" pc="268447469" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="411" pc="268447479" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="415" pc="268447489" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="416" pc="268447500" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="418" pc="268447510" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="419" pc="268447521" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="421" pc="268447531" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="43" lineNum="426" pc="268447538" symbol="drawMinuteArc"/>
-<entry filename="source/lateView.mc" id="44" lineNum="431" pc="268447615" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="432" pc="268447619" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="435" pc="268447642" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="437" pc="268447656" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="438" pc="268447672" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="442" pc="268447682" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="443" pc="268447718" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="444" pc="268447735" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="446" pc="268447761" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="447" pc="268447772" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="449" pc="268447811" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="454" pc="268447847" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="455" pc="268447873" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="457" pc="268447911" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="458" pc="268447938" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="458" pc="268447949" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="460" pc="268447987" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="44" lineNum="461" pc="268448023" symbol="drawBatteryLevel"/>
-<entry filename="source/lateView.mc" id="45" lineNum="467" pc="268448065" symbol="drawSunBitmaps"/>
-<entry filename="source/lateView.mc" id="45" lineNum="468" pc="268448069" symbol="drawSunBitmaps"/>
-<entry filename="source/lateView.mc" id="45" lineNum="470" pc="268448091" symbol="drawSunBitmaps"/>
-<entry filename="source/lateView.mc" id="45" lineNum="471" pc="268448182" symbol="drawSunBitmaps"/>
-<entry filename="source/lateView.mc" id="45" lineNum="472" pc="268448205" symbol="drawSunBitmaps"/>
-<entry filename="source/lateView.mc" id="45" lineNum="473" pc="268448221" symbol="drawSunBitmaps"/>
-<entry filename="source/lateView.mc" id="45" lineNum="476" pc="268448349" symbol="drawSunBitmaps"/>
-<entry filename="source/lateView.mc" id="45" lineNum="477" pc="268448440" symbol="drawSunBitmaps"/>
-<entry filename="source/lateView.mc" id="45" lineNum="478" pc="268448463" symbol="drawSunBitmaps"/>
-<entry filename="source/lateView.mc" id="46" lineNum="490" pc="268448595" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="491" pc="268448599" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="492" pc="268448622" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="493" pc="268448629" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="494" pc="268448660" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="495" pc="268448667" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="496" pc="268448685" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="501" pc="268448692" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="502" pc="268448705" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="505" pc="268448737" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="506" pc="268448762" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="510" pc="268448787" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="511" pc="268448809" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="513" pc="268448896" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="514" pc="268448912" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="516" pc="268448949" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="517" pc="268448997" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="520" pc="268449045" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="521" pc="268449045" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="522" pc="268449062" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="525" pc="268449096" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="528" pc="268449127" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="529" pc="268449175" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="532" pc="268449223" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="533" pc="268449274" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="534" pc="268449295" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="535" pc="268449314" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="539" pc="268449346" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="540" pc="268449393" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="541" pc="268449425" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="543" pc="268449456" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="544" pc="268449488" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="46" lineNum="557" pc="268449532" symbol="computeSun"/>
-<entry filename="source/lateView.mc" id="47" lineNum="561" pc="268449534" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="568" pc="268449538" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="569" pc="268449558" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="572" pc="268449563" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="580" pc="268449814" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="583" pc="268449843" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="584" pc="268449850" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="585" pc="268449888" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="586" pc="268449905" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="587" pc="268449928" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="588" pc="268449949" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="590" pc="268449955" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="594" pc="268449971" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="596" pc="268449988" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="598" pc="268449993" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="599" pc="268450000" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="601" pc="268450039" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="602" pc="268450062" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="604" pc="268450067" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="605" pc="268450118" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="607" pc="268450172" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="608" pc="268450195" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="609" pc="268450214" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="610" pc="268450227" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="612" pc="268450260" symbol="parseISODate"/>
-<entry filename="source/lateView.mc" id="47" lineNum="615" pc="268450268" symbol="parseISODate"/>
-<entry filename="source/sunrisetCompute.mc" id="48" lineNum="29" pc="268450309" symbol="computeDayNumber"/>
-<entry filename="source/sunrisetCompute.mc" id="48" lineNum="32" pc="268450321" symbol="computeDayNumber"/>
-<entry filename="source/sunrisetCompute.mc" id="48" lineNum="33" pc="268450337" symbol="computeDayNumber"/>
-<entry filename="source/sunrisetCompute.mc" id="48" lineNum="34" pc="268450350" symbol="computeDayNumber"/>
-<entry filename="source/sunrisetCompute.mc" id="49" lineNum="38" pc="268450417" symbol="dayOfYear"/>
-<entry filename="source/sunrisetCompute.mc" id="49" lineNum="40" pc="268450429" symbol="dayOfYear"/>
-<entry filename="source/sunrisetCompute.mc" id="49" lineNum="41" pc="268450448" symbol="dayOfYear"/>
-<entry filename="source/sunrisetCompute.mc" id="49" lineNum="42" pc="268450473" symbol="dayOfYear"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="46" pc="268450480" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="48" pc="268450492" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="49" pc="268450499" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="50" pc="268450506" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="53" pc="268450513" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="54" pc="268450523" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="55" pc="268450523" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="57" pc="268450528" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="61" pc="268450550" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="65" pc="268450569" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="68" pc="268450585" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="69" pc="268450655" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="71" pc="268450666" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="73" pc="268450679" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="75" pc="268450690" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="79" pc="268450703" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="80" pc="268450749" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="82" pc="268450760" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="84" pc="268450773" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="86" pc="268450784" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="90" pc="268450797" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="91" pc="268450824" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="92" pc="268450851" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="95" pc="268450861" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="98" pc="268450871" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="99" pc="268450899" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="102" pc="268450933" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="103" pc="268451003" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="104" pc="268451003" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="106" pc="268451008" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="110" pc="268451039" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="112" pc="268451061" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="115" pc="268451071" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="118" pc="268451093" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="119" pc="268451100" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="121" pc="268451111" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="123" pc="268451124" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="125" pc="268451135" symbol="computeSunriset"/>
-<entry filename="source/sunrisetCompute.mc" id="50" lineNum="128" pc="268451148" symbol="computeSunriset"/>
+<entry filename="source/lateBackground.mc" id="20" lineNum="25" pc="268436091" symbol="onTemporalEvent"/>
+<entry filename="source/lateBackground.mc" id="20" lineNum="26" pc="268436095" symbol="onTemporalEvent"/>
+<entry filename="source/lateBackground.mc" id="20" lineNum="27" pc="268436129" symbol="onTemporalEvent"/>
+<entry filename="source/lateBackground.mc" id="20" lineNum="28" pc="268436175" symbol="onTemporalEvent"/>
+<entry filename="source/lateBackground.mc" id="20" lineNum="30" pc="268436202" symbol="onTemporalEvent"/>
+<entry filename="source/lateBackground.mc" id="20" lineNum="31" pc="268436253" symbol="onTemporalEvent"/>
+<entry filename="source/lateBackground.mc" id="20" lineNum="46" pc="268436469" symbol="onTemporalEvent"/>
+<entry filename="source/lateBackground.mc" id="20" lineNum="47" pc="268436506" symbol="onTemporalEvent"/>
+<entry filename="source/lateBackground.mc" id="21" lineNum="51" pc="268436541" symbol="initOAuth"/>
+<entry filename="source/lateBackground.mc" id="21" lineNum="52" pc="268436545" symbol="initOAuth"/>
+<entry filename="source/lateBackground.mc" id="22" lineNum="65" pc="268436728" symbol="handleAccessResponse"/>
+<entry filename="source/lateBackground.mc" id="22" lineNum="66" pc="268436732" symbol="handleAccessResponse"/>
+<entry filename="source/lateBackground.mc" id="22" lineNum="67" pc="268436743" symbol="handleAccessResponse"/>
+<entry filename="source/lateBackground.mc" id="22" lineNum="68" pc="268436764" symbol="handleAccessResponse"/>
+<entry filename="source/lateBackground.mc" id="22" lineNum="69" pc="268436774" symbol="handleAccessResponse"/>
+<entry filename="source/lateBackground.mc" id="22" lineNum="71" pc="268436789" symbol="handleAccessResponse"/>
+<entry filename="source/lateBackground.mc" id="22" lineNum="72" pc="268436810" symbol="handleAccessResponse"/>
+<entry filename="source/lateBackground.mc" id="23" lineNum="76" pc="268436835" symbol="getCalendarData"/>
+<entry filename="source/lateBackground.mc" id="23" lineNum="77" pc="268436839" symbol="getCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="94" pc="268436992" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="95" pc="268436996" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="96" pc="268437023" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="97" pc="268437034" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="98" pc="268437065" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="99" pc="268437078" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="100" pc="268437086" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="101" pc="268437093" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="102" pc="268437117" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="103" pc="268437124" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="104" pc="268437135" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="104" pc="268437152" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="105" pc="268437178" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="107" pc="268437188" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="110" pc="268437208" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="110" pc="268437225" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="111" pc="268437251" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="113" pc="268437270" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="114" pc="268437294" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="116" pc="268437367" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="24" lineNum="118" pc="268437382" symbol="parseCalendarData"/>
+<entry filename="source/lateBackground.mc" id="25" lineNum="123" pc="268437407" symbol="repeater"/>
+<entry filename="source/lateBackground.mc" id="25" lineNum="124" pc="268437411" symbol="repeater"/>
+<entry filename="source/lateBackground.mc" id="25" lineNum="125" pc="268437431" symbol="repeater"/>
+<entry filename="source/lateBackground.mc" id="25" lineNum="126" pc="268437450" symbol="repeater"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="131" pc="268437483" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="132" pc="268437487" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="133" pc="268437531" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="134" pc="268437550" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="135" pc="268437594" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="136" pc="268437624" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="137" pc="268437656" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="147" pc="268437766" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="148" pc="268437776" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="149" pc="268437860" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="159" pc="268437970" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="26" lineNum="160" pc="268437980" symbol="getCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="179" pc="268438188" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="180" pc="268438192" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="181" pc="268438203" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="182" pc="268438241" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="183" pc="268438262" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="189" pc="268438413" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="190" pc="268438424" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="191" pc="268438459" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="192" pc="268438483" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="193" pc="268438494" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="196" pc="268438532" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="198" pc="268438565" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="199" pc="268438591" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="203" pc="268438631" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="205" pc="268438652" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="207" pc="268438671" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="209" pc="268438686" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="27" lineNum="213" pc="268438726" symbol="parseCalendarEventData"/>
+<entry filename="source/lateBackground.mc" id="28" lineNum="217" pc="268438745" symbol="getAccessTokenFromRefresh"/>
+<entry filename="source/lateBackground.mc" id="28" lineNum="218" pc="268438749" symbol="getAccessTokenFromRefresh"/>
+<entry filename="source/lateBackground.mc" id="29" lineNum="233" pc="268438923" symbol="handleAccessResponseRefresh"/>
+<entry filename="source/lateBackground.mc" id="29" lineNum="234" pc="268438927" symbol="handleAccessResponseRefresh"/>
+<entry filename="source/lateBackground.mc" id="29" lineNum="235" pc="268438938" symbol="handleAccessResponseRefresh"/>
+<entry filename="source/lateBackground.mc" id="29" lineNum="236" pc="268438977" symbol="handleAccessResponseRefresh"/>
+<entry filename="source/lateBackground.mc" id="29" lineNum="237" pc="268438987" symbol="handleAccessResponseRefresh"/>
+<entry filename="source/lateBackground.mc" id="29" lineNum="239" pc="268439002" symbol="handleAccessResponseRefresh"/>
+<entry filename="source/lateView.mc" id="31" lineNum="67" pc="268441557" symbol="initialize"/>
+<entry filename="source/lateView.mc" id="31" lineNum="68" pc="268441561" symbol="initialize"/>
+<entry filename="source/lateView.mc" id="31" lineNum="69" pc="268441578" symbol="initialize"/>
+<entry filename="source/lateView.mc" id="31" lineNum="70" pc="268441596" symbol="initialize"/>
+<entry filename="source/lateView.mc" id="31" lineNum="71" pc="268441613" symbol="initialize"/>
+<entry filename="source/lateView.mc" id="31" lineNum="72" pc="268441629" symbol="initialize"/>
+<entry filename="source/lateView.mc" id="31" lineNum="73" pc="268441652" symbol="initialize"/>
+<entry filename="source/lateView.mc" id="31" lineNum="75" pc="268441675" symbol="initialize"/>
+<entry filename="source/lateView.mc" id="32" lineNum="80" pc="268441699" symbol="onLayout"/>
+<entry filename="source/lateView.mc" id="32" lineNum="82" pc="268441703" symbol="onLayout"/>
+<entry filename="source/lateView.mc" id="33" lineNum="85" pc="268441716" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="86" pc="268441720" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="87" pc="268441720" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="88" pc="268441737" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="89" pc="268441754" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="90" pc="268441767" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="91" pc="268441795" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="92" pc="268441817" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="93" pc="268441860" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="94" pc="268441903" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="95" pc="268441946" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="97" pc="268442026" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="98" pc="268442039" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="99" pc="268442061" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="100" pc="268442104" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="101" pc="268442147" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="102" pc="268442190" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="105" pc="268442246" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="106" pc="268442263" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="107" pc="268442276" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="108" pc="268442298" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="109" pc="268442320" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="110" pc="268442363" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="111" pc="268442406" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="112" pc="268442449" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="114" pc="268442529" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="115" pc="268442542" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="116" pc="268442564" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="117" pc="268442607" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="118" pc="268442650" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="119" pc="268442693" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="122" pc="268442746" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="123" pc="268442763" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="124" pc="268442846" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="125" pc="268442863" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="126" pc="268442974" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="127" pc="268442991" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="128" pc="268443014" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="129" pc="268443057" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="131" pc="268443137" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="135" pc="268443156" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="139" pc="268443222" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="140" pc="268443308" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="141" pc="268443321" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="141" pc="268443334" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="145" pc="268443365" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="146" pc="268443430" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="147" pc="268443450" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="33" lineNum="149" pc="268443473" symbol="setLayoutVars"/>
+<entry filename="source/lateView.mc" id="34" lineNum="152" pc="268443487" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="153" pc="268443491" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="154" pc="268443528" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="155" pc="268443565" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="156" pc="268443602" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="157" pc="268443639" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="158" pc="268443676" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="159" pc="268443713" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="162" pc="268443750" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="169" pc="268443763" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="170" pc="268443774" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="171" pc="268443817" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="172" pc="268443860" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="173" pc="268443903" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="174" pc="268443946" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="175" pc="268443969" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="176" pc="268443991" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="178" pc="268444006" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="179" pc="268444023" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="180" pc="268444036" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="180" pc="268444053" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="181" pc="268444099" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="181" pc="268444116" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="182" pc="268444162" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="183" pc="268444209" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="184" pc="268444225" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="184" pc="268444242" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="185" pc="268444288" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="185" pc="268444305" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="188" pc="268444354" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="192" pc="268444367" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="34" lineNum="193" pc="268444380" symbol="loadSettings"/>
+<entry filename="source/lateView.mc" id="35" lineNum="198" pc="268444393" symbol="onShow"/>
+<entry filename="source/lateView.mc" id="35" lineNum="199" pc="268444397" symbol="onShow"/>
+<entry filename="source/lateView.mc" id="36" lineNum="203" pc="268444411" symbol="onHide"/>
+<entry filename="source/lateView.mc" id="36" lineNum="204" pc="268444415" symbol="onHide"/>
+<entry filename="source/lateView.mc" id="37" lineNum="208" pc="268444429" symbol="onExitSleep"/>
+<entry filename="source/lateView.mc" id="37" lineNum="209" pc="268444433" symbol="onExitSleep"/>
+<entry filename="source/lateView.mc" id="38" lineNum="213" pc="268444447" symbol="onEnterSleep"/>
+<entry filename="source/lateView.mc" id="38" lineNum="214" pc="268444451" symbol="onEnterSleep"/>
+<entry filename="source/lateView.mc" id="39" lineNum="223" pc="268444465" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="224" pc="268444469" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="226" pc="268444492" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="226" pc="268444518" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="228" pc="268444534" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="229" pc="268444551" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="230" pc="268444573" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="231" pc="268444585" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="232" pc="268444607" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="233" pc="268444651" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="234" pc="268444667" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="235" pc="268444691" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="236" pc="268444702" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="237" pc="268444751" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="239" pc="268444766" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="241" pc="268444780" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="248" pc="268444824" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="249" pc="268444846" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="250" pc="268444863" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="252" pc="268444879" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="258" pc="268444969" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="259" pc="268444996" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="259" pc="268445007" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="260" pc="268445020" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="260" pc="268445031" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="262" pc="268445044" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="263" pc="268445080" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="266" pc="268445171" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="269" pc="268445188" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="270" pc="268445220" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="271" pc="268445227" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="272" pc="268445240" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="274" pc="268445329" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="275" pc="268445356" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="288" pc="268445406" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="289" pc="268445423" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="290" pc="268445442" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="290" pc="268445459" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="291" pc="268445483" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="291" pc="268445500" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="292" pc="268445524" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="292" pc="268445541" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="293" pc="268445569" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="293" pc="268445586" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="294" pc="268445616" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="294" pc="268445633" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="295" pc="268445655" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="297" pc="268445662" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="298" pc="268445694" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="299" pc="268445711" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="300" pc="268445786" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="302" pc="268445891" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="306" pc="268445911" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="307" pc="268445925" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="310" pc="268445942" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="39" lineNum="310" pc="268445959" symbol="onUpdate"/>
+<entry filename="source/lateView.mc" id="40" lineNum="312" pc="268445982" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="314" pc="268445986" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="315" pc="268446017" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="316" pc="268446032" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="317" pc="268446050" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="318" pc="268446076" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="319" pc="268446100" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="321" pc="268446132" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="322" pc="268446139" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="323" pc="268446158" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="325" pc="268446164" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="326" pc="268446197" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="327" pc="268446260" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="328" pc="268446290" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="329" pc="268446301" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="330" pc="268446307" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="331" pc="268446318" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="332" pc="268446337" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="334" pc="268446359" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="335" pc="268446378" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="336" pc="268446389" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="338" pc="268446420" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="341" pc="268446463" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="342" pc="268446485" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="344" pc="268446527" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="347" pc="268446546" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="351" pc="268446679" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="355" pc="268446722" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="356" pc="268446741" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="357" pc="268446803" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="358" pc="268446828" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="359" pc="268446935" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="40" lineNum="360" pc="268446967" symbol="showEvents"/>
+<entry filename="source/lateView.mc" id="41" lineNum="365" pc="268447063" symbol="humanizeNumber"/>
+<entry filename="source/lateView.mc" id="41" lineNum="366" pc="268447067" symbol="humanizeNumber"/>
+<entry filename="source/lateView.mc" id="41" lineNum="367" pc="268447078" symbol="humanizeNumber"/>
+<entry filename="source/lateView.mc" id="41" lineNum="369" pc="268447119" symbol="humanizeNumber"/>
+<entry filename="source/lateView.mc" id="42" lineNum="373" pc="268447132" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="374" pc="268447136" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="375" pc="268447152" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="376" pc="268447181" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="377" pc="268447200" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="378" pc="268447219" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="379" pc="268447226" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="381" pc="268447233" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="382" pc="268447262" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="384" pc="268447332" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="385" pc="268447343" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="386" pc="268447368" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="400" pc="268447388" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="401" pc="268447399" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="402" pc="268447410" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="403" pc="268447417" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="404" pc="268447428" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="407" pc="268447441" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="408" pc="268447466" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="411" pc="268447476" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="415" pc="268447486" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="416" pc="268447497" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="418" pc="268447507" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="419" pc="268447518" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="421" pc="268447528" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="42" lineNum="426" pc="268447535" symbol="drawMinuteArc"/>
+<entry filename="source/lateView.mc" id="43" lineNum="431" pc="268447612" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="432" pc="268447616" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="435" pc="268447639" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="437" pc="268447653" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="438" pc="268447669" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="442" pc="268447679" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="443" pc="268447715" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="444" pc="268447732" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="446" pc="268447758" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="447" pc="268447769" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="449" pc="268447808" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="454" pc="268447844" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="455" pc="268447870" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="457" pc="268447908" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="458" pc="268447935" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="458" pc="268447946" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="460" pc="268447984" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="43" lineNum="461" pc="268448020" symbol="drawBatteryLevel"/>
+<entry filename="source/lateView.mc" id="44" lineNum="467" pc="268448062" symbol="drawSunBitmaps"/>
+<entry filename="source/lateView.mc" id="44" lineNum="468" pc="268448066" symbol="drawSunBitmaps"/>
+<entry filename="source/lateView.mc" id="44" lineNum="470" pc="268448088" symbol="drawSunBitmaps"/>
+<entry filename="source/lateView.mc" id="44" lineNum="471" pc="268448179" symbol="drawSunBitmaps"/>
+<entry filename="source/lateView.mc" id="44" lineNum="472" pc="268448202" symbol="drawSunBitmaps"/>
+<entry filename="source/lateView.mc" id="44" lineNum="473" pc="268448218" symbol="drawSunBitmaps"/>
+<entry filename="source/lateView.mc" id="44" lineNum="476" pc="268448346" symbol="drawSunBitmaps"/>
+<entry filename="source/lateView.mc" id="44" lineNum="477" pc="268448437" symbol="drawSunBitmaps"/>
+<entry filename="source/lateView.mc" id="44" lineNum="478" pc="268448460" symbol="drawSunBitmaps"/>
+<entry filename="source/lateView.mc" id="45" lineNum="490" pc="268448592" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="491" pc="268448596" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="492" pc="268448619" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="493" pc="268448626" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="494" pc="268448657" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="495" pc="268448664" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="496" pc="268448682" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="501" pc="268448689" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="502" pc="268448702" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="505" pc="268448734" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="506" pc="268448759" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="510" pc="268448784" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="511" pc="268448806" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="513" pc="268448893" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="514" pc="268448909" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="516" pc="268448946" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="517" pc="268448994" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="520" pc="268449042" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="521" pc="268449042" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="522" pc="268449059" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="525" pc="268449093" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="528" pc="268449124" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="529" pc="268449172" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="532" pc="268449220" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="533" pc="268449271" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="534" pc="268449292" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="535" pc="268449311" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="539" pc="268449343" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="540" pc="268449390" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="541" pc="268449422" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="543" pc="268449453" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="544" pc="268449485" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="45" lineNum="557" pc="268449529" symbol="computeSun"/>
+<entry filename="source/lateView.mc" id="46" lineNum="561" pc="268449531" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="568" pc="268449535" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="569" pc="268449555" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="572" pc="268449560" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="580" pc="268449811" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="583" pc="268449840" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="584" pc="268449847" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="585" pc="268449885" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="586" pc="268449902" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="587" pc="268449925" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="588" pc="268449946" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="590" pc="268449952" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="594" pc="268449968" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="596" pc="268449985" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="598" pc="268449990" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="599" pc="268449997" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="601" pc="268450036" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="602" pc="268450059" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="604" pc="268450064" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="605" pc="268450115" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="607" pc="268450169" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="608" pc="268450192" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="609" pc="268450211" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="610" pc="268450224" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="612" pc="268450257" symbol="parseISODate"/>
+<entry filename="source/lateView.mc" id="46" lineNum="615" pc="268450265" symbol="parseISODate"/>
+<entry filename="source/sunrisetCompute.mc" id="47" lineNum="29" pc="268450306" symbol="computeDayNumber"/>
+<entry filename="source/sunrisetCompute.mc" id="47" lineNum="32" pc="268450318" symbol="computeDayNumber"/>
+<entry filename="source/sunrisetCompute.mc" id="47" lineNum="33" pc="268450334" symbol="computeDayNumber"/>
+<entry filename="source/sunrisetCompute.mc" id="47" lineNum="34" pc="268450347" symbol="computeDayNumber"/>
+<entry filename="source/sunrisetCompute.mc" id="48" lineNum="38" pc="268450414" symbol="dayOfYear"/>
+<entry filename="source/sunrisetCompute.mc" id="48" lineNum="40" pc="268450426" symbol="dayOfYear"/>
+<entry filename="source/sunrisetCompute.mc" id="48" lineNum="41" pc="268450445" symbol="dayOfYear"/>
+<entry filename="source/sunrisetCompute.mc" id="48" lineNum="42" pc="268450470" symbol="dayOfYear"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="46" pc="268450477" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="48" pc="268450489" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="49" pc="268450496" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="50" pc="268450503" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="53" pc="268450510" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="54" pc="268450520" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="55" pc="268450520" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="57" pc="268450525" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="61" pc="268450547" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="65" pc="268450566" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="68" pc="268450582" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="69" pc="268450652" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="71" pc="268450663" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="73" pc="268450676" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="75" pc="268450687" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="79" pc="268450700" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="80" pc="268450746" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="82" pc="268450757" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="84" pc="268450770" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="86" pc="268450781" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="90" pc="268450794" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="91" pc="268450821" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="92" pc="268450848" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="95" pc="268450858" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="98" pc="268450868" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="99" pc="268450896" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="102" pc="268450930" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="103" pc="268451000" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="104" pc="268451000" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="106" pc="268451005" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="110" pc="268451036" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="112" pc="268451058" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="115" pc="268451068" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="118" pc="268451090" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="119" pc="268451097" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="121" pc="268451108" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="123" pc="268451121" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="125" pc="268451132" symbol="computeSunriset"/>
+<entry filename="source/sunrisetCompute.mc" id="49" lineNum="128" pc="268451145" symbol="computeSunriset"/>
 </pcToLineNum>
 <symbolTable>
 <entry field="true" id="16" symbol="ServerToken"/>
 <entry field="true" id="105" symbol="refreshFrequency"/>
 <entry field="true" id="31" symbol="code"/>
 <entry field="true" id="120" symbol="activityColor"/>
-<entry field="true" id="53" symbol="Cal"/>
-<entry field="true" id="69" symbol="SmallBig"/>
+<entry field="true" id="52" symbol="Cal"/>
+<entry field="true" id="68" symbol="SmallBig"/>
 <entry field="true" id="133" symbol="sunst"/>
 <entry field="true" id="132" symbol="sunrs"/>
-<entry id="41" method="true" symbol="repeater"/>
+<entry id="40" method="true" symbol="repeater"/>
 <entry field="true" id="25" symbol="SUNRISET_NBR"/>
-<entry field="true" id="61" symbol="HoursBig"/>
+<entry field="true" id="60" symbol="HoursBig"/>
 <entry id="147" method="true" symbol="setLayoutVars"/>
 <entry field="true" id="20" symbol="Scopes"/>
 <entry field="true" id="113" symbol="ColorPurple"/>
-<entry field="true" id="43" symbol="events_list"/>
+<entry field="true" id="42" symbol="events_list"/>
 <entry field="true" id="142" symbol="batteryY"/>
-<entry field="true" id="54" symbol="Steps"/>
+<entry field="true" id="53" symbol="Steps"/>
 <entry field="true" id="93" symbol="ColorGreen"/>
 <entry id="8389683" method="true" symbol="onSettingsChanged"/>
-<entry field="true" id="79" symbol="ColorYellow"/>
+<entry field="true" id="78" symbol="ColorYellow"/>
 <entry id="26" object="true" symbol="lateView"/>
 <entry field="true" id="8389759" symbol="radius"/>
-<entry field="true" id="83" symbol="ColorRed"/>
-<entry field="true" id="66" symbol="MinuteBig240"/>
+<entry field="true" id="82" symbol="ColorRed"/>
+<entry field="true" id="65" symbol="MinuteBig240"/>
 <entry field="true" id="8388938" symbol="month"/>
 <entry id="152" method="true" symbol="drawBatteryLevel"/>
-<entry field="true" id="76" symbol="ColorDarkRed"/>
-<entry field="true" id="89" symbol="ActiveMinutesDay"/>
+<entry field="true" id="89" symbol="accessCode"/>
+<entry field="true" id="75" symbol="ColorDarkRed"/>
+<entry field="true" id="88" symbol="ActiveMinutesDay"/>
 <entry field="true" id="110" symbol="ColorGray"/>
-<entry field="true" id="57" symbol="Bat"/>
-<entry field="true" id="88" symbol="calendarIndexes"/>
+<entry field="true" id="56" symbol="Bat"/>
+<entry field="true" id="87" symbol="calendarIndexes"/>
 <entry field="true" id="24" symbol="SUNRISET_MAX"/>
 <entry id="8388924" module="true" symbol="Gregorian"/>
-<entry field="true" id="37" symbol="current_index"/>
+<entry field="true" id="36" symbol="current_index"/>
 <entry field="true" id="98" symbol="ActiveMinutesWeek"/>
 <entry field="true" id="139" symbol="dateY"/>
 <entry field="true" id="124" symbol="utcOffset"/>
 <entry field="true" id="8388611" module="true" symbol="Toybox"/>
 <entry id="155" method="true" symbol="parseISODate"/>
 <entry id="14" method="true" symbol="getWeekNbr"/>
-<entry field="true" id="74" symbol="ColorBlue"/>
-<entry field="true" id="81" symbol="AppName"/>
+<entry field="true" id="73" symbol="ColorBlue"/>
+<entry field="true" id="80" symbol="AppName"/>
 <entry id="8389339" symbol="second"/>
-<entry field="true" id="60" symbol="Hours240px"/>
+<entry field="true" id="59" symbol="Hours240px"/>
 <entry field="true" id="145" symbol="redrawAll"/>
 <entry id="8389594" symbol="headers"/>
 <entry field="true" id="140" symbol="circleWidth"/>
 <entry id="8388772" module="true" object="true" symbol="Fonts"/>
 <entry field="true" id="123" symbol="showSunrise"/>
-<entry id="33" method="true" symbol="getAccessToken"/>
 <entry id="8388631" module="true" symbol="Activity"/>
 <entry id="8390147" object="true" symbol="ServiceDelegate"/>
 <entry id="8389338" symbol="minute"/>
@@ -667,70 +664,70 @@
 <entry field="true" id="126" symbol="lonW"/>
 <entry field="true" id="8389104" symbol="event"/>
 <entry id="27" method="true" symbol="computeDayNumber"/>
-<entry id="46" method="true" symbol="handleAccessResponseRefresh"/>
+<entry id="45" method="true" symbol="handleAccessResponseRefresh"/>
 <entry id="8390148" method="true" symbol="onTemporalEvent"/>
 <entry id="13" method="true" symbol="drawFilledCircle"/>
 <entry field="true" id="96" symbol="BellowThird"/>
 <entry field="true" id="115" symbol="Always"/>
 <entry id="8389124" method="true" symbol="onUpdate"/>
-<entry field="true" id="64" symbol="Minute240"/>
-<entry field="true" id="51" symbol="Sunset"/>
+<entry field="true" id="63" symbol="Minute240"/>
+<entry field="true" id="50" symbol="Sunset"/>
 <entry field="true" id="146" symbol="lastRedrawMin"/>
 <entry id="32" method="true" symbol="initOAuth"/>
-<entry field="true" id="55" symbol="Minutes"/>
+<entry field="true" id="54" symbol="Minutes"/>
 <entry field="true" id="112" symbol="BellowFive"/>
-<entry id="42" method="true" symbol="getCalendarEventData"/>
+<entry id="41" method="true" symbol="getCalendarEventData"/>
 <entry id="28" method="true" symbol="dayOfYear"/>
-<entry field="true" id="40" symbol="in_progress"/>
+<entry field="true" id="39" symbol="in_progress"/>
 <entry field="true" id="131" symbol="sun"/>
 <entry id="8388771" module="true" object="true" symbol="Drawables"/>
 <entry field="true" id="8389067" symbol="height"/>
-<entry field="true" id="50" symbol="Sun"/>
+<entry field="true" id="49" symbol="Sun"/>
 <entry field="true" id="97" symbol="s1"/>
 <entry field="true" id="95" symbol="s0"/>
 <entry id="8390169" method="true" symbol="getServiceDelegate"/>
-<entry id="48" module="true" symbol="Menus"/>
+<entry id="47" module="true" symbol="Menus"/>
 <entry field="true" id="100" symbol="ColorDarkGray"/>
 <entry field="true" id="17" symbol="AuthUri"/>
-<entry field="true" id="70" symbol="SmallBig240"/>
+<entry field="true" id="69" symbol="SmallBig240"/>
 <entry id="8389122" method="true" symbol="onLayout"/>
-<entry field="true" id="75" symbol="BellowTwenty"/>
+<entry field="true" id="74" symbol="BellowTwenty"/>
 <entry id="8389376" method="true" symbol="onEnterSleep"/>
-<entry field="true" id="71" symbol="Condensed"/>
+<entry field="true" id="70" symbol="Condensed"/>
 <entry field="true" id="130" symbol="moon"/>
 <entry field="true" id="107" symbol="DialSize"/>
-<entry field="true" id="80" symbol="BatteryTitle"/>
+<entry field="true" id="79" symbol="BatteryTitle"/>
 <entry id="151" method="true" symbol="drawMinuteArc"/>
-<entry field="true" id="36" symbol="calendar_size"/>
+<entry field="true" id="35" symbol="calendar_size"/>
 <entry field="true" id="127" symbol="latN"/>
 <entry field="true" id="103" symbol="Calendar"/>
 <entry field="true" id="19" symbol="ApiCalendarUrl"/>
-<entry id="35" method="true" symbol="getCalendarData"/>
+<entry id="34" method="true" symbol="getCalendarData"/>
 <entry field="true" id="128" symbol="sunrise"/>
-<entry field="true" id="86" symbol="b5"/>
-<entry field="true" id="85" symbol="b4"/>
-<entry field="true" id="84" symbol="b3"/>
+<entry field="true" id="85" symbol="b5"/>
+<entry field="true" id="84" symbol="b4"/>
+<entry field="true" id="83" symbol="b3"/>
 <entry field="true" id="92" symbol="ColorWhite"/>
 <entry field="true" id="101" symbol="ColorDarkBlue"/>
 <entry field="true" id="121" symbol="activity"/>
-<entry field="true" id="59" symbol="Hours"/>
+<entry field="true" id="58" symbol="Hours"/>
 <entry id="8388637" module="true" symbol="Communications"/>
 <entry id="8389717" method="true" symbol="ceil"/>
 <entry id="8390170" method="true" symbol="onBackgroundData"/>
-<entry field="true" id="73" symbol="credentials"/>
+<entry field="true" id="72" symbol="credentials"/>
 <entry field="true" id="8389870" symbol="activeMinutesDay"/>
 <entry field="true" id="138" symbol="fontCondensed"/>
-<entry field="true" id="65" symbol="MinuteBig"/>
-<entry field="true" id="78" symbol="showSunriseSunsetTitle"/>
+<entry field="true" id="64" symbol="MinuteBig"/>
+<entry field="true" id="77" symbol="showSunriseSunsetTitle"/>
 <entry field="true" id="143" symbol="activityY"/>
 <entry id="8388786" method="true" symbol="method"/>
 <entry id="8389377" method="true" symbol="onExitSleep"/>
 <entry field="true" id="137" symbol="fontHours"/>
-<entry field="true" id="49" symbol="Moon"/>
+<entry field="true" id="48" symbol="Moon"/>
 <entry id="8388645" module="true" symbol="Time"/>
 <entry id="8388769" module="true" object="true" symbol="Rez"/>
-<entry field="true" id="87" symbol="ActivityTitle"/>
-<entry field="true" id="62" symbol="HoursBig240px"/>
+<entry field="true" id="86" symbol="ActivityTitle"/>
+<entry field="true" id="61" symbol="HoursBig240px"/>
 <entry id="154" method="true" symbol="computeSun"/>
 <entry field="true" id="108" symbol="DateFormTitle"/>
 <entry field="true" id="144" symbol="batThreshold"/>
@@ -738,25 +735,25 @@
 <entry field="true" id="136" symbol="fontMinutes"/>
 <entry field="true" id="8388720" symbol="hour"/>
 <entry field="true" id="141" symbol="dialSize"/>
-<entry field="true" id="67" symbol="Small"/>
+<entry field="true" id="66" symbol="Small"/>
 <entry id="8388640" module="true" symbol="Lang"/>
 <entry id="8390088" module="true" object="true" symbol="JsonData"/>
-<entry field="true" id="72" symbol="Condensed240"/>
-<entry field="true" id="58" symbol="LauncherIcon"/>
+<entry field="true" id="71" symbol="Condensed240"/>
+<entry field="true" id="57" symbol="LauncherIcon"/>
 <entry field="true" id="125" symbol="clockTime"/>
 <entry id="8389123" method="true" symbol="onShow"/>
-<entry field="true" id="82" symbol="ColorDarkGreen"/>
+<entry field="true" id="81" symbol="ColorDarkGreen"/>
 <entry field="true" id="134" symbol="icon"/>
-<entry field="true" id="52" symbol="Sunrise"/>
-<entry id="39" method="true" symbol="parseCalendarData"/>
+<entry field="true" id="51" symbol="Sunrise"/>
+<entry id="38" method="true" symbol="parseCalendarData"/>
 <entry id="150" method="true" symbol="humanizeNumber"/>
-<entry field="true" id="63" symbol="Minute"/>
+<entry field="true" id="62" symbol="Minute"/>
 <entry field="true" id="116" symbol="CENTER"/>
-<entry field="true" id="56" symbol="Floors"/>
+<entry field="true" id="55" symbol="Floors"/>
 <entry id="8388770" module="true" object="true" symbol="Strings"/>
 <entry id="8390146" module="true" symbol="Background"/>
-<entry id="44" method="true" symbol="parseCalendarEventData"/>
-<entry id="45" method="true" symbol="getAccessTokenFromRefresh"/>
+<entry id="43" method="true" symbol="parseCalendarEventData"/>
+<entry id="44" method="true" symbol="getAccessTokenFromRefresh"/>
 <entry field="true" id="118" symbol="centerY"/>
 <entry field="true" id="117" symbol="centerX"/>
 <entry id="22" object="true" symbol="lateBackground"/>
@@ -766,7 +763,7 @@
 <entry id="8389279" method="true" symbol="onStart"/>
 <entry field="true" id="135" symbol="fontSmall"/>
 <entry field="true" id="91" symbol="DnD"/>
-<entry field="true" id="68" symbol="Small240"/>
+<entry field="true" id="67" symbol="Small240"/>
 <entry id="8388641" module="true" symbol="Math"/>
 <entry field="true" id="30" symbol="watch"/>
 <entry field="true" id="102" symbol="DateFormMonth"/>
@@ -781,9 +778,9 @@
 <entry id="29" method="true" symbol="computeSunriset"/>
 <entry field="true" id="8388940" symbol="year"/>
 <entry field="true" id="99" symbol="AppVersionTitle"/>
-<entry id="34" method="true" symbol="handleAccessResponse"/>
+<entry id="33" method="true" symbol="handleAccessResponse"/>
 <entry id="149" method="true" symbol="showEvents"/>
-<entry id="47" module="true" symbol="Layouts"/>
+<entry id="46" module="true" symbol="Layouts"/>
 <entry field="true" id="109" symbol="Calories"/>
 <entry id="148" method="true" symbol="loadSettings"/>
 <entry id="8389718" method="true" symbol="floor"/>
@@ -797,198 +794,197 @@
 <entry field="true" id="23" symbol="SUNRISET_NOW"/>
 <entry field="true" id="104" symbol="BellowTen"/>
 <entry field="true" id="114" symbol="DateFormDayOfWeek"/>
-<entry field="true" id="77" symbol="ColorTitle"/>
+<entry field="true" id="76" symbol="ColorTitle"/>
 <entry field="true" id="111" symbol="BellowHalf"/>
-<entry field="true" id="38" symbol="id_list"/>
+<entry field="true" id="37" symbol="id_list"/>
 </symbolTable>
 <localVars>
-<entry endPc="268439384" name="cx" stackId="8" startPc="268439164"/>
-<entry endPc="268439384" name="cyy" stackId="9" startPc="268439164"/>
-<entry endPc="268439397" name="cy" stackId="7" startPc="268439164"/>
-<entry endPc="268439397" name="r2" stackId="5" startPc="268439109"/>
-<entry endPc="268439397" name="pcx" stackId="6" startPc="268439109"/>
-<entry endPc="268439398" name="x" stackId="1" startPc="268439097"/>
-<entry endPc="268439398" name="dc" stackId="4" startPc="268439097"/>
-<entry endPc="268439398" name="r" stackId="3" startPc="268439097"/>
-<entry endPc="268439398" name="y" stackId="2" startPc="268439097"/>
-<entry endPc="268439908" name="pos_x" stackId="11" startPc="268439664"/>
-<entry endPc="268439908" name="b" stackId="10" startPc="268439410"/>
-<entry endPc="268439908" name="ty" stackId="8" startPc="268439410"/>
-<entry endPc="268439908" name="a" stackId="9" startPc="268439410"/>
-<entry endPc="268439908" name="tx" stackId="7" startPc="268439410"/>
-<entry endPc="268439908" name="pos_y" stackId="6" startPc="268439410"/>
-<entry endPc="268439908" name="x1" stackId="5" startPc="268439410"/>
-<entry endPc="268439909" name="x" stackId="1" startPc="268439398"/>
-<entry endPc="268439909" name="dc" stackId="4" startPc="268439398"/>
-<entry endPc="268439909" name="r" stackId="3" startPc="268439398"/>
-<entry endPc="268439909" name="y" stackId="2" startPc="268439398"/>
-<entry endPc="268440263" name="x" stackId="5" startPc="268439921"/>
-<entry endPc="268440263" name="cd2" stackId="7" startPc="268439921"/>
-<entry endPc="268440263" name="y" stackId="6" startPc="268439921"/>
-<entry endPc="268440264" name="dc" stackId="4" startPc="268439909"/>
-<entry endPc="268440264" name="r" stackId="3" startPc="268439909"/>
-<entry endPc="268440264" name="xc" stackId="1" startPc="268439909"/>
-<entry endPc="268440264" name="yc" stackId="2" startPc="268439909"/>
-<entry endPc="268440591" name="x" stackId="8" startPc="268440276"/>
-<entry endPc="268440591" name="dB" stackId="7" startPc="268440276"/>
-<entry endPc="268440591" name="dA" stackId="6" startPc="268440276"/>
-<entry endPc="268440591" name="d" stackId="5" startPc="268440276"/>
-<entry endPc="268440591" name="y" stackId="9" startPc="268440276"/>
-<entry endPc="268440592" name="dc" stackId="4" startPc="268440264"/>
-<entry endPc="268440592" name="R" stackId="3" startPc="268440264"/>
-<entry endPc="268440592" name="xc" stackId="1" startPc="268440264"/>
-<entry endPc="268440592" name="yc" stackId="2" startPc="268440264"/>
-<entry endPc="268440695" name="cx" stackId="7" startPc="268440629"/>
-<entry endPc="268440695" name="cyy" stackId="8" startPc="268440629"/>
-<entry endPc="268440708" name="cy" stackId="6" startPc="268440629"/>
-<entry endPc="268440708" name="r2" stackId="5" startPc="268440604"/>
-<entry endPc="268440709" name="x" stackId="1" startPc="268440592"/>
-<entry endPc="268440709" name="dc" stackId="4" startPc="268440592"/>
-<entry endPc="268440709" name="r" stackId="3" startPc="268440592"/>
-<entry endPc="268440709" name="y" stackId="2" startPc="268440592"/>
-<entry endPc="268440769" name="f" stackId="1" startPc="268440709"/>
-<entry endPc="268440838" name="f2" stackId="2" startPc="268440781"/>
-<entry endPc="268440839" name="f" stackId="1" startPc="268440769"/>
-<entry endPc="268441559" name="nYY" stackId="5" startPc="268440851"/>
-<entry endPc="268441559" name="nWeekNumber" stackId="12" startPc="268440851"/>
-<entry endPc="268441559" name="bIsPrevYear" stackId="16" startPc="268440851"/>
-<entry endPc="268441559" name="bIsLeapYear" stackId="15" startPc="268440851"/>
-<entry endPc="268441559" name="nYearNumber" stackId="11" startPc="268440851"/>
-<entry endPc="268441559" name="nMonthArray" stackId="17" startPc="268440851"/>
-<entry endPc="268441559" name="nWeekday" stackId="10" startPc="268440851"/>
-<entry endPc="268441559" name="nJ" stackId="14" startPc="268440851"/>
-<entry endPc="268441559" name="nI" stackId="13" startPc="268440851"/>
-<entry endPc="268441559" name="nH" stackId="9" startPc="268440851"/>
-<entry endPc="268441559" name="nG" stackId="7" startPc="268440851"/>
-<entry endPc="268441559" name="nC" stackId="6" startPc="268440851"/>
-<entry endPc="268441559" name="nJan1Weekday" stackId="8" startPc="268440851"/>
-<entry endPc="268441559" name="nNumDaysOfYear" stackId="4" startPc="268440851"/>
-<entry endPc="268441560" name="nYear" stackId="1" startPc="268440839"/>
-<entry endPc="268441560" name="nMonth" stackId="2" startPc="268440839"/>
-<entry endPc="268441560" name="nDay" stackId="3" startPc="268440839"/>
+<entry endPc="268439381" name="cx" stackId="8" startPc="268439161"/>
+<entry endPc="268439381" name="cyy" stackId="9" startPc="268439161"/>
+<entry endPc="268439394" name="cy" stackId="7" startPc="268439161"/>
+<entry endPc="268439394" name="r2" stackId="5" startPc="268439106"/>
+<entry endPc="268439394" name="pcx" stackId="6" startPc="268439106"/>
+<entry endPc="268439395" name="x" stackId="1" startPc="268439094"/>
+<entry endPc="268439395" name="dc" stackId="4" startPc="268439094"/>
+<entry endPc="268439395" name="r" stackId="3" startPc="268439094"/>
+<entry endPc="268439395" name="y" stackId="2" startPc="268439094"/>
+<entry endPc="268439905" name="pos_x" stackId="11" startPc="268439661"/>
+<entry endPc="268439905" name="b" stackId="10" startPc="268439407"/>
+<entry endPc="268439905" name="ty" stackId="8" startPc="268439407"/>
+<entry endPc="268439905" name="a" stackId="9" startPc="268439407"/>
+<entry endPc="268439905" name="tx" stackId="7" startPc="268439407"/>
+<entry endPc="268439905" name="pos_y" stackId="6" startPc="268439407"/>
+<entry endPc="268439905" name="x1" stackId="5" startPc="268439407"/>
+<entry endPc="268439906" name="x" stackId="1" startPc="268439395"/>
+<entry endPc="268439906" name="dc" stackId="4" startPc="268439395"/>
+<entry endPc="268439906" name="r" stackId="3" startPc="268439395"/>
+<entry endPc="268439906" name="y" stackId="2" startPc="268439395"/>
+<entry endPc="268440260" name="x" stackId="5" startPc="268439918"/>
+<entry endPc="268440260" name="cd2" stackId="7" startPc="268439918"/>
+<entry endPc="268440260" name="y" stackId="6" startPc="268439918"/>
+<entry endPc="268440261" name="dc" stackId="4" startPc="268439906"/>
+<entry endPc="268440261" name="r" stackId="3" startPc="268439906"/>
+<entry endPc="268440261" name="xc" stackId="1" startPc="268439906"/>
+<entry endPc="268440261" name="yc" stackId="2" startPc="268439906"/>
+<entry endPc="268440588" name="x" stackId="8" startPc="268440273"/>
+<entry endPc="268440588" name="dB" stackId="7" startPc="268440273"/>
+<entry endPc="268440588" name="dA" stackId="6" startPc="268440273"/>
+<entry endPc="268440588" name="d" stackId="5" startPc="268440273"/>
+<entry endPc="268440588" name="y" stackId="9" startPc="268440273"/>
+<entry endPc="268440589" name="dc" stackId="4" startPc="268440261"/>
+<entry endPc="268440589" name="R" stackId="3" startPc="268440261"/>
+<entry endPc="268440589" name="xc" stackId="1" startPc="268440261"/>
+<entry endPc="268440589" name="yc" stackId="2" startPc="268440261"/>
+<entry endPc="268440692" name="cx" stackId="7" startPc="268440626"/>
+<entry endPc="268440692" name="cyy" stackId="8" startPc="268440626"/>
+<entry endPc="268440705" name="cy" stackId="6" startPc="268440626"/>
+<entry endPc="268440705" name="r2" stackId="5" startPc="268440601"/>
+<entry endPc="268440706" name="x" stackId="1" startPc="268440589"/>
+<entry endPc="268440706" name="dc" stackId="4" startPc="268440589"/>
+<entry endPc="268440706" name="r" stackId="3" startPc="268440589"/>
+<entry endPc="268440706" name="y" stackId="2" startPc="268440589"/>
+<entry endPc="268440766" name="f" stackId="1" startPc="268440706"/>
+<entry endPc="268440835" name="f2" stackId="2" startPc="268440778"/>
+<entry endPc="268440836" name="f" stackId="1" startPc="268440766"/>
+<entry endPc="268441556" name="nYY" stackId="5" startPc="268440848"/>
+<entry endPc="268441556" name="nWeekNumber" stackId="12" startPc="268440848"/>
+<entry endPc="268441556" name="bIsPrevYear" stackId="16" startPc="268440848"/>
+<entry endPc="268441556" name="bIsLeapYear" stackId="15" startPc="268440848"/>
+<entry endPc="268441556" name="nYearNumber" stackId="11" startPc="268440848"/>
+<entry endPc="268441556" name="nMonthArray" stackId="17" startPc="268440848"/>
+<entry endPc="268441556" name="nWeekday" stackId="10" startPc="268440848"/>
+<entry endPc="268441556" name="nJ" stackId="14" startPc="268440848"/>
+<entry endPc="268441556" name="nI" stackId="13" startPc="268440848"/>
+<entry endPc="268441556" name="nH" stackId="9" startPc="268440848"/>
+<entry endPc="268441556" name="nG" stackId="7" startPc="268440848"/>
+<entry endPc="268441556" name="nC" stackId="6" startPc="268440848"/>
+<entry endPc="268441556" name="nJan1Weekday" stackId="8" startPc="268440848"/>
+<entry endPc="268441556" name="nNumDaysOfYear" stackId="4" startPc="268440848"/>
+<entry endPc="268441557" name="nYear" stackId="1" startPc="268440836"/>
+<entry endPc="268441557" name="nMonth" stackId="2" startPc="268440836"/>
+<entry endPc="268441557" name="nDay" stackId="3" startPc="268440836"/>
 <entry endPc="268435484" name="state" stackId="1" startPc="268435479"/>
 <entry endPc="268435489" name="state" stackId="1" startPc="268435484"/>
 <entry endPc="268435793" name="freq" stackId="2" startPc="268435712"/>
 <entry endPc="268435854" name="codes" stackId="1" startPc="268435532"/>
 <entry endPc="268436022" name="data" stackId="1" startPc="268435855"/>
-<entry endPc="268436667" name="accessCode" stackId="1" startPc="268436435"/>
-<entry endPc="268436732" name="responseCode" stackId="1" startPc="268436667"/>
-<entry endPc="268436732" name="data" stackId="2" startPc="268436667"/>
-<entry endPc="268437099" name="c" stackId="8" startPc="268437021"/>
-<entry endPc="268437112" name="i" stackId="7" startPc="268437021"/>
-<entry endPc="268437271" name="d" stackId="9" startPc="268437198"/>
-<entry endPc="268437283" name="index_list" stackId="5" startPc="268436931"/>
-<entry endPc="268437283" name="indexes" stackId="4" startPc="268436931"/>
-<entry endPc="268437283" name="cn" stackId="6" startPc="268436931"/>
-<entry endPc="268437310" name="result_size" stackId="3" startPc="268436893"/>
-<entry endPc="268437311" name="responseCode" stackId="1" startPc="268436889"/>
-<entry endPc="268437311" name="data" stackId="2" startPc="268436889"/>
-<entry endPc="268438190" name="sign" stackId="6" startPc="268437448"/>
-<entry endPc="268438190" name="today" stackId="2" startPc="268437448"/>
-<entry endPc="268438190" name="sys_time" stackId="3" startPc="268437448"/>
-<entry endPc="268438190" name="dateEnd" stackId="8" startPc="268437448"/>
-<entry endPc="268438190" name="UTCdelta" stackId="4" startPc="268437448"/>
-<entry endPc="268438190" name="dateStart" stackId="7" startPc="268437448"/>
-<entry endPc="268438190" name="to" stackId="5" startPc="268437448"/>
-<entry endPc="268438191" name="calendar_id" stackId="1" startPc="268437444"/>
-<entry endPc="268438532" name="split" stackId="6" startPc="268438427"/>
-<entry endPc="268438555" name="event" stackId="4" startPc="268438244"/>
-<entry endPc="268438555" name="eventTrim" stackId="5" startPc="268438244"/>
-<entry endPc="268438568" name="i" stackId="3" startPc="268438244"/>
-<entry endPc="268438652" name="code_events" stackId="7" startPc="268438594"/>
-<entry endPc="268438747" name="code_events" stackId="8" startPc="268438689"/>
-<entry endPc="268438748" name="responseCode" stackId="1" startPc="268438191"/>
-<entry endPc="268438748" name="data" stackId="2" startPc="268438191"/>
-<entry endPc="268438926" name="refresh_token" stackId="1" startPc="268438748"/>
-<entry endPc="268439030" name="responseCode" stackId="1" startPc="268438926"/>
-<entry endPc="268439030" name="data" stackId="2" startPc="268438926"/>
-<entry endPc="268441701" name="time" stackId="1" startPc="268441564"/>
-<entry endPc="268441701" name="set" stackId="2" startPc="268441564"/>
-<entry endPc="268441719" name="dc" stackId="1" startPc="268441702"/>
-<entry endPc="268443489" name="langTest" stackId="2" startPc="268441723"/>
-<entry endPc="268444969" name="a" stackId="4" startPc="268444705"/>
-<entry endPc="268444969" name="r" stackId="5" startPc="268444705"/>
-<entry endPc="268445911" name="text" stackId="6" startPc="268445191"/>
-<entry endPc="268445942" name="h" stackId="3" startPc="268444554"/>
-<entry endPc="268445942" name="info" stackId="2" startPc="268444554"/>
-<entry endPc="268445985" name="dc" stackId="1" startPc="268444468"/>
-<entry endPc="268446706" name="duration" stackId="5" startPc="268446142"/>
-<entry endPc="268446709" name="date" stackId="4" startPc="268446103"/>
-<entry endPc="268446722" name="i" stackId="3" startPc="268446103"/>
-<entry endPc="268447065" name="data" stackId="2" startPc="268445989"/>
-<entry endPc="268447066" name="dc" stackId="1" startPc="268445985"/>
-<entry endPc="268447135" name="number" stackId="1" startPc="268447066"/>
-<entry endPc="268447614" name="sin" stackId="5" startPc="268447139"/>
-<entry endPc="268447614" name="minutes" stackId="2" startPc="268447139"/>
-<entry endPc="268447614" name="cos" stackId="4" startPc="268447139"/>
-<entry endPc="268447614" name="offset" stackId="6" startPc="268447139"/>
-<entry endPc="268447614" name="angle" stackId="3" startPc="268447139"/>
-<entry endPc="268447614" name="gap" stackId="7" startPc="268447139"/>
-<entry endPc="268447615" name="dc" stackId="1" startPc="268447135"/>
-<entry endPc="268448061" name="lvl" stackId="5" startPc="268447656"/>
-<entry endPc="268448061" name="yPos" stackId="4" startPc="268447656"/>
-<entry endPc="268448061" name="xPos" stackId="3" startPc="268447656"/>
-<entry endPc="268448064" name="bat" stackId="2" startPc="268447619"/>
-<entry endPc="268448065" name="dc" stackId="1" startPc="268447615"/>
-<entry endPc="268448591" name="a" stackId="2" startPc="268448091"/>
-<entry endPc="268448591" name="r" stackId="3" startPc="268448091"/>
-<entry endPc="268448595" name="dc" stackId="1" startPc="268448065"/>
-<entry endPc="268449346" name="i" stackId="6" startPc="268449295"/>
-<entry endPc="268449532" name="i" stackId="7" startPc="268449393"/>
-<entry endPc="268449533" name="max" stackId="4" startPc="268448599"/>
-<entry endPc="268449533" name="now" stackId="3" startPc="268448599"/>
-<entry endPc="268449533" name="offset" stackId="5" startPc="268448599"/>
-<entry endPc="268449533" name="timeInfo" stackId="2" startPc="268448599"/>
-<entry endPc="268449533" name="pos" stackId="1" startPc="268448599"/>
-<entry endPc="268449965" name="first" stackId="5" startPc="268449905"/>
-<entry endPc="268450265" name="sign" stackId="7" startPc="268450039"/>
-<entry endPc="268450308" name="tzOffset" stackId="6" startPc="268449538"/>
-<entry endPc="268450308" name="suffix" stackId="3" startPc="268449538"/>
-<entry endPc="268450308" name="moment" stackId="2" startPc="268449538"/>
-<entry endPc="268450308" name="tz" stackId="4" startPc="268449538"/>
-<entry endPc="268450309" name="date" stackId="1" startPc="268449534"/>
-<entry endPc="268450417" name="m" stackId="2" startPc="268450309"/>
-<entry endPc="268450417" name="d" stackId="1" startPc="268450309"/>
-<entry endPc="268450417" name="y" stackId="3" startPc="268450309"/>
-<entry endPc="268450479" name="now" stackId="4" startPc="268450429"/>
-<entry endPc="268450479" name="begOfYear" stackId="5" startPc="268450429"/>
-<entry endPc="268450480" name="day" stackId="1" startPc="268450417"/>
-<entry endPc="268450480" name="year" stackId="3" startPc="268450417"/>
-<entry endPc="268450480" name="month" stackId="2" startPc="268450417"/>
-<entry endPc="268451151" name="cosDec" stackId="16" startPc="268450492"/>
-<entry endPc="268451151" name="cosH" stackId="17" startPc="268450492"/>
-<entry endPc="268451151" name="RAquadrant" stackId="14" startPc="268450492"/>
-<entry endPc="268451151" name="Lquadrant" stackId="13" startPc="268450492"/>
-<entry endPc="268451151" name="lnHour" stackId="8" startPc="268450492"/>
-<entry endPc="268451151" name="T" stackId="19" startPc="268450492"/>
-<entry endPc="268451151" name="R2D" stackId="7" startPc="268450492"/>
-<entry endPc="268451151" name="M" stackId="10" startPc="268450492"/>
-<entry endPc="268451151" name="RA" stackId="12" startPc="268450492"/>
-<entry endPc="268451151" name="L" stackId="11" startPc="268450492"/>
-<entry endPc="268451151" name="UT" stackId="20" startPc="268450492"/>
-<entry endPc="268451151" name="sinDec" stackId="15" startPc="268450492"/>
-<entry endPc="268451151" name="D2R" stackId="6" startPc="268450492"/>
-<entry endPc="268451151" name="H" stackId="18" startPc="268450492"/>
-<entry endPc="268451151" name="zenith" stackId="5" startPc="268450492"/>
-<entry endPc="268451151" name="t" stackId="9" startPc="268450492"/>
-<entry endPc="268451152" name="day" stackId="1" startPc="268450480"/>
-<entry endPc="268451152" name="sunrise" stackId="4" startPc="268450480"/>
-<entry endPc="268451152" name="longitude" stackId="2" startPc="268450480"/>
-<entry endPc="268451152" name="latitude" stackId="3" startPc="268450480"/>
+<entry endPc="268436835" name="responseCode" stackId="1" startPc="268436728"/>
+<entry endPc="268436835" name="data" stackId="2" startPc="268436728"/>
+<entry endPc="268437195" name="c" stackId="8" startPc="268437117"/>
+<entry endPc="268437208" name="i" stackId="7" startPc="268437117"/>
+<entry endPc="268437367" name="d" stackId="9" startPc="268437294"/>
+<entry endPc="268437379" name="index_list" stackId="5" startPc="268437034"/>
+<entry endPc="268437379" name="indexes" stackId="4" startPc="268437034"/>
+<entry endPc="268437379" name="cn" stackId="6" startPc="268437034"/>
+<entry endPc="268437406" name="result_size" stackId="3" startPc="268436996"/>
+<entry endPc="268437407" name="responseCode" stackId="1" startPc="268436992"/>
+<entry endPc="268437407" name="data" stackId="2" startPc="268436992"/>
+<entry endPc="268438187" name="sign" stackId="6" startPc="268437487"/>
+<entry endPc="268438187" name="today" stackId="2" startPc="268437487"/>
+<entry endPc="268438187" name="sys_time" stackId="3" startPc="268437487"/>
+<entry endPc="268438187" name="dateEnd" stackId="8" startPc="268437487"/>
+<entry endPc="268438187" name="UTCdelta" stackId="4" startPc="268437487"/>
+<entry endPc="268438187" name="dateStart" stackId="7" startPc="268437487"/>
+<entry endPc="268438187" name="to" stackId="5" startPc="268437487"/>
+<entry endPc="268438188" name="calendar_id" stackId="1" startPc="268437483"/>
+<entry endPc="268438529" name="split" stackId="6" startPc="268438424"/>
+<entry endPc="268438552" name="event" stackId="4" startPc="268438241"/>
+<entry endPc="268438552" name="eventTrim" stackId="5" startPc="268438241"/>
+<entry endPc="268438565" name="i" stackId="3" startPc="268438241"/>
+<entry endPc="268438649" name="code_events" stackId="7" startPc="268438591"/>
+<entry endPc="268438744" name="code_events" stackId="8" startPc="268438686"/>
+<entry endPc="268438745" name="responseCode" stackId="1" startPc="268438188"/>
+<entry endPc="268438745" name="data" stackId="2" startPc="268438188"/>
+<entry endPc="268438923" name="refresh_token" stackId="1" startPc="268438745"/>
+<entry endPc="268439027" name="responseCode" stackId="1" startPc="268438923"/>
+<entry endPc="268439027" name="data" stackId="2" startPc="268438923"/>
+<entry endPc="268441698" name="time" stackId="1" startPc="268441561"/>
+<entry endPc="268441698" name="set" stackId="2" startPc="268441561"/>
+<entry endPc="268441716" name="dc" stackId="1" startPc="268441699"/>
+<entry endPc="268443486" name="langTest" stackId="2" startPc="268441720"/>
+<entry endPc="268444966" name="a" stackId="4" startPc="268444702"/>
+<entry endPc="268444966" name="r" stackId="5" startPc="268444702"/>
+<entry endPc="268445908" name="text" stackId="6" startPc="268445188"/>
+<entry endPc="268445939" name="h" stackId="3" startPc="268444551"/>
+<entry endPc="268445939" name="info" stackId="2" startPc="268444551"/>
+<entry endPc="268445982" name="dc" stackId="1" startPc="268444465"/>
+<entry endPc="268446703" name="duration" stackId="5" startPc="268446139"/>
+<entry endPc="268446706" name="date" stackId="4" startPc="268446100"/>
+<entry endPc="268446719" name="i" stackId="3" startPc="268446100"/>
+<entry endPc="268447062" name="data" stackId="2" startPc="268445986"/>
+<entry endPc="268447063" name="dc" stackId="1" startPc="268445982"/>
+<entry endPc="268447132" name="number" stackId="1" startPc="268447063"/>
+<entry endPc="268447611" name="sin" stackId="5" startPc="268447136"/>
+<entry endPc="268447611" name="minutes" stackId="2" startPc="268447136"/>
+<entry endPc="268447611" name="cos" stackId="4" startPc="268447136"/>
+<entry endPc="268447611" name="offset" stackId="6" startPc="268447136"/>
+<entry endPc="268447611" name="angle" stackId="3" startPc="268447136"/>
+<entry endPc="268447611" name="gap" stackId="7" startPc="268447136"/>
+<entry endPc="268447612" name="dc" stackId="1" startPc="268447132"/>
+<entry endPc="268448058" name="lvl" stackId="5" startPc="268447653"/>
+<entry endPc="268448058" name="yPos" stackId="4" startPc="268447653"/>
+<entry endPc="268448058" name="xPos" stackId="3" startPc="268447653"/>
+<entry endPc="268448061" name="bat" stackId="2" startPc="268447616"/>
+<entry endPc="268448062" name="dc" stackId="1" startPc="268447612"/>
+<entry endPc="268448588" name="a" stackId="2" startPc="268448088"/>
+<entry endPc="268448588" name="r" stackId="3" startPc="268448088"/>
+<entry endPc="268448592" name="dc" stackId="1" startPc="268448062"/>
+<entry endPc="268449343" name="i" stackId="6" startPc="268449292"/>
+<entry endPc="268449529" name="i" stackId="7" startPc="268449390"/>
+<entry endPc="268449530" name="max" stackId="4" startPc="268448596"/>
+<entry endPc="268449530" name="now" stackId="3" startPc="268448596"/>
+<entry endPc="268449530" name="offset" stackId="5" startPc="268448596"/>
+<entry endPc="268449530" name="timeInfo" stackId="2" startPc="268448596"/>
+<entry endPc="268449530" name="pos" stackId="1" startPc="268448596"/>
+<entry endPc="268449962" name="first" stackId="5" startPc="268449902"/>
+<entry endPc="268450262" name="sign" stackId="7" startPc="268450036"/>
+<entry endPc="268450305" name="tzOffset" stackId="6" startPc="268449535"/>
+<entry endPc="268450305" name="suffix" stackId="3" startPc="268449535"/>
+<entry endPc="268450305" name="moment" stackId="2" startPc="268449535"/>
+<entry endPc="268450305" name="tz" stackId="4" startPc="268449535"/>
+<entry endPc="268450306" name="date" stackId="1" startPc="268449531"/>
+<entry endPc="268450414" name="m" stackId="2" startPc="268450306"/>
+<entry endPc="268450414" name="d" stackId="1" startPc="268450306"/>
+<entry endPc="268450414" name="y" stackId="3" startPc="268450306"/>
+<entry endPc="268450476" name="now" stackId="4" startPc="268450426"/>
+<entry endPc="268450476" name="begOfYear" stackId="5" startPc="268450426"/>
+<entry endPc="268450477" name="day" stackId="1" startPc="268450414"/>
+<entry endPc="268450477" name="year" stackId="3" startPc="268450414"/>
+<entry endPc="268450477" name="month" stackId="2" startPc="268450414"/>
+<entry endPc="268451148" name="cosDec" stackId="16" startPc="268450489"/>
+<entry endPc="268451148" name="cosH" stackId="17" startPc="268450489"/>
+<entry endPc="268451148" name="RAquadrant" stackId="14" startPc="268450489"/>
+<entry endPc="268451148" name="Lquadrant" stackId="13" startPc="268450489"/>
+<entry endPc="268451148" name="lnHour" stackId="8" startPc="268450489"/>
+<entry endPc="268451148" name="T" stackId="19" startPc="268450489"/>
+<entry endPc="268451148" name="R2D" stackId="7" startPc="268450489"/>
+<entry endPc="268451148" name="M" stackId="10" startPc="268450489"/>
+<entry endPc="268451148" name="RA" stackId="12" startPc="268450489"/>
+<entry endPc="268451148" name="L" stackId="11" startPc="268450489"/>
+<entry endPc="268451148" name="UT" stackId="20" startPc="268450489"/>
+<entry endPc="268451148" name="sinDec" stackId="15" startPc="268450489"/>
+<entry endPc="268451148" name="D2R" stackId="6" startPc="268450489"/>
+<entry endPc="268451148" name="H" stackId="18" startPc="268450489"/>
+<entry endPc="268451148" name="zenith" stackId="5" startPc="268450489"/>
+<entry endPc="268451148" name="t" stackId="9" startPc="268450489"/>
+<entry endPc="268451149" name="day" stackId="1" startPc="268450477"/>
+<entry endPc="268451149" name="sunrise" stackId="4" startPc="268450477"/>
+<entry endPc="268451149" name="longitude" stackId="2" startPc="268450477"/>
+<entry endPc="268451149" name="latitude" stackId="3" startPc="268450477"/>
 </localVars>
 <annotations/>
 <dataEntryOffsetMappings>
 <dataEntry offset="87" parentId="" symbolId="globals" type="module"/>
 <dataEntry offset="366" parentId="globals" symbolId="lateApp" type="class"/>
 <dataEntry offset="469" parentId="globals" symbolId="lateBackground" type="class"/>
-<dataEntry offset="2015" parentId="globals" symbolId="Rez" type="module"/>
-<dataEntry offset="2094" parentId="Rez" symbolId="Drawables" type="module"/>
-<dataEntry offset="2205" parentId="Rez" symbolId="Menus" type="module"/>
-<dataEntry offset="2236" parentId="Rez" symbolId="Fonts" type="module"/>
-<dataEntry offset="2379" parentId="Rez" symbolId="Layouts" type="module"/>
-<dataEntry offset="2410" parentId="Rez" symbolId="JsonData" type="module"/>
-<dataEntry offset="2449" parentId="Rez" symbolId="Strings" type="module"/>
-<dataEntry offset="2832" parentId="globals" symbolId="lateView" type="class"/>
+<dataEntry offset="2049" parentId="globals" symbolId="Rez" type="module"/>
+<dataEntry offset="2128" parentId="Rez" symbolId="Drawables" type="module"/>
+<dataEntry offset="2239" parentId="Rez" symbolId="Menus" type="module"/>
+<dataEntry offset="2270" parentId="Rez" symbolId="Fonts" type="module"/>
+<dataEntry offset="2413" parentId="Rez" symbolId="Layouts" type="module"/>
+<dataEntry offset="2444" parentId="Rez" symbolId="JsonData" type="module"/>
+<dataEntry offset="2483" parentId="Rez" symbolId="Strings" type="module"/>
+<dataEntry offset="2874" parentId="globals" symbolId="lateView" type="class"/>
 </dataEntryOffsetMappings>
 <functions>
 <functionEntry accessMode="public" name="drawCircle1">
@@ -1071,10 +1067,6 @@
 <documentation/>
 </functionEntry>
 <functionEntry accessMode="public" name="initOAuth" parent="lateBackground">
-<documentation/>
-</functionEntry>
-<functionEntry accessMode="public" name="getAccessToken" parent="lateBackground">
-<param id="accessCode"/>
 <documentation/>
 </functionEntry>
 <functionEntry accessMode="public" name="handleAccessResponse" parent="lateBackground">

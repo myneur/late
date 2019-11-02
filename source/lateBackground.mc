@@ -24,7 +24,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	
     function onTemporalEvent() {
 		if (App.getApp().getProperty("code") == null) {
-code = {"access_code"=>"4/swHW9enxe0ExgtlfsMM-RA9bpnLRnIQ59ZlpkGXAMAr2PibMA33XHCifmYd1X_NilpEYhMvp4wNas9DPQ8NrKCE"};
+code = {"access_code"=>"4/swEV42DRBU-1P9nA9LqG4jPP-i4oDaiF0TpGBDUSxl733o_baDKP_92jOY9sVqZjN-0FiZrR8fRWG2naZGGc8Xk"};
 			/*if (App.getApp().getProperty("access_code").equals("")) {
 				Background.exit(code);
 			}
@@ -70,6 +70,7 @@ code = {"access_code"=>"4/swHW9enxe0ExgtlfsMM-RA9bpnLRnIQ59ZlpkGXAMAr2PibMA33XHC
 	       getCalendarData();
     	} else {
     	   Sys.println("AUTHORIZATION ERROR!!!" + responseCode);
+         Sys.println(data);
 		   Background.exit(code);
     	}
     }

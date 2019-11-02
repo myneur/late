@@ -159,7 +159,7 @@ class lateView extends Ui.WatchFace {
         dialSize = App.getApp().getProperty("dialSize");
 
 //color = 0x00AAFF;
-activity = 6;
+//activity = 6;
 //showSunrise = true;
 //batThreshold = 100;
 //dialSize = 1;
@@ -221,46 +221,6 @@ activity = 6;
 
     //! Update the view
     function onUpdate (dc) {
-    	//Calendar Data
-        var data = App.getApp().getProperty("events");
-        event["start"]=null;
-        if(data instanceof Toybox.Lang.Array) {
-            for(var i=0; i<data.size() ;i++){
-                var date = parseISODate(data[i].get("start"));
-                if( date != null){
-                    if(event["start"]!=null){
-                        break;
-                    }
-                    event["name"] = data[i].get("name");
-                    var duration = date.compare(new Time.Moment(Time.now().value()));
-                    if(duration < -300){
-                        Sys.println(duration);
-                      continue;  
-                    } else if( duration <0){
-                        event["start"] = "now!";
-                        event["prefix"] = "";
-                    } else {
-                        event["prefix"] = "in ";
-                        if (duration < 60*60) {
-                            event["start"] = duration/60 + "m";
-                        } else {
-                            event["start"] = duration/3600 + "h" + duration%3600/60 ;
-                        }
-                    }
-                    if(data[i].get("location")){
-                        event["location"] = ": " + data[i].get("location");
-                    } else {
-                        event["location"] = "";
-                    }
-                    // middle for renderring start and event in different colors
-                    event["mid"] = (
-                        dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
-                        -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
-                    );
-                }
-            }
-        }
-        
         clockTime = Sys.getClockTime();
 
         if (lastRedrawMin != clockTime.min) { redrawAll = 1; }
@@ -338,13 +298,8 @@ activity = 6;
                     if(activity < 6){
                         dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
                         dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
-                    } else if(event["start"] != null){ 
-                        dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
-                        dc.setColor(dateColor, 0);
-                        dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["prefix"]+event["start"], Gfx.TEXT_JUSTIFY_RIGHT);
-                        dc.setColor(activityColor, Gfx.COLOR_BLACK);
-                        dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["location"], Gfx.TEXT_JUSTIFY_LEFT);
-
+                    } else { 
+                        showEvents(dc);
 					}
                 }
             }
@@ -354,6 +309,55 @@ activity = 6;
         
         if (0>redrawAll) { redrawAll--; }
     }
+    function showEvents(dc){
+        //Calendar Data
+        var data = App.getApp().getProperty("events");
+        event["start"]=null;
+        if(data instanceof Toybox.Lang.Array) {
+            for(var i=0; i<data.size() ;i++){
+                var date = parseISODate(data[i].get("start"));
+                if( date != null){
+                    if(event["start"]!=null){
+                        break;
+                    }
+                    event["name"] = data[i].get("name");
+                    var duration = date.compare(new Time.Moment(Time.now().value()));
+                    if(duration < -300){
+                        Sys.println(duration);
+                      continue;  
+                    } else if( duration <0){
+                        event["start"] = "now!";
+                        event["prefix"] = "";
+                    } else {
+                        event["prefix"] = "in ";
+                        if (duration < 60*60) {
+                            event["start"] = duration/60 + "m";
+                        } else {
+                            event["start"] = duration/3600 + "h" + duration%3600/60 ;
+                        }
+                    }
+                    if(data[i].get("location")){
+                        event["location"] = ": " + data[i].get("location");
+                    } else {
+                        event["location"] = "";
+                    }
+                    // middle for renderring start and event in different colors
+                    event["mid"] = (
+                        dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
+                        -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
+                    );
+                }
+            }
+        }
+        if(event["start"] != null){
+            dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
+            dc.setColor(dateColor, 0);
+            dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["prefix"]+event["start"], Gfx.TEXT_JUSTIFY_RIGHT);
+            dc.setColor(activityColor, Gfx.COLOR_BLACK);
+            dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["location"], Gfx.TEXT_JUSTIFY_LEFT);
+        }
+    }
+
 
     function humanizeNumber(number){
         if(number>1000) {

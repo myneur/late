@@ -31,6 +31,7 @@
             <listEntry value="3">@Strings.ActiveMinutesDay</listEntry>
             <listEntry value="4">@Strings.ActiveMinutesWeek</listEntry>
             <listEntry value="5">@Strings.Floors</listEntry>
+            <listEntry value="6">@Strings.Calendar</listEntry>
         </settingConfig>
     </setting>
 

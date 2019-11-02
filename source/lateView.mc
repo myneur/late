@@ -159,7 +159,7 @@ class lateView extends Ui.WatchFace {
         dialSize = App.getApp().getProperty("dialSize");
 
 //color = 0x00AAFF;
-//activity = 6;
+activity = 6;
 //showSunrise = true;
 //batThreshold = 100;
 //dialSize = 1;
@@ -323,7 +323,6 @@ class lateView extends Ui.WatchFace {
                     event["name"] = data[i].get("name");
                     var duration = date.compare(new Time.Moment(Time.now().value()));
                     if(duration < -300){
-                        Sys.println(duration);
                       continue;  
                     } else if( duration <0){
                         event["start"] = "now!";
@@ -346,6 +345,7 @@ class lateView extends Ui.WatchFace {
                         dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
                         -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
                     );
+                    Sys.println(event);
                 }
             }
         }

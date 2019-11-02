@@ -89,13 +89,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     }
     
     var calendar_size = 0;
-	var current_index = 0;
+    var current_index = 0;
     var id_list = [];
     function parseCalendarData(responseCode, data) {
     	var result_size = data.get("items").size();
 		if (responseCode == 200) {
 			var indexes = App.getApp().getProperty("calendar_indexes");
-//indexes = "6,7";
+indexes = "6,7";
 			indexes = indexes.toCharArray();
     		var index_list = [];
 			var cn = "";

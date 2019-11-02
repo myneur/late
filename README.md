@@ -1,6 +1,6 @@
 # almost late! Garmin fēnix 3 Connect IQ watchface
 
-![concept teaser](/doc/tease.png) 
+![concept teaser](/docs/tease.png) 
 
 * you rarely need to know an exact hour and minute in the day
 * you rather need to know what is a current hour quickly (here digital watches are great)
@@ -14,3 +14,4 @@ Availabe in [Garmin Connect IQ Store](https://apps.garmin.com/en-US/apps/3532114
 
 ## Special thanks
 * To Diego Fernandez Bravo: Thank you for sharing your code which was base to this watch face
+

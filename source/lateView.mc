@@ -231,7 +231,7 @@ activity = 6;
             lastRedrawMin=clockTime.min;
             var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
             var h=clockTime.hour;
-
+Sys.println(clockTime);
             if(showSunrise){
                 if(day != info.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
                     computeSun();
@@ -313,15 +313,18 @@ activity = 6;
         //Calendar Data
         var data = App.getApp().getProperty("events");
         event["start"]=null;
+        Sys.println(data);
         if(data instanceof Toybox.Lang.Array) {
             for(var i=0; i<data.size() ;i++){
                 var date = parseISODate(data[i].get("start"));
+
                 if( date != null){
                     if(event["start"]!=null){
                         break;
                     }
                     event["name"] = data[i].get("name");
                     var duration = date.compare(new Time.Moment(Time.now().value()));
+                    Sys.print(duration/60 + " ");
                     if(duration < -300){
                       continue;  
                     } else if( duration <0){

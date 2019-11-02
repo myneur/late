@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>almost late!</title>
+</head>
+
+<body>
+    <h1>almost late!</h1>
+    <p>
+        Following Google OAuth page might tell this application is not verified.
+        This is true, we are waiting for verification. Requested permissions are
+        read-only so your data isn't comprimised.
+    </p>
+    <button href="#" onclick="auth();" id="main">
+        Click Here to get access code.
+    </button>
+    <div id="codediv" hidden>
+        <h3 id="codeh">Code</h3>
+        <p>Please select all of the text</p>
+        <input type="text" id="code" style="width: 100%;" readonly></input>
+    </div>
+    <a href="privacy.html">Privacy Policy</a>
+
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('code')) {
+            var code_input = document.getElementById("code");
+            var codediv = document.getElementById("codediv");
+            codediv.hidden = false;
+            code_input.value = urlParams.get('code');
+
+            code_input.select();
+            code_input.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+        }
+        if (window.location.hash && window.location.hash == "#auth") auth();
+        function auth() {
+            var url = "https://accounts.google.com/o/oauth2/auth";
+            var data = {
+                "client_id":
+                    "595112725917-nersh6timt59nuc3mtjulmrqm9eqdeqt.apps.googleusercontent.com",
+                "response_type": "code",
+                "redirect_uri": window.location,
+                "scope": "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly"
+            };
+            window.location = url + encodeQueryData(data);
+        }
+
+        function encodeQueryData(data) {
+            var ret = [];
+            for (let d in data)
+                ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
+            return "?" + ret.join("&");
+        }
+    </script>
+</body>
+
+</html>

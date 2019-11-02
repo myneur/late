@@ -1,26 +1,26 @@
 <strings>
     <string id="AppName">almost late!</string>
     <string id="AppVersionTitle">version</string>
-    
+
     <string id="ColorTitle">Color</string>
     <string id="ColorWhite">White</string>
     <string id="ColorBlue">Blue</string>
-    <string id="ColorDarkBlue">Dark Blue</string>    
+    <string id="ColorDarkBlue">Dark Blue</string>
     <string id="ColorRed">Red</string>
-    <string id="ColorDarkRed">Dark Red</string>    
+    <string id="ColorDarkRed">Dark Red</string>
     <string id="ColorOrange">Orange</string>
     <string id="ColorYellow">Yellow</string>
     <string id="ColorPurple">Purple</string>
     <string id="ColorPink">Pink</string>
-    <string id="ColorGreen">Green</string>    
-    <string id="ColorDarkGreen">Dark Green</string>    
-    <string id="ColorDarkGray">Dark Gray</string>    
-    <string id="ColorGray">Gray</string>    
-    
+    <string id="ColorGreen">Green</string>
+    <string id="ColorDarkGreen">Dark Green</string>
+    <string id="ColorDarkGray">Dark Gray</string>
+    <string id="ColorGray">Gray</string>
+
     <string id="DateFormTitle">Date Format</string>
     <string id="DateFormMonth">Month</string>
     <string id="DateFormDayOfWeek">Day of week</string>
-    
+
     <string id="ActivityTitle">Activity Info</string>
     <string id="DnD">Nothing: Do not disturb me!</string>
     <string id="Calories">Calories Burned</string>
@@ -48,7 +48,8 @@
     <string id="s1">Strong</string>
 
     <string id="showSunriseSunsetTitle">Sunrise and sunset position on 24h dial</string>
-    
+
     <string id="calendarIndexes">Calendar Indexes (comma seperated, min=1)</string>
     <string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
+    <string id="accessCode">Access Code (myneur.github.io/late/docs)</string>
 </strings>

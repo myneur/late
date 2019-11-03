@@ -3,6 +3,7 @@ using Toybox.WatchUi as Ui;
 using Toybox.Background;
 using Toybox.System as Sys;
 using Toybox.Time as Time;
+using Toybox.Time.Gregorian;
 
 class lateApp extends App.AppBase {
 
@@ -32,13 +33,16 @@ class lateApp extends App.AppBase {
     	} else {
     		Sys.println("****background not available on this device****");
     	}
-        return [new lateView()];
+        watch = new lateView();
+        return [watch];
     }
     
     function onBackgroundData(data) {
     	if (data.hasKey("events")) {
+            var events = parseEvents(data.get("events"));
     		App.getApp().setProperty("code", data.get("code"));
-    		App.getApp().setProperty("events", data.get("events"));
+    		App.getApp().setProperty("events", events);
+            watch.onBackgroundData(events);
     	} else {
 			App.getApp().setProperty("code", data);
     	}
@@ -49,4 +53,83 @@ class lateApp extends App.AppBase {
         return [new lateBackground()];
     }
     
+    function parseEvents(data){
+        var events_list = [];
+        var dayDegrees = 3600*24.0/360;
+        var midnight = Time.today();
+        
+        if(data instanceof Toybox.Lang.Array) {
+            for(var i=0; i<data.size() ;i++){
+                var date = parseISODate(data[i].get("start"));
+                if(date!=null){
+                    events_list.add({
+                        "start"=>date.value(),
+                        "degreeStart"=>date.compare(midnight)/dayDegrees, 
+                        "degreeEnd"=>parseISODate(data[i].get("end")).compare(midnight)/dayDegrees, 
+                        "name"=>data[i].get("name"), 
+                        "location"=> data[i].get("location") ? ": " + data[i].get("location") : ""
+                    });
+                }
+            }
+        }
+        return(events_list);
+    }
+
+    // converts rfc3339 formatted timestamp to Time::Moment (null on error)
+    function parseISODate(date) {
+        // assert(date instanceOf String)
+
+        // 0123456789012345678901234
+        // 2011-10-17T13:00:00-07:00
+        // 2011-10-17T16:30:55.000Z
+        // 2011-10-17T16:30:55Z
+        if (date.length() < 20) {
+            return null;
+        }
+
+        var moment = Gregorian.moment({
+            :year => date.substring( 0, 4).toNumber(),
+            :month => date.substring( 5, 7).toNumber(),
+            :day => date.substring( 8, 10).toNumber(),
+            :hour => date.substring(11, 13).toNumber(),
+            :minute => date.substring(14, 16).toNumber(),
+            :second => date.substring(17, 19).toNumber()
+        });
+        var suffix = date.substring(19, date.length());
+
+        // skip over to time zone
+        var tz = 0;
+        if (suffix.substring(tz, tz + 1).equals(".")) {
+            while (tz < suffix.length()) {
+                var first = suffix.substring(tz, tz + 1);
+                if ("-+Z".find(first) != null) {
+                    break;
+                }
+                tz++;
+            }
+        }
+
+        if (tz >= suffix.length()) {
+            // no timezone given
+            return null;
+        }
+        var tzOffset = 0;
+        if (!suffix.substring(tz, tz + 1).equals("Z")) {
+            // +HH:MM
+            if (suffix.length() - tz < 6) {
+                return null;
+            }
+            tzOffset = suffix.substring(tz + 1, tz + 3).toNumber() * Gregorian.SECONDS_PER_HOUR;
+            tzOffset += suffix.substring(tz + 4, tz + 6).toNumber() * Gregorian.SECONDS_PER_MINUTE;
+
+            var sign = suffix.substring(tz, tz + 1);
+            if (sign.equals("+")) {
+                tzOffset = -tzOffset;
+            } else if (sign.equals("-") && tzOffset == 0) {
+                // -00:00 denotes unknown timezone
+                return null;
+            }
+        }
+        return moment.add(new Time.Duration(tzOffset));
+    }
 }

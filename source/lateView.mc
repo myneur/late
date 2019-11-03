@@ -8,7 +8,6 @@ using Toybox.Activity as Activity;
 using Toybox.Math as Math;
 //using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Application as App;
-using Toybox.Time.Gregorian;
 
 enum {       
     SUNRISET_NOW=0,
@@ -74,6 +73,13 @@ class lateView extends Ui.WatchFace {
         centerY = height >> 1;
         //sunrise/sunset stuff
         clockTime = Sys.getClockTime();
+        if(events_list.size()==0){
+            var events = App.getApp().getProperty("events");
+            System.println(events_list);
+            if(events instanceof Toybox.Lang.Array){
+                events_list = events;
+            }
+        }
     }
 
     //! Load your resources here
@@ -187,11 +193,8 @@ activity = 6;
         } else {
             dateColor = 0x555555;
         }
-
-
         redrawAll = 2;
         setLayoutVars();
-
     }
 
     //! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
@@ -246,10 +249,7 @@ activity = 6;
             }
             dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
             dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);    
-
-
             if(centerY>89){
-
                 // draw Day info
                 dc.setColor(dateColor, Gfx.COLOR_BLACK);
                 var text = "";
@@ -259,14 +259,10 @@ activity = 6;
                 text += info.day.format("%0.1d");
                 dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
 
-                
                 /*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, CENTER);
                 dc.setPenWidth(2);
                 dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);
                 */
-
-                // activity
-
                 //System.println(method(:humanizeNumber).invoke(100000)); // TODO this is how to save and invoke method callback to get rid of ugly ifelse like below
                 // The best circle for activity percentages: dc.setPenWidth(2);dc.setColor(Gfx.COLOR_DK_GRAY, 0); dc.drawArc(centerX, 190, 10, Gfx.ARC_CLOCKWISE, 90, 90-49*6);
 
@@ -284,75 +280,53 @@ activity = 6;
                         dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
                         dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
                     } else { 
-                        showEvents(dc);
+                        drawEvent(dc);
+                        drawEvents(dc);
 					}
                 }
             }
             drawBatteryLevel(dc);
             drawMinuteArc(dc);
             if(activity == 6 || showSunrise){
-                drawNow(dc, h);
+                drawNowCircle(dc, h);
             }
         }
         
         if (0>redrawAll) { redrawAll--; }
     }
-    function showEvents(dc){
-        //Calendar Data
-        var data = App.getApp().getProperty("events");
-        event["start"]=null;
-        events_list = [];
-        var dayDegrees = 3600*24.0/360;
-        var midnight = Time.today();
-        
-        if(data instanceof Toybox.Lang.Array) {
-            for(var i=0; i<data.size() ;i++){
-                var date = parseISODate(data[i].get("start"));
-                
-                events_list.add([date.compare(midnight)/dayDegrees, parseISODate(data[i].get("end")).compare(midnight)/dayDegrees]);
-                
-                if( date != null){
-                    if(event["start"]==null){
-                        event["name"] = data[i].get("name");
-                        var duration = date.compare(new Time.Moment(Time.now().value()));
-                        Sys.print(duration/60 + " ");
-                        if(duration < -300){
-                          continue;  
-                        } else if( duration <0){
-                            event["start"] = "now!";
-                            event["prefix"] = "";
-                        } else {
-                            event["prefix"] = "in ";
-                            if (duration < 60*60) {
-                                event["start"] = duration/60 + "m";
-                            } else {
-                                event["start"] = duration/3600 + "h" + duration%3600/60 ;
-                            }
-                        }
-                        if(data[i].get("location")){
-                            event["location"] = ": " + data[i].get("location");
-                        } else {
-                            event["location"] = "";
-                        }
-                        // middle for renderring start and event in different colors
-                        event["mid"] = (
-                            dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
-                            -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
-                        );
-                    }
 
-                    
+    function onBackgroundData(data) {
+        events_list = data;
+        redrawAll = 1;
+    }
 
+    function updateCurrentEvent(dc){
+        Sys.println(events_list);
+        for(var i=0; i<events_list.size(); i++){
+            event["name"] = events_list[i]["name"]; // optimization move down
+
+            event["start"] = new Time.Moment(events_list[i]["start"]);
+            var duration = event["start"].compare(new Time.Moment(Time.now().value()));
+
+            if(duration < -300){
+              continue;  
+            } else if( duration <0){
+                event["start"] = "now!";
+                event["prefix"] = "";
+            } else {
+                event["prefix"] = "in ";
+                if (duration < 60*60) {
+                    event["start"] = duration/60 + "m";
+                } else {
+                    event["start"] = duration/3600 + "h" + duration%3600/60 ;
                 }
             }
-        }
-        drawEvents(dc);
-        if(event["start"] != null){
-            dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
-            dc.setColor(dateColor, 0);
-            dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["prefix"]+event["start"], Gfx.TEXT_JUSTIFY_RIGHT);
-            dc.setColor(activityColor, Gfx.COLOR_BLACK);
-            dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["location"], Gfx.TEXT_JUSTIFY_LEFT);
+            event["location"]=events_list[i]["location"];
+            event["mid"] = (
+                dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
+                -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
+            );
+            break;
         }
     }
 
@@ -365,7 +339,7 @@ activity = 6;
         }
     }
 
-    function drawNow(dc, hour){
+    function drawNowCircle(dc, hour){
         // show now in a day
         var a = Math.PI/(12*60.0) * (hour*60+clockTime.min);
         /*var bitmapNow = sun;
@@ -380,11 +354,23 @@ activity = 6;
         dc.fillCircle(centerX+((r-5)*Math.sin(a)), centerY-((r-5)*Math.cos(a)),4);
     }
 
+    function drawEvent(dc){
+        updateCurrentEvent(dc);
+        Sys.println(event["start"]);
+        if(event["start"]){
+            dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
+            dc.setColor(dateColor, 0);
+            dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["prefix"]+event["start"], Gfx.TEXT_JUSTIFY_RIGHT);
+            dc.setColor(activityColor, Gfx.COLOR_BLACK);
+            dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["location"], Gfx.TEXT_JUSTIFY_LEFT);
+        }
+    }
+
     function drawEvents(dc){
         dc.setPenWidth(4);
         dc.setColor(activityColor, 0);
         for(var i=0; i <events_list.size(); i++){
-            dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i][0], 90-events_list[i][1]);
+            dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i]["degreeStart"], 90-events_list[i]["degreeEnd"]);
         }
     }
 
@@ -573,63 +559,5 @@ activity = 6;
             //Sys.println(str);
         }*/
         return;
-    }
-
-    // converts rfc3339 formatted timestamp to Time::Moment (null on error)
-    function parseISODate(date) {
-        // assert(date instanceOf String)
-
-        // 0123456789012345678901234
-        // 2011-10-17T13:00:00-07:00
-        // 2011-10-17T16:30:55.000Z
-        // 2011-10-17T16:30:55Z
-        if (date.length() < 20) {
-            return null;
-        }
-
-        var moment = Gregorian.moment({
-            :year => date.substring( 0, 4).toNumber(),
-            :month => date.substring( 5, 7).toNumber(),
-            :day => date.substring( 8, 10).toNumber(),
-            :hour => date.substring(11, 13).toNumber(),
-            :minute => date.substring(14, 16).toNumber(),
-            :second => date.substring(17, 19).toNumber()
-        });
-        var suffix = date.substring(19, date.length());
-
-        // skip over to time zone
-        var tz = 0;
-        if (suffix.substring(tz, tz + 1).equals(".")) {
-            while (tz < suffix.length()) {
-                var first = suffix.substring(tz, tz + 1);
-                if ("-+Z".find(first) != null) {
-                    break;
-                }
-                tz++;
-            }
-        }
-
-        if (tz >= suffix.length()) {
-            // no timezone given
-            return null;
-        }
-        var tzOffset = 0;
-        if (!suffix.substring(tz, tz + 1).equals("Z")) {
-            // +HH:MM
-            if (suffix.length() - tz < 6) {
-                return null;
-            }
-            tzOffset = suffix.substring(tz + 1, tz + 3).toNumber() * Gregorian.SECONDS_PER_HOUR;
-            tzOffset += suffix.substring(tz + 4, tz + 6).toNumber() * Gregorian.SECONDS_PER_MINUTE;
-
-            var sign = suffix.substring(tz, tz + 1);
-            if (sign.equals("+")) {
-                tzOffset = -tzOffset;
-            } else if (sign.equals("-") && tzOffset == 0) {
-                // -00:00 denotes unknown timezone
-                return null;
-            }
-        }
-        return moment.add(new Time.Duration(tzOffset));
     }
 }

@@ -311,7 +311,6 @@ activity = 6;
         //Calendar Data
         var data = App.getApp().getProperty("events");
         event["start"]=null;
-        Sys.println(data);
         if(data instanceof Toybox.Lang.Array) {
             for(var i=0; i<data.size() ;i++){
                 var date = parseISODate(data[i].get("start"));

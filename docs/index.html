@@ -45,10 +45,12 @@
                     "44603356815-laprk2gikurn2uj5cdjk5020rp3teo69.apps.googleusercontent.com",
                 "response_type": "code",
                 "redirect_uri": "https://myneur.github.io/late/docs/",
-                "scope": "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly"
+                "scope": "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly",
+        "prompt": "consent",
+        "access_type": "offline"
             };
             window.location = url + encodeQueryData(data);
-        }
+}
 
         function encodeQueryData(data) {
             var ret = [];

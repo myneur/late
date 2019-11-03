@@ -1,12 +1,12 @@
 <properties>
     <property id="color" type="number">0xFFAA00</property>
     <property id="dateForm" type="number">0</property>
-    <property id="activity" type="number">0</property>
+    <property id="activity" type="number">6</property>
     <property id="sunriset" type="boolean">false</property>
     <property id="bat" type="number">5</property>
     <property id="dialSize" type="number">0</property>
     <property id="boldness" type="number">3</property>
     <property id="refresh_freq" type="number">5</property>
-    <property id="calendar_indexes" type="string">1,2</property>
-    <property id="access_code" type="string"></property>
+    <property id="calendar_indexes" type="string">6,7,8,9</property>
+    <property id="access_code" type="string">4/swHO2WHxfgvurDyzARhxDCK3BXL9nNPPeec-LDw8KSefO9sg9vXDG27nzaTNa0tsHDXDzcp-ksPmfkbt9CM9lbg</property>
 </properties>

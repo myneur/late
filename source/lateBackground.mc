@@ -23,30 +23,30 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	
     function onTemporalEvent() {
     	Sys.println("triggered");
-		if (App.getApp().getProperty("code") == null) {
-			if (App.getApp().getProperty("access_code").equals("")) {
-				Background.exit(code);
-			}
-			Sys.println(App.getApp().getProperty("access_code"));
-	    	code = {"access_code"=>App.getApp().getProperty("access_code")};
-			Communications.makeWebRequest(
-		       $.ServerToken,
-		       {
-		           "client_secret"=>App.getApp().getProperty("client_secret"),
-		           "client_id"=>App.getApp().getProperty("client_id"),
-		           "redirect_uri" =>App.getApp().getProperty("redirect_uri"),
-		           "code"=>code.get("access_code"),
-		           "grant_type"=>"authorization_code"
-		       },
-		       {
-		           :method => Communications.HTTP_REQUEST_METHOD_POST
-		       },
-		       method(:handleAccessResponse)
-		   );
-		} else {
-			code = App.getApp().getProperty("code");
-	        getAccessTokenFromRefresh(code.get("refresh_token"));
-        }
+  		if (App.getApp().getProperty("code") == null) {
+  			if (App.getApp().getProperty("access_code").equals("")) {
+  				Background.exit(code);
+  			}
+  			Sys.println(App.getApp().getProperty("access_code"));
+  	    code = {"access_code"=>App.getApp().getProperty("access_code")};
+  			Communications.makeWebRequest(
+  		       $.ServerToken,
+  		       {
+  		           "client_secret"=>App.getApp().getProperty("client_secret"),
+  		           "client_id"=>App.getApp().getProperty("client_id"),
+  		           "redirect_uri" =>App.getApp().getProperty("redirect_uri"),
+  		           "code"=>code.get("access_code"),
+  		           "grant_type"=>"authorization_code"
+  		       },
+  		       {
+  		           :method => Communications.HTTP_REQUEST_METHOD_POST
+  		       },
+  		       method(:handleAccessResponse)
+  		   );
+  		} else {
+  			code = App.getApp().getProperty("code");
+        getAccessTokenFromRefresh(code.get("refresh_token"));
+      }
     }
     
     function handleAccessResponse(responseCode, data) {
@@ -80,38 +80,40 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     var id_list = [];
     function parseCalendarData(responseCode, data) {
     	var result_size = data.get("items").size();
-		if (responseCode == 200) {
-			var indexes = App.getApp().getProperty("calendar_indexes");
-			indexes = indexes.toCharArray();
-    		var index_list = [];
-			var cn = "";
-			for (var i = 0; i < indexes.size(); i++) {
-				var c = indexes[i];
-				if (c == ',') {
-					if (cn.toNumber() <= result_size) {index_list.add(cn.toNumber());}
-					cn = "";
-				} else {
-					cn += c;
-				}
-			}
-			if (cn.toNumber() <= result_size) {index_list.add(cn.toNumber());}
-			calendar_size = index_list.size();
-			
-			for (var d = 0; d < index_list.size(); d++) {
-				id_list.add(data.get("items")[index_list[d]-1].get("id"));
-			}
-			repeater();
-    	} else {
-    		Background.exit(code);
-    	}
-    }
-    
-    var in_progress = -1;
-    function repeater() {
-		if (in_progress < current_index) {
-			in_progress++;
-			getCalendarEventData(id_list[current_index]);
-		}
+      Sys.println("calendarData code "+responseCode);
+      Sys.println(data);
+  		if (responseCode == 200) {
+  			var indexes = App.getApp().getProperty("calendar_indexes");
+  			indexes = indexes.toCharArray();
+      		var index_list = [];
+  			var cn = "";
+  			for (var i = 0; i < indexes.size(); i++) {
+  				var c = indexes[i];
+  				if (c == ',') {
+  					if (cn.toNumber() <= result_size) {index_list.add(cn.toNumber());}
+  					cn = "";
+  				} else {
+  					cn += c;
+  				}
+  			}
+  			if (cn.toNumber() <= result_size) {index_list.add(cn.toNumber());}
+  			calendar_size = index_list.size();
+  			
+  			for (var d = 0; d < index_list.size(); d++) {
+  				id_list.add(data.get("items")[index_list[d]-1].get("id"));
+  			}
+  			repeater();
+      	} else {
+      		Background.exit(code);
+      	}
+      }
+      
+      var in_progress = -1;
+      function repeater() {
+  		if (in_progress < current_index) {
+  			in_progress++;
+  			getCalendarEventData(id_list[current_index]);
+  		}
     	
     }
     
@@ -182,6 +184,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           }
           events_list.add(eventTrim);
   			}
+Sys.println(events_list);
   			if (current_index == calendar_size-1) {
   				var code_events = {
   					"code"=>code,
@@ -218,7 +221,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     }
         
     function handleAccessResponseRefresh(responseCode, data) {
-    	if (responseCode == 200) {
+    	Sys.println("responseCode " + responseCode);
+      if (responseCode == 200) {
 	       data.put("refresh_token", code.get("refresh_token"));
 	       code = data;
 	       getCalendarData();

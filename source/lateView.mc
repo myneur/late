@@ -59,6 +59,7 @@ class lateView extends Ui.WatchFace {
     hidden var batThreshold = 5;
 
     hidden var event = {"name"=>"", "prefix"=>"in ", "start"=>0, "location"=>"", "mid"=>0, "height"=>25};
+    hidden var events_list = [];
     
     // redraw full watchface
     hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -235,20 +236,6 @@ activity = 6;
                     computeSun();
                 }
                 drawSunBitmaps(dc);
-                // show now in a day
-                var a = Math.PI/(12*60.0) * (h*60+clockTime.min);
-                /*var bitmapNow = sun;
-                if(a<sunset[SUNRISET_NOW] || a>sunrise[SUNRISET_NOW]){
-                    bitmapNow = moon;
-                } 
-                var r = centerX - 11;
-                dc.drawBitmap(centerX + (r * Math.sin(a))-bitmapNow.getWidth()>>1, centerY - (r * Math.cos(a))-bitmapNow.getWidth()>>1, bitmapNow);*/
-                dc.setColor(0x555555, 0);
-                dc.setPenWidth(1);
-                var r = centerX-5;
-                //dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
-                dc.drawCircle(centerX+((r-5)*Math.sin(a)), centerY-((r-5)*Math.cos(a)),4);
-
             }
             // TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 
@@ -303,6 +290,9 @@ activity = 6;
             }
             drawBatteryLevel(dc);
             drawMinuteArc(dc);
+            if(activity == 6 || showSunrise){
+                drawNow(dc, h);
+            }
         }
         
         if (0>redrawAll) { redrawAll--; }
@@ -311,44 +301,52 @@ activity = 6;
         //Calendar Data
         var data = App.getApp().getProperty("events");
         event["start"]=null;
+        events_list = [];
+        var dayDegrees = 3600*24.0/360;
+        var midnight = Time.today();
+        
         if(data instanceof Toybox.Lang.Array) {
             for(var i=0; i<data.size() ;i++){
                 var date = parseISODate(data[i].get("start"));
-
+                
+                events_list.add([date.compare(midnight)/dayDegrees, parseISODate(data[i].get("end")).compare(midnight)/dayDegrees]);
+                
                 if( date != null){
-                    if(event["start"]!=null){
-                        break;
-                    }
-                    event["name"] = data[i].get("name");
-                    var duration = date.compare(new Time.Moment(Time.now().value()));
-                    Sys.print(duration/60 + " ");
-                    if(duration < -300){
-                      continue;  
-                    } else if( duration <0){
-                        event["start"] = "now!";
-                        event["prefix"] = "";
-                    } else {
-                        event["prefix"] = "in ";
-                        if (duration < 60*60) {
-                            event["start"] = duration/60 + "m";
+                    if(event["start"]==null){
+                        event["name"] = data[i].get("name");
+                        var duration = date.compare(new Time.Moment(Time.now().value()));
+                        Sys.print(duration/60 + " ");
+                        if(duration < -300){
+                          continue;  
+                        } else if( duration <0){
+                            event["start"] = "now!";
+                            event["prefix"] = "";
                         } else {
-                            event["start"] = duration/3600 + "h" + duration%3600/60 ;
+                            event["prefix"] = "in ";
+                            if (duration < 60*60) {
+                                event["start"] = duration/60 + "m";
+                            } else {
+                                event["start"] = duration/3600 + "h" + duration%3600/60 ;
+                            }
                         }
+                        if(data[i].get("location")){
+                            event["location"] = ": " + data[i].get("location");
+                        } else {
+                            event["location"] = "";
+                        }
+                        // middle for renderring start and event in different colors
+                        event["mid"] = (
+                            dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
+                            -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
+                        );
                     }
-                    if(data[i].get("location")){
-                        event["location"] = ": " + data[i].get("location");
-                    } else {
-                        event["location"] = "";
-                    }
-                    // middle for renderring start and event in different colors
-                    event["mid"] = (
-                        dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
-                        -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
-                    );
-                    Sys.println(event);
+
+                    
+
                 }
             }
         }
+        drawEvents(dc);
         if(event["start"] != null){
             dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
             dc.setColor(dateColor, 0);
@@ -364,6 +362,29 @@ activity = 6;
             return (number.toFloat()/1000).format("%1.1f")+"k";
         } else {
             return number.toString();
+        }
+    }
+
+    function drawNow(dc, hour){
+        // show now in a day
+        var a = Math.PI/(12*60.0) * (hour*60+clockTime.min);
+        /*var bitmapNow = sun;
+        if(a<sunset[SUNRISET_NOW] || a>sunrise[SUNRISET_NOW]){
+            bitmapNow = moon;
+        } 
+        var r = centerX - 11;
+        dc.drawBitmap(centerX + (r * Math.sin(a))-bitmapNow.getWidth()>>1, centerY - (r * Math.cos(a))-bitmapNow.getWidth()>>1, bitmapNow);*/
+        dc.setColor(0x555555, 0);
+        var r = centerX-5;
+        //dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
+        dc.fillCircle(centerX+((r-5)*Math.sin(a)), centerY-((r-5)*Math.cos(a)),4);
+    }
+
+    function drawEvents(dc){
+        dc.setPenWidth(4);
+        dc.setColor(activityColor, 0);
+        for(var i=0; i <events_list.size(); i++){
+            dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i][0], 90-events_list[i][1]);
         }
     }
 

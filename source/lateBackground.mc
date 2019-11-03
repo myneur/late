@@ -146,7 +146,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           ]
   		);
   		dateEnd += sign + to;
- 		Communications.makeWebRequest(
+      Sys.println($.ApiUrl + calendar_id + "/events");
+ 		 Communications.makeWebRequest(
            $.ApiUrl + calendar_id + "/events",
            {
            	"maxResults"=>"6",
@@ -166,7 +167,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     
 	var events_list = [];
     function parseCalendarEventData(responseCode, data) {
-    	if (responseCode == 200) {
+    	Sys.println ("event data "+responseCode);
+      Sys.println(data);
+      if (responseCode == 200) {
   			for (var i = 0; i < data.get("items").size(); i++) {
   				var event = data.get("items")[i];
   				var eventTrim = {

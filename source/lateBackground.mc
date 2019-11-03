@@ -11,7 +11,6 @@ const AuthUri = "https://accounts.google.com/o/oauth2/auth";
 const ApiUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const ApiCalendarUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
 const Scopes = "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly";
-const RedirectUri = "http://localhost";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -23,54 +22,40 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
     function onTemporalEvent() {
+    	Sys.println("triggered");
 		if (App.getApp().getProperty("code") == null) {
-code = {"access_code"=>"4/swEV42DRBU-1P9nA9LqG4jPP-i4oDaiF0TpGBDUSxl733o_baDKP_92jOY9sVqZjN-0FiZrR8fRWG2naZGGc8Xk"};
-			/*if (App.getApp().getProperty("access_code").equals("")) {
+			if (App.getApp().getProperty("access_code").equals("")) {
 				Background.exit(code);
 			}
-			code = {"access_code"=>App.getApp().getProperty("access_code")};*/
+			Sys.println(App.getApp().getProperty("access_code"));
+	    	code = {"access_code"=>App.getApp().getProperty("access_code")};
 			Communications.makeWebRequest(
-	           $.ServerToken,
-	           {
-	               "client_secret"=>App.getApp().getProperty("client_secret"),
-	               "client_id"=>App.getApp().getProperty("client_id"),
-	               "redirect_uri" => $.RedirectUri,
-	               "code"=>code.get("access_code"),
-	               "grant_type"=>"authorization_code"
-	           },
-	           {
-	               :method => Communications.HTTP_REQUEST_METHOD_POST
-	           },
-	           method(:handleAccessResponse)
-	       );
+		       $.ServerToken,
+		       {
+		           "client_secret"=>App.getApp().getProperty("client_secret"),
+		           "client_id"=>App.getApp().getProperty("client_id"),
+		           "redirect_uri" =>App.getApp().getProperty("redirect_uri"),
+		           "code"=>code.get("access_code"),
+		           "grant_type"=>"authorization_code"
+		       },
+		       {
+		           :method => Communications.HTTP_REQUEST_METHOD_POST
+		       },
+		       method(:handleAccessResponse)
+		   );
 		} else {
 			code = App.getApp().getProperty("code");
 	        getAccessTokenFromRefresh(code.get("refresh_token"));
         }
     }
     
-    function initOAuth() {
-       Communications.makeOAuthRequest(
-           $.AuthUri,
-           {
-               "client_id"=>App.getApp().getProperty("client_id"),
-               "response_type"=>"code",
-               "scope"=>Communications.encodeURL($.Scopes),
-               "redirect_uri"=>$.RedirectUri
-           },
-           $.RedirectUri,
-           Communications.OAUTH_RESULT_TYPE_URL,
-           {"code"=>"value"});
-    }
-    
     function handleAccessResponse(responseCode, data) {
     	if (responseCode == 200) {
-    	   Sys.println("AUTHORIZATION COMPLETE");
+    	   Sys.println("AUTHORIZATION COMPLETED");
 	       code = data;
 	       getCalendarData();
     	} else {
-    	   Sys.println("AUTHORIZATION ERROR!!!" + responseCode);
-         Sys.println(data);
+    	   Sys.println("AUTHORIZATION ERROR!!!");
 		   Background.exit(code);
     	}
     }
@@ -191,7 +176,7 @@ code = {"access_code"=>"4/swEV42DRBU-1P9nA9LqG4jPP-i4oDaiF0TpGBDUSxl733o_baDKP_9
           if(eventTrim["location"]){  // trimming and event to fit the screen right 
             eventTrim["location"] = eventTrim["location"].substring(0,15);
             var split = eventTrim["location"].find(",");
-            if(split>0){
+            if(split && split>0){
                 eventTrim["location"] = eventTrim["location"].substring(0,split);
             }
           }

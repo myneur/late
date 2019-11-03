@@ -136,7 +136,6 @@ class lateView extends Ui.WatchFace {
                 }
             }
         } catch(ex){
-            Sys.println([fontSmall , fontMinutes , fontHours ,fontCondensed]);
             activity = 0;
             if(fontSmall == null ){ fontSmall = fontMinutes;}
         }
@@ -231,7 +230,6 @@ activity = 6;
             lastRedrawMin=clockTime.min;
             var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
             var h=clockTime.hour;
-Sys.println(clockTime);
             if(showSunrise){
                 if(day != info.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
                     computeSun();

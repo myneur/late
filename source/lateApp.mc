@@ -71,6 +71,7 @@ class lateApp extends App.AppBase {
         var dayDegrees = 3600*24.0/360;
         var midnight = Time.today();
         
+        
         if(data instanceof Toybox.Lang.Array) {
             for(var i=0; i<data.size()-1; i++){
                 for (var j=0; j<data.size()-i-1; j++) {
@@ -83,7 +84,7 @@ class lateApp extends App.AppBase {
             }
         }
         
-        if(data instanceof Toybox.Lang.Array) {
+        if(data instanceof Toybox.Lang.Array) { 
             for(var i=0; i<data.size() ;i++){
                 var date = parseISODate(data[i].get("start"));
                 if(date!=null){
@@ -92,7 +93,8 @@ class lateApp extends App.AppBase {
                         "degreeStart"=>date.compare(midnight)/dayDegrees, 
                         "degreeEnd"=>parseISODate(data[i].get("end")).compare(midnight)/dayDegrees, 
                         "name"=>data[i].get("name"), 
-                        "location"=> data[i].get("location") ? ": " + data[i].get("location") : ""
+                        "location"=> data[i].get("location") ? ": " + data[i].get("location") : "",
+                        "cal"=>data[i].get("cal")
                     });
                 }
             }

@@ -17,7 +17,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	var code;
 
-    function initialize() {
+  function initialize() {
 		Sys.ServiceDelegate.initialize();
 	}
 	
@@ -167,11 +167,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     	if(responseCode == 200) {
   			for (var i = 0; i < data.get("items").size(); i++) {
   				var event = data.get("items")[i];
-  				var eventTrim = {
+  				
+          var eventTrim = {
   					"name"=>event.get("summary").substring(0,25),
   					"location"=>event.get("location"),
   					"start"=>event.get("start").get("dateTime"),
-  					"end"=>event.get("end").get("dateTime")
+  					"end"=>event.get("end").get("dateTime"), 
+            "cal"=>current_index
   				};
           if(eventTrim["location"]){  // trimming and event to fit the screen right 
             eventTrim["location"] = eventTrim["location"].substring(0,15);
@@ -182,7 +184,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           }
           events_list.add(eventTrim);
     			}
-    			if (current_index == calendar_size-1) {
+
+    			if (current_index == calendar_size-1) { // done
     				var code_events = {
     					"code"=>code,
     					"events"=>events_list
@@ -196,10 +199,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     				current_index++;
     			}
     			repeater();
-      	} else {
+
+      	} else { // no data'
     			var code_events = {
     				"code"=>code,
-    				"events"=>events_list
+    				"events"=>events_list // TODO the events should not be updated if no response
     			};
           try{
       		  Background.exit(code_events);

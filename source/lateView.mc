@@ -26,8 +26,9 @@ class lateView extends Ui.WatchFace {
     hidden var activity = 0;
     hidden var dateForm;
     hidden var showSunrise = false;
-    hidden var utcOffset;
+    hidden var calendarColors = [0x0000FF, 0x00AA00, 0x5500FF];
 
+    hidden var utcOffset;
     hidden var clockTime;
     hidden var day = -1;
     // sunrise/sunset
@@ -75,7 +76,6 @@ class lateView extends Ui.WatchFace {
         clockTime = Sys.getClockTime();
         if(events_list.size()==0){
             var events = App.getApp().getProperty("events");
-            System.println(events_list);
             if(events instanceof Toybox.Lang.Array){
                 events_list = events;
             }
@@ -368,6 +368,9 @@ activity = 6;
         dc.setPenWidth(4);
         dc.setColor(activityColor, 0);
         for(var i=0; i <events_list.size(); i++){
+            if(events_list[i]["cal"]!=null){
+                dc.setColor(calendarColors[events_list[i]["cal"]%(calendarColors.size())], 0);
+            }
             dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i]["degreeStart"], 90-events_list[i]["degreeEnd"]);
         }
     }

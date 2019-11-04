@@ -181,23 +181,31 @@ class lateBackground extends Toybox.System.ServiceDelegate {
             }
           }
           events_list.add(eventTrim);
-  			}
-  			if (current_index == calendar_size-1) {
-  				var code_events = {
-  					"code"=>code,
-  					"events"=>events_list
-  				};
-  				Background.exit(code_events);
-  			} else {
-  				current_index++;
-  			}
-  			repeater();
+    			}
+    			if (current_index == calendar_size-1) {
+    				var code_events = {
+    					"code"=>code,
+    					"events"=>events_list
+    				};
+            try{
+    				  Background.exit(code_events);
+            }catch(ex){
+              Background.exit(null);
+            }
+    			} else {
+    				current_index++;
+    			}
+    			repeater();
       	} else {
-  			var code_events = {
-  				"code"=>code,
-  				"events"=>events_list
-  			};
-      		Background.exit(code_events);
+    			var code_events = {
+    				"code"=>code,
+    				"events"=>events_list
+    			};
+          try{
+      		  Background.exit(code_events);
+          }catch(ex){
+            Background.exit(null);
+          }
       	}
       }
     

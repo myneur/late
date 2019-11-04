@@ -301,7 +301,6 @@ activity = 6;
     }
 
     function updateCurrentEvent(dc){
-        Sys.println(events_list);
         for(var i=0; i<events_list.size(); i++){
             event["name"] = events_list[i]["name"]; // optimization move down
 
@@ -356,7 +355,6 @@ activity = 6;
 
     function drawEvent(dc){
         updateCurrentEvent(dc);
-        Sys.println(event["start"]);
         if(event["start"]){
             dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
             dc.setColor(dateColor, 0);

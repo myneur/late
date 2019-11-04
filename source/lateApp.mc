@@ -38,15 +38,21 @@ class lateApp extends App.AppBase {
     }
     
     function onBackgroundData(data) {
-    	if (data.hasKey("events")) {
-            var events = parseEvents(data.get("events"));
-    		App.getApp().setProperty("code", data.get("code"));
-    		App.getApp().setProperty("events", events);
-            watch.onBackgroundData(events);
-    	} else {
-			App.getApp().setProperty("code", data);
-    	}
-        Ui.requestUpdate();
+    	try{
+            if (data.hasKey("events")) {
+                var events = parseEvents(data.get("events"));
+        		App.getApp().setProperty("code", data.get("code"));
+        		App.getApp().setProperty("events", events);
+                if(watch){
+                    watch.onBackgroundData(events);
+                }
+        	} else {
+    			App.getApp().setProperty("code", data);
+        	}
+            Ui.requestUpdate();
+        } catch (ex){
+            return data;
+        }
     }    
 
     function getServiceDelegate() {

@@ -53,10 +53,29 @@ class lateApp extends App.AppBase {
         return [new lateBackground()];
     }
     
+    function swap(data, x, y) {
+        var tmp = data[x];
+        data[x] = data[y];
+        data[y] = tmp;
+        return data;
+    }
+    
     function parseEvents(data){
         var events_list = [];
         var dayDegrees = 3600*24.0/360;
         var midnight = Time.today();
+        
+        if(data instanceof Toybox.Lang.Array) {
+            for(var i=0; i<data.size()-1; i++){
+                for (var j=0; j<data.size()-i-1; j++) {
+                    var x = parseISODate(data[j].get("start"));
+                    var y = parseISODate(data[j+1].get("start"));
+                    if (x.greaterThan(y)) {
+                        data = swap(data, j, j+1);
+                    }
+                }
+            }
+        }
         
         if(data instanceof Toybox.Lang.Array) {
             for(var i=0; i<data.size() ;i++){

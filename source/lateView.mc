@@ -16,11 +16,11 @@ enum {
 }
 
 class lateView extends Ui.WatchFace {
-    hidden const CENTER = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
+    hidden const CENTER = Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER;
     hidden var centerX;
     hidden var centerY;
     hidden var height;
-    hidden var color = Graphics.COLOR_YELLOW;
+    hidden var color = Gfx.COLOR_YELLOW;
     hidden var dateColor = 0x555555;
     hidden var activityColor = 0x555555;
     hidden var activity = 0;

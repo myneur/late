@@ -22,7 +22,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
     function onTemporalEvent() {
-      Sys.println("event");
     	if (App.getApp().getProperty("code") == null) {
   			if (App.getApp().getProperty("access_code").equals("")) {
   				Background.exit(code);
@@ -79,6 +78,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     var id_list = [];
     function parseCalendarData(responseCode, data) {
     	var result_size = data.get("items").size();
+      Sys.println(data);
       if (responseCode == 200) {
   			var indexes = App.getApp().getProperty("calendar_indexes");
         Sys.println("calendar indexes to read: " + indexes);
@@ -100,7 +100,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   			for (var d = 0; d < index_list.size(); d++) {
   				id_list.add(data.get("items")[index_list[d]-1].get("id"));
   			}
-  			repeater();
+  			 repeater();
       	} else {
       		Background.exit(code);
       	}

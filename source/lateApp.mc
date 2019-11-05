@@ -90,6 +90,7 @@ class lateApp extends App.AppBase {
                 if(date!=null){
                     events_list.add({
                         "start"=>date.value(),
+                        "end"=>parseISODate(data[i].get("end")).value(),
                         "degreeStart"=>date.compare(midnight)/dayDegrees, 
                         "degreeEnd"=>parseISODate(data[i].get("end")).compare(midnight)/dayDegrees, 
                         "name"=>data[i].get("name"), 

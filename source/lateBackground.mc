@@ -81,7 +81,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       Sys.println(data);
       if (responseCode == 200) {
   			var indexes = App.getApp().getProperty("calendar_indexes");
-        Sys.println("calendar indexes to read: " + indexes);
+        Sys.println(indexes);
         indexes = indexes.toCharArray();
       	var index_list = [];
   			var cn = "";
@@ -144,6 +144,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           ]
   		);
   		dateEnd += sign + to;
+      Sys.println(calendar_id);
       Communications.makeWebRequest(
            $.ApiUrl + calendar_id + "/events",
            {
@@ -191,6 +192,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     					"events"=>events_list
     				};
             try{
+              Sys.println("Size : " + code_events.toString().length());
     				  Background.exit(code_events);
             }catch(ex){
               Background.exit(null);
@@ -200,7 +202,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     			}
     			repeater();
 
-      	} else { // no data'
+      	} else { // no data
     			var code_events = {
     				"code"=>code,
     				"events"=>events_list // TODO the events should not be updated if no response

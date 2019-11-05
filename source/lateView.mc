@@ -347,10 +347,13 @@ activity = 6;
         } 
         var r = centerX - 11;
         dc.drawBitmap(centerX + (r * Math.sin(a))-bitmapNow.getWidth()>>1, centerY - (r * Math.cos(a))-bitmapNow.getWidth()>>1, bitmapNow);*/
-        dc.setColor(0x555555, 0);
-        var r = centerX-5;
+        
+        var r = centerX-9;
         //dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
-        dc.fillCircle(centerX+((r-5)*Math.sin(a)), centerY-((r-5)*Math.cos(a)),4);
+        dc.setColor(0, 0);
+        dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),5);
+        dc.setColor(dateColor, 0);
+        dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),4);
     }
 
     function drawEvent(dc){
@@ -377,7 +380,6 @@ activity = 6;
                 events_list[i]["degreeStart"]=events_list[i]["degreeStart"].toNumber()%360;
                 events_list[i]["degreeEnd"]=nowBoundary;
             }
-            Sys.println([events_list[i]["degreeStart"], events_list[i]["degreeEnd"], events_list[i]["end"]>=tomorrow, tomorrow, nowBoundary] );
             dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i]["degreeStart"]+1, 90-events_list[i]["degreeStart"]);
             if(events_list[i]["cal"]!=null){
                 dc.setColor(calendarColors[events_list[i]["cal"]%(calendarColors.size())], 0);

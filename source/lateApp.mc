@@ -38,6 +38,7 @@ class lateApp extends App.AppBase {
     }
     
     function onBackgroundData(data) {
+        Sys.println("data");
     	try{
             if (data.hasKey("events")) {
                 var events = parseEvents(data.get("events"));

@@ -162,29 +162,39 @@ class lateBackground extends Toybox.System.ServiceDelegate {
            method(:parseCalendarEventData)
        );
     }
-    
+  var events_list_size = 0;  
 	var events_list = [];
     function parseCalendarEventData(responseCode, data) {
     	if(responseCode == 200) {
   			for (var i = 0; i < data.get("items").size(); i++) {
   				var event = data.get("items")[i];
-  				
-          var eventTrim = {
-  					"name"=>event.get("summary").substring(0,25),
-  					"location"=>event.get("location"),
-  					"start"=>event.get("start").get("dateTime"),
-  					"end"=>event.get("end").get("dateTime"), 
-            "cal"=>current_index
-  				};
-          if(eventTrim["location"]){  // trimming and event to fit the screen right 
-            eventTrim["location"] = eventTrim["location"].substring(0,15);
-            var split = eventTrim["location"].find(",");
-            if(split && split>0){
-                eventTrim["location"] = eventTrim["location"].substring(0,split);
+          //if(events_list_size>500){break;}
+          
+  				try {
+            var eventTrim = {
+    					"name"=>event.get("summary").substring(0,25),
+    					"location"=>event.get("location"),
+    					"start"=>event.get("start").get("dateTime"),
+    					"end"=>event.get("end").get("dateTime"), 
+              "cal"=>current_index
+    				};
+            if(eventTrim["location"]){  // trimming and event to fit the screen right 
+              eventTrim["location"] = eventTrim["location"].substring(0,15);
+              var split = eventTrim["location"].find(",");
+              if(split && split>0){
+                  eventTrim["location"] = eventTrim["location"].substring(0,split);
+              }
             }
+            events_list.add(eventTrim);
+            events_list_size += eventTrim.toString().length();
+
+            Sys.println([eventTrim["name"], eventTrim.toString().length(), events_list_size, code.toString().length()]);
+            }catch(ex){
+              Sys.println("ex: " + ex.getErrorMessage());
+              Sys.println( ex.printStackTrace());
+            }
+
           }
-          events_list.add(eventTrim);
-    			}
 
     			if (current_index == calendar_size-1) { // done
     				var code_events = {
@@ -193,8 +203,10 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     				};
             try{
               Sys.println("Size : " + code_events.toString().length());
-    				  Background.exit(code_events);
+              Background.exit(code_events);
             }catch(ex){
+              Sys.println("bg ex: " + ex.getErrorMessage());
+              Sys.println( ex.printStackTrace());
               Background.exit(null);
             }
     			} else {

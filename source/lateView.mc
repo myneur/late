@@ -370,21 +370,25 @@ activity = 6;
     function drawEvents(dc){
         dc.setPenWidth(5);
         dc.setColor(activityColor, 0);
-        var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360-1;
+        var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;
         var tomorrow = Time.today().value()+3600*24;
-
+        var degreeStart;
+        var degreeEnd;
         for(var i=0; i <events_list.size(); i++){
             dc.setColor(0, 0);
-            
-            if(events_list[i]["end"]>=tomorrow){
-                events_list[i]["degreeStart"]=events_list[i]["degreeStart"].toNumber()%360;
-                events_list[i]["degreeEnd"]=nowBoundary;
-            }
             dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i]["degreeStart"]+1, 90-events_list[i]["degreeStart"]);
+            if(events_list[i]["end"]>=tomorrow){
+                degreeStart=events_list[i]["degreeStart"].toNumber()%360;
+                degreeEnd=nowBoundary;
+                dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-nowBoundary+1, 90-nowBoundary);
+            } else {
+                degreeStart = events_list[i]["degreeStart"];
+                degreeEnd = events_list[i]["degreeEnd"];
+            }
             if(events_list[i]["cal"]!=null){
                 dc.setColor(calendarColors[events_list[i]["cal"]%(calendarColors.size())], 0);
             }
-            dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i]["degreeStart"], 90-events_list[i]["degreeEnd"]);
+            dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd+1);
         }
     }
 

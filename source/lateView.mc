@@ -377,7 +377,7 @@ activity = 6;
         for(var i=0; i <events_list.size(); i++){
             dc.setColor(0, 0);
             dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i]["degreeStart"]+1, 90-events_list[i]["degreeStart"]);
-            if(events_list[i]["end"]>=tomorrow){
+            if(events_list[i]["end"]>=tomorrow && events_list[i]["degreeEnd"].toNumber()%360 > nowBoundary){
                 degreeStart=events_list[i]["degreeStart"].toNumber()%360;
                 degreeEnd=nowBoundary;
                 dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-nowBoundary+1, 90-nowBoundary);

@@ -207,7 +207,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
             }catch(ex){
               Sys.println("bg ex: " + ex.getErrorMessage());
               Sys.println( ex.printStackTrace());
-              Background.exit(null);
+              code_events["events"] = events_list.size() ? events_list[0] : null;
+              Background.exit(code_events);
             }
     			} else {
     				current_index++;

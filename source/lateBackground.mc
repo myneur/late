@@ -173,7 +173,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           if(event["start"]){ // skip day events that have only "summary"
     				try {
               var eventTrim = {
-      					"name"=>event.get("summary").substring(0,25),
+      					"name"=> event.get("summary") ? event.get("summary").substring(0,25) : "",
       					"location"=>event.get("location"),
       					"start"=>event.get("start").get("dateTime"),
       					"end"=>event.get("end").get("dateTime"), 

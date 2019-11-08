@@ -325,8 +325,9 @@ activity = 6;
                 dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
                 -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
             );
-            break;
+            return;
         }
+        event["start"] = null;
     }
 
 

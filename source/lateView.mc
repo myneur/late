@@ -64,7 +64,10 @@ class lateView extends Ui.WatchFace {
     // redraw full watchface
     hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
     hidden var lastRedrawMin=-1;
-    
+
+    //hidden var dataCount=0;
+    //hidden var wakeCount=0;
+
     function initialize (){
         var time=Sys.getTimer();
         WatchFace.initialize();
@@ -209,6 +212,7 @@ activity = 6;
     
     //! The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep(){
+        //wakeCount++;
         redrawAll = 2;
     }
 
@@ -296,6 +300,7 @@ activity = 6;
     }
 
     function onBackgroundData(data) {
+        //dataCount++;
         events_list = data;
         redrawAll = 1;
     }
@@ -303,7 +308,7 @@ activity = 6;
     function updateCurrentEvent(dc){
         for(var i=0; i<events_list.size(); i++){
             event["name"] = events_list[i]["name"]; // optimization move down
-
+            //event["name"] += "w"+wakeCount+"d"+dataCount;
             event["start"] = new Time.Moment(events_list[i]["start"]);
             var duration = event["start"].compare(new Time.Moment(Time.now().value()));
 

@@ -29,6 +29,7 @@ class lateApp extends App.AppBase {
     	App.getApp().setProperty("redirect_uri", codes.get("web").get("redirect_uri"));
     	if(Toybox.System has :ServiceDelegate) {
     		var freq = App.getApp().getProperty("refresh_freq") * 60;
+//freq = freq * 24; // testing inflence of data loading on battery
     		Background.registerForTemporalEvent(new Time.Duration(freq));
     	} else {
     		Sys.println("****background not available on this device****");
@@ -47,6 +48,7 @@ class lateApp extends App.AppBase {
                 if(watch){
                     watch.onBackgroundData(events);
                 }
+Background.registerForTemporalEvent(new Time.Duration(120*60)); 
         	} else {
     			App.getApp().setProperty("code", data);
         	}

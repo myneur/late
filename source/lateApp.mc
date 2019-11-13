@@ -27,6 +27,7 @@ class lateApp extends App.AppBase {
     	App.getApp().setProperty("client_id", codes.get("web").get("client_id"));
     	App.getApp().setProperty("client_secret", codes.get("web").get("client_secret"));
     	App.getApp().setProperty("redirect_uri", codes.get("web").get("redirect_uri"));
+
     	if(Toybox.System has :ServiceDelegate) {
     		var freq = App.getApp().getProperty("refresh_freq") * 60;
     		Background.registerForTemporalEvent(new Time.Duration(freq));
@@ -38,73 +39,144 @@ class lateApp extends App.AppBase {
     }
     
     function onBackgroundData(data) {
-        Sys.println("data");
-    	try{
+        try {
             if (data.hasKey("events")) {
-                var events = parseEvents(data.get("events"));
-        		App.getApp().setProperty("code", data.get("code"));
-        		App.getApp().setProperty("events", events);
-                if(watch){
+                if (data.get("code").hasKey("refresh_token")) {
+                    if (App.getApp().getProperty("code") == null) {
+                        App.getApp().setProperty("code", data.get("code"));
+                    } else if (data.get("code").get("refresh_token") != App.getApp().getProperty("code").get("refresh_token")) {
+                        App.getApp().setProperty("code", data.get("code"));
+                    }
+                }
+
+                var events = decodeEvents(data.get("events"));
+                App.getApp().setProperty("events", events);
+                if (watch) {
                     watch.onBackgroundData(events);
                 }
-        	} else {
-    			App.getApp().setProperty("code", data);
-        	}
+            } else {
+                if (data.hasKey("refresh_token")) {
+                    if (App.getApp().getProperty("code") == null) {
+                        App.getApp().setProperty("code", data);
+                    } else if (data.get("refresh_token") != App.getApp().getProperty("code").get("refresh_token")) {
+                        App.getApp().setProperty("code", data);
+                    }
+                }
+            }
             Ui.requestUpdate();
         } catch (ex){
             return data;
         }
-    }    
+    }
+
+    function decodeEvents(object) {
+        var os = object.toString();
+        var size = os.substring(0, 1).toNumber();
+
+        var ci = 0;
+        var state = 0;
+        var rest = os.substring(os.find("%")+1, os.length());
+        var data = [[], [], [], [], []];
+        for (var i = 0; !rest.equals("");) {
+            var part, next;
+            rest = rest.substring(i, os.length());
+            if (rest.find(",")) {
+                next = rest.find(",");
+                part = rest.substring(0, next);
+                if (part.find("/")) {
+                    next = rest.find("/");
+                    part = rest.substring(0, next);
+                }
+                i = next+1;
+            } else {
+                try {
+                    next = rest.find("/");
+                    part = rest.substring(0, next);
+                    i = next+1;
+                } catch (ignored) {
+                    part = rest;
+                    rest = "";
+                }
+            }
+            if (rest.find("/") == null) {
+                state = 2;
+            }
+            if (ci < size) {
+                if (state == 0) { //name
+                    data[0].add(part);
+                    state++;
+                } else { //location
+                    data[1].add(part);
+                    state--;
+                    ci++;
+                }
+            } else {
+                if (state == 0) { //hour
+                    if (data[0].size() > data[2].size()) {
+                        data[2].add(part);
+                    } else {
+                        state++;
+                    }
+                }
+                if (state == 1) { //degree
+                    var tomorrow = false;
+                    if (part.find("t") != null) {
+                        tomorrow = true;
+                    }
+                    var degree = part.substring(0, part.length()-1);
+                    data[3].add([
+                        degree.substring(0, degree.find("-")),
+                        degree.substring(degree.find("-")+1, degree.length()),
+                        tomorrow
+                    ]);
+                }
+                if (state == 2) { //cal index
+                    data[4].add(part);
+                }
+            }
+        }
+        for (var i = 0; i < data[2].size(); i++) {
+            var part = data[2][i];
+            var sys_time = System.getClockTime();
+            var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
+            var to = (UTCdelta/3600).format("%02d") + ":00";
+            var sign = sys_time.timeZoneOffset < 0 ? "-" : "+";
+            var date = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+            if (data[3][i][2]) {
+                date = Gregorian.info(Time.now().add(new Time.Duration(3600*24)), Time.FORMAT_SHORT);
+            }
+            var start = Lang.format(
+                "$1$-$2$-$3$T$4$:$5$:00",
+                [
+                    date.year,
+                    date.month,
+                    date.day,
+                    part.substring(0, part.find(":")),
+                    part.substring(part.find(":")+1, part.length())
+                ]
+            );
+            start += sign + to;
+            data[2][i] = start;
+        }
+        var events_list = [];
+        for (var i = 0; i < data[3].size(); i++) {
+            events_list.add({
+                "name"=>data[0].size() > i ? data[0][i] : "", 
+                "location"=>data[1].size() > i ? ": " + data[1][i] : "",
+                "start"=>data[2].size() > i ? parseISODate(data[2][i]).value() : "",
+                "tomorrow"=>data[3][i][2],
+                "degreeStart"=>data[3][i][0], 
+                "degreeEnd"=>data[3][i][1], 
+                "cal"=>data[4][i]
+            });
+        }
+        return events_list;
+    }
 
     function getServiceDelegate() {
         return [new lateBackground()];
     }
-    
-    function swap(data, x, y) {
-        var tmp = data[x];
-        data[x] = data[y];
-        data[y] = tmp;
-        return data;
-    }
-    
-    function parseEvents(data){
-        var events_list = [];
-        var dayDegrees = 3600*24.0/360;
-        var midnight = Time.today();
-        
-        
-        if(data instanceof Toybox.Lang.Array) {
-            for(var i=0; i<data.size()-1; i++){
-                for (var j=0; j<data.size()-i-1; j++) {
-                    var x = parseISODate(data[j].get("start"));
-                    var y = parseISODate(data[j+1].get("start"));
-                    if (x.greaterThan(y)) {
-                        data = swap(data, j, j+1);
-                    }
-                }
-            }
-        }
-        
-        if(data instanceof Toybox.Lang.Array) { 
-            for(var i=0; i<data.size() ;i++){
-                var date = parseISODate(data[i].get("start"));
-                if(date!=null){
-                    events_list.add({
-                        "start"=>date.value(),
-                        "end"=>parseISODate(data[i].get("end")).value(),
-                        "degreeStart"=>date.compare(midnight)/dayDegrees, 
-                        "degreeEnd"=>parseISODate(data[i].get("end")).compare(midnight)/dayDegrees, 
-                        "name"=>data[i].get("name"), 
-                        "location"=> data[i].get("location") ? ": " + data[i].get("location") : "",
-                        "cal"=>data[i].get("cal")
-                    });
-                }
-            }
-        }
-        return(events_list);
-    }
 
-    // converts rfc3339 formatted timestamp to Time::Moment (null on error)
     function parseISODate(date) {
         // assert(date instanceOf String)
 

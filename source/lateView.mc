@@ -301,29 +301,31 @@ class lateView extends Ui.WatchFace {
     }
 
     function updateCurrentEvent(dc){
-        event["name"] = events_list[0]["name"]; // optimization move down
+        if (events_list != null && events_list.size() > 0) {
+            event["name"] = events_list[0]["name"]; // optimization move down
 
-        event["start"] = new Time.Moment(events_list[0]["start"].toNumber());
-        var duration = event["start"].compare(new Time.Moment(Time.now().value()));
+            event["start"] = new Time.Moment(events_list[0]["start"].toNumber());
+            var duration = event["start"].compare(new Time.Moment(Time.now().value()));
 
-        if(duration < -300){  
-            event["start"] = "";
-        } else if( duration <0){
-            event["start"] = "now!";
-            event["prefix"] = "";
-        } else {
-            event["prefix"] = "in ";
-            if (duration < 60*60) {
-                event["start"] = duration/60 + "m";
+            if(duration < -300){  
+                event["start"] = "";
+            } else if( duration <0){
+                event["start"] = "now!";
+                event["prefix"] = "";
             } else {
-                event["start"] = duration/3600 + "h" + duration%3600/60 ;
+                event["prefix"] = "in ";
+                if (duration < 60*60) {
+                    event["start"] = duration/60 + "m";
+                } else {
+                    event["start"] = duration/3600 + "h" + duration%3600/60 ;
+                }
             }
+            event["location"]=events_list[0]["location"];
+            event["mid"] = (
+                dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
+                -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
+            );
         }
-        event["location"]=events_list[0]["location"];
-        event["mid"] = (
-            dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
-            -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
-        );
     }
 
 

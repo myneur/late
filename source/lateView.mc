@@ -301,7 +301,7 @@ activity = 6;
 
     function onBackgroundData(data) {
         //dataCount++;
-        events_list = data;
+        events_list = data;            
         redrawAll = 1;
     }
 

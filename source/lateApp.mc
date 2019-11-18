@@ -54,6 +54,8 @@ Background.registerForTemporalEvent(new Time.Duration(120*60));
         	}
             Ui.requestUpdate();
         } catch (ex){
+            Sys.println("ex: " + ex.getErrorMessage());
+            Sys.println( ex.printStackTrace());
             return data;
         }
     }    
@@ -78,8 +80,8 @@ Background.registerForTemporalEvent(new Time.Duration(120*60));
         if(data instanceof Toybox.Lang.Array) {
             for(var i=0; i<data.size()-1; i++){
                 for (var j=0; j<data.size()-i-1; j++) {
-                    var x = parseISODate(data[j].get("start"));
-                    var y = parseISODate(data[j+1].get("start"));
+                    var x = parseISODate(data[j][0]);
+                    var y = parseISODate(data[j+1][0]);
                     if (x.greaterThan(y)) {
                         data = swap(data, j, j+1);
                     }
@@ -89,16 +91,17 @@ Background.registerForTemporalEvent(new Time.Duration(120*60));
         
         if(data instanceof Toybox.Lang.Array) { 
             for(var i=0; i<data.size() ;i++){
-                var date = parseISODate(data[i].get("start"));
+                var date = parseISODate(data[i][0]);
+                Sys.println(data[i]);
                 if(date!=null){
                     events_list.add({
                         "start"=>date.value(),
-                        "end"=>parseISODate(data[i].get("end")).value(),
+                        "end"=>parseISODate(data[i][1]).value(),
                         "degreeStart"=>date.compare(midnight)/dayDegrees, 
-                        "degreeEnd"=>parseISODate(data[i].get("end")).compare(midnight)/dayDegrees, 
-                        "name"=>data[i].get("name"), 
-                        "location"=> data[i].get("location") ? ": " + data[i].get("location") : "",
-                        "cal"=>data[i].get("cal")
+                        "degreeEnd"=>parseISODate(data[i][1]).compare(midnight)/dayDegrees, 
+                        "name"=>data[i][2], 
+                        "location"=> data[i][3] ? ": " + data[i][3] : "",
+                        "cal"=>data[i][4]
                     });
                 }
             }

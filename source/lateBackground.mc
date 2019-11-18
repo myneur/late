@@ -172,30 +172,35 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           //if(events_list_size>500){break;}
           if(event["start"]){ // skip day events that have only "summary"
     				try {
-              var eventTrim = {
+              /*var eventTrim = {
       					"name"=> event.get("summary") ? event.get("summary").substring(0,25) : "",
       					"location"=>event.get("location"),
       					"start"=>event.get("start").get("dateTime"),
       					"end"=>event.get("end").get("dateTime"), 
                 "cal"=>current_index
-      				};
-              Sys.println(eventTrim);
-              if(eventTrim["location"]){  // trimming and event to fit the screen right 
-                eventTrim["location"] = eventTrim["location"].substring(0,15);
-                var split = eventTrim["location"].find(",");
+      				};*/
+              var eventTrim = [
+                event.get("start").get("dateTime"),
+                event.get("end").get("dateTime"), 
+                event.get("summary") ? event.get("summary").substring(0,25) : "",
+                event.get("location"),
+                current_index
+              ];
+              //Sys.println(eventTrim);
+              if(eventTrim[3]){  // trimming and event to fit the screen right 
+                eventTrim[3] = eventTrim[3].substring(0,15);
+                var split = eventTrim[3].find(",");
                 if(split && split>0){
-                    eventTrim["location"] = eventTrim["location"].substring(0,split);
+                    eventTrim[3] = eventTrim[3].substring(0,split);
                 }
               }
               events_list.add(eventTrim);
-              events_list_size += eventTrim.toString().length();
-
-              Sys.println([eventTrim["name"], eventTrim.toString().length(), events_list_size, code.toString().length()]);
-              }catch(ex){
+              //events_list_size += eventTrim.toString().length();
+              //Sys.println([eventTrim["name"], eventTrim.toString().length(), events_list_size, code.toString().length()]);
+              } catch(ex) {
                 Sys.println("ex: " + ex.getErrorMessage());
                 Sys.println( ex.printStackTrace());
               }
-
             }
           }
 
@@ -204,15 +209,21 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     					"code"=>code,
     					"events"=>events_list
     				};
-            try{
-              Sys.println("Size : " + code_events.toString().length());
-              Background.exit(code_events);
-            }catch(ex){
-              Sys.println("bg ex: " + ex.getErrorMessage());
-              Sys.println( ex.printStackTrace());
-              code_events["events"] = events_list.size() ? events_list[0] : null;
-              Background.exit(code_events);
-            }
+            //for(var j=events_list.size()-1; j>=0 ;j--){
+              try{  
+                  Sys.println(events_list);
+                  Background.exit(code_events);
+              }catch(ex){
+                Sys.println("bg ex: " + ex.getErrorMessage());Sys.println(ex.printStackTrace());
+                /*if(j>0 && j<events_list.size()){
+                  events_list[j][3]=null;
+                  events_list[j][2]=null;
+                } else {*/
+                  code_events["events"] = events_list.size() ? [events_list[0]] : null;
+                  Background.exit(code_events);
+                //}
+              }
+            //}
     			} else {
     				current_index++;
     			}
@@ -256,4 +267,5 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		   Background.exit(code);
     	}
     }
+
 }

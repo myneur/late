@@ -24,6 +24,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   function onTemporalEvent() {
   	if (App.getApp().getProperty("code") == null) {
 			if (App.getApp().getProperty("access_code").equals("")) {
+        Sys.printl("code is null");
 				Background.exit(code);
 			}
 			code = {"access_code"=>App.getApp().getProperty("access_code")};
@@ -53,7 +54,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       code = data;
       getCalendarData();
   	} else {
-      Sys.println("AUTHORIZATION ERROR!!!");
+      Sys.println("AUTHORIZATION ERROR! " + responseCode);
       Background.exit(code);
   	}
   }
@@ -102,6 +103,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			}
 			 repeater();
     	} else {
+        Sys.println("calendars error code "+responseCode);
     		Background.exit(code);
     	}
       data = null;
@@ -231,6 +233,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   				"events"=>events_list // TODO the events should not be updated if no response
   			};
         try{
+          Sys.println("events error code "+responseCode);
     		  Background.exit(code_events);
         }catch(ex){
           Background.exit(null);

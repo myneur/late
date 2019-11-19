@@ -10,7 +10,7 @@ const ServerToken = "https://oauth2.googleapis.com/token";
 const AuthUri = "https://accounts.google.com/o/oauth2/auth";
 const ApiUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const ApiCalendarUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
-const Scopes = "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly";
+//const Scopes = "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -104,6 +104,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     	} else {
     		Background.exit(code);
     	}
+      data = null;
     }
     
     var in_progress = -1;
@@ -112,7 +113,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			in_progress++;
 			getCalendarEventData(id_list[current_index]);
 		}
-  	
   }
   
   function getCalendarEventData(calendar_id) {
@@ -144,7 +144,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         ]
 		);
 		dateEnd += sign + to;
-    Sys.println(calendar_id);
+    //Sys.println(calendar_id);
     Communications.makeWebRequest(
          $.ApiUrl + calendar_id + "/events",
          {
@@ -206,6 +206,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
             try{  
                 //Sys.println(events_list);
                 Sys.println("free memory: "+Sys.getSystemStats().freeMemory + ", events length: "+events_list_size + ", code length: "+ code.toString().length());
+                data = null; // to free memory, because it is shared with the limit of the data that can be ppassed
+                id_list = null;
                 Background.exit(code_events);
             }catch(ex){
               Sys.println("bg ex: " + ex.getErrorMessage());Sys.println(ex.printStackTrace());
@@ -213,7 +215,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
                 events_list[j][3]=null;
                 events_list[j][2]=null;
               } else {*/
-                code_events["events"] = events_list.size() ? [events_list[0]] : null;
+                code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
                 Background.exit(code_events);
               //}
             }

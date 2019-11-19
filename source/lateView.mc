@@ -307,9 +307,9 @@ activity = 6;
 
     function updateCurrentEvent(dc){
         for(var i=0; i<events_list.size(); i++){
-            event["name"] = events_list[i]["name"]; // optimization move down
+            event["name"] = events_list[i][2]; // optimization move down
             //event["name"] += "w"+wakeCount+"d"+dataCount;
-            event["start"] = new Time.Moment(events_list[i]["start"]);
+            event["start"] = new Time.Moment(events_list[i][0]);
             var duration = event["start"].compare(new Time.Moment(Time.now().value()));
 
             if(duration < -300){
@@ -325,7 +325,7 @@ activity = 6;
                     event["start"] = duration/3600 + "h" + duration%3600/60 ;
                 }
             }
-            event["location"]=events_list[i]["location"];
+            event["location"]=events_list[i][2];
             event["mid"] = (
                 dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
                 -(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
@@ -382,17 +382,17 @@ activity = 6;
         var degreeEnd;
         for(var i=0; i <events_list.size(); i++){
             dc.setColor(0, 0);
-            dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i]["degreeStart"]+1, 90-events_list[i]["degreeStart"]);
-            if(events_list[i]["end"]>=tomorrow && events_list[i]["degreeEnd"].toNumber()%360 > nowBoundary){
-                degreeStart=events_list[i]["degreeStart"].toNumber()%360;
+            dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i][5]+1, 90-events_list[i][5]);
+            if(events_list[i][1]>=tomorrow && events_list[i][6].toNumber()%360 > nowBoundary){
+                degreeStart=events_list[i][5].toNumber()%360;
                 degreeEnd=nowBoundary;
                 dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-nowBoundary+1, 90-nowBoundary);
             } else {
-                degreeStart = events_list[i]["degreeStart"];
-                degreeEnd = events_list[i]["degreeEnd"];
+                degreeStart = events_list[i][5];
+                degreeEnd = events_list[i][6];
             }
-            if(events_list[i]["cal"]!=null){
-                dc.setColor(calendarColors[events_list[i]["cal"]%(calendarColors.size())], 0);
+            if(events_list[i][4]!=null){ // calendar
+                dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], 0);
             }
             dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd+1);
         }

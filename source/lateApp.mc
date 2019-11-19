@@ -56,7 +56,7 @@ Background.registerForTemporalEvent(new Time.Duration(120*60));
         } catch (ex){
             Sys.println("ex: " + ex.getErrorMessage());
             Sys.println( ex.printStackTrace());
-            return data;
+            return;
         }
     }    
 
@@ -94,15 +94,15 @@ Background.registerForTemporalEvent(new Time.Duration(120*60));
                 var date = parseISODate(data[i][0]);
                 //Sys.println(data[i]);
                 if(date!=null){
-                    events_list.add({
-                        "start"=>date.value(),
-                        "end"=>parseISODate(data[i][1]).value(),
-                        "degreeStart"=>date.compare(midnight)/dayDegrees, 
-                        "degreeEnd"=>parseISODate(data[i][1]).compare(midnight)/dayDegrees, 
-                        "name"=>data[i][2], 
-                        "location"=> data[i][3] ? ": " + data[i][3] : "",
-                        "cal"=>data[i][4]
-                    });
+                    events_list.add([
+                        date.value(),                                               // start
+                        parseISODate(data[i][1]).value(),                           // end
+                        data[i][2],                                                 // name
+                        data[i][3] ? ": " + data[i][3] : "",                        // location
+                        data[i][4],                                                 // calendar
+                        date.compare(midnight)/dayDegrees,                          // degree start
+                        parseISODate(data[i][1]).compare(midnight)/dayDegrees       // degree end
+                    ]);
                 }
             }
         }

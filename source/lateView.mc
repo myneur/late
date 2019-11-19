@@ -325,7 +325,7 @@ activity = 6;
 					event["start"] = duration/3600 + "h" + duration%3600/60 ;
 				}
 			}
-			event["location"]=events_list[i][2];
+			event["location"]=events_list[i][3];
 			event["mid"] = (
 				dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
 				-(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))

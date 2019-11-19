@@ -24,7 +24,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   function onTemporalEvent() {
   	if (App.getApp().getProperty("code") == null) {
 			if (App.getApp().getProperty("access_code").equals("")) {
-        Sys.printl("code is null");
 				Background.exit(code);
 			}
 			code = {"access_code"=>App.getApp().getProperty("access_code")};
@@ -169,7 +168,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function parseCalendarEventData(responseCode, data) {
   	if(responseCode == 200) {
-			for (var i = 0; i < data.get("items").size(); i++) {
+			for (var i = 0; i < data.get("items").size() && events_list.size()<10; i++) { // 10 events not to get out of memory
 				var event = data.get("items")[i];
         //if(events_list_size>500){break;}
         if(event["start"]){ // skip day events that have only "summary"

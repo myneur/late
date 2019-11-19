@@ -92,7 +92,7 @@ Background.registerForTemporalEvent(new Time.Duration(120*60));
         if(data instanceof Toybox.Lang.Array) { 
             for(var i=0; i<data.size() ;i++){
                 var date = parseISODate(data[i][0]);
-                Sys.println(data[i]);
+                //Sys.println(data[i]);
                 if(date!=null){
                     events_list.add({
                         "start"=>date.value(),

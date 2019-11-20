@@ -50,8 +50,7 @@ class lateApp extends App.AppBase {
 				}
 //Background.registerForTemporalEvent(new Time.Duration(120*60)); 
 			} else {
-				if (data.hasKey("error")){
-
+				if (data.hasKey("errorCode")){
 					watch.onBackgroundData(data);
 				} else {
 					App.getApp().setProperty("code", data);
@@ -100,13 +99,13 @@ class lateApp extends App.AppBase {
 				//Sys.println(data[i]);
 				if(date!=null){
 					events_list.add([
-						date.value(),											   // start
-						parseISODate(data[i][1]).value(),						   // end
-						data[i][2],												 // name
+						date.value(),											   	// start
+						parseISODate(data[i][1]).value(),						   	// end
+						data[i][2],												 	// name
 						data[i][3] ? ": " + data[i][3] : "",						// location
-						data[i][4],												 // calendar
-						date.compare(midnight)/dayDegrees,						  // degree start
-						parseISODate(data[i][1]).compare(midnight)/dayDegrees	   // degree end
+						data[i][4],												 	// calendar
+						(date.compare(midnight)/dayDegrees).toFloat(),						  	// degree start
+						(parseISODate(data[i][1]).compare(midnight)/dayDegrees).toFloat()	   	// degree end
 					]);
 				}
 			}

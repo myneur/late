@@ -305,9 +305,9 @@ activity = 6;
 			events_list = data;
 		} else {
 			var nowError = ((Time.now())).value();
-			events_list = [[nowError, nowError + 3600, "Auth Error", null, 0, 0, 0]];
-			if(data.hasKey("error")){
-				events_list[0][3] = " " + data["error"];
+			events_list = [[nowError, nowError, Ui.loadResource(Rez.Strings.AuthError), null, 0, 0, 0]];
+			if(data.hasKey("errorCode")){
+				events_list[0][3] = " " + data["errorCode"];
 			}
 			Sys.println("err " + event["name"]);
 		}

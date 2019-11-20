@@ -149,7 +149,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Communications.makeWebRequest(
          $.ApiUrl + calendar_id + "/events",
          {
-         	"maxResults"=>"5",
+         	"maxResults"=>"6",
          	"orderBy"=>"startTime",
          	"singleEvents"=>"true",
          	"timeMin"=>dateStart,
@@ -168,7 +168,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function parseCalendarEventData(responseCode, data) {
   	if(responseCode == 200) {
-			for (var i = 0; i < data.get("items").size() && events_list.size()<9; i++) { // 10 events not to get out of memory
+			for (var i = 0; i < data.get("items").size() && events_list.size()<10; i++) { // 10 events not to get out of memory
         //Sys.println("m"+i+": "+Sys.getSystemStats().freeMemory);
 				var event = data.get("items")[i];
         //if(events_list_size>500){break;}
@@ -183,7 +183,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
             ];
             //Sys.println(eventTrim);
             if(eventTrim[3]){  // trimming and event to fit the screen right 
-              eventTrim[3] = eventTrim[3].substring(0,15);
+              eventTrim[3] = eventTrim[3].substring(0,12);
               var split = eventTrim[3].find(",");
               if(split && split>0){
                   eventTrim[3] = eventTrim[3].substring(0,split);

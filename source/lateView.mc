@@ -413,6 +413,8 @@ class lateView extends Ui.WatchFace {
 				degreeEnd = events_list[i][6]-1;
 			}
 			if(degreeEnd-1 >= degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
+				dc.setColor(backgroundColor, backgroundColor);
+				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
 				dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
 				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}

@@ -23,6 +23,7 @@ class lateView extends Ui.WatchFace {
 	hidden var color = Gfx.COLOR_YELLOW;
 	hidden var dateColor = 0x555555;
 	hidden var activityColor = 0x555555;
+	hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var activity = 0;
 	hidden var dateForm;
 	hidden var showSunrise = false;
@@ -305,33 +306,41 @@ activity = 6;
 			events_list = data;
 		} else {
 			var nowError = ((Time.now())).value();
-			events_list = [[nowError, nowError, Ui.loadResource(Rez.Strings.AuthError), null, 0, 0, 0]];
+			events_list = [[nowError, nowError+3600*24, Ui.loadResource(Rez.Strings.AuthError), null, 0, -1, 1]];
 			if(data.hasKey("errorCode")){
 				events_list[0][3] = " " + data["errorCode"];
 			}
-			Sys.println("err " + event["name"]);
 		}
 		redrawAll = 1;
 	}
 
 	function updateCurrentEvent(dc){
 		for(var i=0; i<events_list.size(); i++){
-			event["name"] = events_list[i][2]; // optimization move down
-			//event["name"] += "w"+wakeCount+"d"+dataCount;
+			event["name"] = events_list[i][2]; // TODO: optimization move down
+			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
 			event["start"] = new Time.Moment(events_list[i][0]);
-			var duration = event["start"].compare(new Time.Moment(Time.now().value()));
+			event["end"] = new Time.Moment(events_list[i][1]);
+			var timeNow = Time.now();
+			var tillStart = event["start"].compare(timeNow);
+			
+			if(event["end"].compare(timeNow)<0){
+				events_list.remove(events_list[i]);
+				i--;
+				Sys.println("removed "+i);
+				continue;
+			}
 
-			if(duration < -300){
+			if(tillStart < -300){
 			  continue;  
-			} else if( duration <0){
+			} else if( tillStart <0){
 				event["start"] = "now!";
 				event["prefix"] = "";
 			} else {
 				event["prefix"] = "in ";
-				if (duration < 60*60) {
-					event["start"] = duration/60 + "m";
+				if (tillStart < 60*60) {
+					event["start"] = tillStart/60 + "m";
 				} else {
-					event["start"] = duration/3600 + "h" + duration%3600/60 ;
+					event["start"] = tillStart/3600 + "h" + tillStart%3600/60 ;
 				}
 			}
 			event["location"]=events_list[i][3];
@@ -375,7 +384,7 @@ activity = 6;
 		updateCurrentEvent(dc);
 		if(event["start"]){
 			dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
-			dc.setColor(dateColor, 0);
+			dc.setColor(dateColor, backgroundColor);
 			dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["prefix"]+event["start"], Gfx.TEXT_JUSTIFY_RIGHT);
 			dc.setColor(activityColor, Gfx.COLOR_BLACK);
 			dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["location"], Gfx.TEXT_JUSTIFY_LEFT);
@@ -384,26 +393,29 @@ activity = 6;
 
 	function drawEvents(dc){
 		dc.setPenWidth(5);
-		dc.setColor(activityColor, 0);
 		var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;
-		var tomorrow = Time.today().value()+3600*24;
+		var tomorrow = Time.now().value()+3600*24;
 		var degreeStart;
 		var degreeEnd;
 		for(var i=0; i <events_list.size(); i++){
-			dc.setColor(0, 0);
-			dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-events_list[i][5]+1, 90-events_list[i][5]);
-			if(events_list[i][1]>=tomorrow && events_list[i][6].toNumber()%360 > nowBoundary){
+			if(events_list[i][1]>=tomorrow && (events_list[i][6].toNumber() > nowBoundary )){ // crop tomorrow event overlapping now on 360° dial
+				Sys.println("cropping");
 				degreeStart=events_list[i][5].toNumber()%360;
-				degreeEnd=nowBoundary;
-				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-nowBoundary+1, 90-nowBoundary);
+				degreeEnd=nowBoundary-1;
+				if(degreeEnd > events_list[0][5].toNumber()%360){	// not to overlapp the start of the current event
+					degreeEnd = events_list[0][5].toNumber()%360-1;
+				}
+				if(degreeEnd-1>degreeStart){
+					dc.setColor(backgroundColor, backgroundColor);
+				}
 			} else {
 				degreeStart = events_list[i][5];
-				degreeEnd = events_list[i][6];
+				degreeEnd = events_list[i][6]-1;
 			}
-			if(events_list[i][4]!=null){ // calendar
-				dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], 0);
+			if(degreeEnd-1>degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
+				dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
+				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}
-			dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd+1);
 		}
 	}
 

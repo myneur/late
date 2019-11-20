@@ -48,7 +48,7 @@ class lateApp extends App.AppBase {
 				if(watch){
 					watch.onBackgroundData(events);
 				}
-//Background.registerForTemporalEvent(new Time.Duration(120*60)); 
+Background.registerForTemporalEvent(new Time.Duration(120*60)); 
 			} else {
 				if (data.hasKey("errorCode")){
 					watch.onBackgroundData(data);

@@ -59,7 +59,7 @@ class lateView extends Ui.WatchFace {
 	hidden var activityY;
 	hidden var batThreshold = 5;
 
-	hidden var event = {"name"=>"", "prefix"=>"in ", "start"=>0, "location"=>"", "mid"=>0, "height"=>25};
+	hidden var event = {"start"=>0, "end"=>0, "name"=>"", "location"=>"", "prefix"=>"in ", "mid"=>0, "height"=>25};
 	hidden var events_list = [];
 	
 	// redraw full watchface
@@ -169,7 +169,7 @@ class lateView extends Ui.WatchFace {
 		dialSize = App.getApp().getProperty("dialSize");
 
 //color = 0x00AAFF;
-activity = 6;
+//activity = 6;
 //showSunrise = true;
 //batThreshold = 100;
 //dialSize = 1;
@@ -316,23 +316,24 @@ activity = 6;
 
 	function updateCurrentEvent(dc){
 		for(var i=0; i<events_list.size(); i++){
-			event["name"] = events_list[i][2]; // TODO: optimization move down
-			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
+			
 			event["start"] = new Time.Moment(events_list[i][0]);
-			event["end"] = new Time.Moment(events_list[i][1]);
 			var timeNow = Time.now();
 			var tillStart = event["start"].compare(timeNow);
+			var eventEnd = new Time.Moment(events_list[i][1]);
 			
-			if(event["end"].compare(timeNow)<0){
+			if(eventEnd.compare(timeNow)<0){
 				events_list.remove(events_list[i]);
 				i--;
 				Sys.println("removed "+i);
 				continue;
 			}
-
 			if(tillStart < -300){
 			  continue;  
-			} else if( tillStart <0){
+			} 
+			event["name"] = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,22); 
+			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
+			if( tillStart <0){
 				event["start"] = "now!";
 				event["prefix"] = "";
 			} else {
@@ -343,7 +344,7 @@ activity = 6;
 					event["start"] = tillStart/3600 + "h" + tillStart%3600/60 ;
 				}
 			}
-			event["location"]=events_list[i][3];
+			event["location"] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
 			event["mid"] = (
 				dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
 				-(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
@@ -399,20 +400,19 @@ activity = 6;
 		var degreeEnd;
 		for(var i=0; i <events_list.size(); i++){
 			if(events_list[i][1]>=tomorrow && (events_list[i][6].toNumber() > nowBoundary )){ // crop tomorrow event overlapping now on 360° dial
-				Sys.println("cropping");
 				degreeStart=events_list[i][5].toNumber()%360;
 				degreeEnd=nowBoundary-1;
 				if(degreeEnd > events_list[0][5].toNumber()%360){	// not to overlapp the start of the current event
 					degreeEnd = events_list[0][5].toNumber()%360-1;
 				}
-				if(degreeEnd-1>degreeStart){
+				if(degreeEnd-1 >= degreeStart){	// ensuring the 1° gap between the events did not switch the order of the start/end
 					dc.setColor(backgroundColor, backgroundColor);
 				}
 			} else {
 				degreeStart = events_list[i][5];
 				degreeEnd = events_list[i][6]-1;
 			}
-			if(degreeEnd-1>degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
+			if(degreeEnd-1 >= degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
 				dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
 				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}

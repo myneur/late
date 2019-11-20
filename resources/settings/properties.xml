@@ -1,12 +1,12 @@
 <properties>
-    <property id="color" type="number">0x00AACC</property>
-    <property id="dateForm" type="number">0</property>
-    <property id="activity" type="number">6</property>
-    <property id="sunriset" type="boolean">true</property>
-    <property id="bat" type="number">33</property>
-    <property id="dialSize" type="number">0</property>
-    <property id="boldness" type="number">7</property>
-    <property id="refresh_freq" type="number">5</property>
-    <property id="calendar_indexes" type="string">3,4,5</property>
-    <property id="access_code" type="string">4/tgEJkFpKH1WLf4i5Lin-ObCpFPhgnAb41s64Ok1WVs7gPq-tw4PViKunMJvTFEJVBeBbHAn9ydsZOLWwCKDxmO8</property>
+	<property id="color" type="number">0x00AACC</property>
+	<property id="dateForm" type="number">0</property>
+	<property id="activity" type="number">6</property>
+	<property id="sunriset" type="boolean">true</property>
+	<property id="bat" type="number">33</property>
+	<property id="dialSize" type="number">0</property>
+	<property id="boldness" type="number">7</property>
+	<property id="refresh_freq" type="number">5</property>
+	<property id="calendar_indexes" type="string">3,4,5</property>
+	<property id="access_code" type="string">4/tgEJkFpKH1WLf4i5Lin-ObCpFPhgnAb41s64Ok1WVs7gPq-tw4PViKunMJvTFEJVBeBbHAn9ydsZOLWwCKDxmO8</property>
 </properties>

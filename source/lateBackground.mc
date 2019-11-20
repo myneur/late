@@ -102,7 +102,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			}
 			 repeater();
     	} else {
-        Sys.println("calendars error code "+responseCode);
+        //Sys.println("calendars error code "+responseCode);
     		Background.exit(code);
     	}
       data = null;
@@ -235,7 +235,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   				"events"=>events_list // TODO the events should not be updated if no response
   			};
         try{
-          Sys.println("events error code "+responseCode);
+          //Sys.println("events error code "+responseCode);
     		  Background.exit(code_events);
         }catch(ex){
           Background.exit(null);

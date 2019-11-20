@@ -54,7 +54,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       getCalendarData();
   	} else {
       Sys.println("AUTHORIZATION ERROR! " + responseCode);
-      Background.exit(code);
+      Background.exit({"error"=>responseCode});
   	}
   }
   

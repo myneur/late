@@ -301,7 +301,16 @@ activity = 6;
 
 	function onBackgroundData(data) {
 		//dataCount++;
-		events_list = data;			
+		if(data instanceof Array){
+			events_list = data;
+		} else {
+			var nowError = ((Time.now())).value();
+			events_list = [[nowError, nowError + 3600, "Auth Error", null, 0, 0, 0]];
+			if(data.hasKey("error")){
+				events_list[0][3] = " " + data["error"];
+			}
+			Sys.println("err " + event["name"]);
+		}
 		redrawAll = 1;
 	}
 

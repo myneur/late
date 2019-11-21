@@ -22,6 +22,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
   function onTemporalEvent() {
+    Sys.println("event free memory: "+Sys.getSystemStats().freeMemory);
   	if (App.getApp().getProperty("code") == null) {
 			if (App.getApp().getProperty("access_code").equals("")) {
 				Background.exit(code);
@@ -77,6 +78,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   var current_index = 0;
   var id_list = [];
   function parseCalendarData(responseCode, data) {
+    Sys.println("calendar data free memory: "+Sys.getSystemStats().freeMemory);
   	var result_size = data.get("items").size();
     //Sys.println(data);
     if (responseCode == 200) {
@@ -100,6 +102,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			for (var d = 0; d < index_list.size(); d++) {
 				id_list.add(data.get("items")[index_list[d]-1].get("id"));
 			}
+      Sys.println("repeater calendar data free memory: "+Sys.getSystemStats().freeMemory);
 			 repeater();
     	} else {
         //Sys.println("calendars error code "+responseCode);
@@ -117,6 +120,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function getCalendarEventData(calendar_id) {
+    Sys.println("get calendar events free memory: "+Sys.getSystemStats().freeMemory);
   	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
   	var sys_time = System.getClockTime();
   	var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -149,7 +153,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Communications.makeWebRequest(
          $.ApiUrl + calendar_id + "/events",
          {
-         	"maxResults"=>"6",
+         	"maxResults"=>"8",
          	"orderBy"=>"startTime",
          	"singleEvents"=>"true",
          	"timeMin"=>dateStart,
@@ -167,8 +171,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	var events_list = [];
 
   function parseCalendarEventData(responseCode, data) {
+    Sys.println("parse events free memory: "+Sys.getSystemStats().freeMemory);
   	if(responseCode == 200) {
-			for (var i = 0; i < data.get("items").size() && events_list.size()<10; i++) { // 10 events not to get out of memory
+			for (var i = 0; i < data.get("items").size() && events_list.size()<9; i++) { // 10 events not to get out of memory
         //Sys.println("m"+i+": "+Sys.getSystemStats().freeMemory);
 				var event = data.get("items")[i];
         //if(events_list_size>500){break;}
@@ -227,6 +232,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   				current_index++;
   			}
         data = null;
+        Sys.println("repeater event data free memory: "+Sys.getSystemStats().freeMemory);
   			repeater();
 
     	} else { // no data

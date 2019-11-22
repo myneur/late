@@ -97,43 +97,42 @@ class lateView extends Ui.WatchFace {
 	function setLayoutVars(){
 		Sys.println("laout start free memory: "+Sys.getSystemStats().freeMemory);
 		try{
-			if(height>218){
-				if(dialSize>0){
+
+			if(dialSize>0){ // strong design
+				fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
+				fontMinutes = Ui.loadResource(Rez.Fonts.MinuteStrong);
+				fontSmall = Ui.loadResource(Rez.Fonts.SmallStrong);
+				
+				if(height>218){
+					dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-7;
 					radius = 89;
 					circleWidth=circleWidth*3+1;
 					batteryY=height-15 ;
-					fontHours = Ui.loadResource(Rez.Fonts.HoursBig);
-					fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig);
-					fontSmall = Ui.loadResource(Rez.Fonts.SmallBig);
-					dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-7;
 				} else {
-					radius = 63;	
-					batteryY = centerY+38;
-					fontHours = Ui.loadResource(Rez.Fonts.Hours);
-					fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
-					fontSmall = Ui.loadResource(Rez.Fonts.Small);
-					dateY = centerY-90-(Gfx.getFontHeight(fontSmall)>>1);
-				}
-			} else {
-				if(dialSize>0){
+					dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-6;
 					radius = 81;
 					batteryY=height-15;
 					circleWidth=circleWidth*3;
-					fontHours = Ui.loadResource(Rez.Fonts.HoursBig);		
-					fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig);
-					fontSmall = Ui.loadResource(Rez.Fonts.SmallBig);
-					dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-6;
+				}		
+			} else { // elegant design
+				fontHours = Ui.loadResource(Rez.Fonts.Hours);
+				fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
+				fontSmall = Ui.loadResource(Rez.Fonts.Small);
+
+				if(height>218){
+					dateY = centerY-90-(Gfx.getFontHeight(fontSmall)>>1);
+					radius = 63;	
+					batteryY = centerY+38;	
 				} else {
+					dateY = centerY-80-(Gfx.getFontHeight(fontSmall)>>1);
 					radius = 55;
 					batteryY = centerY+33;
-					fontHours = Ui.loadResource(Rez.Fonts.Hours);	 
-					fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
-					fontSmall = Ui.loadResource(Rez.Fonts.Small);   
-					dateY = centerY-80-(Gfx.getFontHeight(fontSmall)>>1);
 				}
 			}
+			
+
 			if(activity>0){
-				fontCondensed = Ui.loadResource(height>218 ?Rez.Fonts.Condensed : Rez.Fonts.Condensed);
+				fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
 				if(dialSize==0){
 					activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
 					if(activity == 6){

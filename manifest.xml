@@ -4,17 +4,17 @@
 		<iq:products>
 			<!-- groups by shape, resolution, memory and # colors, -->
 			<!-- round & data-->
-            <!-- 280x280 with data 64 colors 94k memory -->
-            <iq:product id="fenix6pro"/>
-            <iq:product id="fenix6xpro"/>
-            
-            <!-- 260x260 with data 94k memory -->
-            <iq:product id="fenix6"/>
-            
+			<!-- 280x280 with data 64 colors 94k memory -->
+			<iq:product id="fenix6pro"/>
+			<iq:product id="fenix6xpro"/>
+			
+			<!-- 260x260 with data 94k memory -->
+			<iq:product id="fenix6"/>
+			
 			<!-- 240x240 with data 64 colors 94k memory-->
 			<iq:product id="fenix6s"/>
-            <iq:product id="fenix6spro"/>
-            <iq:product id="approachs60"/>
+			<iq:product id="fenix6spro"/>
+			<iq:product id="approachs60"/>
 			<iq:product id="fenix5"/>
 			<iq:product id="fenix5plus"/>
 			<iq:product id="fenix5x"/>
@@ -38,7 +38,7 @@
 			<iq:product id="marqdriver"/>
 			<!-- ??? quatix&reg 5 ??? -->
 
-            
+			
 			<!-- 218x218 with data 16 colors 94k memory-->
 			<iq:product id="d2charlie"/>
 			<iq:product id="d2delta"/>
@@ -48,18 +48,18 @@
 			<iq:product id="descentmk1"/>
 			<iq:product id="fenix5s"/>
 			<iq:product id="fenix5splus"/>
-            <iq:product id="vivoactive4s"/>
+			<iq:product id="vivoactive4s"/>
 
-            <!-- no data or lower memory -->
-            <!-- 218x218 no data 65k memory-->
+			<!-- no data or lower memory -->
+			<!-- 218x218 no data 65k memory-->
 			<iq:product id="fenix3"/>
 			<iq:product id="fenix3_hr"/>
 			<iq:product id="d2bravo"/>
 			<iq:product id="d2bravo_titanium"/>
 			<!-- ??? tactix Bravo, quatix 3 ??? -->
 
-            <!-- rectangle 148x205 with data 64 colors 61k memory-->
-            <iq:product id="vivoactive_hr"/>
+			<!-- rectangle 148x205 with data 64 colors 61k memory-->
+			<iq:product id="vivoactive_hr"/>
 			
 			<!-- semi-round 215x180 no data 16c olors 65k memory-->
 			<iq:product id="fr230"/>

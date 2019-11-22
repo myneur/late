@@ -4,7 +4,7 @@ project.manifest = manifest.xml
 round-280x280.resourcePath = $(base.resourcePath);resources-backgrounddata;resources-240;resources-280
 round-260x260.resourcePath = $(base.resourcePath);resources-backgrounddata;resources-240
 round-240x240.resourcePath = $(base.resourcePath);resources-backgrounddata;resources-240
-round-218x218.resourcePath = $(base.resourcePath);resources-backgrounddata
+# round-218x218.resourcePath = $(base.resourcePath);resources-backgrounddata # find out how to exclude for fenix3 family
 
 # no background data communication
 rectangle.excludeAnnotations = data

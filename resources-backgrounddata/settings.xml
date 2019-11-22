@@ -31,6 +31,7 @@
 			<listEntry value="3">@Strings.ActiveMinutesDay</listEntry>
 			<listEntry value="4">@Strings.ActiveMinutesWeek</listEntry>
 			<listEntry value="5">@Strings.Floors</listEntry>
+			<listEntry value="6">@Strings.Calendar</listEntry>
 		</settingConfig>
 	</setting>
 
@@ -64,5 +65,17 @@
 
 	<setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
 		<settingConfig type="boolean" />
+	</setting>
+	
+	<setting propertyKey="@Properties.calendar_indexes" title="@Strings.calendarIndexes">
+		<settingConfig type="alphaNumeric"/>
+	</setting>
+	
+	<setting propertyKey="@Properties.access_code" title="@Strings.accessCode">
+		<settingConfig type="alphaNumeric"/>
+	</setting>
+	
+	<setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
+		<settingConfig type="numeric" min="5" max="1440" />
 	</setting>
 </settings>

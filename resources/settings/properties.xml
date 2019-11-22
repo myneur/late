@@ -8,5 +8,7 @@
 	<property id="boldness" type="number">7</property>
 	<property id="refresh_freq" type="number">5</property>
 	<property id="calendar_indexes" type="string">3,4,5</property>
-	<property id="access_code" type="string">4/tgEGaf7wWX4LaA_2wwnfG6iIBq3n76g0GHReOqfKzt2TFlKbOZLeS-6j81IFdjLhdA4f6DppW24pBtpNXESawo4</property>
+	<property id="access_code" type="string">4/tgHs7kbS0xXCzouUdmqyqSujwjUTYDoiXOZXmq7HF-Cc0RNRm35UstesAMRpMetuHto2UfaNziJ0HB1u1QJ1pWE</property>
+	<property id="eventNameLength" type="number">22</property>
+	<property id="eventLocationLength" type="number">8</property>
 </properties>

@@ -70,6 +70,7 @@ class lateView extends Ui.WatchFace {
 	//hidden var wakeCount=0;
 
 	function initialize (){
+		Sys.println(App.getApp().getProperty("eventNameLength"));
 		var time=Sys.getTimer();
 		WatchFace.initialize();
 		var set=Sys.getDeviceSettings();
@@ -94,22 +95,23 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function setLayoutVars(){
+		Sys.println("laout start free memory: "+Sys.getSystemStats().freeMemory);
 		try{
 			if(height>218){
 				if(dialSize>0){
 					radius = 89;
 					circleWidth=circleWidth*3+1;
 					batteryY=height-15 ;
-					fontHours = Ui.loadResource(Rez.Fonts.HoursBig240px);
-					fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig240);
-					fontSmall = Ui.loadResource(Rez.Fonts.SmallBig240);
+					fontHours = Ui.loadResource(Rez.Fonts.HoursBig);
+					fontMinutes = Ui.loadResource(Rez.Fonts.MinuteBig);
+					fontSmall = Ui.loadResource(Rez.Fonts.SmallBig);
 					dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-7;
 				} else {
 					radius = 63;	
 					batteryY = centerY+38;
-					fontHours = Ui.loadResource(Rez.Fonts.Hours240px);
-					fontMinutes = Ui.loadResource(Rez.Fonts.Minute240);
-					fontSmall = Ui.loadResource(Rez.Fonts.Small240);
+					fontHours = Ui.loadResource(Rez.Fonts.Hours);
+					fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
+					fontSmall = Ui.loadResource(Rez.Fonts.Small);
 					dateY = centerY-90-(Gfx.getFontHeight(fontSmall)>>1);
 				}
 			} else {
@@ -131,7 +133,7 @@ class lateView extends Ui.WatchFace {
 				}
 			}
 			if(activity>0){
-				fontCondensed = Ui.loadResource(height>218 ?Rez.Fonts.Condensed240 : Rez.Fonts.Condensed);
+				fontCondensed = Ui.loadResource(height>218 ?Rez.Fonts.Condensed : Rez.Fonts.Condensed);
 				if(dialSize==0){
 					activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
 					if(activity == 6){
@@ -157,6 +159,7 @@ class lateView extends Ui.WatchFace {
 			fontSmall = Gfx.FONT_SMALL;
 		}
 		dateColor = 0xaaaaaa;
+		Sys.println("layout end free memory: "+Sys.getSystemStats().freeMemory);
 	}
 
 	function loadSettings(){
@@ -169,7 +172,7 @@ class lateView extends Ui.WatchFace {
 		dialSize = App.getApp().getProperty("dialSize");
 
 //color = 0x00AAFF;
-//activity = 6;
+//activity = 1;
 //showSunrise = true;
 //batThreshold = 100;
 //dialSize = 1;

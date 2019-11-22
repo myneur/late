@@ -1,0 +1,9 @@
+<fonts>
+	<font id="Hours" filename="../resources/fonts/futura95.fnt" filter="0123456789:" antialias="true" />
+	<font id="HoursBig" filename="../resources/fonts/futura135num.fnt" filter="0123456789:" antialias="true" />
+	<font id="Minute" filename="../resources/fonts/futura24num.fnt"  filter="0123456789:" antialias="true" />
+	<font id="MinuteBig" filename="../resources/fonts/futura31num.fnt"  filter="0123456789:" antialias="true" />
+	<font id="Small" filename="../resources/fonts/futura24-i18n.fnt"  antialias="true" />
+	<font id="SmallBig" filename="../resources/fonts/futura31-i18n.fnt"  antialias="true" />
+	<font id="Condensed" filename="../resources/fonts/futura-condensed25-i18n.fnt"  antialias="true" />
+</fonts>

@@ -1,1 +1,25 @@
 project.manifest = manifest.xml
+
+# bigger display
+round-280x280.resourcePath = $(base.resourcePath);resources-backgrounddata;resources-240;resources-280
+round-260x260.resourcePath = $(base.resourcePath);resources-backgrounddata;resources-240
+round-240x240.resourcePath = $(base.resourcePath);resources-backgrounddata;resources-240
+round-218x218.resourcePath = $(base.resourcePath);resources-backgrounddata
+
+# no background data communication
+rectangle.excludeAnnotations = data
+rectangle.sourcePath = source
+semiround.excludeAnnotations = data
+semiround.sourcePath = source
+fr45.excludeAnnotations = data
+fr45.sourcePath = source
+
+# 218 px, but no data and less activities
+fenix3.excludeAnnotations = data
+fenix3.sourcePath = source
+fenix3_hr.excludeAnnotations = data
+fenix3_hr.sourcePath = source
+d2bravo.excludeAnnotations = data
+d2bravo.sourcePath = source
+d2bravo_titanium.excludeAnnotations = data
+d2bravo_titanium.sourcePath = source

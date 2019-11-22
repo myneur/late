@@ -32,6 +32,7 @@ class lateApp extends App.AppBase {
         return [watch];
     }
     
+    (:data)
     function onBackgroundData(data) {
         Sys.println("data");
         try{
@@ -58,10 +59,12 @@ Background.registerForTemporalEvent(new Time.Duration(120*60));
         }
     }   
 
+    (:data)
     function getServiceDelegate() {
         return [new lateBackground()];
     }
     
+    (:data)
     function swap(data, x, y) {
         var tmp = data[x];
         data[x] = data[y];
@@ -69,6 +72,7 @@ Background.registerForTemporalEvent(new Time.Duration(120*60));
         return data;
     }
     
+    (:data)
     function parseEvents(data){
         var events_list = [];
         var dayDegrees = 3600*24.0/360;
@@ -108,6 +112,7 @@ Background.registerForTemporalEvent(new Time.Duration(120*60));
     }
 
     // converts rfc3339 formatted timestamp to Time::Moment (null on error)
+    (:data)
     function parseISODate(date) {
         // assert(date instanceOf String)
 

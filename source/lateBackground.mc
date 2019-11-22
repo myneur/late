@@ -1,6 +1,5 @@
 using Toybox.Background;
 using Toybox.System as Sys;
-using Toybox.WatchUi as Ui;
 using Toybox.Communications;
 using Toybox.Application as App;
 using Toybox.Time;

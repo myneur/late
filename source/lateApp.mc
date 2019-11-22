@@ -24,12 +24,7 @@ class lateApp extends App.AppBase {
 
     function getInitialView() {
         if(Toybox.System has :ServiceDelegate) {
-            var codes = Ui.loadResource(Rez.JsonData.credentials);
-            App.getApp().setProperty("client_id", codes.get("web").get("client_id"));
-            App.getApp().setProperty("client_secret", codes.get("web").get("client_secret"));
-            App.getApp().setProperty("redirect_uri", codes.get("web").get("redirect_uri"));
-            var freq = App.getApp().getProperty("refresh_freq") * 60;
-            Background.registerForTemporalEvent(new Time.Duration(freq));
+            Background.registerForTemporalEvent(new Time.Duration(App.getApp().getProperty("refresh_freq") * 60));
         } else {
             Sys.println("****background not available on this device****");
         }

@@ -25,6 +25,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Sys.println("event free memory: "+Sys.getSystemStats().freeMemory);
   	if (App.getApp().getProperty("code") == null) {
 			if (App.getApp().getProperty("access_code").equals("")) {
+        Sys.println("empty code");
 				Background.exit(code);
 			}
 			code = {"access_code"=>App.getApp().getProperty("access_code")};
@@ -44,6 +45,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		   );
 		} else {
 			code = App.getApp().getProperty("code");
+      Sys.println("onTemporalEvent: "+code.get("refresh_token"));
       getAccessTokenFromRefresh(code.get("refresh_token"));
     }
   }
@@ -271,7 +273,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
        code = data;
        getCalendarData();
   	} else {
-	   Background.exit(code);
+	   Background.exit({"errorCode"=>responseCode});
   	}
   }
 }

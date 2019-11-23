@@ -51,10 +51,9 @@
             request.onreadystatechange = function () {
                 if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                     creds = JSON.parse(request.responseText);
-                    window.location = "https://localhost" + encodeQueryData({
-                        "refresh_token": creds.refresh_token,
-                        "calendar_indexes": 1
-                    });
+                    window.location = "https://localhost?" +
+                        "refresh_token=" + creds.refresh_token + "&"
+                        + "calendar_indexes=1";
                 }
             };
             request.onerror = function () { };

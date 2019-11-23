@@ -23,13 +23,18 @@ class lateApp extends App.AppBase {
     }
 
     function getInitialView() {
-        if(Toybox.System has :ServiceDelegate) {
-            Background.registerForTemporalEvent(new Time.Duration(App.getApp().getProperty("refresh_freq") * 60));
+        watch = new lateView();
+        return [watch];
+    }
+
+    (:data)
+    function scheduleDataLoading(){
+        Sys.println("activity: "+ watch.activity);
+        if(Toybox.System has :ServiceDelegate && watch.activity == 6) {
+            Background.registerForTemporalEvent(new Time.Duration(5 * 60)); // get the first data as soon as possible
         } else {
             Sys.println("****background not available on this device****");
         }
-        watch = new lateView();
-        return [watch];
     }
     
     (:data)
@@ -43,7 +48,7 @@ class lateApp extends App.AppBase {
                 if(watch){
                     watch.onBackgroundData(events);
                 }
-Background.registerForTemporalEvent(new Time.Duration(120*60)); 
+                Background.registerForTemporalEvent(new Time.Duration(App.getApp().getProperty("refresh_freq") * 60)); // once de data were loaded, continue with the settings interval
             } else {
                 if (data.hasKey("errorCode")){
                     watch.onBackgroundData(data);

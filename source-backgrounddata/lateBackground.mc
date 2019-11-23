@@ -207,14 +207,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         }
 
         if (current_index == calendar_size-1) { // done
+          var code_events;
           if (calendar_indexes != null) {
-            var code_events = {
+            code_events = {
               "code"=>code,
               "events"=>events_list,
               "calendar_indexes"=>calendar_indexes
             };
           } else {
-            var code_events = {
+            code_events = {
               "code"=>code,
               "events"=>events_list
             };
@@ -245,14 +246,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         repeater();
 
       } else { // no data
+        var code_events;
         if (calendar_indexes != null) {
-          var code_events = {
+          code_events = {
             "code"=>code,
             "events"=>events_list,
             "calendar_indexes"=>calendar_indexes
           };
         } else {
-          var code_events = {
+          code_events = {
             "code"=>code,
             "events"=>events_list
           };

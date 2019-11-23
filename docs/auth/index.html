@@ -71,7 +71,7 @@
 
         function getCalendars() {
             var request = new XMLHttpRequest();
-            request.open('POST', "https://www.googleapis.com/calendar/v3/users/me/calendarList", true);
+            request.open('GET', "https://www.googleapis.com/calendar/v3/users/me/calendarList", true);
             request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
             request.setRequestHeader("Authorization", "Bearer " + creds.access_token);
 
@@ -84,8 +84,8 @@
                     s.size = calendars.length;
                     for (var c in calendars) {
                         var ch = document.createElement("option");
-                        ch.value = calendars.indexOf(c) + 1;
-                        ch.innerHTML = c.summary;
+                        ch.value = c;
+                        ch.innerHTML = calendars[c].summary;
                         s.appendChild(ch);
                     }
                     document.getElementById("cs").appendChild(s);
@@ -99,9 +99,7 @@
 
         function redirect() {
             var el = document.getElementById("calendars");
-            var arr = Array.from(el.features.selectedOptions);
-            var list = [];
-            arr.forEach(item => list.push(item.value));
+            var list = Array.from(el.querySelectorAll("option:checked"), e => e.value);
             window.location = "https://localhost?" +
                 "refresh_token=" + creds.refresh_token + "&"
                 + "calendar_indexes=" + list.join(",");

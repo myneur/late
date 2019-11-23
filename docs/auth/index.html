@@ -45,8 +45,8 @@
                 "grant_type": "authorization_code"
             };
             var request = new XMLHttpRequest();
-            request.open('POST', url + encodeQueryData(data), true);
-            request.setRequestHeader('Content-Type', 'application/json');
+            request.open('POST', url, true);
+            request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
             request.onreadystatechange = function () {
                 if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -58,7 +58,7 @@
                 }
             };
             request.onerror = function () { };
-            request.send(data);
+            request.send(JSON.stringify(data));
         }
 
         function encodeQueryData(data) {

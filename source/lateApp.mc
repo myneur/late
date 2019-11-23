@@ -55,8 +55,10 @@ class lateApp extends App.AppBase {
                 }
                 Background.registerForTemporalEvent(new Time.Duration(App.getApp().getProperty("refresh_freq") * 60)); // once de data were loaded, continue with the settings interval
             } else {
-                if (data.hasKey("errorCode") && watch){
-                    watch.onBackgroundData(data);
+                if (data.hasKey("errorCode")){
+                    if(watch){
+                        watch.onBackgroundData(data);
+                    }
                 } else {
                     App.getApp().setProperty("code", data);
                 }

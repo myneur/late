@@ -26,8 +26,7 @@ code for computeDatNumber from https://alcor.concordia.ca/~gpkatch/gdate-algorit
 
 */
 
-function computeDayNumber (d, m, y)
-{
+function computeDayNumber (d, m, y){
     //Sys.println("calc:"+d+"/"+m+"/"+y);    
     m = (m + 9) % 12;
     y = y - m / 10;
@@ -35,16 +34,14 @@ function computeDayNumber (d, m, y)
 }
 
 // returns the number of the day from 0 to 365
-function dayOfYear (day, month, year)
-{
+function dayOfYear (day, month, year){
     var now = computeDayNumber(day, month, year);
     var begOfYear = computeDayNumber(1, 1, year);
     return (now - begOfYear);
     //Sys.println("dayOfYear: " + dayOfYear.format("%d"));
 }
 
-function computeSunriset (day, longitude, latitude, sunrise)
-{
+function computeSunriset (day, longitude, latitude, sunrise){
     var zenith = 90.83333333333333; // official
     var D2R = 0.01745329251994329576923690768489;
     var R2D = 57.295779513082320876798154814105;
@@ -52,12 +49,9 @@ function computeSunriset (day, longitude, latitude, sunrise)
     // convert the longitude to hour value and calculate an approximate time
     var lnHour = longitude / 15;
     var t;
-    if (sunrise)
-    {
+    if (sunrise){
         t = day + ((6 - lnHour) / 24);
-    }
-    else
-    {
+    }else{
         t = day + ((18 - lnHour) / 24);
     }
 
@@ -66,23 +60,17 @@ function computeSunriset (day, longitude, latitude, sunrise)
 
     //calculate the Sun's true longitude
     var L = M + (1.916 * Math.sin(M * D2R)) + (0.020 * Math.sin(2 * M * D2R)) + 282.634;
-    if (L > 360)
-    {
+    if (L > 360){
         L = L - 360;
-    }
-    else if (L < 0)
-    {
+    } else if (L < 0){
         L = L + 360;
     }
 
     //calculate the Sun's right ascension
     var RA = R2D * Math.atan(0.91764 * Math.tan(L * D2R));
-    if (RA > 360)
-    {
+    if (RA > 360){
         RA = RA - 360;
-    }
-    else if (RA < 0)
-    {
+    } else if (RA < 0) {
         RA = RA + 360;
     }
 
@@ -101,12 +89,9 @@ function computeSunriset (day, longitude, latitude, sunrise)
     //calculate the Sun's local hour angle
     var cosH = (Math.cos(zenith * D2R) - (sinDec * Math.sin(latitude * D2R))) / (cosDec * Math.cos(latitude * D2R));
     var H;
-    if (sunrise)
-    {
+    if (sunrise) {
         H = 360 - R2D * Math.acos(cosH);
-    }
-    else
-    {
+    } else {
         H = R2D * Math.acos(cosH);
     }
     H = H / 15;
@@ -116,14 +101,25 @@ function computeSunriset (day, longitude, latitude, sunrise)
 
     //adjust back to UTC
     var UT = T - lnHour;
-    if (UT > 24)
-    {
+    if (UT > 24) {
         UT = UT - 24;
-    }
-    else if (UT < 0)
-    {
+    } else if (UT < 0){
         UT = UT + 24;
     }
-
     return UT;
+}
+
+function floor (f){
+    if (f instanceof Toybox.Lang.Float){
+         return f.toNumber();   
+    }
+    return -1;
+} 
+ 
+function ceil (f){
+    var f2=-f;
+    if (f2 instanceof Toybox.Lang.Float){
+        return f2.toNumber();   
+    }
+    return -1;
 }

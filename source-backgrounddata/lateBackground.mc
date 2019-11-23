@@ -6,7 +6,7 @@ using Toybox.Time;
 using Toybox.Time.Gregorian;
 
 const ServerToken = "https://oauth2.googleapis.com/token";
-const AuthUri = "https://accounts.google.com/o/oauth2/auth";
+//const AuthUri = "https://accounts.google.com/o/oauth2/auth";
 const ApiUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const ApiCalendarUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
 //const Scopes = "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly";
@@ -21,7 +21,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function onTemporalEvent() {
-    Sys.println("event free memory: "+Sys.getSystemStats().freeMemory);
     if (App.getApp().getProperty("code") == null) {
       if (App.getApp().getProperty("access_code").equals("")) {
         Sys.println("empty code");
@@ -44,7 +43,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
        );
     } else {
       code = App.getApp().getProperty("code");
-      Sys.println("onTemporalEvent: "+code.get("refresh_token"));
       getAccessTokenFromRefresh(code.get("refresh_token"));
     }
   }

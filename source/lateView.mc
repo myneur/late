@@ -9,68 +9,28 @@ using Toybox.Math as Math;
 //using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Application as App;
 
-enum {	   
-	SUNRISET_NOW=0,
-	SUNRISET_MAX,
-	SUNRISET_NBR
-}
+enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
 
 class lateView extends Ui.WatchFace {
 	hidden const CENTER = Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER;
-	hidden var centerX;
-	hidden var centerY;
-	hidden var height;
-	hidden var color = Gfx.COLOR_YELLOW;
-	hidden var dateColor = 0x555555;
-	hidden var activityColor = 0x555555;
-	hidden var backgroundColor = Gfx.COLOR_BLACK;
-	hidden var activity = 0;
-	hidden var dateForm;
-	hidden var showSunrise = false;
+	hidden var dateForm; hidden var batThreshold = 33;
+	hidden var centerX; hidden var centerY; hidden var height;
+	hidden var color = Gfx.COLOR_YELLOW; hidden var dateColor = 0x555555; hidden var activityColor = 0x555555; hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
-
-	hidden var utcOffset;
-	hidden var clockTime;
-	hidden var day = -1;
-	// sunrise/sunset
-	hidden var lonW;
-	hidden var latN;
-	hidden var sunrise = new [SUNRISET_NBR];
-	hidden var sunset = new [SUNRISET_NBR];
-
-	// resources
-	hidden var moon = null;   
-	hidden var sun = null; 
-	hidden var sunrs = null;   
-	hidden var sunst = null;   
-	hidden var icon = null;
-
-	hidden var fontSmall = null; 
-	hidden var fontMinutes = null;
-	hidden var fontHours = null; 
-	hidden var fontCondensed = null;
-	
-	hidden var dateY = null;
-	hidden var radius;
-	hidden var circleWidth = 3; 
-	hidden var dialSize = 0;
-	hidden var batteryY;
-
-	hidden var activityY;
-	hidden var batThreshold = 5;
-
+	hidden var activity = 0; hidden var showSunrise = false;
+	hidden var icon = null; hidden var moon = null; hidden var sun = null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
+	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
+	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
+	hidden var fontSmall = null; hidden var fontMinutes = null; hidden var fontHours = null; hidden var fontCondensed = null;
+	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; //hidden var notifY;
 	hidden var event = {"start"=>0, "end"=>0, "name"=>"", "location"=>"", "prefix"=>"in ", "mid"=>0, "height"=>25};
 	hidden var events_list = [];
-	
 	// redraw full watchface
 	hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
 	hidden var lastRedrawMin=-1;
-
-	//hidden var dataCount=0;
-	//hidden var wakeCount=0;
+	//hidden var dataCount=0;hidden var wakeCount=0;
 
 	function initialize (){
-		Sys.println(App.getApp().getProperty("eventNameLength"));
 		var time=Sys.getTimer();
 		WatchFace.initialize();
 		var set=Sys.getDeviceSettings();
@@ -95,63 +55,53 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function setLayoutVars(){
-		Sys.println("laout start free memory: "+Sys.getSystemStats().freeMemory);
-		try{
-
-			if(dialSize>0){ // strong design
-				fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
-				fontMinutes = Ui.loadResource(Rez.Fonts.MinuteStrong);
-				fontSmall = Ui.loadResource(Rez.Fonts.SmallStrong);
-				
-				if(height>218){
-					dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-7;
-					radius = 89;
-					circleWidth=circleWidth*3+1;
-					batteryY=height-15 ;
-				} else {
-					dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-6;
-					radius = 81;
-					batteryY=height-15;
-					circleWidth=circleWidth*3;
-				}		
-			} else { // elegant design
-				fontHours = Ui.loadResource(Rez.Fonts.Hours);
-				fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
-				fontSmall = Ui.loadResource(Rez.Fonts.Small);
-
-				if(height>218){
-					dateY = centerY-90-(Gfx.getFontHeight(fontSmall)>>1);
-					radius = 63;	
-					batteryY = centerY+38;	
-				} else {
-					dateY = centerY-80-(Gfx.getFontHeight(fontSmall)>>1);
-					radius = 55;
-					batteryY = centerY+33;
-				}
+		Sys.println("layout start free memory: "+Sys.getSystemStats().freeMemory);
+		if(dialSize>0){ // strong design
+			fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
+			fontMinutes = Ui.loadResource(Rez.Fonts.MinuteStrong);
+			fontSmall = Ui.loadResource(Rez.Fonts.SmallStrong);
+			if(height>218){
+				dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-7;
+				radius = 89;
+				circleWidth=circleWidth*3+1;
+				batteryY=height-15 ;
+			} else {
+				dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-6;
+				radius = 81;
+				batteryY=height-15;
+				circleWidth=circleWidth*3;
+			}		
+		} else { // elegant design
+			fontHours = Ui.loadResource(Rez.Fonts.Hours);
+			fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
+			fontSmall = Ui.loadResource(Rez.Fonts.Small);
+			if(height>218){
+				dateY = centerY-90-(Gfx.getFontHeight(fontSmall)>>1);
+				radius = 63;	
+				batteryY = centerY+38;	
+			} else {
+				dateY = centerY-80-(Gfx.getFontHeight(fontSmall)>>1);
+				radius = 55;
+				batteryY = centerY+33;
 			}
-			
-
-			if(activity>0){
-				fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
-				if(dialSize==0){
-					activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
-					if(activity == 6){
-						if(Toybox.System has :ServiceDelegate){
-							event["height"] = Gfx.getFontHeight(fontCondensed)-1;
-							activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
-						} else { 
-							activity = 0;
-						}
-					}
-				} else {
-					activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
-				}
-			}
-		} catch(ex){
-			activity = 0;
-			if(fontSmall == null ){ fontSmall = fontMinutes;}
 		}
 
+		if(activity>0){
+			fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
+			if(dialSize==0){
+				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
+				if(activity == 6){
+					if(Toybox.System has :ServiceDelegate){
+						event["height"] = Gfx.getFontHeight(fontCondensed)-1;
+						activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
+					} else { 
+						activity = 0;
+					}
+				}
+			} else {
+				activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
+			}
+		}
 
 		var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
 		if(langTest.toNumber()>382){ // fallback for not-supported latin fonts 
@@ -178,7 +128,7 @@ class lateView extends Ui.WatchFace {
 //circleWidth = 3;
 
 		// when running for the first time: load resources and compute sun positions
-		if(showSunrise ){ // TODO recalculate when day or position changes
+		if(showSunrise){ // TODO recalculate when day or position changes
 			moon = Ui.loadResource(Rez.Drawables.Moon);
 			sun = Ui.loadResource(Rez.Drawables.Sun);
 			sunrs = Ui.loadResource(Rez.Drawables.Sunrise);
@@ -250,10 +200,12 @@ class lateView extends Ui.WatchFace {
 			// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 
 			// draw hour
-			if(Sys.getDeviceSettings().is24Hour == false){
+			var set = Sys.getDeviceSettings();
+			if(set.is24Hour == false){
 				if(h>11){ h-=12;}
 				if(0==h){ h=12;}
 			}
+			// TODO if(set.notificationCount){dc.drawBitmap(centerX, notifY, iconNotification);}
 			dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
 			dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
 			if(centerY>89){
@@ -302,6 +254,7 @@ class lateView extends Ui.WatchFace {
 		if (0>redrawAll) { redrawAll--; }
 	}
 
+	(:data)
 	function onBackgroundData(data) {
 		//dataCount++;
 		if(data instanceof Array){
@@ -316,6 +269,7 @@ class lateView extends Ui.WatchFace {
 		redrawAll = 1;
 	}
 
+	(:data)
 	function updateCurrentEvent(dc){
 		for(var i=0; i<events_list.size(); i++){
 			
@@ -327,7 +281,6 @@ class lateView extends Ui.WatchFace {
 			if(eventEnd.compare(timeNow)<0){
 				events_list.remove(events_list[i]);
 				i--;
-				Sys.println("removed "+i);
 				continue;
 			}
 			if(tillStart < -300){
@@ -379,10 +332,17 @@ class lateView extends Ui.WatchFace {
 		//dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
 		dc.setColor(0, 0);
 		dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),5);
-		dc.setColor(dateColor, 0);
-		dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),4);
+		if(activity == 6){
+			dc.setColor(dateColor, backgroundColor);
+			dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),4);
+		} else {
+			dc.setColor(activityColor, backgroundColor);
+			dc.setPenWidth(1);
+			dc.drawCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),4);
+		}
 	}
 
+	(:data)
 	function drawEvent(dc){
 		updateCurrentEvent(dc);
 		if(event["start"]){
@@ -394,6 +354,7 @@ class lateView extends Ui.WatchFace {
 		}
 	}
 
+	(:data)
 	function drawEvents(dc){
 		dc.setPenWidth(5);
 		var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;

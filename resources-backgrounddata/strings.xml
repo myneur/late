@@ -2,9 +2,7 @@
 	<string id="AppName">simply late! calendar</string>
 	<string id="CIQ">2</string>
 	<string id="DataLoading">1</string>
-	
-	<string id="accessCode">Experiment: Get Calendar Access from git.io/Jeize</string>
-	<string id="calendarIndexes">Calendar Indexes (comma seperated, min=1)</string>
+
 	<string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
 	<string id="AuthError">Get new access code</string>
 </strings>

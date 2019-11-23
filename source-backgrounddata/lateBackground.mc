@@ -28,7 +28,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
             {"client_secret"=>App.getApp().getProperty("client_secret")},
             "https://localhost",
             Communications.OAUTH_RESULT_TYPE_URL,
-            {"code"=>"refresh_token", "indexes"=>"calendar_indexes"}
+            {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"}
         );
         Background.exit({"oauth"=>true});
       }

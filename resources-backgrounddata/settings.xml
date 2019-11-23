@@ -1,21 +1,21 @@
 <settings>
 	<setting propertyKey="@Properties.color" title="@Strings.ColorTitle">
 		<settingConfig type="list">
-			<listEntry value="0xFFAA00">@Strings.ColorYellow</listEntry>						
+			<listEntry value="0xFFAA00">@Strings.ColorYellow</listEntry>
 			<listEntry value="0xFF5500">@Strings.ColorOrange</listEntry>
 			<listEntry value="0x00AAFF">@Strings.ColorBlue</listEntry>
 			<listEntry value="0x00AA00">@Strings.ColorDarkGreen</listEntry>
 			<listEntry value="0x00FF00">@Strings.ColorGreen</listEntry>
 			<listEntry value="0xFF0000">@Strings.ColorRed</listEntry>
 			<listEntry value="0xAA0000">@Strings.ColorDarkRed</listEntry>
-			<listEntry value="0xAA00FF">@Strings.ColorPurple</listEntry> 
-			<listEntry value="0xFF00FF">@Strings.ColorPink</listEntry> 
-			<listEntry value="0xFFFFFF">@Strings.ColorWhite</listEntry> 
-			<listEntry value="0xAAAAAA">@Strings.ColorGray</listEntry> 
-			<listEntry value="0x555555">@Strings.ColorDarkGray</listEntry> 
+			<listEntry value="0xAA00FF">@Strings.ColorPurple</listEntry>
+			<listEntry value="0xFF00FF">@Strings.ColorPink</listEntry>
+			<listEntry value="0xFFFFFF">@Strings.ColorWhite</listEntry>
+			<listEntry value="0xAAAAAA">@Strings.ColorGray</listEntry>
+			<listEntry value="0x555555">@Strings.ColorDarkGray</listEntry>
 		</settingConfig>
 	</setting>
-	
+
 	<setting propertyKey="@Properties.dateForm" title="@Strings.DateFormTitle">
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.DateFormMonth</listEntry>
@@ -53,7 +53,7 @@
 		</settingConfig>
 	</setting>
 
-   <setting propertyKey="@Properties.boldness" title="@Strings.Boldness">
+	<setting propertyKey="@Properties.boldness" title="@Strings.Boldness">
 		<settingConfig type="list">
 			<listEntry value="3">@Strings.b3</listEntry>
 			<listEntry value="4">@Strings.b4</listEntry>
@@ -66,15 +66,7 @@
 	<setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
 		<settingConfig type="boolean" />
 	</setting>
-	
-	<setting propertyKey="@Properties.calendar_indexes" title="@Strings.calendarIndexes">
-		<settingConfig type="alphaNumeric"/>
-	</setting>
-	
-	<setting propertyKey="@Properties.access_code" title="@Strings.accessCode">
-		<settingConfig type="alphaNumeric"/>
-	</setting>
-	
+
 	<setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
 		<settingConfig type="numeric" min="5" max="1440" />
 	</setting>

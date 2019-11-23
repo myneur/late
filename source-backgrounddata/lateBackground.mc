@@ -101,7 +101,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       calendar_size = index_list.size();
       
       for (var d = 0; d < index_list.size(); d++) {
-        id_list.add(data.get("items")[index_list[d]-1].get("id"));
+        id_list.add(data.get("items")[index_list[d]].get("id"));
       }
       Sys.println("repeater calendar data free memory: "+Sys.getSystemStats().freeMemory);
        repeater();

@@ -15,7 +15,7 @@
 			<iq:product id="fenix6s"/>
 			<iq:product id="fenix6spro"/>
 			<iq:product id="approachs60"/>
-			<iq:product id="fenix5"/>
+			<iq:product id="fenix5"/> <!-- = Quatix 5 -->
 			<iq:product id="fenix5plus"/>
 			<iq:product id="fenix5x"/>
 			<iq:product id="fenix5xplus"/>
@@ -36,7 +36,6 @@
 			<iq:product id="marqcaptain"/>
 			<iq:product id="marqexpedition"/>
 			<iq:product id="marqdriver"/>
-			<!-- ??? quatix&reg 5 ??? -->
 
 			<!-- 218x218 with data 16 colors 94k memory-->
 			<iq:product id="d2charlie"/>
@@ -49,27 +48,26 @@
 			<iq:product id="fenix5splus"/>
 			<iq:product id="vivoactive4s"/>
 
-			<!-- semi-round 215x180 with data 16c olors 65k memory-->
+			<!-- semi-round 215x180 with data 16c olors 65k memory CIQ2 -->
 			<iq:product id="fr735xt"/>
 
-			<!-- rectangle 148x205 with data 64 colors 61k memory-->
+			<!-- rectangle 148x205 with data 64 colors 61k memory CIQ2 -->
 			<iq:product id="vivoactive_hr"/>
 
 			
 			<!-- no data or lower memory -->
 			<!-- 218x218 no data 65k memory-->
-			<iq:product id="fenix3"/>
+			<iq:product id="fenix3"/> <!-- = Tactix Bravo, Quatix 3 -->
 			<iq:product id="fenix3_hr"/>
 			<iq:product id="d2bravo"/>
 			<iq:product id="d2bravo_titanium"/>
-			<!-- ??? tactix Bravo, quatix 3 ??? -->
 
-			<!-- semi-round 215x180 no data 16c olors 65k memory-->
+			<!-- semi-round 215x180 no data 16c olors 65k memory CIQ2-->
 			<iq:product id="fr230"/>
 			<iq:product id="fr235"/>
 			<iq:product id="fr630"/>
 			
-			<!-- rectangle 205x148 no data 64 colors 65k memory-->
+			<!-- rectangle 205x148 no data 64 colors 65k memory CIQ2 -->
 			<iq:product id="vivoactive"/>
 			
 			<!-- 208x208 no data 49k memory -->

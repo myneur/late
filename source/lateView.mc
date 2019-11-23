@@ -17,13 +17,13 @@ class lateView extends Ui.WatchFace {
 	hidden var centerX; hidden var centerY; hidden var height;
 	hidden var color = Gfx.COLOR_YELLOW; hidden var dateColor = 0x555555; hidden var activityColor = 0x555555; hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
-	var activity = 0; var showSunrise = false;
+	var activity = 0; var showSunrise = false; var dataLoading = false;
 	hidden var icon = null; hidden var moon = null; hidden var sun = null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var fontSmall = null; hidden var fontMinutes = null; hidden var fontHours = null; hidden var fontCondensed = null;
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; //hidden var notifY;
-	hidden var event = {"start"=>0, "end"=>0, "name"=>"", "location"=>"", "prefix"=>"in ", "mid"=>0, "height"=>25};
+	hidden var event = {"start"=>0, "end"=>0, "name"=>"", "location"=>"", "prefix"=>"", "mid"=>0, "height"=>25};
 	hidden var events_list = [];
 	// redraw full watchface
 	hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -31,7 +31,16 @@ class lateView extends Ui.WatchFace {
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
 	function initialize (){
+		Sys.println("init free memory: "+Sys.getSystemStats().freeMemory);
 		Sys.println(Ui.loadResource(Rez.Strings.AppName));
+		Sys.println("CIQ"+Ui.loadResource(Rez.Strings.CIQ));
+		Sys.println(Ui.loadResource(Rez.Strings.DataLoading));
+		Sys.println(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1);
+		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
+			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
+		}
+		Sys.println("activities " + ActivityMonitor.getInfo() has :activeMinutesDay);
+
 		var time=Sys.getTimer();
 		WatchFace.initialize();
 		var set=Sys.getDeviceSettings();
@@ -57,6 +66,7 @@ class lateView extends Ui.WatchFace {
 
 	function setLayoutVars(){
 		Sys.println("layout start free memory: "+Sys.getSystemStats().freeMemory);
+		Sys.println("data: "+ dataLoading);
 		if(dialSize>0){ // strong design
 			fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
 			fontMinutes = Ui.loadResource(Rez.Fonts.MinuteStrong);
@@ -92,7 +102,7 @@ class lateView extends Ui.WatchFace {
 			if(dialSize==0){
 				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
 				if(activity == 6){
-					if(Toybox.System has :ServiceDelegate){
+					if(dataLoading){
 						event["height"] = Gfx.getFontHeight(fontCondensed)-1;
 						activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
 						App.getApp().scheduleDataLoading();
@@ -288,13 +298,13 @@ class lateView extends Ui.WatchFace {
 			if(tillStart < -300){
 			  continue;  
 			} 
-			event["name"] = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,22); 
+			event["name"] = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21); 
 			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
 			if( tillStart <0){
 				event["start"] = "now!";
 				event["prefix"] = "";
 			} else {
-				event["prefix"] = "in ";
+				event["prefix"] = "";
 				if (tillStart < 60*60) {
 					event["start"] = tillStart/60 + "m";
 				} else {
@@ -350,6 +360,7 @@ class lateView extends Ui.WatchFace {
 		if(event["start"]){
 			dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
 			dc.setColor(dateColor, backgroundColor);
+			// TODO remove prefix for simplicity and size limitations
 			dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["prefix"]+event["start"], Gfx.TEXT_JUSTIFY_RIGHT);
 			dc.setColor(activityColor, Gfx.COLOR_BLACK);
 			dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["location"], Gfx.TEXT_JUSTIFY_LEFT);

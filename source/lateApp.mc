@@ -30,7 +30,7 @@ class lateApp extends App.AppBase {
     (:data)
     function scheduleDataLoading(){
         Sys.println("activity: "+ watch.activity);
-        if(Toybox.System has :ServiceDelegate && watch.activity == 6) {
+        if(watch.dataLoading && watch.activity == 6) {
             Background.registerForTemporalEvent(new Time.Duration(5 * 60)); // get the first data as soon as possible
         } else {
             Sys.println("****background not available on this device****");

@@ -46,6 +46,13 @@ class lateApp extends App.AppBase {
     function onBackgroundData(data) {
         Sys.println("data");
         try{
+            if (data.hasKey("oauth")) {
+                App.getApp().setProperty("oauth", true);
+                return;
+            }
+            if (data.hasKey("calendar_indexes")) {
+                App.getApp().setProperty("calendar_indexes", data.get("calendar_indexes"));
+            }
             if (data.hasKey("events")) {
                 var events = parseEvents(data.get("events"));
                 App.getApp().setProperty("code", data.get("code"));

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>almost late!</title>
+</head>
+
+<body>
+    <div id="stage">
+        <h1>almost late!</h1>
+        <p>
+            To use this page you should have already gathered an access_code from https://myneur.github.io/late/docs/
+            <br>
+            If not, please open this url in your own browser: https://myneur.github.io/late/docs/ and return to this
+            window
+            after you received your access_code.
+        </p>
+        <h4>Please paste the access_code bellow and click submit.</h4>
+        <input type="text" id="code" style="width: 100%;"></input>
+        <button href="#" onclick="auth();" id="main">
+            Submit
+        </button>
+        <a href="../privacy.html">Privacy Policy</a>
+    </div>
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var client_secret;
+        var creds;
+        if (urlParams.has('client_secret')) {
+            client_secret = urlParams.get("client_secret");
+        } else {
+            document.getElementById("stage").innerHTML = "<h1>400: Bad Request</h1>";
+        }
+        function auth() {
+            var url = "https://oauth2.googleapis.com/token";
+            var data = {
+                "client_id":
+                    "44603356815-laprk2gikurn2uj5cdjk5020rp3teo69.apps.googleusercontent.com",
+                "client_secret": client_secret,
+                "redirect_uri": "https://myneur.github.io/late/docs/",
+                "code": document.getElementById("code").value,
+                "grant_type": "authorization_code"
+            };
+            var request = new XMLHttpRequest();
+            request.open('POST', url, true);
+            request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+            request.onreadystatechange = function () {
+                if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                    creds = JSON.parse(request.responseText);
+                    window.location = "https://localhost?" +
+                        "refresh_token=" + creds.refresh_token + "&"
+                        + "calendar_indexes=1";
+                }
+            };
+            request.onerror = function () { };
+            request.send(JSON.stringify(data));
+        }
+
+        function encodeQueryData(data) {
+            var ret = [];
+            for (let d in data)
+                ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
+            return "?" + ret.join("&");
+        }
+    </script>
+</body>
+
+</html>

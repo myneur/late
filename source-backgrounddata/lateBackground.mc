@@ -6,45 +6,42 @@ using Toybox.Time;
 using Toybox.Time.Gregorian;
 
 const ServerToken = "https://oauth2.googleapis.com/token";
-//const AuthUri = "https://accounts.google.com/o/oauth2/auth";
 const ApiUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const ApiCalendarUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
-//const Scopes = "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
 
   var code;
+  var calendar_indexes;
 
   function initialize() {
     Sys.ServiceDelegate.initialize();
+    Communications.registerForOAuthMessages(method(:getAuthData));
   }
   
   function onTemporalEvent() {
     if (App.getApp().getProperty("code") == null) {
-      if (App.getApp().getProperty("access_code").equals("")) {
-        Sys.println("empty code");
-        Background.exit(code);
+      if (App.getApp().getProperty("oauth") == null) {
+        Communications.makeOAuthRequest(
+          "https://myneur.github.io/late/docs/auth",
+            {"client_secret"=>App.getApp().getProperty("client_secret")},
+            "https://localhost",
+            Communications.OAUTH_RESULT_TYPE_URL,
+            {"code"=>"refresh_token", "indexes"=>"calendar_indexes"}
+        );
+        Background.exit({"oauth"=>true});
       }
-      code = {"access_code"=>App.getApp().getProperty("access_code")};
-      Communications.makeWebRequest(
-           $.ServerToken,
-           {
-               "client_secret"=>App.getApp().getProperty("client_secret"),
-               "client_id"=>App.getApp().getProperty("client_id"),
-               "redirect_uri" =>App.getApp().getProperty("redirect_uri"),
-               "code"=>code.get("access_code"),
-               "grant_type"=>"authorization_code"
-           },
-           {
-               :method => Communications.HTTP_REQUEST_METHOD_POST
-           },
-           method(:handleAccessResponse)
-       );
     } else {
       code = App.getApp().getProperty("code");
-      getAccessTokenFromRefresh(code.get("refresh_token"));
+      getAccessTokenFromRefresh();
     }
+  }
+
+  function getAuthData(data) {
+    code = {"refresh_token"=>data.data["refresh_token"]};
+    calendar_indexes = data.data["calendar_indexes"];
+    getAccessTokenFromRefresh();
   }
   
   function handleAccessResponse(responseCode, data) {
@@ -81,7 +78,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     var result_size = data.get("items").size();
     //Sys.println(data);
     if (responseCode == 200) {
-      var indexes = App.getApp().getProperty("calendar_indexes");
+      var indexes;
+      if (App.getApp().getProperty("calendar_indexes")) {
+        indexes = App.getApp().getProperty("calendar_indexes");
+      } else {
+        indexes = calendar_indexes;
+      }
       //Sys.println(indexes);
       indexes = indexes.toCharArray();
       var index_list = [];
@@ -205,10 +207,19 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         }
 
         if (current_index == calendar_size-1) { // done
-          var code_events = {
-            "code"=>code,
-            "events"=>events_list
-          };
+          var code_events;
+          if (calendar_indexes != null) {
+            code_events = {
+              "code"=>code,
+              "events"=>events_list,
+              "calendar_indexes"=>calendar_indexes
+            };
+          } else {
+            code_events = {
+              "code"=>code,
+              "events"=>events_list
+            };
+          }
           //for(var j=events_list.size()-1; j>=0 ;j--){
             try{  
                 //Sys.println(events_list);
@@ -235,10 +246,19 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         repeater();
 
       } else { // no data
-        var code_events = {
-          "code"=>code,
-          "events"=>events_list // TODO the events should not be updated if no response
-        };
+        var code_events;
+        if (calendar_indexes != null) {
+          code_events = {
+            "code"=>code,
+            "events"=>events_list,
+            "calendar_indexes"=>calendar_indexes
+          };
+        } else {
+          code_events = {
+            "code"=>code,
+            "events"=>events_list
+          };
+        }
         try{
           //Sys.println("events error code "+responseCode);
           Background.exit(code_events);
@@ -248,13 +268,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       }
     }
   
-  function getAccessTokenFromRefresh(refresh_token) {
+  function getAccessTokenFromRefresh() {
      Communications.makeWebRequest(
          $.ServerToken,
          {
              "client_secret"=>App.getApp().getProperty("client_secret"),
              "client_id"=>App.getApp().getProperty("client_id"),
-             "refresh_token"=>refresh_token,
+             "refresh_token"=>code.get("refresh_token"),
              "grant_type"=>"refresh_token"
          },
          {

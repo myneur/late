@@ -23,7 +23,7 @@ class lateView extends Ui.WatchFace {
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var fontSmall = null; hidden var fontMinutes = null; hidden var fontHours = null; hidden var fontCondensed = null;
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; //hidden var notifY;
-	hidden var event = {"start"=>0, "end"=>0, "name"=>"", "location"=>"", "prefix"=>"", "mid"=>0, "height"=>25};
+	hidden var event = {:start=>0, :end=>0, :name=>"", :location=>"", :prefix=>"", :mid=>0, :height=>25};
 	hidden var events_list = [];
 	// redraw full watchface
 	hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -219,7 +219,7 @@ class lateView extends Ui.WatchFace {
 			dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
 			dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
 			if(centerY>89){
-				// draw Day info
+				// function drawDate(x, y){}
 				dc.setColor(dateColor, Gfx.COLOR_BLACK);
 				var text = "";
 				if(dateForm != null){
@@ -283,9 +283,9 @@ class lateView extends Ui.WatchFace {
 	function updateCurrentEvent(dc){
 		for(var i=0; i<events_list.size(); i++){
 			
-			event["start"] = new Time.Moment(events_list[i][0]);
+			event[:start] = new Time.Moment(events_list[i][0]);
 			var timeNow = Time.now();
-			var tillStart = event["start"].compare(timeNow);
+			var tillStart = event[:start].compare(timeNow);
 			var eventEnd = new Time.Moment(events_list[i][1]);
 			
 			if(eventEnd.compare(timeNow)<0){
@@ -296,27 +296,28 @@ class lateView extends Ui.WatchFace {
 			if(tillStart < -300){
 			  continue;  
 			} 
-			event["name"] = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21); 
+			event[:name] = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21); 
+
 			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
 			if( tillStart <0){
-				event["start"] = "now!";
-				event["prefix"] = "";
+				event[:start] = "now!";
+				event[:prefix] = "";
 			} else {
-				event["prefix"] = "";
+				event[:prefix] = "";
 				if (tillStart < 60*60) {
-					event["start"] = tillStart/60 + "m";
+					event[:start] = tillStart/60 + "m";
 				} else {
-					event["start"] = tillStart/3600 + "h" + tillStart%3600/60 ;
+					event[:start] = tillStart/3600 + "h" + tillStart%3600/60 ;
 				}
 			}
-			event["location"] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
-			event["mid"] = (
-				dc.getTextWidthInPixels(event["prefix"]+event["start"]+event["location"], fontCondensed)>>1 
-				-(dc.getTextWidthInPixels(event["prefix"]+event["start"], fontCondensed))
+			event[:location] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
+			event[:mid] = (
+				dc.getTextWidthInPixels(event[:prefix]+event[:start]+event[:location], fontCondensed)>>1 
+				-(dc.getTextWidthInPixels(event[:prefix]+event[:start], fontCondensed))
 			);
 			return;
 		}
-		event["start"] = null;
+		event[:start] = null;
 	}
 
 
@@ -355,13 +356,13 @@ class lateView extends Ui.WatchFace {
 	(:data)
 	function drawEvent(dc){
 		updateCurrentEvent(dc);
-		if(event["start"]){
-			dc.drawText(centerX, activityY, fontCondensed, event["name"], Gfx.TEXT_JUSTIFY_CENTER);
+		if(event[:start]){
+			dc.drawText(centerX, activityY, fontCondensed, event[:name], Gfx.TEXT_JUSTIFY_CENTER);
 			dc.setColor(dateColor, backgroundColor);
 			// TODO remove prefix for simplicity and size limitations
-			dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["prefix"]+event["start"], Gfx.TEXT_JUSTIFY_RIGHT);
+			dc.drawText(centerX-event[:mid], activityY+event[:height], fontCondensed, event[:prefix]+event[:start], Gfx.TEXT_JUSTIFY_RIGHT);
 			dc.setColor(activityColor, Gfx.COLOR_BLACK);
-			dc.drawText(centerX-event["mid"], activityY+event["height"], fontCondensed, event["location"], Gfx.TEXT_JUSTIFY_LEFT);
+			dc.drawText(centerX-event[:mid], activityY+event[:height], fontCondensed, event[:location], Gfx.TEXT_JUSTIFY_LEFT);
 		}
 	}
 

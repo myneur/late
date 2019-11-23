@@ -23,12 +23,22 @@
         <button href="#" onclick="auth();" id="main">
             Submit
         </button>
+        <div id="codediv" hidden>
+            <h3>Calendars</h3>
+            <p>Please select all the calendars you would like to see in your watch. You may control-click (Windows) or
+                command-click (Mac) to select more than one.</p>
+            <div id="cs" />
+            <button href="#" onclick="redirect();">
+                Return to Watch
+            </button>
+        </div>
         <a href="../privacy.html">Privacy Policy</a>
     </div>
     <script>
         var urlParams = new URLSearchParams(window.location.search);
         var client_secret;
         var creds;
+        var codediv = document.getElementById("codediv");
         if (urlParams.has('client_secret')) {
             client_secret = urlParams.get("client_secret");
         } else {
@@ -47,17 +57,52 @@
             var request = new XMLHttpRequest();
             request.open('POST', url, true);
             request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            document.getElementsByTagName("h1")[0].innerHTML = "Loading...";
 
             request.onreadystatechange = function () {
                 if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                     creds = JSON.parse(request.responseText);
-                    window.location = "https://localhost?" +
-                        "refresh_token=" + creds.refresh_token + "&"
-                        + "calendar_indexes=1";
+                    getCalendars();
                 }
             };
             request.onerror = function () { };
             request.send(JSON.stringify(data));
+        }
+
+        function getCalendars() {
+            var request = new XMLHttpRequest();
+            request.open('GET', "https://www.googleapis.com/calendar/v3/users/me/calendarList", true);
+            request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            request.setRequestHeader("Authorization", "Bearer " + creds.access_token);
+
+            request.onreadystatechange = function () {
+                if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                    calendars = JSON.parse(request.responseText).items;
+                    var s = document.createElement("select");
+                    s.multiple = true;
+                    s.id = "calendars";
+                    s.size = calendars.length;
+                    for (var c in calendars) {
+                        var ch = document.createElement("option");
+                        ch.value = c;
+                        ch.innerHTML = calendars[c].summary;
+                        s.appendChild(ch);
+                    }
+                    document.getElementById("cs").appendChild(s);
+                    codediv.hidden = false;
+                    document.getElementsByTagName("h1")[0].innerHTML = "Loaded Calendars.";
+                }
+            };
+            request.onerror = function () { };
+            request.send(JSON.stringify({ "fields": "items(summary)" }));
+        }
+
+        function redirect() {
+            var el = document.getElementById("calendars");
+            var list = Array.from(el.querySelectorAll("option:checked"), e => e.value);
+            window.location = "https://localhost?" +
+                "refresh_token=" + creds.refresh_token + "&"
+                + "calendar_indexes=" + list.join(",");
         }
 
         function encodeQueryData(data) {

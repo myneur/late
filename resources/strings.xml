@@ -50,10 +50,5 @@
 	<string id="s1">Strong</string>
 
 	<string id="showSunriseSunsetTitle">Sunrise and sunset position on 24h dial</string>
-
-	<string id="calendarIndexes">Calendar Indexes (comma seperated, min=1)</string>
-	<string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
-	<string id="accessCode">Access Code (myneur.github.io/late/docs)</string>
-
 	<string id="AuthError">Get new access code</string>
 </strings>

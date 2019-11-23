@@ -31,6 +31,7 @@ class lateView extends Ui.WatchFace {
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
 	function initialize (){
+		Sys.println(Ui.loadResource(Rez.Strings.AppName));
 		var time=Sys.getTimer();
 		WatchFace.initialize();
 		var set=Sys.getDeviceSettings();

@@ -36,6 +36,11 @@ class lateApp extends App.AppBase {
             Sys.println("****background not available on this device****");
         }
     }
+    (:data)
+    function unScheduleDataLoading(){
+        Background.deleteTemporalEvent();
+        Sys.println("activity unscheduled: "+ watch.activity);
+    }
     
     (:data)
     function onBackgroundData(data) {

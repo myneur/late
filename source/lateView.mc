@@ -34,13 +34,9 @@ class lateView extends Ui.WatchFace {
 		Sys.println("init free memory: "+Sys.getSystemStats().freeMemory);
 		Sys.println(Ui.loadResource(Rez.Strings.AppName));
 		Sys.println("CIQ"+Ui.loadResource(Rez.Strings.CIQ));
-		Sys.println(Ui.loadResource(Rez.Strings.DataLoading));
-		Sys.println(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1);
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
-		Sys.println("activities " + ActivityMonitor.getInfo() has :activeMinutesDay);
-
 		var time=Sys.getTimer();
 		WatchFace.initialize();
 		var set=Sys.getDeviceSettings();
@@ -114,6 +110,9 @@ class lateView extends Ui.WatchFace {
 				activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
 			}
 		}
+		if(dataLoading && activity != 6){
+			App.getApp().unScheduleDataLoading();
+		}
 
 		var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
 		if(langTest.toNumber()>382){ // fallback for not-supported latin fonts 
@@ -157,7 +156,6 @@ class lateView extends Ui.WatchFace {
 				activity = 0;   // reset not supported activities
 			} else if(activity <= 4) { icon = Ui.loadResource(Rez.Drawables.Minutes); }
 			else if(activity == 5) { icon = Ui.loadResource(Rez.Drawables.Floors); }
-
 		} else {
 			dateColor = 0x555555;
 		}

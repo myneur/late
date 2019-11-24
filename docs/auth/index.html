@@ -5,7 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>almost late!</title>
+    <title>simply late!</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153146351-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-153146351-1');
+    </script>
+
 </head>
 
 <body>
@@ -13,21 +23,21 @@
         <h1>simply late!</h1>
         <h4>Login in browser</h4>
         <p>
-            Open <a href="https://myneur.github.io/late/docs/" target="_blank">https://myneur.github.io/late/docs/</a> to log in to your Google calendar and return back here with the code you get there. 
+            Open <a href="https://git.io/Jeize" target="_blank">git.io/Jeize</a> by long-touch to log in to your Google calendar and return back here with the code you get there. 
         </p>
         <h4>Paste code back here</h4>
+        <p>Long-touch the field below and select to paste the code to select calendars</p>
         <input type="text" id="code" style="width: 100%;"></input>
         <button href="#" onclick="auth();" id="main">
-            Submit
+            Load your calendars
         </button>
         <div id="codediv" hidden>
             <h3>Select calendar</h3>
             <p>Select which calendars to show in your watch. 
-                Control-click (Windows) or
-                Command-click (Mac) for more.</p>
+                Control-click or Command-click for multiple.</p>
             <div id="cs" />
             <button href="#" onclick="redirect();">
-                Return to Watch
+                Grant watch read-only access 
             </button>
         </div>
         <a href="../privacy.html">Privacy Policy</a>
@@ -88,7 +98,7 @@
                     }
                     document.getElementById("cs").appendChild(s);
                     codediv.hidden = false;
-                    document.getElementsByTagName("h1")[0].innerHTML = "Loaded Calendars.";
+                    document.getElementsByTagName("h1")[0].innerHTML = "Select calendars below";
                 }
             };
             request.onerror = function () { };

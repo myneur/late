@@ -22,22 +22,22 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   
   function onTemporalEvent() {
     Sys.println("onTemporalEvent");
-    if (App.getApp().getProperty("code") == null) {
+    var app = App.getApp();
+    if (app.getProperty("code") == null) {
       Sys.println("code null");
-      if (App.getApp().getProperty("oauth") == null) {
+      if (app.getProperty("oauth") == null) {
         Sys.println("oauth null");
         Communications.makeOAuthRequest(
           "https://myneur.github.io/late/docs/auth",
-            {"client_secret"=>App.getApp().getProperty("client_secret")},
+            {"client_secret"=>app.getProperty("client_secret")}, // TODO will fail if the client_secret is missing
             "https://localhost",
             Communications.OAUTH_RESULT_TYPE_URL,
             {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"}
         );
-        Background.exit({"oauth"=>true, "userPrompt"=>"Log in by phone", "userLoc"=>"Connect", "errorCode"=>0});
+        Background.exit({"oauth"=>true, "errorCode"=>0});
       }
     } else {
-      code = App.getApp().getProperty("code");
-      Sys.println("code: "+ code);
+      code = app.getProperty("code");
       getAccessTokenFromRefresh();
     }
   }
@@ -49,6 +49,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function handleAccessResponse(responseCode, data) {
+    Sys.println("auth response");
     if (responseCode == 200) {
       //Sys.println("AUTHORIZATION COMPLETED");
       code = data;

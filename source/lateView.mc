@@ -99,9 +99,10 @@ class lateView extends Ui.WatchFace {
 						event["height"] = Gfx.getFontHeight(fontCondensed)-1;
 						activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
 						var response = App.getApp().scheduleDataLoading();
-
-						var nowError = ((Time.now())).value() + response["errorCode"]+6*60;
-						events_list = [[nowError, nowError+3600*24, response["userPrompt"].toString(), " Connect", 0, -1, 1]]; 
+						if(response != true){
+							var nowError = ((Time.now())).value() + (response["errorCode"]+6)*60;
+							events_list = [[nowError, nowError+3600*24, response["userPrompt"].toString(), " "+response["userContext"], 0, -1, 1]]; 
+						}
 					} else { 
 						activity = 0;
 					}
@@ -270,13 +271,18 @@ class lateView extends Ui.WatchFace {
 		if(data instanceof Array){
 			events_list = data;
 		} else {
-			var nowError = ((Time.now())).value();
-			events_list = [[nowError, nowError+3600*24, "", null, 0, -1, 1]]; // TODO different message when 501: not supported by watch
-			if(data.hasKey("errorCode")){
-				events_list[0][2] = Ui.loadResource(Rez.Strings.AuthError);
-				events_list[0][3] = " " + data["errorCode"];
-			} if(data.hasKey("userPrompt")){
-				events_list[0][2] = data["userPrompt"];
+			if(data){
+				var nowError = ((Time.now())).value();
+				events_list = [[nowError, nowError+3600*24, "", "", 0, -1, 1]]; // TODO different message when 501: not supported by watch
+				if(data.hasKey("oauth")){ // oauth just fired
+					events_list[0][2] = Ui.loadResource(Rez.Strings.AuthPrompt);
+				} else if(data.hasKey("errorCode")){ // we had some error
+					events_list[0][2] = Ui.loadResource(Rez.Strings.AuthPrompt);
+					events_list[0][3] = " " + data["errorCode"];
+				} 
+				if(data.hasKey("userPrompt")){
+					events_list[0][2] = data["userPrompt"];
+				}
 			}
 		}
 		redrawAll = 1;

@@ -4,6 +4,10 @@
 	<string id="DataLoading">1</string>
 	
 	<string id="Calendar">Experimental: Calendar [here be dragons:]</string>
+
 	<string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
-	<string id="AuthError">Login by Garmin Connect</string>
+	<string id="AuthPrompt">Log in by mobile</string>
+	<string id="AuthWait">Wait to log in by mobile</string>
+	<string id="AuthContext">Connect</string>
+	<string id="NotSupportedData">Data not supported</string>
 </strings>

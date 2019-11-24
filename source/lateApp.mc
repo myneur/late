@@ -32,19 +32,24 @@ class lateApp extends App.AppBase {
         Sys.println("scheduling");
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
-            Sys.println(lastEvent);
             Background.registerForTemporalEvent(new Time.Duration(5 * 60)); // get the first data as soon as possible
-            if (lastEvent != null) {
-                lastEvent = (lastEvent.compare(Time.now())/60).toNumber();
-                Sys.println(lastEvent);
-                return ({"errorCode"=>lastEvent, "userPrompt"=>"Wait for login"}); // show message when to happen login
+            Sys.println([App.getApp().getProperty("oauth") , App.getApp().getProperty("code")]);
+            if(App.getApp().getProperty("oauth") == null && App.getApp().getProperty("code") == null){
+                Sys.println("no auth");
+                if (lastEvent != null) {
+                    Sys.println("last event");
+                    lastEvent = (lastEvent.compare(Time.now())/60).toNumber();
+                    Sys.println(lastEvent);
+                    return ({"errorCode"=>lastEvent, "userPrompt"=>Ui.loadResource(Rez.Strings.AuthWait), "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // show message when to happen login
+                }
+                 
+                return ({"errorCode"=>0, "userPrompt"=>"Log in by phone", "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // first login
             }
-            Sys.println(0);
-            return ({"errorCode"=>0, "userPrompt"=>"Log in by phone", "userLoc"=>"Connect"}); // first login
-        } else {
+        } else { // not supported by the watch
             Sys.println(501);
-            return ({"errorCode"=>501, "userPrompt"=>"Not supported"}); // not supported by the watch
+            return ({"errorCode"=>501, "userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData)}); 
         }
+        return true;
     }
 
     (:data)
@@ -57,6 +62,9 @@ class lateApp extends App.AppBase {
         try{
             if (data.hasKey("oauth")) {
                 App.getApp().setProperty("oauth", true);
+                if(watch){
+                    watch.onBackgroundData(data);
+                }
                 return;
             }
             if (data.hasKey("calendar_indexes")) {

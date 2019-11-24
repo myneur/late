@@ -1,7 +1,5 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
-    <bitmap id="Moon" filename="moon.png" />
-    <bitmap id="Sun" filename="sun.png" />
     <bitmap id="Sunset" filename="moon.png" />
     <bitmap id="Sunrise" filename="sun.png" />
     <bitmap id="Cal" filename="calories.png" />

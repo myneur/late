@@ -79,7 +79,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   var current_index = 0;
   var id_list = [];
   function parseCalendarData(responseCode, data) {
-    //Sys.println("Calendar data free memory: "+Sys.getSystemStats().freeMemory);
+    Sys.println("Calendar data free memory: "+Sys.getSystemStats().freeMemory);
     var result_size = data.get("items").size();
     //Sys.println(data);
     if (responseCode == 200) {
@@ -108,7 +108,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       for (var d = 0; d < index_list.size(); d++) {
         id_list.add(data.get("items")[index_list[d]].get("id"));
       }
-      //Sys.println("repeater calendar data free memory: "+Sys.getSystemStats().freeMemory);
        repeater();
       } else {
         //Sys.println("calendars error code "+responseCode);
@@ -126,7 +125,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function getCalendarEventData(calendar_id) {
-    //Sys.println("get calendar events free memory: "+Sys.getSystemStats().freeMemory);
     var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     var sys_time = System.getClockTime();
     var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -155,7 +153,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         ]
     );
     dateEnd += sign + to;
-    //Sys.println(calendar_id);
     Communications.makeWebRequest(
          $.ApiUrl + calendar_id + "/events",
          {
@@ -172,16 +169,18 @@ class lateBackground extends Toybox.System.ServiceDelegate {
          },
          method(:parseCalendarEventData)
      );
+    Sys.println([Sys.getSystemStats().freeMemory, calendar_id]);
   }
   var events_list_size = 0;  
   var events_list = [];
 
   function parseCalendarEventData(responseCode, data) {
-    //Sys.println("parse events free memory: "+Sys.getSystemStats().freeMemory);
+    Sys.println(Sys.getSystemStats().freeMemory+" /events: " + data.toString().length());
     if(responseCode == 200) {
-      for (var i = 0; i < data.get("items").size() && events_list.size()<7; i++) { // 10 events not to get out of memory
-        //Sys.println("m"+i+": "+Sys.getSystemStats().freeMemory);
-        var event = data.get("items")[i];
+      data = data.get("items");
+      for (var i = 0; i < data.size() && events_list.size()<7; i++) { // 10 events not to get out of memory
+        var event = data[i];
+        data[i] = null;
         //if(events_list_size>500){break;}
         if(event["start"]){ // skip day events that have only "summary"
           try {
@@ -201,7 +200,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
             }
             events_list.add(eventTrim);
             events_list_size += eventTrim.toString().length();
-            //Sys.println(events_list_size);
             eventTrim = null;
             } catch(ex) {
               Sys.println("ex: " + ex.getErrorMessage());

@@ -18,7 +18,7 @@ class lateView extends Ui.WatchFace {
 	hidden var color = Gfx.COLOR_YELLOW; hidden var dateColor = 0x555555; hidden var activityColor = 0x555555; hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
 	var activity = 0; var showSunrise = false; var dataLoading = false;
-	hidden var icon = null; hidden var moon = null; hidden var sun = null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
+	hidden var icon = null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var fontSmall = null; hidden var fontMinutes = null; hidden var fontHours = null; hidden var fontCondensed = null;
@@ -141,8 +141,6 @@ class lateView extends Ui.WatchFace {
 
 		// when running for the first time: load resources and compute sun positions
 		if(showSunrise){ // TODO recalculate when day or position changes
-			moon = Ui.loadResource(Rez.Drawables.Moon);
-			sun = Ui.loadResource(Rez.Drawables.Sun);
 			sunrs = Ui.loadResource(Rez.Drawables.Sunrise);
 			sunst = Ui.loadResource(Rez.Drawables.Sunset);
 			clockTime = Sys.getClockTime();

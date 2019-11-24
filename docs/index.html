@@ -5,25 +5,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>almost late!</title>
+    <title>simply late!</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153146351-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-153146351-1');
+    </script>
 </head>
 
 <body>
-    <h1>almost late!</h1>
+    <h1>simply late!</h1>
     <p>
-        Following Google OAuth page might tell this application is not verified.
-        This is true, we are waiting for verification. Requested permissions are
-        read-only so your data isn't comprimised.
+        Next code will give your watch read-only access to your calendar if you paste it back.
     </p>
+    <h3 id="login">Log in to calendar</h3>
     <button href="#" onclick="auth();" id="main">
-        Click Here to get access code.
+        Log in to your Google calenar
     </button>
     <div id="codediv" hidden>
-        <h3 id="codeh">Code</h3>
-        <p>Please select all of the text</p>
+        <h3 id="codeh">Copy access code</h3>
+        <p>Long-touch and "Select all" the code below and copy it to clipboard</p>
         <input type="text" id="code" style="width: 100%;" readonly></input>
+        <p>Paste this code back to your Garmin Mobile Connect app</p>
     </div>
-    <a href="privacy.html">Privacy Policy</a>
+    <p><a href="privacy.html">Privacy Policy</a></p>
 
     <script>
         var urlParams = new URLSearchParams(window.location.search);

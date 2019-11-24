@@ -10,23 +10,21 @@
 
 <body>
     <div id="stage">
-        <h1>almost late!</h1>
+        <h1>simply late!</h1>
+        <h4>Login in browser</h4>
         <p>
-            To use this page you should have already gathered an access_code from https://myneur.github.io/late/docs/
-            <br>
-            If not, please open this url in your own browser: https://myneur.github.io/late/docs/ and return to this
-            window
-            after you received your access_code.
+            Open <a href="https://myneur.github.io/late/docs/" target="_blank">https://myneur.github.io/late/docs/</a> to log in to your Google calendar and return back here with the code you get there. 
         </p>
-        <h4>Please paste the access_code bellow and click submit.</h4>
+        <h4>Paste code back here</h4>
         <input type="text" id="code" style="width: 100%;"></input>
         <button href="#" onclick="auth();" id="main">
             Submit
         </button>
         <div id="codediv" hidden>
-            <h3>Calendars</h3>
-            <p>Please select all the calendars you would like to see in your watch. You may control-click (Windows) or
-                command-click (Mac) to select more than one.</p>
+            <h3>Select calendar</h3>
+            <p>Select which calendars to show in your watch. 
+                Control-click (Windows) or
+                Command-click (Mac) for more.</p>
             <div id="cs" />
             <button href="#" onclick="redirect();">
                 Return to Watch

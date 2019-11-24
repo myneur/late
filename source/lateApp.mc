@@ -29,22 +29,31 @@ class lateApp extends App.AppBase {
 
     (:data)
     function scheduleDataLoading(){
-        Sys.println("activity: "+ watch.activity);
+        Sys.println("scheduling");
         if(watch.dataLoading && watch.activity == 6) {
+            var lastEvent = Background.getLastTemporalEventTime();
+            Sys.println(lastEvent);
             Background.registerForTemporalEvent(new Time.Duration(5 * 60)); // get the first data as soon as possible
+            if (lastEvent != null) {
+                lastEvent = (lastEvent.compare(Time.now())/60).toNumber();
+                Sys.println(lastEvent);
+                return ({"errorCode"=>lastEvent, "userPrompt"=>"Wait for login"}); // show message when to happen login
+            }
+            Sys.println(0);
+            return ({"errorCode"=>0, "userPrompt"=>"Log in by phone", "userLoc"=>"Connect"}); // first login
         } else {
-            Sys.println("****background not available on this device****");
+            Sys.println(501);
+            return ({"errorCode"=>501, "userPrompt"=>"Not supported"}); // not supported by the watch
         }
     }
+
     (:data)
     function unScheduleDataLoading(){
         Background.deleteTemporalEvent();
-        Sys.println("activity unscheduled: "+ watch.activity);
     }
     
     (:data)
     function onBackgroundData(data) {
-        Sys.println("data");
         try{
             if (data.hasKey("oauth")) {
                 App.getApp().setProperty("oauth", true);

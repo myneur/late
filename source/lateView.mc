@@ -31,9 +31,7 @@ class lateView extends Ui.WatchFace {
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
 	function initialize (){
-		Sys.println("init free memory: "+Sys.getSystemStats().freeMemory);
-		Sys.println(Ui.loadResource(Rez.Strings.AppName));
-		Sys.println("CIQ"+Ui.loadResource(Rez.Strings.CIQ));
+		//Sys.println("CIQ "+ Ui.loadResource(Rez.Strings.CIQ) +" free memory: "+Sys.getSystemStats().freeMemory);
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
@@ -61,8 +59,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function setLayoutVars(){
-		Sys.println("layout start free memory: "+Sys.getSystemStats().freeMemory);
-		Sys.println("data: "+ dataLoading);
+		//Sys.println("Layout free memory: "+Sys.getSystemStats().freeMemory);
 		if(dialSize>0){ // strong design
 			fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
 			fontMinutes = Ui.loadResource(Rez.Fonts.MinuteStrong);
@@ -101,7 +98,10 @@ class lateView extends Ui.WatchFace {
 					if(dataLoading){
 						event["height"] = Gfx.getFontHeight(fontCondensed)-1;
 						activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
-						App.getApp().scheduleDataLoading();
+						var response = App.getApp().scheduleDataLoading();
+
+						var nowError = ((Time.now())).value() + response["errorCode"]+6*60;
+						events_list = [[nowError, nowError+3600*24, response["userPrompt"].toString(), " Connect", 0, -1, 1]]; 
 					} else { 
 						activity = 0;
 					}
@@ -119,7 +119,7 @@ class lateView extends Ui.WatchFace {
 			fontSmall = Gfx.FONT_SMALL;
 		}
 		dateColor = 0xaaaaaa;
-		Sys.println("layout end free memory: "+Sys.getSystemStats().freeMemory);
+		//Sys.println("Layout finish free memory: "+Sys.getSystemStats().freeMemory);
 	}
 
 	function loadSettings(){
@@ -271,9 +271,12 @@ class lateView extends Ui.WatchFace {
 			events_list = data;
 		} else {
 			var nowError = ((Time.now())).value();
-			events_list = [[nowError, nowError+3600*24, Ui.loadResource(Rez.Strings.AuthError), null, 0, -1, 1]];
+			events_list = [[nowError, nowError+3600*24, "", null, 0, -1, 1]]; // TODO different message when 501: not supported by watch
 			if(data.hasKey("errorCode")){
+				events_list[0][2] = Ui.loadResource(Rez.Strings.AuthError);
 				events_list[0][3] = " " + data["errorCode"];
+			} if(data.hasKey("userPrompt")){
+				events_list[0][2] = data["userPrompt"];
 			}
 		}
 		redrawAll = 1;

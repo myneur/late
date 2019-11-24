@@ -5,9 +5,9 @@
 	<property id="sunriset" type="boolean">true</property>
 	<property id="bat" type="number">33</property>
 	<property id="dialSize" type="number">0</property>
-	<property id="boldness" type="number">7</property>
-	<property id="refresh_freq" type="number">5</property>
-	<property id="access_code" type="string">4/tgFIgUlRBeY5LScuLRp2PfY-q1rRO7ivqfZtd_n9Xfm5KuW1TmCi1eE4VU3DfgV3Ok_hJsK-I_IOeoqllDc_YXs</property>
+	<property id="boldness" type="number">5</property>
+	<property id="refresh_freq" type="number">15</property>
+	<property id="access_code" type="string"></property>
 	<property id="compatibility" type="number">2</property>
 	<property id="eventNameLength" type="number">25</property>
 	<property id="eventLocationLength" type="number">12</property>

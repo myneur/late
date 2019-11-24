@@ -2,7 +2,8 @@
 	<string id="AppName">simply late! calendar</string>
 	<string id="CIQ">2</string>
 	<string id="DataLoading">1</string>
-
+	
+	<string id="Calendar">Experimental: Calendar [here be dragons:]</string>
 	<string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
-	<string id="AuthError">Get new access code</string>
+	<string id="AuthError">Login by Garmin Connect</string>
 </strings>

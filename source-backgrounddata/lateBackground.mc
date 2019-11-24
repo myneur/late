@@ -21,8 +21,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function onTemporalEvent() {
+    Sys.println("onTemporalEvent");
     if (App.getApp().getProperty("code") == null) {
+      Sys.println("code null");
       if (App.getApp().getProperty("oauth") == null) {
+        Sys.println("oauth null");
         Communications.makeOAuthRequest(
           "https://myneur.github.io/late/docs/auth",
             {"client_secret"=>App.getApp().getProperty("client_secret")},
@@ -30,10 +33,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
             Communications.OAUTH_RESULT_TYPE_URL,
             {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"}
         );
-        Background.exit({"oauth"=>true});
+        Background.exit({"oauth"=>true, "userPrompt"=>"Log in by phone", "userLoc"=>"Connect", "errorCode"=>0});
       }
     } else {
       code = App.getApp().getProperty("code");
+      Sys.println("code: "+ code);
       getAccessTokenFromRefresh();
     }
   }
@@ -46,11 +50,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   
   function handleAccessResponse(responseCode, data) {
     if (responseCode == 200) {
-      Sys.println("AUTHORIZATION COMPLETED");
+      //Sys.println("AUTHORIZATION COMPLETED");
       code = data;
       getCalendarData();
     } else {
-      Sys.println("AUTHORIZATION ERROR! " + responseCode);
+      //Sys.println("AUTHORIZATION ERROR! " + responseCode);
       Background.exit({"errorCode"=>responseCode});
     }
   }
@@ -74,7 +78,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   var current_index = 0;
   var id_list = [];
   function parseCalendarData(responseCode, data) {
-    Sys.println("calendar data free memory: "+Sys.getSystemStats().freeMemory);
+    //Sys.println("Calendar data free memory: "+Sys.getSystemStats().freeMemory);
     var result_size = data.get("items").size();
     //Sys.println(data);
     if (responseCode == 200) {
@@ -103,7 +107,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       for (var d = 0; d < index_list.size(); d++) {
         id_list.add(data.get("items")[index_list[d]].get("id"));
       }
-      Sys.println("repeater calendar data free memory: "+Sys.getSystemStats().freeMemory);
+      //Sys.println("repeater calendar data free memory: "+Sys.getSystemStats().freeMemory);
        repeater();
       } else {
         //Sys.println("calendars error code "+responseCode);
@@ -121,7 +125,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function getCalendarEventData(calendar_id) {
-    Sys.println("get calendar events free memory: "+Sys.getSystemStats().freeMemory);
+    //Sys.println("get calendar events free memory: "+Sys.getSystemStats().freeMemory);
     var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     var sys_time = System.getClockTime();
     var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -172,7 +176,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   var events_list = [];
 
   function parseCalendarEventData(responseCode, data) {
-    Sys.println("parse events free memory: "+Sys.getSystemStats().freeMemory);
+    //Sys.println("parse events free memory: "+Sys.getSystemStats().freeMemory);
     if(responseCode == 200) {
       for (var i = 0; i < data.get("items").size() && events_list.size()<9; i++) { // 10 events not to get out of memory
         //Sys.println("m"+i+": "+Sys.getSystemStats().freeMemory);
@@ -242,7 +246,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           current_index++;
         }
         data = null;
-        Sys.println("repeater event data free memory: "+Sys.getSystemStats().freeMemory);
+        //Sys.println("repeater event data free memory: "+Sys.getSystemStats().freeMemory);
         repeater();
 
       } else { // no data

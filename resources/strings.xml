@@ -27,10 +27,6 @@
 	<string id="DnD">Nothing: Do not disturb me!</string>
 	<string id="Calories">Calories Burned</string>
 	<string id="Steps">Steps</string>
-	<string id="Floors">Fenix5: Floors Climbed</string>
-	<string id="Calendar">Experimental: Calendar</string>
-	<string id="ActiveMinutesDay">Fenix5: Active Minutes Today</string>
-	<string id="ActiveMinutesWeek">Fenix5: Active Minutes this Week</string>
 
 	<string id="BatteryTitle">Battery level</string>
 	<string id="BellowFive">below 5%</string>
@@ -51,6 +47,5 @@
 	<string id="s0">Elegant</string>
 	<string id="s1">Strong</string>
 
-	<string id="showSunriseSunsetTitle">Sunrise and sunset position on 24h dial</string>
-	<string id="AuthError">Get new access code</string>
+	<string id="showSunriseSunsetTitle">Sunrise and sunset on 24h dial</string>
 </strings>

@@ -67,6 +67,7 @@ class lateApp extends App.AppBase {
                 App.getApp().setProperty("calendar_indexes", data.get("calendar_indexes"));
             }
             if (data.hasKey("events")) {
+                App.getApp().setProperty("oauth", false);
                 var events = parseEvents(data.get("events"));
                 App.getApp().setProperty("code", data.get("code"));
                 App.getApp().setProperty("events", events);

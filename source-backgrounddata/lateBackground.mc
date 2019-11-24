@@ -159,7 +159,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Communications.makeWebRequest(
          $.ApiUrl + calendar_id + "/events",
          {
-          "maxResults"=>"8",
+          "maxResults"=>"7",
           "orderBy"=>"startTime",
           "singleEvents"=>"true",
           "timeMin"=>dateStart,
@@ -179,7 +179,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   function parseCalendarEventData(responseCode, data) {
     //Sys.println("parse events free memory: "+Sys.getSystemStats().freeMemory);
     if(responseCode == 200) {
-      for (var i = 0; i < data.get("items").size() && events_list.size()<9; i++) { // 10 events not to get out of memory
+      for (var i = 0; i < data.get("items").size() && events_list.size()<7; i++) { // 10 events not to get out of memory
         //Sys.println("m"+i+": "+Sys.getSystemStats().freeMemory);
         var event = data.get("items")[i];
         //if(events_list_size>500){break;}
@@ -192,7 +192,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
               event.get("location"),
               current_index
             ];
-            //Sys.println(eventTrim);
             if(eventTrim[3]){  // trimming and event to fit the screen right 
               eventTrim[3] = eventTrim[3].substring(0,12);
               var split = eventTrim[3].find(",");
@@ -202,8 +201,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
             }
             events_list.add(eventTrim);
             events_list_size += eventTrim.toString().length();
+            //Sys.println(events_list_size);
             eventTrim = null;
-            //Sys.println([eventTrim["name"], eventTrim.toString().length(), events_list_size, code.toString().length()]);
             } catch(ex) {
               Sys.println("ex: " + ex.getErrorMessage());
               Sys.println( ex.printStackTrace());
@@ -227,8 +226,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           }
           //for(var j=events_list.size()-1; j>=0 ;j--){
             try{  
-                //Sys.println(events_list);
-                Sys.println("free memory: "+Sys.getSystemStats().freeMemory + ", events length: "+events_list_size + ", code length: "+ code.toString().length());
+                //Sys.println([Sys.getSystemStats().freeMemory, events_list_size ]);
                 data = null; // to free memory, because it is shared with the limit of the data that can be ppassed
                 id_list = null;
                 Background.exit(code_events);

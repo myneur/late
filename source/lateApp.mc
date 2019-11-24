@@ -33,20 +33,16 @@ class lateApp extends App.AppBase {
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
             Background.registerForTemporalEvent(new Time.Duration(5 * 60)); // get the first data as soon as possible
-            Sys.println([App.getApp().getProperty("oauth") , App.getApp().getProperty("code")]);
             if(App.getApp().getProperty("oauth") == null && App.getApp().getProperty("code") == null){
                 Sys.println("no auth");
                 if (lastEvent != null) {
-                    Sys.println("last event");
                     lastEvent = (lastEvent.compare(Time.now())/60).toNumber();
-                    Sys.println(lastEvent);
                     return ({"errorCode"=>lastEvent, "userPrompt"=>Ui.loadResource(Rez.Strings.AuthWait), "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // show message when to happen login
                 }
                  
                 return ({"errorCode"=>0, "userPrompt"=>"Log in by phone", "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // first login
             }
         } else { // not supported by the watch
-            Sys.println(501);
             return ({"errorCode"=>501, "userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData)}); 
         }
         return true;

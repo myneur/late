@@ -9,11 +9,11 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153146351-1"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'UA-153146351-1');
+        gtag('config', 'UA-153146351-1');
     </script>
 </head>
 
@@ -55,11 +55,11 @@
                 "response_type": "code",
                 "redirect_uri": "https://myneur.github.io/late/docs/",
                 "scope": "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly",
-        "prompt": "consent",
-        "access_type": "offline"
+                "prompt": "consent",
+                "access_type": "offline"
             };
             window.location = url + encodeQueryData(data);
-}
+        }
 
         function encodeQueryData(data) {
             var ret = [];

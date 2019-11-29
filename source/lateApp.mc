@@ -39,8 +39,7 @@ class lateApp extends App.AppBase {
                     lastEvent = (lastEvent.compare(Time.now())/60).toNumber();
                     return ({"errorCode"=>lastEvent, "userPrompt"=>Ui.loadResource(Rez.Strings.AuthWait), "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // show message when to happen login
                 }
-                 
-                return ({"errorCode"=>0, "userPrompt"=>"Log in by phone", "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // first login
+                return ({"errorCode"=>0, "userPrompt"=>Ui.loadResource(Rez.Strings.AutPrompt), "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // first login
             }
         } else { // not supported by the watch
             return ({"errorCode"=>501, "userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData)}); 

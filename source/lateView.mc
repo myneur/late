@@ -405,6 +405,7 @@ class lateView extends Ui.WatchFace {
 
 	function drawMinuteArc (dc){
 		var minutes = clockTime.min; 
+		Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
 		var angle =  minutes/60.0*2*Math.PI;
 		var cos = Math.cos(angle);
 		var sin = Math.sin(angle);

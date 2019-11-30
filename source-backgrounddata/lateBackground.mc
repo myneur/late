@@ -18,47 +18,47 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   function initialize() {
     Sys.println(Sys.getSystemStats().freeMemory + " on init");
     Sys.ServiceDelegate.initialize();
-    Communications.registerForOAuthMessages(method(:getAuthData));
+    Communications.registerForOAuthMessages(method(:onOauthMessage));
   }
   
   function onTemporalEvent() {
     Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     var app = App.getApp();
-    if (app.getProperty("code") == null) {
-      Sys.println("code null");
-      if (app.getProperty("oauth") == null) {
-        Sys.println("oauth null");
-        Communications.makeOAuthRequest(
-          "https://myneur.github.io/late/docs/auth",
-            {"client_secret"=>app.getProperty("client_secret")}, // TODO will fail if the client_secret is missing
-            "https://localhost",
-            Communications.OAUTH_RESULT_TYPE_URL,
-            {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"}
-        );
-        Background.exit({"oauth"=>true, "errorCode"=>0});
-      }
-    } else {
+    if (code == null){
+      Sys.println("get code");
       code = app.getProperty("code");
+    }
+    if (code == null) {  // show login 
+      Sys.println("code null");
+      Communications.makeOAuthRequest(
+        "https://myneur.github.io/late/docs/auth",
+        {"client_secret"=>app.getProperty("client_secret")}, // TODO will fail if the client_secret is missing
+        "https://localhost",
+        Communications.OAUTH_RESULT_TYPE_URL,
+        {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"}
+      );
+      Background.exit({"errorCode"=>0});
+    } else {
       getAccessTokenFromRefresh();
     }
   }
 
-  function getAuthData(data) {
-    Sys.println("getAuthData " +data.data["refresh_token"]);
+  function onOauthMessage(data) {
+    Sys.println("onOauthMessage " +data.data["refresh_token"]);
     code = {"refresh_token"=>data.data["refresh_token"]};
     calendar_indexes = data.data["calendar_indexes"];
     getAccessTokenFromRefresh();
   }
   
-  function handleAccessResponse(responseCode, data) {
+  function onAccessResponseRefresh(responseCode, data) {
     Sys.println("auth response " + responseCode);
     Sys.println(data);
     if (responseCode == 200) {
-      //Sys.println("AUTHORIZATION COMPLETED");
+      data.put("refresh_token", code.get("refresh_token"));
       code = data;
       getCalendarData();
     } else {
-      //Sys.println("AUTHORIZATION ERROR! " + responseCode);
+      code = null;
       Background.exit({"errorCode"=>responseCode});
     }
   }
@@ -74,15 +74,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
              :method=>Communications.HTTP_REQUEST_METHOD_GET,
              :headers=>{ "Authorization"=>"Bearer " + code.get("access_token") }
          },
-         method(:parseCalendarData)
+         method(:onCalendarData)
      );
   }
   
   var calendar_size = 0;
   var current_index = 0;
   var id_list = [];
-  function parseCalendarData(responseCode, data) {
-    Sys.println(Sys.getSystemStats().freeMemory + " on parseCalendarData");
+  function onCalendarData(responseCode, data) {
+    Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
     var result_size = data.get("items").size();
     //Sys.println(data);
     if (responseCode == 200) {
@@ -171,15 +171,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
              :method=>Communications.HTTP_REQUEST_METHOD_GET,
              :headers=>{ "Authorization"=>"Bearer " + code.get("access_token") }
          },
-         method(:parseCalendarEventData)
+         method(:onCalendarEventData)
      );
     Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
   }
   var events_list_size = 0;  
   var events_list = [];
 
-  function parseCalendarEventData(responseCode, data) {
-    Sys.println(Sys.getSystemStats().freeMemory +" on parseCalendarEventData");
+  function onCalendarEventData(responseCode, data) {
+    Sys.println(Sys.getSystemStats().freeMemory +" on onCalendarEventData");
     if(responseCode == 200) {
       data = data.get("items");
       for (var i = 0; i < data.size() && events_list.size()<9; i++) { // 10 events not to get out of memory
@@ -288,17 +288,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
          {
              :method => Communications.HTTP_REQUEST_METHOD_POST
          },
-         method(:handleAccessResponseRefresh)
+         method(:onAccessResponseRefresh)
      );
-  }
-      
-  function handleAccessResponseRefresh(responseCode, data) {
-    if (responseCode == 200) {
-       data.put("refresh_token", code.get("refresh_token"));
-       code = data;
-       getCalendarData();
-    } else {
-     Background.exit({"errorCode"=>responseCode});
-    }
   }
 }

@@ -268,19 +268,16 @@ class lateView extends Ui.WatchFace {
 		//dataCount++;
 		if(data instanceof Array){
 			events_list = data;
-		} else {
-			if(data){
-				var nowError = ((Time.now())).value();
-				events_list = [[nowError, nowError+3600*24, "", "", 0, -1, 1]]; // TODO different message when 501: not supported by watch
-				if(data.hasKey("oauth")){ // oauth just fired
-					events_list[0][2] = Ui.loadResource(Rez.Strings.AuthPrompt);
-				} else if(data.hasKey("errorCode")){ // we had some error
-					events_list[0][2] = Ui.loadResource(Rez.Strings.AuthPrompt);
-					events_list[0][3] = " " + data["errorCode"];
-				} 
-				if(data.hasKey("userPrompt")){
-					events_list[0][2] = data["userPrompt"];
-				}
+		} 
+		else if(data){
+			var nowError = ((Time.now())).value();
+			events_list = [[nowError, nowError+3600*24, "", "", 0, -1, 1]]; // TODO different message when 501: not supported by watch
+			if(data.hasKey("errorCode")){ // error or login prompt
+				events_list[0][2] = Ui.loadResource(Rez.Strings.AuthPrompt);
+				events_list[0][3] = " " + data["errorCode"];
+			} 
+			if(data.hasKey("userPrompt")){
+				events_list[0][2] = data["userPrompt"];
 			}
 		}
 		redrawAll = 1;

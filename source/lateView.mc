@@ -19,7 +19,7 @@ enum {fog,wind,cloudy,mostly,	partly,clear,		rain,		snow,sleet}
 class lateView extends Ui.WatchFace {
 	
 	(:data)
-	function drawWeather(dc){
+	function drawWeather(dc){ // hardcoded testing how to render the forecast
 		var offset = 0;
 		var startAngle = -2.0/24*360;
 		Sys.println(Sys.getSystemStats().freeMemory);

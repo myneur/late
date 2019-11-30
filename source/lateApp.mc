@@ -29,21 +29,22 @@ class lateApp extends App.AppBase {
 
     (:data)
     function scheduleDataLoading(){
-        Sys.println("scheduling");
+        ///Sys.println("scheduling");
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
             Background.registerForTemporalEvent(new Time.Duration(5 * 60)); // get the first data as soon as possible
-            if(App.getApp().getProperty("oauth") == null && App.getApp().getProperty("code") == null){
-                Sys.println("no auth");
-                if (lastEvent != null) {
-                    lastEvent = (lastEvent.compare(Time.now())/60).toNumber();
-                    return ({"errorCode"=>lastEvent, "userPrompt"=>Ui.loadResource(Rez.Strings.AuthWait), "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // show message when to happen login
+            if(App.getApp().getProperty("code") == null){
+                ///Sys.println("no auth");
+                if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
+                    lastEvent = lastEvent.compare(Time.now());
+                    return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogInDelayed), "errorCode"=>511, "wait"=>lastEvent});
+                } else {
+                    return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogIn), "errorCode"=>511});
                 }
-                 
-                return ({"errorCode"=>0, "userPrompt"=>"Log in by phone", "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // first login
+                
             }
         } else { // not supported by the watch
-            return ({"errorCode"=>501, "userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData)}); 
+            return ({"userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData), "errorCode"=>501}); 
         }
         return true;
     }
@@ -55,40 +56,29 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
-        try{
-            if (data.hasKey("oauth")) {
-                App.getApp().setProperty("oauth", true);
-                if(watch){
-                    watch.onBackgroundData(data);
-                }
-                return;
-            }
+        try {
+            App.getApp().setProperty("code", data.get("code"));
             if (data.hasKey("calendar_indexes")) {
                 App.getApp().setProperty("calendar_indexes", data.get("calendar_indexes"));
             }
             if (data.hasKey("events")) {
-                App.getApp().setProperty("oauth", false);
-                var events = parseEvents(data.get("events"));
-                App.getApp().setProperty("code", data.get("code"));
-                App.getApp().setProperty("events", events);
-                if(watch){
-                    watch.onBackgroundData(events);
-                }
+                data = parseEvents(data.get("events"));
+                App.getApp().setProperty("events", data);
                 Background.registerForTemporalEvent(new Time.Duration(App.getApp().getProperty("refresh_freq") * 60)); // once de data were loaded, continue with the settings interval
-            } else {
-                if (data.hasKey("errorCode")){
-                    if(watch){
-                        watch.onBackgroundData(data);
-                    }
-                } else {
-                    App.getApp().setProperty("code", data);
-                }
+            } 
+            else if(data.get("errorCode")==401){ // unauthorized
+                ///Sys.println("unauthorized");
+                App.getApp().setProperty("code", null);
+            } else if(data.get("errorCode")==511){ // login prompt
+                ///Sys.println("login request");
+                data["userPrompt"] = Ui.loadResource(Rez.Strings.LogIn);
+            }
+            if(watch){
+                watch.onBackgroundData(data);
             }
             Ui.requestUpdate();
         } catch (ex){
-            Sys.println("ex: " + ex.getErrorMessage());
-            Sys.println( ex.printStackTrace());
-            return;
+            Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());return;
         }
     }   
 
@@ -127,7 +117,6 @@ class lateApp extends App.AppBase {
         if(data instanceof Toybox.Lang.Array) { 
             for(var i=0; i<data.size() ;i++){
                 var date = parseISODate(data[i][0]);
-                //Sys.println(data[i]);
                 if(date!=null){
                     events_list.add([
                         date.value(),                                               // start

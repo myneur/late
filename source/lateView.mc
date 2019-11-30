@@ -98,11 +98,7 @@ class lateView extends Ui.WatchFace {
 					if(dataLoading){
 						event["height"] = Gfx.getFontHeight(fontCondensed)-1;
 						activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
-						var response = App.getApp().scheduleDataLoading();
-						if(response != true){
-							var nowError = ((Time.now())).value() + (response["errorCode"]+6)*60;
-							events_list = [[nowError, nowError+3600*24, response["userPrompt"].toString(), " "+response["userContext"], 0, -1, 1]]; 
-						}
+						showMessage(App.getApp().scheduleDataLoading());
 					} else { 
 						activity = 0;
 					}
@@ -263,25 +259,26 @@ class lateView extends Ui.WatchFace {
 		if (0>redrawAll) { redrawAll--; }
 	}
 
+	function showMessage(message){
+		///Sys.println(message);
+		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
+			var nowError = (Time.now()).value();
+			if(message.hasKey("wait")){
+				nowError -= message["wait"].toNumber();
+			}
+			var context = message.hasKey("userContext") ? " "+ message["userContext"] : "";
+			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, message["userPrompt"].toString(), context, 0, -1, 1]]; 
+		}
+	}
+
 	(:data)
 	function onBackgroundData(data) {
 		//dataCount++;
 		if(data instanceof Array){
 			events_list = data;
-		} else {
-			if(data){
-				var nowError = ((Time.now())).value();
-				events_list = [[nowError, nowError+3600*24, "", "", 0, -1, 1]]; // TODO different message when 501: not supported by watch
-				if(data.hasKey("oauth")){ // oauth just fired
-					events_list[0][2] = Ui.loadResource(Rez.Strings.AuthPrompt);
-				} else if(data.hasKey("errorCode")){ // we had some error
-					events_list[0][2] = Ui.loadResource(Rez.Strings.AuthPrompt);
-					events_list[0][3] = " " + data["errorCode"];
-				} 
-				if(data.hasKey("userPrompt")){
-					events_list[0][2] = data["userPrompt"];
-				}
-			}
+		} 
+		else if(data){
+			showMessage(data);
 		}
 		redrawAll = 1;
 	}
@@ -405,6 +402,7 @@ class lateView extends Ui.WatchFace {
 
 	function drawMinuteArc (dc){
 		var minutes = clockTime.min; 
+		///Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
 		var angle =  minutes/60.0*2*Math.PI;
 		var cos = Math.cos(angle);
 		var sin = Math.sin(angle);

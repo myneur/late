@@ -1,0 +1,52 @@
+{
+"latitude":50.1144243,"longitude":14.4887806,"timezone":"Europe/Prague","hourly":{
+"summary":"Mostly cloudy throughout the day.","icon":"partly-cloudy-day","data":[{
+"time":1575147600,"summary":"Mostly Cloudy","icon":"partly-cloudy-night","precipIntensity":0.0083,"precipProbability":0.01,"precipType":"rain","cloudCover":0.75,"visibility":10.003},{
+"time":1575151200,"summary":"Mostly Cloudy","icon":"partly-cloudy-night","precipIntensity":0.0083,"precipProbability":0.01,"precipType":"rain","cloudCover":0.75,"visibility":10.003},{
+"time":1575154800,"summary":"Mostly Cloudy","icon":"partly-cloudy-night","precipIntensity":0.0062,"precipProbability":0.01,"precipType":"snow","precipAccumulation":0.0033,"cloudCover":0.69,"visibility":11.471},{
+"time":1575158400,"summary":"Clear","icon":"clear-night","precipIntensity":0.0051,"precipProbability":0.01,"precipType":"snow","precipAccumulation":0.0037,"cloudCover":0.3,"visibility":16.093},{
+"time":1575162000,"summary":"Clear","icon":"clear-night","precipIntensity":0,"precipProbability":0,"cloudCover":0.04,"visibility":16.093},{
+"time":1575165600,"summary":"Clear","icon":"clear-night","precipIntensity":0,"precipProbability":0,"cloudCover":0.02,"visibility":16.093},{
+"time":1575169200,"summary":"Clear","icon":"clear-night","precipIntensity":0,"precipProbability":0,"cloudCover":0.01,"visibility":16.093},{
+"time":1575172800,"summary":"Clear","icon":"clear-night","precipIntensity":0,"precipProbability":0,"cloudCover":0,"visibility":16.093},{
+"time":1575176400,"summary":"Clear","icon":"clear-night","precipIntensity":0,"precipProbability":0,"cloudCover":0,"visibility":16.093},{
+"time":1575180000,"summary":"Clear","icon":"clear-night","precipIntensity":0,"precipProbability":0,"cloudCover":0.02,"visibility":16.093},{
+"time":1575183600,"summary":"Clear","icon":"clear-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.21,"visibility":16.093},{
+"time":1575187200,"summary":"Partly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.47,"visibility":16.093},{
+"time":1575190800,"summary":"Mostly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.67,"visibility":16.093},{
+"time":1575194400,"summary":"Mostly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.73,"visibility":16.093},{
+"time":1575198000,"summary":"Mostly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.72,"visibility":16.093},{
+"time":1575201600,"summary":"Mostly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.74,"visibility":16.093},{
+"time":1575205200,"summary":"Mostly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.82,"visibility":16.093},{
+"time":1575208800,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":0.93,"visibility":16.093},{
+"time":1575212400,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575216000,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575219600,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575223200,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575226800,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575230400,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575234000,"summary":"Overcast","icon":"cloudy","precipIntensity":0.0072,"precipProbability":0.02,"precipType":"rain","cloudCover":1,"visibility":16.093},{
+"time":1575237600,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575241200,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575244800,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575248400,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":1,"visibility":16.093},{
+"time":1575252000,"summary":"Overcast","icon":"cloudy","precipIntensity":0.0134,"precipProbability":0.03,"precipType":"snow","precipAccumulation":0.0079,"cloudCover":1,"visibility":16.093},{
+"time":1575255600,"summary":"Overcast","icon":"cloudy","precipIntensity":0.0241,"precipProbability":0.03,"precipType":"snow","precipAccumulation":0.0165,"cloudCover":1,"visibility":16.093},{
+"time":1575259200,"summary":"Overcast","icon":"cloudy","precipIntensity":0.017,"precipProbability":0.03,"precipType":"snow","precipAccumulation":0.0127,"cloudCover":1,"visibility":16.093},{
+"time":1575262800,"summary":"Overcast","icon":"cloudy","precipIntensity":0.0054,"precipProbability":0.02,"precipType":"snow","precipAccumulation":0.0042,"cloudCover":1,"visibility":16.093},{
+"time":1575266400,"summary":"Overcast","icon":"cloudy","precipIntensity":0,"precipProbability":0,"cloudCover":0.99,"visibility":16.093},{
+"time":1575270000,"summary":"Mostly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.87,"visibility":16.093},{
+"time":1575273600,"summary":"Mostly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.7,"visibility":16.093},{
+"time":1575277200,"summary":"Partly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.56,"visibility":16.093},{
+"time":1575280800,"summary":"Partly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.48,"visibility":16.093},{
+"time":1575284400,"summary":"Partly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.42,"visibility":16.093},{
+"time":1575288000,"summary":"Partly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.38,"visibility":16.093},{
+"time":1575291600,"summary":"Partly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.37,"visibility":16.093},{
+"time":1575295200,"summary":"Partly Cloudy","icon":"partly-cloudy-day","precipIntensity":0,"precipProbability":0,"cloudCover":0.38,"visibility":16.093},{
+"time":1575298800,"summary":"Partly Cloudy","icon":"partly-cloudy-night","precipIntensity":0,"precipProbability":0,"cloudCover":0.41,"visibility":16.093},{
+"time":1575302400,"summary":"Partly Cloudy","icon":"partly-cloudy-night","precipIntensity":0,"precipProbability":0,"cloudCover":0.44,"visibility":16.093},{
+"time":1575306000,"summary":"Partly Cloudy","icon":"partly-cloudy-night","precipIntensity":0,"precipProbability":0,"cloudCover":0.49,"visibility":16.093},{
+"time":1575309600,"summary":"Partly Cloudy","icon":"partly-cloudy-night","precipIntensity":0,"precipProbability":0,"cloudCover":0.53,"visibility":16.093},{
+"time":1575313200,"summary":"Partly Cloudy","icon":"partly-cloudy-night","precipIntensity":0,"precipProbability":0,"cloudCover":0.56,"visibility":16.093},{
+"time":1575316800,"summary":"Partly Cloudy","icon":"partly-cloudy-night","precipIntensity":0.0091,"precipProbability":0.03,"precipType":"rain","cloudCover":0.59,"visibility":16.013},{
+"time":1575320400,"summary":"Mostly Cloudy","icon":"partly-cloudy-night","precipIntensity":0.0169,"precipProbability":0.03,"precipType":"rain","cloudCover":0.61,"visibility":14.063}]},"offset":1}

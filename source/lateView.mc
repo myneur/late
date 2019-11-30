@@ -10,8 +10,55 @@ using Toybox.Math as Math;
 using Toybox.Application as App;
 
 enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
+enum {night,day}
+var meteoColors =[
+[0,0,0,0,						0,0,				0x0055AA,	0x555555,0x555555],
+[0,0,0,0,						0xAAAA00,0xFFAA00,	0x0055FF,	0xAAAAAA,0xAAAAAA]];
+enum {fog,wind,cloudy,mostly,	partly,clear,		rain,		snow,sleet}
 
 class lateView extends Ui.WatchFace {
+	
+	(:data)
+	function drawWeather(dc){
+		var offset = 0;
+		var startAngle = -2.0/24*360;
+		Sys.println(Sys.getSystemStats().freeMemory);
+		var weatherJson = Ui.loadResource(Rez.JsonData.weatherJson);
+		Sys.println(Sys.getSystemStats().freeMemory);
+		weatherJson = weatherJson["hourly"]["data"];
+		Sys.println(Sys.getSystemStats().freeMemory);
+		var pointer = [0,0];
+
+		for(var w=offset; w<offset+24; w++){
+			pointer = [0,0];
+			if(weatherJson[w]["summary"].find("Clear") != null || weatherJson[w]["summary"].find("Partly") != null){
+				Sys.println(weatherJson[w]["summary"]);
+				pointer[0]=5;
+			}
+			if(weatherJson[w]["icon"].find("day") != null){
+				pointer[1]=1;
+			}
+			if(weatherJson[w]["icon"].find("rain") != null || weatherJson[w]["icon"].find("snow") != null || weatherJson[w]["icon"].find("sleet") != null){
+				pointer[0]=7;
+			}
+			Sys.println([weatherJson[w]["time"], pointer, meteoColors[pointer[1]][pointer[0]]]);
+			weatherJson[w]=meteoColors[pointer[1]][pointer[0]];
+			
+		}
+
+
+		dc.setPenWidth(2);
+		var weather; var color;
+		for(var i=offset; i <offset+24; i++){
+			//weather = meteoTest[day][i];
+			color = weatherJson[i];
+			dc.setColor(color, backgroundColor);
+			dc.drawArc(centerX, centerY, centerY-1, Gfx.ARC_CLOCKWISE, 90-startAngle-i*360/24, 90-startAngle-(i+1)*360/24);
+		}
+	}
+
+
+
 	hidden const CENTER = Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER;
 	hidden var dateForm; hidden var batThreshold = 33;
 	hidden var centerX; hidden var centerY; hidden var height;
@@ -230,6 +277,7 @@ class lateView extends Ui.WatchFace {
 				//System.println(method(:humanizeNumber).invoke(100000)); // TODO this is how to save and invoke method callback to get rid of ugly ifelse like below
 				// The best circle for activity percentages: dc.setPenWidth(2);dc.setColor(Gfx.COLOR_DK_GRAY, 0); dc.drawArc(centerX, 190, 10, Gfx.ARC_CLOCKWISE, 90, 90-49*6);
 
+				drawWeather(dc);
 				if(activity > 0){
 					text = ActivityMonitor.getInfo();
 					if(activity == 1){ text = humanizeNumber(text.steps); }

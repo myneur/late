@@ -16,20 +16,21 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   var calendar_indexes;
 
   function initialize() {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on init");
+    Sys.println(Sys.getSystemStats().freeMemory + " on init");
     Sys.ServiceDelegate.initialize();
     Communications.registerForOAuthMessages(method(:onOauthMessage));
   }
   
   function onTemporalEvent() {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
+    Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     var app = App.getApp();
     if (code == null){
-      ///Sys.println("get code");
+      Sys.println("get code");
       code = app.getProperty("code");
+      Sys.println(code);
     }
     if (code == null) {  // show login 
-      ///Sys.println("code null");
+      Sys.println("code null");
       Communications.makeOAuthRequest(
         "https://myneur.github.io/late/docs/auth",
         {"client_secret"=>app.getProperty("client_secret")}, // TODO will fail if the client_secret is missing
@@ -44,15 +45,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function onOauthMessage(data) {
-    ///Sys.println("onOauthMessage " +data.data["refresh_token"]);
+    Sys.println("onOauthMessage " +data.data["refresh_token"]);
     code = {"refresh_token"=>data.data["refresh_token"]};
     calendar_indexes = data.data["calendar_indexes"];
     getAccessTokenFromRefresh();
   }
   
   function onAccessResponseRefresh(responseCode, data) {
-    ///Sys.println("auth response " + responseCode);
-    ///Sys.println(data);
+    Sys.println("auth response " + responseCode);
+    Sys.println(data);
     if (responseCode == 200) {
       data.put("refresh_token", code.get("refresh_token"));
       code = data;
@@ -82,7 +83,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   var current_index = 0;
   var id_list = [];
   function onCalendarData(responseCode, data) {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
+    Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
     var result_size = data.get("items").size();
     if (responseCode == 200) {
       var indexes;
@@ -92,6 +93,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         indexes = calendar_indexes;
       }
       indexes = indexes.toCharArray();
+      Sys.println("indexes "+indexes);
       var index_list = [];
       var cn = "";
       for (var i = 0; i < indexes.size(); i++) {
@@ -125,7 +127,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function getCalendarEventData(calendar_id) {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
+    Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
     var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     var sys_time = System.getClockTime();
     var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -170,13 +172,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
          },
          method(:onCalendarEventData)
      );
-    ///Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
+    Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
   }
   var events_list_size = 0;  
   var events_list = [];
 
   function onCalendarEventData(responseCode, data) {
-    ///Sys.println(Sys.getSystemStats().freeMemory +" on onCalendarEventData");
+    Sys.println(Sys.getSystemStats().freeMemory +" on onCalendarEventData");
     if(responseCode == 200) {
       data = data.get("items");
       for (var i = 0; i < data.size() && events_list.size()<9; i++) { // 10 events not to get out of memory
@@ -224,7 +226,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
           }
           //for(var j=events_list.size()-1; j>=0 ;j--){
             try{  
-                ///Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
+                Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
                 data = null; // to free memory, because it is shared with the limit of the data that can be ppassed
                 id_list = null;
                 

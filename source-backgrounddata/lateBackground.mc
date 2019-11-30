@@ -37,7 +37,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         Communications.OAUTH_RESULT_TYPE_URL,
         {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"}
       );
-      Background.exit({"errorCode"=>0});
+      Background.exit({"errorCode"=>511});
     } else {
       getAccessTokenFromRefresh();
     }

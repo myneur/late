@@ -36,13 +36,15 @@ class lateApp extends App.AppBase {
             if(App.getApp().getProperty("code") == null){
                 Sys.println("no auth");
                 if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
-                    lastEvent = (lastEvent.compare(Time.now())/60).toNumber();
-                    return ({"errorCode"=>lastEvent, "userPrompt"=>Ui.loadResource(Rez.Strings.AuthWait), "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); 
+                    lastEvent = lastEvent.compare(Time.now());
+                    return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogInDelayed), "errorCode"=>511, "wait"=>lastEvent});
+                } else {
+                    return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogIn), "errorCode"=>511});
                 }
-                return ({"errorCode"=>0, "userPrompt"=>Ui.loadResource(Rez.Strings.AuthPrompt), "userContext"=>Ui.loadResource(Rez.Strings.AuthContext)}); // first login
+                
             }
         } else { // not supported by the watch
-            return ({"errorCode"=>501, "userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData)}); 
+            return ({"userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData), "errorCode"=>501}); 
         }
         return true;
     }
@@ -65,7 +67,11 @@ class lateApp extends App.AppBase {
                 Background.registerForTemporalEvent(new Time.Duration(App.getApp().getProperty("refresh_freq") * 60)); // once de data were loaded, continue with the settings interval
             } 
             else if(data.get("errorCode")==401){ // unauthorized
+                Sys.println("unauthorized");
                 App.getApp().setProperty("code", null);
+            } else if(data.get("errorCode")==511){ // login prompt
+                Sys.println("login request");
+                data["userPrompt"] = Ui.loadResource(Rez.Strings.LogIn);
             }
             if(watch){
                 watch.onBackgroundData(data);

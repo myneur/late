@@ -239,7 +239,7 @@ class lateView extends Ui.WatchFace {
 					else if(activity == 5){ text = (text.floorsClimbed.toString()); }
 					else {text = "";}
 
-					dc.setColor(activityColor, Gfx.COLOR_BLACK);
+					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 					if(activity < 6){
 						dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
 						dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
@@ -260,7 +260,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function showMessage(message){
-		Sys.println(message);
+		///Sys.println(message);
 		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			if(message.hasKey("wait")){
@@ -361,11 +361,12 @@ class lateView extends Ui.WatchFace {
 	function drawEvent(dc){
 		updateCurrentEvent(dc);
 		if(event[:start]){
+			
 			dc.drawText(centerX, activityY, fontCondensed, event[:name], Gfx.TEXT_JUSTIFY_CENTER);
-			dc.setColor(dateColor, backgroundColor);
+			dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 			// TODO remove prefix for simplicity and size limitations
 			dc.drawText(centerX-event[:mid], activityY+event[:height], fontCondensed, event[:prefix]+event[:start], Gfx.TEXT_JUSTIFY_RIGHT);
-			dc.setColor(activityColor, Gfx.COLOR_BLACK);
+			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(centerX-event[:mid], activityY+event[:height], fontCondensed, event[:location], Gfx.TEXT_JUSTIFY_LEFT);
 		}
 	}
@@ -402,7 +403,7 @@ class lateView extends Ui.WatchFace {
 
 	function drawMinuteArc (dc){
 		var minutes = clockTime.min; 
-		Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
+		///Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
 		var angle =  minutes/60.0*2*Math.PI;
 		var cos = Math.cos(angle);
 		var sin = Math.sin(angle);

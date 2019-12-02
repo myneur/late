@@ -29,12 +29,12 @@ class lateApp extends App.AppBase {
 
     (:data)
     function scheduleDataLoading(){
-        Sys.println("scheduling");
+        ///Sys.println("scheduling");
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
             Background.registerForTemporalEvent(new Time.Duration(5 * 60)); // get the first data as soon as possible
             if(App.getApp().getProperty("code") == null){
-                Sys.println("no auth");
+                ///Sys.println("no auth");
                 if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
                     lastEvent = lastEvent.compare(Time.now());
                     return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogInDelayed), "errorCode"=>511, "wait"=>lastEvent});
@@ -56,8 +56,11 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
+        ///Sys.println(data);
         try {
-            App.getApp().setProperty("code", data.get("code"));
+            if(data.hasKey("code")){
+                App.getApp().setProperty("code", data.get("code"));
+            }
             if (data.hasKey("calendar_indexes")) {
                 App.getApp().setProperty("calendar_indexes", data.get("calendar_indexes"));
             }
@@ -67,10 +70,10 @@ class lateApp extends App.AppBase {
                 Background.registerForTemporalEvent(new Time.Duration(App.getApp().getProperty("refresh_freq") * 60)); // once de data were loaded, continue with the settings interval
             } 
             else if(data.get("errorCode")==401){ // unauthorized
-                Sys.println("unauthorized");
+                ///Sys.println("unauthorized");
                 App.getApp().setProperty("code", null);
             } else if(data.get("errorCode")==511){ // login prompt
-                Sys.println("login request");
+                ///Sys.println("login request");
                 data["userPrompt"] = Ui.loadResource(Rez.Strings.LogIn);
             }
             if(watch){
@@ -78,7 +81,8 @@ class lateApp extends App.AppBase {
             }
             Ui.requestUpdate();
         } catch (ex){
-            Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());return;
+            //Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
+            return;
         }
     }   
 

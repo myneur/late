@@ -191,7 +191,7 @@ class lateView extends Ui.WatchFace {
 		if (lastRedrawMin != clockTime.min) { redrawAll = 1; }
 
 		if (redrawAll!=0){
-			dc.setColor(0x00, 0x00);
+			dc.setColor(backgroundColor, backgroundColor);
 			dc.clear();
 			lastRedrawMin=clockTime.min;
 			var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
@@ -211,11 +211,11 @@ class lateView extends Ui.WatchFace {
 				if(0==h){ h=12;}
 			}
 			// TODO if(set.notificationCount){dc.drawBitmap(centerX, notifY, iconNotification);}
-			dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
+			dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
 			if(centerY>89){
 				// function drawDate(x, y){}
-				dc.setColor(dateColor, Gfx.COLOR_BLACK);
+				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 				var text = "";
 				if(dateForm != null){
 					text = Lang.format("$1$ ", ((dateForm == 0) ? [info.month] : [info.day_of_week]) );
@@ -345,7 +345,7 @@ class lateView extends Ui.WatchFace {
 		
 		var r = centerX-9;
 		//dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
-		dc.setColor(0, 0);
+		dc.setColor(backgroundColor, backgroundColor);
 		dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),5);
 		if(activity == 6){
 			dc.setColor(dateColor, backgroundColor);
@@ -410,11 +410,11 @@ class lateView extends Ui.WatchFace {
 		var offset=0;
 		var gap=0;
 
-		dc.setColor(Gfx.COLOR_WHITE, 0);
+		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontMinutes, minutes /*clockTime.min.format("%0.1d")*/, CENTER);
 
 		if(minutes>0){
-			dc.setColor(color, 0);
+			dc.setColor(color, backgroundColor);
 			dc.setPenWidth(circleWidth);
 			
 			/* kerning values not to have ugly gaps between arc and minutes
@@ -471,14 +471,14 @@ class lateView extends Ui.WatchFace {
 
 			// print the remaining %
 			//var str = bat.format("%d") + "%";
-			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+			dc.setColor(backgroundColor, backgroundColor);
 			dc.setPenWidth(1);
 			dc.fillRectangle(xPos,yPos,20, 10);
 
 			if(bat<=15){
-				dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_BLACK);
+				dc.setColor(Gfx.COLOR_RED, backgroundColor);
 			} else {
-				dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_BLACK);
+				dc.setColor(Gfx.COLOR_DK_GRAY, backgroundColor);
 			}
 				
 			// draw the battery
@@ -489,7 +489,7 @@ class lateView extends Ui.WatchFace {
 			var lvl = floor((15.0 * (bat / 99.0)));
 			if (1.0 <= lvl) { dc.fillRectangle(xPos + 2, yPos + 2, lvl, 6); }
 			else {
-				dc.setColor(Gfx.COLOR_ORANGE, Gfx.COLOR_BLACK);
+				dc.setColor(Gfx.COLOR_ORANGE, backgroundColor);
 				dc.fillRectangle(xPos + 1, yPos + 1, 1, 8);
 			}
 		}

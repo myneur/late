@@ -35,18 +35,21 @@ class lateApp extends App.AppBase {
             Background.registerForTemporalEvent(new Time.Duration(5*Gregorian.SECONDS_PER_MINUTE)); // get the first data as soon as possible
             if(App.getApp().getProperty("code") == null){
                 ///Sys.println("no auth");
-                if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
-                    lastEvent = lastEvent.compare(Time.now()).toNumber();
-                    if(lastEvent < -5*Gregorian.SECONDS_PER_MINUTE){
-                        lastEvent = 0;
+                if(Sys.getDeviceSettings().phoneConnected){
+                    if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
+                        lastEvent = lastEvent.compare(Time.now()).toNumber();
+                        if(lastEvent < -5*Gregorian.SECONDS_PER_MINUTE){
+                            lastEvent = 0;
+                        }
+                        //Sys.println(lastEvent);
+                        return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogInDelayed), "errorCode"=>511, "wait"=>lastEvent});
+                    } else {
+                        return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogIn), "errorCode"=>511});
                     }
-                    //Sys.println(lastEvent);
-                    return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogInDelayed), "errorCode"=>511, "wait"=>lastEvent});
                 } else {
-                    return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogIn), "errorCode"=>511});
+                    return ({"userPrompt"=>Ui.loadResource(Rez.Strings.notConnected), "errorCode"=>511});
                 }
-                
-            }
+            }  
         } else { // not supported by the watch
             return ({"userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData), "errorCode"=>501}); 
         }
@@ -78,7 +81,11 @@ class lateApp extends App.AppBase {
                 App.getApp().setProperty("code", null);
             } else if(data.get("errorCode")==511){ // login prompt
                 ///Sys.println("login request");
-                data["userPrompt"] = Ui.loadResource(Rez.Strings.LogIn);
+                if(Sys.getDeviceSettings().phoneConnected){
+                    data["userPrompt"] = Ui.loadResource(Rez.Strings.LogIn);
+                } else {
+                    data["userPrompt"] = Ui.loadResource(Rez.Strings.notConnected);
+                }
             }
             if(watch){
                 watch.onBackgroundData(data);

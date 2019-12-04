@@ -22,8 +22,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function onTemporalEvent() {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
+    Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     var app = App.getApp();
+    var connected = Sys.getDeviceSettings().phoneConnected;
     if (code == null){
       ///Sys.println("get code");
       code = app.getProperty("code");
@@ -31,16 +32,20 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     }
     if (code == null) {  // show login 
       ///Sys.println("code null");
-      Communications.makeOAuthRequest(
-        "https://myneur.github.io/late/docs/auth",
-        {"client_secret"=>app.getProperty("client_secret")}, // TODO will fail if the client_secret is missing
-        "https://localhost",
-        Communications.OAUTH_RESULT_TYPE_URL,
-        {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"}
-      );
+      if(connected){
+        Communications.makeOAuthRequest(
+          "https://myneur.github.io/late/docs/auth",
+          {"client_secret"=>app.getProperty("client_secret")}, // TODO will fail if the client_secret is missing
+          "https://localhost",
+          Communications.OAUTH_RESULT_TYPE_URL,
+          {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"}
+        );
+      }
       Background.exit({"errorCode"=>511});
     } else {
-      getAccessTokenFromRefresh();
+      if(connected){
+        getAccessTokenFromRefresh();
+      }
     }
   }
 
@@ -52,7 +57,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function onAccessResponseRefresh(responseCode, data) {
-    ///Sys.println("auth response " + responseCode);
+    Sys.println("auth response " + responseCode);
     ///Sys.println(data);
     if (responseCode == 200) {
       data.put("refresh_token", code.get("refresh_token"));
@@ -82,12 +87,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   var calendar_ids = [];
   function onCalendarData(responseCode, data) {
     Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
-    ///Sys.println(data);
+    Sys.println(data);
     var result_size = data.get("items").size();
     if (responseCode == 200) {
       if (App.getApp().getProperty("calendar_indexes")) {
         calendar_indexes = App.getApp().getProperty("calendar_indexes"); // expect it might be missing
       }
+      Sys.println(calendar_indexes);
       var i;
       var idxs = calendar_indexes;
       while(idxs.length()>0){
@@ -98,7 +104,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         i = idxs.find(",");
         idxs = (i!=null && i<idxs.length()-1) ? idxs.substring(i+1, idxs.length()) : "";
       }
-      //Sys.println(calendar_ids);  
+      Sys.println(calendar_ids);  
       // TODO reset when no indexes at all
       getNextCalendarEventData();
     } else {
@@ -193,7 +199,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
                   eventTrim[3] = eventTrim[3].substring(0,split);
               }
             }
-            Sys.println(eventTrim);
+            //Sys.println(eventTrim);
             events_list.add(eventTrim);
             events_list_size += eventTrim.toString().length();
             eventTrim = null;

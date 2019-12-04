@@ -29,7 +29,7 @@ class lateApp extends App.AppBase {
 
     (:data)
     function scheduleDataLoading(){
-        Sys.println("scheduling");
+        ///Sys.println("scheduling");
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
             Background.registerForTemporalEvent(new Time.Duration(5*Gregorian.SECONDS_PER_MINUTE)); // get the first data as soon as possible
@@ -63,7 +63,7 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
-        ///Sys.println(data);
+        ///Sys.println("onBackgroundData "+data);
         try {
             if(data.hasKey("code")){
                 App.getApp().setProperty("code", data.get("code"));

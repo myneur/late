@@ -84,8 +84,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   var current_index = -1;
-  var calendar_ids = [];
+  var calendar_ids;
   function onCalendarData(responseCode, data) {
+    calendar_ids = [];
     Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
     Sys.println(data);
     var result_size = data.get("items").size();
@@ -98,10 +99,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       var idxs = calendar_indexes;
       while(idxs.length()>0){
         i = idxs.toNumber();
+        Sys.println("idx "+i);
         if(i>=0 && i <= result_size){
           calendar_ids.add(data.get("items")[i].get("id"));
         }
         i = idxs.find(",");
+        Sys.println("pos "+i);
         idxs = (i!=null && i<idxs.length()-1) ? idxs.substring(i+1, idxs.length()) : "";
       }
       Sys.println(calendar_ids);  

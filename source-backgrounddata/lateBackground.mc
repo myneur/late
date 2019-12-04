@@ -98,7 +98,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         i = idxs.find(",");
         idxs = (i!=null && i<idxs.length()-1) ? idxs.substring(i+1, idxs.length()) : "";
       }
-      Sys.println(calendar_ids);  // TODO reset when no indexes at all
+      //Sys.println(calendar_ids);  
+      // TODO reset when no indexes at all
       getNextCalendarEventData();
     } else {
       Background.exit(code);
@@ -113,7 +114,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       getCalendarEventData(calendar_ids[current_index]);
       return true;
     } else {
-      Sys.println([current_index, calendar_ids.size()]);
       return false;
     }
   }
@@ -171,10 +171,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function onCalendarEventData(responseCode, data) {
     Sys.println(Sys.getSystemStats().freeMemory +" on onCalendarEventData");
-    //Sys.println(data);
-    if(responseCode == 200) {
+    if(responseCode == 200) { // TODO handle non 200 codes
       data = data.get("items");
-      Sys.println(data);
       for (var i = 0; i < data.size() && events_list.size()<9; i++) { // 10 events not to get out of memory
         var event = data[i];
         data[i] = null;
@@ -195,62 +193,34 @@ class lateBackground extends Toybox.System.ServiceDelegate {
                   eventTrim[3] = eventTrim[3].substring(0,split);
               }
             }
+            Sys.println(eventTrim);
             events_list.add(eventTrim);
             events_list_size += eventTrim.toString().length();
             eventTrim = null;
-            } catch(ex) {
-              Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
-            }
+          } catch(ex) {
+            Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
           }
-        }
-        if (!getNextCalendarEventData()) { // done
-          var code_events;
-          if (calendar_indexes != null) {
-            code_events = {
-              "code"=>code,
-              "events"=>events_list,
-              "calendar_indexes"=>calendar_indexes
-            };
-          } else {
-            code_events = {
-              "code"=>code,
-              "events"=>events_list
-            };
-          }
-          try{  
-              Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
-              Sys.println([calendar_indexes, calendar_ids]);
-              data = null; // to free memory, because it is shared with the limit of the data that can be ppassed
-              calendar_ids = null;
-              
-              Background.exit(code_events);
-          }catch(ex){
-              code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
-              Background.exit(code_events);
-          }
-        } 
-        data = null;
-      } else { // no data
-        var code_events;
-        if (calendar_indexes != null) {
-          code_events = {
-            "code"=>code,
-            "events"=>events_list,
-            "calendar_indexes"=>calendar_indexes
-          };
-        } else {
-          code_events = {
-            "code"=>code,
-            "events"=>events_list
-          };
-        }
-        try{
-          Background.exit(code_events);
-        }catch(ex){
-          Background.exit(null);
         }
       }
+    } 
+    if (!getNextCalendarEventData()) { // done
+      exitWithData();
+    } 
+  }
+
+  function exitWithData(){ // TODO don't return events on errors
+    var code_events = {"code"=>code,"events"=>events_list};
+    if (calendar_indexes != null) {
+      code_events["calendar_indexes"] = calendar_indexes;
     }
+    try{  
+        Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
+        Background.exit(code_events);
+    }catch(ex){
+        code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
+        Background.exit(code_events);
+    }
+  }
   
   function getAccessTokenFromRefresh() {
      Communications.makeWebRequest(

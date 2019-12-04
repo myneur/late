@@ -40,7 +40,7 @@ class lateApp extends App.AppBase {
                     if(lastEvent < -5*Gregorian.SECONDS_PER_MINUTE){
                         lastEvent = 0;
                     }
-                    Sys.println(lastEvent);
+                    //Sys.println(lastEvent);
                     return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogInDelayed), "errorCode"=>511, "wait"=>lastEvent});
                 } else {
                     return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogIn), "errorCode"=>511});

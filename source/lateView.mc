@@ -364,6 +364,10 @@ class lateView extends Ui.WatchFace {
 			
 			dc.drawText(centerX, activityY, fontCondensed, event[:name], Gfx.TEXT_JUSTIFY_CENTER);
 			dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
+
+			//var angle = (events_list[0][1]-(Time.today()+hours*SECONDS_PER_HOUR)/SECONDS_PER_HOUR*360; dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-angle, 90-angle-1);
+
+
 			// TODO remove prefix for simplicity and size limitations
 			dc.drawText(centerX-event[:mid], activityY+event[:height], fontCondensed, event[:prefix]+event[:start], Gfx.TEXT_JUSTIFY_RIGHT);
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);

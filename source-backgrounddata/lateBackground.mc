@@ -78,59 +78,48 @@ class lateBackground extends Toybox.System.ServiceDelegate {
      );
   }
   
-  var calendar_size = 0;
-  var current_index = 0;
-  var id_list = [];
+  var current_index = -1;
+  var calendar_ids = [];
   function onCalendarData(responseCode, data) {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
+    Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
     ///Sys.println(data);
     var result_size = data.get("items").size();
     if (responseCode == 200) {
-      var indexes;
       if (App.getApp().getProperty("calendar_indexes")) {
-        indexes = App.getApp().getProperty("calendar_indexes");
-      } else {
-        indexes = calendar_indexes;
+        calendar_indexes = App.getApp().getProperty("calendar_indexes"); // expect it might be missing
       }
-      indexes = indexes.toCharArray();
-      ///Sys.println("indexes "+indexes);
-      var index_list = [];
-      var cn = "";
-      for (var i = 0; i < indexes.size(); i++) {
-        var c = indexes[i];
-        if (c == ',') {
-          if (cn.toNumber() <= result_size) {index_list.add(cn.toNumber());}
-          cn = "";
-        } else {
-          cn += c;
+      var i;
+      var idxs = calendar_indexes;
+      while(idxs.length()>0){
+        i = idxs.toNumber();
+        if(i>=0 && i <= result_size){
+          calendar_ids.add(data.get("items")[i].get("id"));
         }
+        i = idxs.find(",");
+        idxs = (i!=null && i<idxs.length()-1) ? idxs.substring(i+1, idxs.length()) : "";
       }
-      if (cn.toNumber() <= result_size) {index_list.add(cn.toNumber());}
-      calendar_size = index_list.size();
-      
-      for (var d = 0; d < index_list.size(); d++) {
-        id_list.add(data.get("items")[index_list[d]].get("id"));
-      }
-      ///Sys.println(index_list);
-      repeater();
+      Sys.println(calendar_ids);  // TODO reset when no indexes at all
+      getNextCalendarEventData();
     } else {
       Background.exit(code);
     }
     data = null;
   }
     
-  var in_progress = -1;
-  function repeater() {
-    if (in_progress < current_index) {
-      ///Sys.println("in_progress: " + in_progress + " / " + current_index  );
-      in_progress++;
-      ///Sys.println(id_list[current_index]);
-      getCalendarEventData(id_list[current_index]);
+  function getNextCalendarEventData() {
+    current_index++;
+    if (current_index<calendar_ids.size()) {
+      Sys.println([current_index, calendar_ids[current_index]]);
+      getCalendarEventData(calendar_ids[current_index]);
+      return true;
+    } else {
+      Sys.println([current_index, calendar_ids.size()]);
+      return false;
     }
   }
   
   function getCalendarEventData(calendar_id) {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
+    Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
     var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     var sys_time = System.getClockTime();
     var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -181,9 +170,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   var events_list = [];
 
   function onCalendarEventData(responseCode, data) {
-    ///Sys.println(Sys.getSystemStats().freeMemory +" on onCalendarEventData");
+    Sys.println(Sys.getSystemStats().freeMemory +" on onCalendarEventData");
+    //Sys.println(data);
     if(responseCode == 200) {
       data = data.get("items");
+      Sys.println(data);
       for (var i = 0; i < data.size() && events_list.size()<9; i++) { // 10 events not to get out of memory
         var event = data[i];
         data[i] = null;
@@ -208,12 +199,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
             events_list_size += eventTrim.toString().length();
             eventTrim = null;
             } catch(ex) {
-              ///Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
+              Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
             }
           }
         }
-
-        if (current_index == calendar_size-1) { // done
+        if (!getNextCalendarEventData()) { // done
           var code_events;
           if (calendar_indexes != null) {
             code_events = {
@@ -227,32 +217,19 @@ class lateBackground extends Toybox.System.ServiceDelegate {
               "events"=>events_list
             };
           }
-          //for(var j=events_list.size()-1; j>=0 ;j--){
-            try{  
-                ///Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
-                data = null; // to free memory, because it is shared with the limit of the data that can be ppassed
-                id_list = null;
-                
-                Background.exit(code_events);
-            }catch(ex){
-              ///Sys.println(Sys.getSystemStats().freeMemory +" on exception with "+ events_list.size() +" events taking " + events_list_size);
-              ///Sys.println("bg ex: " + ex.getErrorMessage()); 
-              ///Sys.println(ex.printStackTrace());
-              /*if(j>0 && j<events_list.size()){
-                events_list[j][3]=null;
-                events_list[j][2]=null;
-              } else {*/
-                code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
-                Background.exit(code_events);
-              //}
-            }
-          //}
-        } else {
-          current_index++;
-        }
+          try{  
+              Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
+              Sys.println([calendar_indexes, calendar_ids]);
+              data = null; // to free memory, because it is shared with the limit of the data that can be ppassed
+              calendar_ids = null;
+              
+              Background.exit(code_events);
+          }catch(ex){
+              code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
+              Background.exit(code_events);
+          }
+        } 
         data = null;
-        repeater();
-
       } else { // no data
         var code_events;
         if (calendar_indexes != null) {

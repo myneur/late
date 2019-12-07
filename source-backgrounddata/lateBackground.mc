@@ -73,7 +73,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function getTokensAndData(){ // device_code can tell if the user granted access
     Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");
-    Sys.println([app.getProperty("user_code"), app.getProperty("device_code")]);
+    Sys.println(app.getProperty("user_code"));
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
       "code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onTokenRefresh2GetData));
@@ -88,7 +88,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         refresh_token = data.get("refresh_token");
       }
       calendar_ids = app.getProperty("calendar_ids");
-      Sys.println("calendar_ids "+calendar_ids);
+      //Sys.println("calendar_ids "+calendar_ids);
       if(calendar_ids == null || !(calendar_ids instanceof Toybox.Lang.Array) || calendar_ids.size() == 0){
         getPrimaryCalendar();
       } else {
@@ -128,9 +128,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     
   function getNextCalendarEvents() {
     current_index++;
-    Sys.println([current_index, calendar_ids]);
     if (current_index<calendar_ids.size()) {
-      Sys.println([current_index, calendar_ids[current_index]]);
+      Sys.println(calendar_ids[current_index]);
       getEvents(calendar_ids[current_index]);
       return true;
     } else {

@@ -4,6 +4,7 @@ using Toybox.Background;
 using Toybox.System as Sys;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian;
+using Toybox.StringUtil as Str;
 
 
 class lateApp extends App.AppBase {
@@ -72,7 +73,7 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
-        Sys.println("onBackgroundData "+data);
+        Sys.println("onBackgroundData ");
         try {
         	if(data.hasKey("refresh_token")){
                 app.setProperty("refresh_token", data.get("refresh_token"));
@@ -84,8 +85,8 @@ class lateApp extends App.AppBase {
         		app.setProperty("user_code", data.get("user_code")); 
         		app.setProperty("device_code", data.get("device_code")); 
         	}
-            if (data.hasKey("primary_calendar")) {
-                updatePrimaryCalendar(data.get("primary_calendar"));
+            if (data.hasKey("primary_calendar")){
+            	app.setProperty("calendar_ids", [data["primary_calendar"]]);
             }
             if (data.hasKey("events")) {
                 data = parseEvents(data.get("events"));
@@ -116,61 +117,31 @@ class lateApp extends App.AppBase {
     }   
 
     (:data)
-    function updatePrimaryCalendar(primary_calendar){
-    	Sys.println("updatePrimaryCalendar "+primary_calendar);
-    	var calendar_ids = app.getProperty("calendar_ids");
-    	if(calendar_ids == null ){
-    		calendar_ids = [];
-    	}
-    	if(!(calendar_ids instanceof Toybox.Lang.Array)){
-    		calendar_ids = split(calendar_ids);
-    	}
-        if(calendar_ids.indexOf(primary_calendar)>=0){
-            calendar_ids.remove(primary_calendar);
-        }
-        calendar_ids = [primary_calendar].addAll(calendar_ids);
-        app.setProperty("calendar_ids", calendar_ids);
-    }
-
-    (:data)
-    function split(string){	// TODO split comma separated calendars to array
-    	if(string instanceof Toybox.Lang.Array){
-    		return string;
-    	} else {
-    		return [string];
-    	}
-		var id_list = app.getProperty("calendar_ids");
-		/*while(id_list.length()>0){
-			i = trimId(id_list);
-			//Sys.println("idx "+i);
-			if(i>=0 && i <= result_size){
-				calendar_ids.add(data.get("items")[i].get("id"));
+    function split(id_list){	// TODO split comma separated calendars to array
+    	Sys.println(id_list);
+    	if(id_list instanceof Toybox.Lang.String){
+    		
+    		var i = 0;
+    		var list = [];
+			while(id_list.length()>1){
+				i = id_list.find(" ");
+				if(i != null){
+					if(i>6){ // id must be at least 7 chars
+						list.add(id_list.substring(0, i));
+					}
+					id_list = id_list.substring(i+1, id_list.length());
+				} else {
+					list.add(id_list);
+					break;
+				}
+				//Sys.println([i,id_list.length()]);
+				//Sys.println(id_list);
+				
 			}
-			i = idxs.find(",");
-			///Sys.println("pos "+i);
-			idxs = (i!=null && i<idxs.length()-1) ? idxs.substring(i+1, idxs.length()) : "";
-		}*/
-	}
-
-	(:data)
-	function trimId(id){
-		var i;
-		var j;
-		for(i=0;i<id.length();i++){
-			if(id[i] != "," && id[i] != " "){
-				break;
-			}
-		}
-		for(j=i+1; j <id.length(); j++){
-			if(id[i] == "," && id[i] == " "){
-				break;
-			}
-		}
-		id = id.substring(i, j);
-		if(id.length()==0){
-			return false;
+			Sys.println(list);
+			return list;
 		} else {
-			return id;
+			return id_list;
 		}
 	}
 

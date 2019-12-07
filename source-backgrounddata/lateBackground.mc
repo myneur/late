@@ -9,6 +9,7 @@ const GoogleDeviceCodeUrl = "https://accounts.google.com/o/oauth2/device/code";
 const GoogleTokenUrl = "https://oauth2.googleapis.com/token";
 const GoogleCalendarEventsUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const GoogleCalendarListUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
+const Scopes = "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -56,10 +57,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
     var app = App.getApp();
     Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
-      {
-        "client_id"=>app.getProperty("client_id"), 
-        "scope"=>"https://www.googleapis.com/auth/calendar.events.readonly",
-      }, 
+      {"client_id"=>app.getProperty("client_id"), "scope"=>$.Scopes,}, 
       {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onAuthCode)); 
   }

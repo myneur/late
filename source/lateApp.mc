@@ -77,9 +77,9 @@ class lateApp extends App.AppBase {
                 app.setProperty("code", data.get("code"));
             }
             if(data.hasKey("user_code")){
-        		data.put("userPrompt", Ui.loadResource(Rez.Strings.EnterCode)+data.get("user_code"));
-        		data.put("userContext", Ui.loadResource(Rez.Strings.LinkPrefix)+data.get("verification_url"));
-        		app.setProperty("user_code", data.get("user_code"));
+        		data.put("userPrompt", Ui.loadResource(Rez.Strings.EnterCode)+data.get("user_code") + " "+Ui.loadResource(Rez.Strings.LinkPrefix));
+        		data.put("userContext", data.get("verification_url").substring(12,data.get("verification_url").length()));
+        		app.setProperty("user_code", data.get("user_code")); //
         	}
             if (data.hasKey("primary_calendar")) {
                 updatePrimaryCalendar(data.get("primary_calendar"));
@@ -89,9 +89,11 @@ class lateApp extends App.AppBase {
                 app.setProperty("events", data);
                 Background.registerForTemporalEvent(new Time.Duration(app.getProperty("refresh_freq") * Gregorian.SECONDS_PER_MINUTE)); // once de data were loaded, continue with the settings interval
             } 
-            else if(data.get("errorCode")==401){ // unauthorized
+            else if(data.get("errorCode")==401 || data.get("errorCode")==400){ // unauthorized || invalid user_code
                 ///Sys.println("unauthorized");
                 app.setProperty("code", null);
+                app.setProperty("user_code", null);
+                data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
             } else if(data.get("errorCode")==511){ // login prompt
                 ///Sys.println("login request");
                 if(Sys.getDeviceSettings().phoneConnected){

@@ -69,10 +69,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     if(responseCode != 200){
       data.put("error_code", responseCode);
     }
+    //requestOAuth();
     Background.exit(data);  // prompt to login or show the error
   }
 
-  function getTokensAndData(){
+  function getTokensAndData(){ // device_code can tell if the user granted access
     Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");
     Sys.println(app.getProperty("user_code"));
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
@@ -92,7 +93,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       }
       getNextCalendarEvents();
     } else {
-      if(responseCode != 400){ // auth pending
+      if(responseCode != 400 || data.get("error").find("invalid_grant") != null){ // auth pending
             Background.exit({"errorCode"=>responseCode});
           }
       }
@@ -215,10 +216,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
 
-  /*function requestOAuth(){
+  function requestOAuth(){
     Communications.makeOAuthRequest("https://myneur.github.io/late/docs/auth", {"client_secret"=>app.getProperty("client_secret")}, "https://localhost", Communications.OAUTH_RESULT_TYPE_URL, {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"});
   }
-  function onOauthMessage(data) {
+
+  /*function onOauthMessage(data) {
     ///Sys.println("onOauthMessage " +data.data["refresh_token"]);
     code = {"refresh_token"=>data.data["refresh_token"]};
     calendar_indexes = data.data["calendar_indexes"];

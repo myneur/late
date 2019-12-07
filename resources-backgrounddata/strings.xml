@@ -7,9 +7,10 @@
 	<string id="AddCalendars">Add more calendar ids</string>
 
 	<string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
-	<string id="Wait4login">Wait to login by phone</string>
+	<string id="Wait4login">Wait to login</string>
 	<string id="EnterCode">Enter: </string>
-	<string id="LinkPrefix">on </string>
+	<string id="LinkPrefix">on</string>
+	<string id="Unauthorized">Wrong password</string>
 	<!--<string id="LogIn">Login by phone</string>
 	<string id="AuthContext">Garmin app</string>-->
 	<string id="NotSupportedData">Data not supported</string>

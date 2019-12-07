@@ -54,7 +54,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function getAuthCode(){
     Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
-    Sys.println({"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes});
+    //Sys.println({"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes});
     Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
       {"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes}, 
       {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
@@ -63,7 +63,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function onAuthCode(responseCode, data){ // {device_code, user_code, verification_url}
     Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode: "+responseCode);
-    Sys.println(data);
+    //Sys.println(data);
     if(responseCode != 200){
       data.put("error_code", responseCode);
     }
@@ -81,15 +81,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function onTokenRefresh2GetData(responseCode, data){
     Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode);
-    Sys.println(data);
+    //Sys.println(data);
     if (responseCode == 200) {
       access_token = data.get("access_token");
       if(data.get("refresh_token")){
         refresh_token = data.get("refresh_token");
       }
-      calendar_ids = app.getProperty("calendars_ids");
+      calendar_ids = app.getProperty("calendar_ids");
       Sys.println("calendar_ids "+calendar_ids);
-      if(calendar_ids == null){ 
+      if(calendar_ids == null || !(calendar_ids instanceof Toybox.Lang.Array) || calendar_ids.size() == 0){
         getPrimaryCalendar();
       } else {
         getNextCalendarEvents();
@@ -111,24 +111,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function onPrimaryCalendarCandidates(responseCode, data) {  // expects calendar list already parsed to array
     Sys.println(Sys.getSystemStats().freeMemory + " on onPrimaryCalendarCandidates");
-    Sys.println(data);
+    //Sys.println(data);
     if (responseCode == 200) {
       data = data.get("items");
       for(var i=0; i < data.size(); i++){
-        Sys.println(data[i]);
         if(data[i].get("primary") != null){
-          Sys.println("primary");
           primary_calendar = data[i].get("id");
-
-          if(calendar_ids != null && calendar_ids instanceof Toybox.Lang.Array && calendar_ids.size()>0){
-            if(calendar_ids.indexOf(primary_calendar)>=0){
-              calendar_ids.remove(primary_calendar);
-            }
-            calendar_ids = [primary_calendar].addAll(calendar_ids);
-          } else {
-              calendar_ids = [primary_calendar];
-          }
-
+          calendar_ids = [primary_calendar];
         }     
       }
       getNextCalendarEvents();
@@ -180,6 +169,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         var event = data[i];
         data[i] = null;
         //if(events_list_size>500){break;}
+        Sys.println(event);
         if(event["start"]){ // skip day events that have only "summary"
           try {
             var eventTrim = [

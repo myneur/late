@@ -5,6 +5,7 @@ using Toybox.System as Sys;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian;
 
+
 class lateApp extends App.AppBase {
 
     var watch;
@@ -37,6 +38,7 @@ class lateApp extends App.AppBase {
     (:data)
     function scheduleDataLoading(){
         Sys.println("scheduling");
+        loadSettings();
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
             Background.registerForTemporalEvent(new Time.Duration(5*Gregorian.SECONDS_PER_MINUTE)); // get the first data as soon as possible
@@ -132,7 +134,11 @@ class lateApp extends App.AppBase {
 
     (:data)
     function split(string){	// TODO split comma separated calendars to array
-    	return [string];
+    	if(string instanceof Toybox.Lang.Array){
+    		return string;
+    	} else {
+    		return [string];
+    	}
 		var id_list = app.getProperty("calendar_ids");
 		/*while(id_list.length()>0){
 			i = trimId(id_list);

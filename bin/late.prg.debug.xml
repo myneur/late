@@ -1074,16 +1074,16 @@
 <dataEntry offset="87" parentId="" symbolId="globals" type="module"/>
 <dataEntry offset="334" parentId="globals" symbolId="lateApp" type="class"/>
 <dataEntry offset="509" parentId="globals" symbolId="lateBackground" type="class"/>
-<dataEntry offset="2578" parentId="globals" symbolId="RunNoEvil" type="class"/>
-<dataEntry offset="2689" parentId="globals" symbolId="Rez" type="module"/>
-<dataEntry offset="2768" parentId="Rez" symbolId="Drawables" type="module"/>
-<dataEntry offset="2863" parentId="Rez" symbolId="Menus" type="module"/>
-<dataEntry offset="2902" parentId="Menus" symbolId="MainMenu" type="class"/>
-<dataEntry offset="2949" parentId="Rez" symbolId="Fonts" type="module"/>
-<dataEntry offset="3036" parentId="Rez" symbolId="Layouts" type="module"/>
-<dataEntry offset="3067" parentId="Rez" symbolId="JsonData" type="module"/>
-<dataEntry offset="3098" parentId="Rez" symbolId="Strings" type="module"/>
-<dataEntry offset="3553" parentId="globals" symbolId="lateView" type="class"/>
+<dataEntry offset="2577" parentId="globals" symbolId="RunNoEvil" type="class"/>
+<dataEntry offset="2688" parentId="globals" symbolId="Rez" type="module"/>
+<dataEntry offset="2767" parentId="Rez" symbolId="Drawables" type="module"/>
+<dataEntry offset="2862" parentId="Rez" symbolId="Menus" type="module"/>
+<dataEntry offset="2901" parentId="Menus" symbolId="MainMenu" type="class"/>
+<dataEntry offset="2948" parentId="Rez" symbolId="Fonts" type="module"/>
+<dataEntry offset="3035" parentId="Rez" symbolId="Layouts" type="module"/>
+<dataEntry offset="3066" parentId="Rez" symbolId="JsonData" type="module"/>
+<dataEntry offset="3097" parentId="Rez" symbolId="Strings" type="module"/>
+<dataEntry offset="3552" parentId="globals" symbolId="lateView" type="class"/>
 </dataEntryOffsetMappings>
 <functions>
 <functionEntry accessMode="public" name="getTestObject">

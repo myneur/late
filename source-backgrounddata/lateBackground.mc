@@ -76,7 +76,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");
     Sys.println(app.getProperty("user_code"));
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
-      "code"=>app.getProperty("user_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0."}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+      "code"=>app.getProperty("user_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onTokenRefresh2GetData));
   }
 

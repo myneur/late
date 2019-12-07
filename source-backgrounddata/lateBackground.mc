@@ -14,7 +14,8 @@ const GoogleScopes = "https://www.googleapis.com/auth/calendar.readonly";
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
 
-  var code;
+  var access_token;
+  var refresh_token;
   var current_index = -1;
   var calendar_ids;
   var events_list = [];
@@ -32,15 +33,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     app = App.getApp();
     var connected = Sys.getDeviceSettings().phoneConnected;
-    if (code == null){
-      code = app.getProperty("code");
-    }
-    Sys.println("code: "+ code);
-    if (code != null) {  
-      if (code.get("refresh_token") != null){
-        if(connected){
-          refreshTokenAndGetData();
-        }
+    
+    if (app.getProperty("refresh_token") != null) { 
+      refresh_token = app.getProperty("refresh_token");
+      if(connected){
+        refreshTokenAndGetData();
       }
     } else {
       if(connected){
@@ -57,6 +54,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function getAuthCode(){
     Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
+    Sys.println({"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes});
     Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
       {"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes}, 
       {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
@@ -75,9 +73,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function getTokensAndData(){ // device_code can tell if the user granted access
     Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");
-    Sys.println(app.getProperty("user_code"));
+    Sys.println([app.getProperty("user_code"), app.getProperty("device_code")]);
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
-      "code"=>app.getProperty("user_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+      "code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onTokenRefresh2GetData));
   }
 
@@ -85,40 +83,55 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode);
     Sys.println(data);
     if (responseCode == 200) {
-      data.put("refresh_token", code.get("refresh_token"));
-      code = data;
-      calendar_ids = app.getProperty("calendars_ids");
-      if(app.getProperty("primary_calendar_read" == null)){
-        getPrimaryCalendar();
+      access_token = data.get("access_token");
+      if(data.get("refresh_token")){
+        refresh_token = data.get("refresh_token");
       }
-      getNextCalendarEvents();
+      calendar_ids = app.getProperty("calendars_ids");
+      Sys.println("calendar_ids "+calendar_ids);
+      if(calendar_ids == null){ 
+        getPrimaryCalendar();
+      } else {
+        getNextCalendarEvents();
+      }
     } else {
-      if(responseCode != 400 || data.get("error").find("invalid_grant") != null){ // auth pending
+      if(responseCode != 400 /*|| data.get("error").find("invalid_grant") != null*/){ // auth pending
             Background.exit({"errorCode"=>responseCode});
           }
       }
   }
 
   function getPrimaryCalendar(){
+    Sys.println(Sys.getSystemStats().freeMemory + " on getPrimaryCalendar");
     Communications.makeWebRequest($.GoogleCalendarListUrl,
-           {"maxResults"=>"15", "fields"=>"items(id)", "minAccessRole"=>"owner", "showDeleted"=>false}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + code.get("access_token")}},
-           method(:onPrimaryCalendarCandidates));
+      {"maxResults"=>"15", "fields"=>"items(id,primary)", "minAccessRole"=>"owner", "showDeleted"=>false}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
+      :headers=>{ "Authorization"=>"Bearer " + access_token}},
+      method(:onPrimaryCalendarCandidates));
   }
 
   function onPrimaryCalendarCandidates(responseCode, data) {  // expects calendar list already parsed to array
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
-    ///Sys.println(data);
+    Sys.println(Sys.getSystemStats().freeMemory + " on onPrimaryCalendarCandidates");
+    Sys.println(data);
     if (responseCode == 200) {
       data = data.get("items");
       for(var i=0; i < data.size(); i++){
+        Sys.println(data[i]);
         if(data[i].get("primary") != null){
+          Sys.println("primary");
           primary_calendar = data[i].get("id");
-          if(calendar_ids.indexOf(primary_calendar)>=0){
-            calendar_ids.remove(primary_calendar);
+
+          if(calendar_ids != null && calendar_ids instanceof Toybox.Lang.Array && calendar_ids.size()>0){
+            if(calendar_ids.indexOf(primary_calendar)>=0){
+              calendar_ids.remove(primary_calendar);
+            }
+            calendar_ids = [primary_calendar].addAll(calendar_ids);
+          } else {
+              calendar_ids = [primary_calendar];
           }
-          calendar_ids = [primary_calendar].addAll(calendar_ids);
+
         }     
       }
+      getNextCalendarEvents();
     } else {
       Background.exit({"errorCode"=>responseCode});
     }
@@ -126,8 +139,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     
   function getNextCalendarEvents() {
     current_index++;
+    Sys.println([current_index, calendar_ids]);
     if (current_index<calendar_ids.size()) {
-      ///Sys.println([current_index, calendar_ids[current_index]]);
+      Sys.println([current_index, calendar_ids[current_index]]);
       getEvents(calendar_ids[current_index]);
       return true;
     } else {
@@ -136,7 +150,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function getEvents(calendar_id) {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
+    Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
     var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     var sys_time = System.getClockTime();
     var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -150,14 +164,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     dateEnd += sign + to;
     
     Communications.makeWebRequest($.GoogleCalendarEventsUrl + calendar_id + "/events", {
-      "maxResults"=>"8", "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + code.get("access_token") }},
+      "maxResults"=>"8", "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
+        :headers=>{ "Authorization"=>"Bearer " + access_token }},
       method(:onEvents));
-    ///Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
+    Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
   }
   
   var events_list_size = 0;
   function onEvents(responseCode, data) {
-    ///Sys.println(Sys.getSystemStats().freeMemory +" on onEvents");
+    Sys.println(Sys.getSystemStats().freeMemory +" on onEvents");
     if(responseCode == 200) { // TODO handle non 200 codes
       data = data.get("items");
       var eventsToSafelySend = primary_calendar ? 8 : 9;
@@ -181,12 +196,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
                   eventTrim[3] = eventTrim[3].substring(0,split);
               }
             }
-            //Sys.println(eventTrim);
+            Sys.println(eventTrim);
             events_list.add(eventTrim);
             events_list_size += eventTrim.toString().length();
             eventTrim = null;
           } catch(ex) {
-            ///Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
+            Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
           }
         }
       }
@@ -197,12 +212,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function exitWithData(){ // TODO don't return events on errors
-    var code_events = {"code"=>code, "events"=>events_list};
+    Sys.println("exitWithData");
+    var code_events = {"refresh_token"=>refresh_token, "events"=>events_list};
     if(primary_calendar){
       code_events["primary_calendar"] = primary_calendar; 
     }
     try{  
-        ///Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
+        Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
         Background.exit(code_events);
     }catch(ex){
         code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
@@ -211,8 +227,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function refreshTokenAndGetData() {
-     Communications.makeWebRequest($.GoogleTokenUrl, {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id"), "refresh_token"=>code.get("refresh_token"), "grant_type"=>"refresh_token"}, {:method => Communications.HTTP_REQUEST_METHOD_POST},
-         method(:onTokenRefresh2GetData));
+    Communications.makeWebRequest($.GoogleTokenUrl, {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id"), 
+      "refresh_token"=>refresh_token, "grant_type"=>"refresh_token"}, {:method => Communications.HTTP_REQUEST_METHOD_POST},
+      method(:onTokenRefresh2GetData));
   }
 
 

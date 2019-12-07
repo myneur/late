@@ -8,10 +8,11 @@ using Toybox.Time.Gregorian;
 class lateApp extends App.AppBase {
 
     var watch;
+    var app;
 
     function initialize() {
         AppBase.initialize();
-        //loadSettings();
+        app = App.getApp();
     }
 
     function onStart(state) { }
@@ -25,7 +26,6 @@ class lateApp extends App.AppBase {
     }
 
     function loadSettings(){
-    	var app = App.getApp();
 		app.setProperty("calendar_ids", split(app.getProperty("calendar_ids")));	//?? how will it show in the properties?
     }
 
@@ -40,7 +40,7 @@ class lateApp extends App.AppBase {
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
             Background.registerForTemporalEvent(new Time.Duration(5*Gregorian.SECONDS_PER_MINUTE)); // get the first data as soon as possible
-            if(App.getApp().getProperty("code") == null){
+            if(app.getProperty("refresh_token") == null){
                 Sys.println("no auth");
                 if(Sys.getDeviceSettings().phoneConnected){
                     if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
@@ -71,15 +71,16 @@ class lateApp extends App.AppBase {
     (:data)
     function onBackgroundData(data) {
         Sys.println("onBackgroundData "+data);
-        var app = App.getApp();
         try {
-        	if(data.hasKey("code")){
-                app.setProperty("code", data.get("code"));
+        	if(data.hasKey("refresh_token")){
+                app.setProperty("refresh_token", data.get("refresh_token"));
+                /// TODO clear login prompt
             }
             if(data.hasKey("user_code")){
         		data.put("userPrompt", Ui.loadResource(Rez.Strings.EnterCode)+data.get("user_code") + " "+Ui.loadResource(Rez.Strings.LinkPrefix));
         		data.put("userContext", data.get("verification_url").substring(12,data.get("verification_url").length()));
-        		app.setProperty("user_code", data.get("user_code")); //
+        		app.setProperty("user_code", data.get("user_code")); 
+        		app.setProperty("device_code", data.get("device_code")); 
         	}
             if (data.hasKey("primary_calendar")) {
                 updatePrimaryCalendar(data.get("primary_calendar"));
@@ -114,20 +115,25 @@ class lateApp extends App.AppBase {
 
     (:data)
     function updatePrimaryCalendar(primary_calendar){
-    	var app = App.getApp();
-    	calendar_ids = app.getProperty("calendar_ids");
+    	Sys.println("updatePrimaryCalendar "+primary_calendar);
+    	var calendar_ids = app.getProperty("calendar_ids");
+    	if(calendar_ids == null ){
+    		calendar_ids = [];
+    	}
+    	if(!(calendar_ids instanceof Toybox.Lang.Array)){
+    		calendar_ids = split(calendar_ids);
+    	}
         if(calendar_ids.indexOf(primary_calendar)>=0){
             calendar_ids.remove(primary_calendar);
         }
         calendar_ids = [primary_calendar].addAll(calendar_ids);
         app.setProperty("calendar_ids", calendar_ids);
-        app.setProperty("primary_calendar_read", true);
     }
 
     (:data)
     function split(string){	// TODO split comma separated calendars to array
     	return [string];
-		var id_list = App.getApp().getProperty("calendar_ids");
+		var id_list = app.getProperty("calendar_ids");
 		/*while(id_list.length()>0){
 			i = trimId(id_list);
 			//Sys.println("idx "+i);

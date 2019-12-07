@@ -3,12 +3,15 @@
 	<string id="CIQ">2</string>
 	<string id="DataLoading">1</string>
 	
-	<string id="Calendar">Experimental: Calendar [here be dragons:]</string>
+	<string id="Calendar">Experimental: Google Calendar [here be dragons:]</string>
+	<string id="AddCalendars">Add more calendar ids</string>
 
 	<string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
-	<string id="LogIn">Login by phone</string>
-	<string id="LogInDelayed">Wait to login by phone</string>
-	<string id="AuthContext">Garmin app</string>
+	<string id="Wait4login">Wait to login by phone</string>
+	<string id="EnterCode">Enter: </string>
+	<string id="LinkPrefix">on </string>
+	<!--<string id="LogIn">Login by phone</string>
+	<string id="AuthContext">Garmin app</string>-->
 	<string id="NotSupportedData">Data not supported</string>
 	<string id="notConnected">Connect to phone</string>
 </strings>

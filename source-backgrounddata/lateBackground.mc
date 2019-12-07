@@ -5,184 +5,160 @@ using Toybox.Application as App;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 
-const ServerToken = "https://oauth2.googleapis.com/token";
-const ApiUrl = "https://www.googleapis.com/calendar/v3/calendars/";
-const ApiCalendarUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
+const GoogleDeviceCodeUrl = "https://accounts.google.com/o/oauth2/device/code";
+const GoogleTokenUrl = "https://oauth2.googleapis.com/token";
+const GoogleCalendarEventsUrl = "https://www.googleapis.com/calendar/v3/calendars/";
+const GoogleCalendarListUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
 
   var code;
-  var calendar_indexes;
+  var current_index = -1;
+  var calendar_ids;
+  var events_list = [];
+  var primary_calendar = false;
 
   function initialize() {
     ///Sys.println(Sys.getSystemStats().freeMemory + " on init");
     Sys.ServiceDelegate.initialize();
-    Communications.registerForOAuthMessages(method(:onOauthMessage));
+    //Communications.registerForOAuthMessages(method(:onOauthMessage));
   }
   
   function onTemporalEvent() {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
+    Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     var app = App.getApp();
     var connected = Sys.getDeviceSettings().phoneConnected;
     if (code == null){
-      ///Sys.println("get code");
       code = app.getProperty("code");
-      ///Sys.println(code);
     }
-    if (code == null) {  // show login 
-      ///Sys.println("code null");
-      if(connected){
-        Communications.makeOAuthRequest(
-          "https://myneur.github.io/late/docs/auth",
-          {"client_secret"=>app.getProperty("client_secret")}, // TODO will fail if the client_secret is missing
-          "https://localhost",
-          Communications.OAUTH_RESULT_TYPE_URL,
-          {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"}
-        );
+    Sys.println("code: "+ code);
+    if (code != null) {  
+      if (code.get("refresh_token") != null){
+        if(connected){
+          refreshTokenAndGetData();
+        }
       }
-      Background.exit({"errorCode"=>511});
     } else {
       if(connected){
-        getAccessTokenFromRefresh();
+        if (app.getProperty("user_code") == null){
+          getAuthCode();
+        } else {
+          getTokensAndData();
+        }
+      } else {
+        Background.exit({"errorCode"=>511});
       }
     }
   }
 
-  function onOauthMessage(data) {
-    ///Sys.println("onOauthMessage " +data.data["refresh_token"]);
-    code = {"refresh_token"=>data.data["refresh_token"]};
-    calendar_indexes = data.data["calendar_indexes"];
-    getAccessTokenFromRefresh();
+  function getAuthCode(){
+    Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
+    var app = App.getApp();
+    Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
+      {
+        "client_id"=>app.getProperty("client_id"), 
+        "scope"=>"https://www.googleapis.com/auth/calendar.events.readonly",
+      }, 
+      {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+      method(:onAuthCode)); 
   }
-  
-  function onAccessResponseRefresh(responseCode, data) {
-    ///Sys.println("auth response " + responseCode);
-    ///Sys.println(data);
+
+  function onAuthCode(responseCode, data){ // {device_code, user_code, verification_url}
+    Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode: "+responseCode);
+    Sys.println(data);
+    if(responseCode != 200){
+      data.put("error_code", responseCode);
+    }
+    Background.exit(data);  // prompt to login or show the error
+  }
+
+  function getTokensAndData(){
+    Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>App.getApp().getProperty("client_id"), "client_secret"=>App.getApp().getProperty("client_secret"),
+      "code"=>code.get("user_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0."}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+      method(:onTokenRefresh2GetData));
+  }
+
+  function onTokenRefresh2GetData(responseCode, data){
     if (responseCode == 200) {
+      var app = App.getApp();
       data.put("refresh_token", code.get("refresh_token"));
       code = data;
-      getCalendarData();
+      calendar_ids = app.getProperty("calendars_ids");
+      if(app.getProperty("primary_calendar_read" == null)){
+        getPrimaryCalendar();
+      }
+      getNextCalendarEvents();
+    } else {
+      if(responseCode != 400){ // auth pending
+            Background.exit({"errorCode"=>responseCode});
+          }
+      }
+  }
+
+  function getPrimaryCalendar(){
+    Communications.makeWebRequest($.GoogleCalendarListUrl,
+           {"maxResults"=>"15", "fields"=>"items(id)", "minAccessRole"=>"owner", "showDeleted"=>false}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + code.get("access_token")}},
+           method(:onPrimaryCalendarCandidates));
+  }
+
+  function onPrimaryCalendarCandidates(responseCode, data) {  // expects calendar list already parsed to array
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
+    ///Sys.println(data);
+    if (responseCode == 200) {
+      data = data.get("items");
+      for(var i=0; i < data.size(); i++){
+        if(data[i].get("primary") != null){
+          primary_calendar = data[i].get("id");
+          if(calendar_ids.indexOf(primary_calendar)>=0){
+            calendar_ids.remove(primary_calendar);
+          }
+          calendar_ids = [primary_calendar].addAll(calendar_ids);
+        }     
+      }
     } else {
       Background.exit({"errorCode"=>responseCode});
     }
   }
-  
-  function getCalendarData() {
-    Communications.makeWebRequest(
-         $.ApiCalendarUrl,
-         {
-          "maxResults"=>"15",
-          "fields"=>"items(id)"
-         },
-         {
-             :method=>Communications.HTTP_REQUEST_METHOD_GET,
-             :headers=>{ "Authorization"=>"Bearer " + code.get("access_token") }
-         },
-         method(:onCalendarData)
-     );
-  }
-  
-  var current_index = -1;
-  var calendar_ids;
-  function onCalendarData(responseCode, data) {
-    calendar_ids = [];
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onCalendarData");
-    ///Sys.println(data);
-    var result_size = data.get("items").size();
-    if (responseCode == 200) {
-      if (App.getApp().getProperty("calendar_indexes")) {
-        calendar_indexes = App.getApp().getProperty("calendar_indexes"); // expect it might be missing
-      }
-      ///Sys.println(calendar_indexes);
-      var i;
-      var idxs = calendar_indexes;
-      while(idxs.length()>0){
-        i = idxs.toNumber();
-        //Sys.println("idx "+i);
-        if(i>=0 && i <= result_size){
-          calendar_ids.add(data.get("items")[i].get("id"));
-        }
-        i = idxs.find(",");
-        ///Sys.println("pos "+i);
-        idxs = (i!=null && i<idxs.length()-1) ? idxs.substring(i+1, idxs.length()) : "";
-      }
-      ///Sys.println(calendar_ids);  
-      // TODO reset when no indexes at all
-      getNextCalendarEventData();
-    } else {
-      Background.exit(code);
-    }
-    data = null;
-  }
     
-  function getNextCalendarEventData() {
+  function getNextCalendarEvents() {
     current_index++;
     if (current_index<calendar_ids.size()) {
       ///Sys.println([current_index, calendar_ids[current_index]]);
-      getCalendarEventData(calendar_ids[current_index]);
+      getEvents(calendar_ids[current_index]);
       return true;
     } else {
       return false;
     }
   }
   
-  function getCalendarEventData(calendar_id) {
+  function getEvents(calendar_id) {
     ///Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
     var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     var sys_time = System.getClockTime();
     var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
     var to = (UTCdelta/3600).format("%02d") + ":00";
     var sign = sys_time.timeZoneOffset < 0 ? "-" : "+";
-    var dateStart = Lang.format(
-        "$1$-$2$-$3$T$4$:$5$:00",
-        [
-            today.year,
-            today.month,
-            today.day,
-            today.hour,
-            today.min
-        ]
-    );
+
+    var dateStart = Lang.format("$1$-$2$-$3$T$4$:$5$:00", [today.year, today.month, today.day, today.hour, today.min]);
     dateStart += sign + to;
-      today = Gregorian.info(Time.now().add(new Time.Duration(3600*24)), Time.FORMAT_SHORT); 
-      var dateEnd = Lang.format(
-        "$1$-$2$-$3$T$4$:$5$:00",
-        [
-            today.year,
-            today.month,
-            today.day,
-            today.hour,
-            today.min
-        ]
-    );
+    today = Gregorian.info(Time.now().add(new Time.Duration(3600*24)), Time.FORMAT_SHORT); 
+    var dateEnd = Lang.format("$1$-$2$-$3$T$4$:$5$:00", [today.year, today.month, today.day, today.hour, today.min]);
     dateEnd += sign + to;
-    Communications.makeWebRequest(
-         $.ApiUrl + calendar_id + "/events",
-         {
-          "maxResults"=>"8",
-          "orderBy"=>"startTime",
-          "singleEvents"=>"true",
-          "timeMin"=>dateStart,
-          "timeMax"=>dateEnd,
-          "fields"=>"items(summary,location,start/dateTime,end/dateTime)"
-         },
-         {
-             :method=>Communications.HTTP_REQUEST_METHOD_GET,
-             :headers=>{ "Authorization"=>"Bearer " + code.get("access_token") }
-         },
-         method(:onCalendarEventData)
-     );
+    
+    Communications.makeWebRequest($.GoogleCalendarEventsUrl + calendar_id + "/events", {
+      "maxResults"=>"8", "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + code.get("access_token") }},
+      method(:onEvents));
     ///Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
   }
-  var events_list_size = 0;  
-  var events_list = [];
-
-  function onCalendarEventData(responseCode, data) {
-    ///Sys.println(Sys.getSystemStats().freeMemory +" on onCalendarEventData");
+  
+  var events_list_size = 0;
+  function onEvents(responseCode, data) {
+    ///Sys.println(Sys.getSystemStats().freeMemory +" on onEvents");
     if(responseCode == 200) { // TODO handle non 200 codes
       data = data.get("items");
-      for (var i = 0; i < data.size() && events_list.size()<9; i++) { // 10 events not to get out of memory
+      var eventsToSafelySend = primary_calendar ? 8 : 9;
+      for (var i = 0; i < data.size() && events_list.size() < eventsToSafelySend; i++) { // 10 events not to get out of memory
         var event = data[i];
         data[i] = null;
         //if(events_list_size>500){break;}
@@ -212,15 +188,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         }
       }
     } 
-    if (!getNextCalendarEventData()) { // done
+    if (!getNextCalendarEvents()) { // done
       exitWithData();
     } 
   }
 
   function exitWithData(){ // TODO don't return events on errors
-    var code_events = {"code"=>code,"events"=>events_list};
-    if (calendar_indexes != null) {
-      code_events["calendar_indexes"] = calendar_indexes;
+    var code_events = {"code"=>code, "events"=>events_list};
+    if(primary_calendar){
+      code_events["primary_calendar"] = primary_calendar; 
     }
     try{  
         ///Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
@@ -231,19 +207,19 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     }
   }
   
-  function getAccessTokenFromRefresh() {
-     Communications.makeWebRequest(
-         $.ServerToken,
-         {
-             "client_secret"=>App.getApp().getProperty("client_secret"),
-             "client_id"=>App.getApp().getProperty("client_id"),
-             "refresh_token"=>code.get("refresh_token"),
-             "grant_type"=>"refresh_token"
-         },
-         {
-             :method => Communications.HTTP_REQUEST_METHOD_POST
-         },
-         method(:onAccessResponseRefresh)
-     );
+  function refreshTokenAndGetData() {
+     Communications.makeWebRequest($.GoogleTokenUrl, {"client_secret"=>App.getApp().getProperty("client_secret"), "client_id"=>App.getApp().getProperty("client_id"), "refresh_token"=>code.get("refresh_token"), "grant_type"=>"refresh_token"}, {:method => Communications.HTTP_REQUEST_METHOD_POST},
+         method(:onTokenRefresh2GetData));
   }
+
+
+  /*function requestOAuth(){
+    Communications.makeOAuthRequest("https://myneur.github.io/late/docs/auth", {"client_secret"=>app.getProperty("client_secret")}, "https://localhost", Communications.OAUTH_RESULT_TYPE_URL, {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"});
+  }
+  function onOauthMessage(data) {
+    ///Sys.println("onOauthMessage " +data.data["refresh_token"]);
+    code = {"refresh_token"=>data.data["refresh_token"]};
+    calendar_indexes = data.data["calendar_indexes"];
+    refreshTokenAndGetData();
+  }*/
 }

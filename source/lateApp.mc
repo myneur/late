@@ -11,6 +11,7 @@ class lateApp extends App.AppBase {
 
     function initialize() {
         AppBase.initialize();
+        //loadSettings();
     }
 
     function onStart(state) { }
@@ -18,8 +19,14 @@ class lateApp extends App.AppBase {
     function onStop(state) { }
 
     function onSettingsChanged() {
-        watch.loadSettings();
+    	watch.loadSettings();
         Ui.requestUpdate();
+        loadSettings();
+    }
+
+    function loadSettings(){
+    	var app = App.getApp();
+		app.setProperty("calendar_ids", split(app.getProperty("calendar_ids")));	//?? how will it show in the properties?
     }
 
     function getInitialView() {
@@ -29,22 +36,22 @@ class lateApp extends App.AppBase {
 
     (:data)
     function scheduleDataLoading(){
-        ///Sys.println("scheduling");
+        Sys.println("scheduling");
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
             Background.registerForTemporalEvent(new Time.Duration(5*Gregorian.SECONDS_PER_MINUTE)); // get the first data as soon as possible
             if(App.getApp().getProperty("code") == null){
-                ///Sys.println("no auth");
+                Sys.println("no auth");
                 if(Sys.getDeviceSettings().phoneConnected){
                     if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
                         lastEvent = lastEvent.compare(Time.now()).toNumber();
                         if(lastEvent < -5*Gregorian.SECONDS_PER_MINUTE){
                             lastEvent = 0;
                         }
-                        //Sys.println(lastEvent);
-                        return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogInDelayed), "errorCode"=>511, "wait"=>lastEvent});
+                        Sys.println(lastEvent);
+                        return ({"userPrompt"=>Ui.loadResource(Rez.Strings.Wait4login), "errorCode"=>511, "wait"=>lastEvent});
                     } else {
-                        return ({"userPrompt"=>Ui.loadResource(Rez.Strings.LogIn), "errorCode"=>511});
+                        return ({"userPrompt"=>Ui.loadResource(Rez.Strings.Wait4login), "errorCode"=>511});
                     }
                 } else {
                     return ({"userPrompt"=>Ui.loadResource(Rez.Strings.notConnected), "errorCode"=>511});
@@ -63,26 +70,32 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
-        ///Sys.println("onBackgroundData "+data);
+        Sys.println("onBackgroundData "+data);
+        var app = App.getApp();
         try {
-            if(data.hasKey("code")){
-                App.getApp().setProperty("code", data.get("code"));
+        	if(data.hasKey("code")){
+                app.setProperty("code", data.get("code"));
             }
-            if (data.hasKey("calendar_indexes")) {
-                App.getApp().setProperty("calendar_indexes", data.get("calendar_indexes"));
+            if(data.hasKey("user_code")){
+        		data.put("userPrompt", Ui.loadResource(Rez.Strings.EnterCode)+data.get("user_code"));
+        		data.put("userContext", Ui.loadResource(Rez.Strings.LinkPrefix)+data.get("verification_url"));
+        		app.setProperty("user_code", data.get("user_code"));
+        	}
+            if (data.hasKey("primary_calendar")) {
+                updatePrimaryCalendar(data.get("primary_calendar"));
             }
             if (data.hasKey("events")) {
                 data = parseEvents(data.get("events"));
-                App.getApp().setProperty("events", data);
-                Background.registerForTemporalEvent(new Time.Duration(App.getApp().getProperty("refresh_freq") * Gregorian.SECONDS_PER_MINUTE)); // once de data were loaded, continue with the settings interval
+                app.setProperty("events", data);
+                Background.registerForTemporalEvent(new Time.Duration(app.getProperty("refresh_freq") * Gregorian.SECONDS_PER_MINUTE)); // once de data were loaded, continue with the settings interval
             } 
             else if(data.get("errorCode")==401){ // unauthorized
                 ///Sys.println("unauthorized");
-                App.getApp().setProperty("code", null);
+                app.setProperty("code", null);
             } else if(data.get("errorCode")==511){ // login prompt
                 ///Sys.println("login request");
                 if(Sys.getDeviceSettings().phoneConnected){
-                    data["userPrompt"] = Ui.loadResource(Rez.Strings.LogIn);
+                    data["userPrompt"] = Ui.loadResource(Rez.Strings.Wait4login);
                 } else {
                     data["userPrompt"] = Ui.loadResource(Rez.Strings.notConnected);
                 }
@@ -92,10 +105,60 @@ class lateApp extends App.AppBase {
             }
             Ui.requestUpdate();
         } catch (ex){
-            //Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
+            Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
             return;
         }
     }   
+
+    (:data)
+    function updatePrimaryCalendar(primary_calendar){
+    	var app = App.getApp();
+    	calendar_ids = app.getProperty("calendar_ids");
+        if(calendar_ids.indexOf(primary_calendar)>=0){
+            calendar_ids.remove(primary_calendar);
+        }
+        calendar_ids = [primary_calendar].addAll(calendar_ids);
+        app.setProperty("calendar_ids", calendar_ids);
+        app.setProperty("primary_calendar_read", true);
+    }
+
+    (:data)
+    function split(string){	// TODO split comma separated calendars to array
+    	return [string];
+		var id_list = App.getApp().getProperty("calendar_ids");
+		/*while(id_list.length()>0){
+			i = trimId(id_list);
+			//Sys.println("idx "+i);
+			if(i>=0 && i <= result_size){
+				calendar_ids.add(data.get("items")[i].get("id"));
+			}
+			i = idxs.find(",");
+			///Sys.println("pos "+i);
+			idxs = (i!=null && i<idxs.length()-1) ? idxs.substring(i+1, idxs.length()) : "";
+		}*/
+	}
+
+	(:data)
+	function trimId(id){
+		var i;
+		var j;
+		for(i=0;i<id.length();i++){
+			if(id[i] != "," && id[i] != " "){
+				break;
+			}
+		}
+		for(j=i+1; j <id.length(); j++){
+			if(id[i] == "," && id[i] == " "){
+				break;
+			}
+		}
+		id = id.substring(i, j);
+		if(id.length()==0){
+			return false;
+		} else {
+			return id;
+		}
+	}
 
     (:data)
     function getServiceDelegate() {

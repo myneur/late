@@ -120,20 +120,14 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function loadSettings(){
-		color = App.getApp().getProperty("color");
-		dateForm = App.getApp().getProperty("dateForm");
-		activity = App.getApp().getProperty("activity");
-		showSunrise = App.getApp().getProperty("sunriset");
-		batThreshold = App.getApp().getProperty("bat");
-		circleWidth = App.getApp().getProperty("boldness");
-		dialSize = App.getApp().getProperty("dialSize");
-
-//color = 0x00AAFF;
-//activity = 1;
-//showSunrise = true;
-//batThreshold = 100;
-//dialSize = 1;
-//circleWidth = 3;
+		var app = App.getApp();
+		color = app.getProperty("color");
+		dateForm = app.getProperty("dateForm");
+		activity = app.getProperty("activity");
+		showSunrise = app.getProperty("sunriset");
+		batThreshold = app.getProperty("bat");
+		circleWidth = app.getProperty("boldness");
+		dialSize = app.getProperty("dialSize");
 
 		// when running for the first time: load resources and compute sun positions
 		if(showSunrise){ // TODO recalculate when day or position changes

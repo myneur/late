@@ -62,4 +62,8 @@
 	<setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
 		<settingConfig type="boolean" />
 	</setting>
+
+	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars">
+		<settingConfig type="alphaNumeric" />
+	</setting>
 </settings>

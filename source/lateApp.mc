@@ -48,7 +48,8 @@ class lateApp extends App.AppBase {
                 if(Sys.getDeviceSettings().phoneConnected){
                     if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
                         lastEvent = lastEvent.compare(Time.now()).toNumber();
-                        if(lastEvent < -5*Gregorian.SECONDS_PER_MINUTE){
+                    	lastEvent = 5*Gregorian.SECONDS_PER_MINUTE-lastEvent;
+                        if(lastEvent < 0){
                             lastEvent = 0;
                         }
                         Sys.println(lastEvent);
@@ -80,10 +81,15 @@ class lateApp extends App.AppBase {
                 /// TODO clear login prompt
             }
             if(data.hasKey("user_code")){
-        		data.put("userPrompt", Ui.loadResource(Rez.Strings.EnterCode)+data.get("user_code") + " "+Ui.loadResource(Rez.Strings.LinkPrefix));
-        		data.put("userContext", data.get("verification_url").substring(12,data.get("verification_url").length()));
-        		app.setProperty("user_code", data.get("user_code")); 
+            	var url = data.get("verification_url");
+            	app.setProperty("user_code", data.get("user_code")); 
         		app.setProperty("device_code", data.get("device_code")); 
+        		app.setProperty("verification_url", url); 
+            	
+            	data.put("userPrompt", url.substring(url.find("www.")+4, url.length()));
+        		data.put("userContext", /*Ui.loadResource(Rez.Strings.EnterCode)+*/data.get("user_code"));
+        		
+        		
         	}
             if (data.hasKey("primary_calendar")){
             	app.setProperty("calendar_ids", [data["primary_calendar"]]);
@@ -117,7 +123,8 @@ class lateApp extends App.AppBase {
     }   
 
     (:data)
-    function split(id_list){	// TODO split comma separated calendars to array
+    function split(id_list){
+    	id_list = "myneur@gmail.com petr.meissner@gmail.com bfq511otpmu8pmokapvmkrovm4@group.calendar.google.com";
     	Sys.println(id_list);
     	if(id_list instanceof Toybox.Lang.String){
     		
@@ -134,9 +141,6 @@ class lateApp extends App.AppBase {
 					list.add(id_list);
 					break;
 				}
-				//Sys.println([i,id_list.length()]);
-				//Sys.println(id_list);
-				
 			}
 			Sys.println(list);
 			return list;

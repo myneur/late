@@ -254,14 +254,15 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function showMessage(message){
-		///Sys.println(message);
+		Sys.println("message "+message);
 		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			if(message.hasKey("wait")){
-				nowError -= message["wait"].toNumber();
+				nowError += message["wait"].toNumber();
 			}
 			var context = message.hasKey("userContext") ? " "+ message["userContext"] : "";
-			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, message["userPrompt"].toString(), context, 0, -1, 1]]; 
+			var calendar = message.hasKey("user_code") ? -1 : 0;
+			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, message["userPrompt"].toString(), context, calendar, -1, 1]]; 
 		}
 	}
 
@@ -297,18 +298,24 @@ class lateView extends Ui.WatchFace {
 			event[:name] = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21); 
 
 			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
-			if( tillStart <0){
-				event[:start] = "now!";
-				event[:prefix] = "";
-			} else {
-				event[:prefix] = "";
-				if (tillStart < 60*60) {
-					event[:start] = tillStart/60 + "m";
+			if(events_list[i][4]>=0){
+				if( tillStart <0){
+					event[:start] = "now!";
+					event[:prefix] = "";
 				} else {
-					event[:start] = tillStart/3600 + "h" + tillStart%3600/60 ;
+					event[:prefix] = "";
+					if (tillStart < 60*60) {
+						event[:start] = tillStart/60 + "m";
+					} else {
+						event[:start] = tillStart/3600 + "h" + tillStart%3600/60 ;
+					}
 				}
+				event[:location] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
+			} else {
+				event[:start] = "";
+				event[:location] = events_list[i][3];
 			}
-			event[:location] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
+			
 			event[:mid] = (
 				dc.getTextWidthInPixels(event[:prefix]+event[:start]+event[:location], fontCondensed)>>1 
 				-(dc.getTextWidthInPixels(event[:prefix]+event[:start], fontCondensed))
@@ -389,7 +396,9 @@ class lateView extends Ui.WatchFace {
 			if(degreeEnd-1 >= degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
 				dc.setColor(backgroundColor, backgroundColor);
 				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
-				dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
+				if(events_list[i][4]>=0){
+					dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
+				}
 				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}
 		}

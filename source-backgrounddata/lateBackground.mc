@@ -9,7 +9,7 @@ const GoogleDeviceCodeUrl = "https://accounts.google.com/o/oauth2/device/code";
 const GoogleTokenUrl = "https://oauth2.googleapis.com/token";
 const GoogleCalendarEventsUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const GoogleCalendarListUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
-const GoogleScopes = "https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly";
+const GoogleScopes = "https://www.googleapis.com/auth/calendar.readonly";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -73,12 +73,16 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function getTokensAndData(){
+    Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");
+    Sys.println(app.getProperty("user_code"));
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
-      "code"=>code.get("user_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0."}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+      "code"=>app.getProperty("user_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0."}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onTokenRefresh2GetData));
   }
 
   function onTokenRefresh2GetData(responseCode, data){
+    Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode);
+    Sys.println(data);
     if (responseCode == 200) {
       data.put("refresh_token", code.get("refresh_token"));
       code = data;

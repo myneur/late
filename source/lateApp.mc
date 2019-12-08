@@ -73,7 +73,8 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
-        //Sys.println("onBackgroundData ");
+        //Sys.println("onBackgroundData");
+        //Sys.println(data);
         try {
         	if(data.hasKey("refresh_token")){
                 app.setProperty("refresh_token", data.get("refresh_token"));
@@ -84,7 +85,7 @@ class lateApp extends App.AppBase {
             	app.setProperty("user_code", data.get("user_code")); 
         		app.setProperty("device_code", data.get("device_code")); 
         		app.setProperty("verification_url", url); 
-            	
+            	app.setProperty("refresh_token", null); 
             	data.put("userPrompt", url.substring(url.find("www.")+4, url.length()));
         		data.put("userContext", /*Ui.loadResource(Rez.Strings.EnterCode)+*/data.get("user_code"));
         		
@@ -123,6 +124,7 @@ class lateApp extends App.AppBase {
 
     (:data)
     function split(id_list){	
+    	//id_list = "myneur@gmail.com sldfksjflksajdflk@slkfjlsdkf.com";
     	//Sys.println(id_list);
     	if(id_list instanceof Toybox.Lang.String){
 

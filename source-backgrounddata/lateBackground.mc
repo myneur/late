@@ -30,7 +30,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function onTemporalEvent() {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
+    Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     app = App.getApp();
     var connected = Sys.getDeviceSettings().phoneConnected;
     
@@ -57,7 +57,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
   function getAuthCode(){
     ///Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
-    ///Sys.println({"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes});
     Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
       {"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes}, 
       {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
@@ -74,14 +73,14 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function getTokensAndData(){ // device_code can tell if the user granted access
-    /// Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); Sys.println(app.getProperty("user_code"));
+     ///Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); Sys.println(app.getProperty("user_code"));
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
       "code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onTokenRefresh2GetData));
   }
 
   function onTokenRefresh2GetData(responseCode, data){
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode); Sys.println(data);
+    Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode); Sys.println(data);
     if (responseCode == 200) {
       access_token = data.get("access_token");
       if(data.get("refresh_token")){
@@ -94,10 +93,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         getNextCalendarEvents();
       }
     } else {
-      if(responseCode == 400){
-        // if ... {error=>invalid_grant, error_description=>Token has been expired or revoked.}
+      if(responseCode == 400){ //{error=>invalid_grant, error_description=>Token has been expired or revoked.}
         getAuthCode();
-      } else if(responseCode == 428){ // polling for auth device user_code
+      } else if(responseCode == 428){ // polling for auth device user_code {error=>authorization_pending, error_description=>Precondition Failed}
         Background.exit({"user_code"=>app.getProperty("user_code"), "device_code"=>app.getProperty("device_code"), "verification_url"=>app.getProperty("verification_url")});
       } else { 
           Background.exit({"errorCode"=>responseCode});
@@ -133,7 +131,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   function getNextCalendarEvents() {
     current_index++;
     if (current_index<calendar_ids.size()) {
-      //Sys.println(calendar_ids[current_index]);
+      ///Sys.println(calendar_ids[current_index]);
       getEvents(calendar_ids[current_index]);
       return true;
     } else {

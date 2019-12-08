@@ -97,10 +97,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     } else {
       if(responseCode == 428){
         Background.exit({"user_code"=>app.getProperty("user_code"), "device_code"=>app.getProperty("device_code"), "verification_url"=>app.getProperty("verification_url")});
-      }
-      if(responseCode != 400 /*|| data.get("error").find("invalid_grant") != null*/){ // auth pending
-            Background.exit({"errorCode"=>responseCode});
-          }
+      } else { 
+          Background.exit({"errorCode"=>responseCode});
+        }
       }
   }
 

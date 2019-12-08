@@ -56,7 +56,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function getAuthCode(){
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
+    Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
     Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
       {"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes}, 
       {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
@@ -64,7 +64,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function onAuthCode(responseCode, data){ // {device_code, user_code, verification_url}
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on AuthCode: "+responseCode); Sys.println(data);
+    Sys.println(Sys.getSystemStats().freeMemory + " on AuthCode: "+responseCode); Sys.println(data);
     if(responseCode != 200){
       data.put("error_code", responseCode);
     }
@@ -73,7 +73,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function getTokensAndData(){ // device_code can tell if the user granted access
-     ///Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); Sys.println(app.getProperty("user_code"));
+     Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); Sys.println(app.getProperty("user_code"));
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
       "code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onTokenRefresh2GetData));
@@ -93,7 +93,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         getNextCalendarEvents();
       }
     } else {
-      if(responseCode == 400){ //{error=>invalid_grant, error_description=>Token has been expired or revoked.}
+      if(responseCode == 400){ //{error=>invalid_grant, error_description=>Token has been expired or revoked.} {error=>expired_token, error_description=>Expired user code}
         getAuthCode();
       } else if(responseCode == 428){ // polling for auth device user_code {error=>authorization_pending, error_description=>Precondition Failed}
         Background.exit({"user_code"=>app.getProperty("user_code"), "device_code"=>app.getProperty("device_code"), "verification_url"=>app.getProperty("verification_url")});
@@ -104,7 +104,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function getPrimaryCalendar(){
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on getPrimaryCalendar");
+    Sys.println(Sys.getSystemStats().freeMemory + " on getPrimaryCalendar");
     Communications.makeWebRequest($.GoogleCalendarListUrl,
       {"maxResults"=>"15", "fields"=>"items(id,primary)", "minAccessRole"=>"owner", "showDeleted"=>false}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
       :headers=>{ "Authorization"=>"Bearer " + access_token}},
@@ -112,7 +112,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function onPrimaryCalendarCandidates(responseCode, data) {  // expects calendar list already parsed to array
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onPrimaryCalendarCandidates");
+    Sys.println(Sys.getSystemStats().freeMemory + " on onPrimaryCalendarCandidates");
     //Sys.println(data);
     if (responseCode == 200) {
       data = data.get("items");
@@ -131,7 +131,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   function getNextCalendarEvents() {
     current_index++;
     if (current_index<calendar_ids.size()) {
-      ///Sys.println(calendar_ids[current_index]);
+      Sys.println(calendar_ids[current_index]);
       getEvents(calendar_ids[current_index]);
       return true;
     } else {
@@ -140,7 +140,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function getEvents(calendar_id) {
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
+    Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
     var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     var sys_time = System.getClockTime();
     var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -162,7 +162,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   
   var events_list_size = 0;
   function onEvents(responseCode, data) {
-    ///Sys.println(Sys.getSystemStats().freeMemory +" on onEvents");
+    Sys.println(Sys.getSystemStats().freeMemory +" on onEvents");
     if(responseCode == 200) { // TODO handle non 200 codes
       data = data.get("items");
       var eventsToSafelySend = primary_calendar ? 8 : 9;
@@ -187,7 +187,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
                   eventTrim[3] = eventTrim[3].substring(0,split);
               }
             }
-            //Sys.println(eventTrim);
+            Sys.println(eventTrim);
             events_list.add(eventTrim);
             events_list_size += eventTrim.toString().length();
             eventTrim = null;
@@ -203,7 +203,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function exitWithData(){ // TODO don't return events on errors
-    ///Sys.println("exitWithData");
+    Sys.println("exitWithData");
     var code_events = {"refresh_token"=>refresh_token, "events"=>events_list};
     if(primary_calendar){
       code_events["primary_calendar"] = primary_calendar; 

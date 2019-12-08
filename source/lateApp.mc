@@ -38,17 +38,20 @@ class lateApp extends App.AppBase {
 
     (:data)
     function scheduleDataLoading(){
-        ///Sys.println("scheduling");
+        Sys.println("scheduling");
         loadSettings();
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
-            Background.registerForTemporalEvent(new Time.Duration(5*Gregorian.SECONDS_PER_MINUTE)); // get the first data as soon as possible
+            changeScheduleToMinutes(5);
+            
             if(app.getProperty("refresh_token") == null){
-                ///Sys.println("no auth");
-                if(Sys.getDeviceSettings().phoneConnected){
+                Sys.println("no auth");
+                if(app.getProperty("user_code")){
+                	return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
+                } else if(Sys.getDeviceSettings().phoneConnected){	// fast schedule till it gets data
                     if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
                         lastEvent = Time.now().compare(lastEvent).toNumber();
-                    	lastEvent = 5*Gregorian.SECONDS_PER_MINUTE-lastEvent;
+                    	lastEvent = 6*Gregorian.SECONDS_PER_MINUTE-lastEvent;
                         if(lastEvent < 0){
                             lastEvent = 0;
                         }
@@ -66,6 +69,18 @@ class lateApp extends App.AppBase {
         return true;
     }
 
+	(:data)
+    function promptLogin(user_code, url){
+    	Sys.println([user_code, url]);
+    	return ({"userPrompt"=>url.substring(url.find("www.")+4, url.length()), "userContext"=>user_code, "permanent"=>true});
+    }
+
+    (:data)
+    function changeScheduleToMinutes(minutes){
+    	Sys.println("changeScheduleToMinutes: ");
+    	return Background.registerForTemporalEvent(new Time.Duration( minutes * Gregorian.SECONDS_PER_MINUTE));
+    }
+
     (:data)
     function unScheduleDataLoading(){
         Background.deleteTemporalEvent();
@@ -73,23 +88,19 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
-        //Sys.println("onBackgroundData");
-        //Sys.println(data);
+    	Sys.println("onBackgroundData");Sys.println(data);
         try {
         	if(data.hasKey("refresh_token")){
                 app.setProperty("refresh_token", data.get("refresh_token"));
                 /// TODO clear login prompt
             }
-            if(data.hasKey("user_code")){
-            	var url = data.get("verification_url");
-            	app.setProperty("user_code", data.get("user_code")); 
-        		app.setProperty("device_code", data.get("device_code")); 
-        		app.setProperty("verification_url", url); 
+            if(data.hasKey("user_code")){ // prompt login
             	app.setProperty("refresh_token", null); 
-            	data.put("userPrompt", url.substring(url.find("www.")+4, url.length()));
-        		data.put("userContext", /*Ui.loadResource(Rez.Strings.EnterCode)+*/data.get("user_code"));
-        		
-        		
+            	app.setProperty("user_code", data.get("user_code")); 
+        		app.setProperty("verification_url", data.get("verification_url")); 
+        		app.setProperty("device_code", data.get("device_code")); 
+            	
+            	promptLogin(data.get("user_code"), data.get("verification_url"));
         	}
             if (data.hasKey("primary_calendar")){
             	app.setProperty("calendar_ids", [data["primary_calendar"]]);
@@ -97,21 +108,24 @@ class lateApp extends App.AppBase {
             if (data.hasKey("events")) {
                 data = parseEvents(data.get("events"));
                 app.setProperty("events", data);
-                Background.registerForTemporalEvent(new Time.Duration(app.getProperty("refresh_freq") * Gregorian.SECONDS_PER_MINUTE)); // once de data were loaded, continue with the settings interval
+                changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
             } 
-            else if(data.get("errorCode")==401 || data.get("errorCode")==400){ // unauthorized || invalid user_code
-                ///Sys.println("unauthorized");
-                app.setProperty("refresh_token", null);
-                app.setProperty("user_code", null);
-                data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
-            } else if(data.get("errorCode")==511){ // login prompt
-                ///Sys.println("login request");
-                if(Sys.getDeviceSettings().phoneConnected){
-                    data["userPrompt"] = Ui.loadResource(Rez.Strings.Wait4login);
-                } else {
-                    data["userPrompt"] = Ui.loadResource(Rez.Strings.notConnected);
-                }
-            }
+            else if(data.hasKey("errorCode")){
+            	changeScheduleToMinutes(5);
+	            if(data.get("errorCode")==401 || data.get("errorCode")==400){ // unauthorized || invalid user_code
+	                ///Sys.println("unauthorized");
+	                app.setProperty("refresh_token", null);
+	                app.setProperty("user_code", null);
+	                data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
+	            } else if(data.get("errorCode")==511){ // login prompt
+	                ///Sys.println("login request");
+	                if(Sys.getDeviceSettings().phoneConnected){
+	                    data["userPrompt"] = Ui.loadResource(Rez.Strings.Wait4login);
+	                } else {
+	                    data["userPrompt"] = Ui.loadResource(Rez.Strings.notConnected);
+	                }
+	            }
+	        }
             if(watch){
                 watch.onBackgroundData(data);
             }
@@ -124,8 +138,7 @@ class lateApp extends App.AppBase {
 
     (:data)
     function split(id_list){	
-    	//id_list = "myneur@gmail.com sldfksjflksajdflk@slkfjlsdkf.com";
-    	//Sys.println(id_list);
+    	Sys.println(id_list);
     	if(id_list instanceof Toybox.Lang.String){
 
     		// this really has to be that ugly, because monkey c cannot replace or split strings like human

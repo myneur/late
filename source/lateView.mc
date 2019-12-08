@@ -261,7 +261,7 @@ class lateView extends Ui.WatchFace {
 				nowError += message["wait"].toNumber();
 			}
 			var context = message.hasKey("userContext") ? " "+ message["userContext"] : "";
-			var calendar = message.hasKey("user_code") ? -1 : 0;
+			var calendar = message.hasKey("permanent") ? -1 : 0;
 			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, message["userPrompt"].toString(), context, calendar, -1, 1]]; 
 		}
 	}

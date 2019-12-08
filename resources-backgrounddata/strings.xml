@@ -4,7 +4,8 @@
 	<string id="DataLoading">1</string>
 	
 	<string id="Calendar">Experimental: Google Calendar [here be dragons:]</string>
-	<string id="AddCalendars">Add more calendar ids</string>
+	<string id="AddCalendars">Calendars to show</string>
+	<string id="CalendarPrompt">Calendar IDs (typically your mail) separated by space</string>
 
 	<string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
 	<string id="Wait4login">Wait to login</string>

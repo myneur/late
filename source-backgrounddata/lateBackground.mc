@@ -30,11 +30,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function onTemporalEvent() {
-    Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     app = App.getApp();
     var connected = Sys.getDeviceSettings().phoneConnected;
     
     if (app.getProperty("refresh_token") != null) { 
+      ///Sys.println("has refresh_token");
       refresh_token = app.getProperty("refresh_token");
       if(connected){
         refreshTokenAndGetData();
@@ -42,8 +43,10 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     } else {
       if(connected){
         if (app.getProperty("user_code") == null){
+          ///Sys.println("no code");
           getAuthCode();
         } else {
+          ///Sys.println("got code");
           getTokensAndData();
         }
       } else {
@@ -53,8 +56,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function getAuthCode(){
-    Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
-    //Sys.println({"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes});
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
+    ///Sys.println({"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes});
     Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
       {"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes}, 
       {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
@@ -62,8 +65,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function onAuthCode(responseCode, data){ // {device_code, user_code, verification_url}
-    Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode: "+responseCode);
-    //Sys.println(data);
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on AuthCode: "+responseCode); Sys.println(data);
     if(responseCode != 200){
       data.put("error_code", responseCode);
     }
@@ -72,30 +74,30 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function getTokensAndData(){ // device_code can tell if the user granted access
-    Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");
-    Sys.println(app.getProperty("user_code"));
+    /// Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); Sys.println(app.getProperty("user_code"));
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
       "code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onTokenRefresh2GetData));
   }
 
   function onTokenRefresh2GetData(responseCode, data){
-    Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode);
-    //Sys.println(data);
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode); Sys.println(data);
     if (responseCode == 200) {
       access_token = data.get("access_token");
       if(data.get("refresh_token")){
         refresh_token = data.get("refresh_token");
       }
       calendar_ids = app.getProperty("calendar_ids");
-      //Sys.println("calendar_ids "+calendar_ids);
-      if(calendar_ids == null || !(calendar_ids instanceof Toybox.Lang.Array) || calendar_ids.size() == 0){
+      if(calendar_ids == null || !(calendar_ids instanceof Toybox.Lang.Array) || calendar_ids.size()==0){ // because of [] and white-spaces
         getPrimaryCalendar();
       } else {
         getNextCalendarEvents();
       }
     } else {
-      if(responseCode == 428){
+      if(responseCode == 400){
+        // if ... {error=>invalid_grant, error_description=>Token has been expired or revoked.}
+        getAuthCode();
+      } else if(responseCode == 428){ // polling for auth device user_code
         Background.exit({"user_code"=>app.getProperty("user_code"), "device_code"=>app.getProperty("device_code"), "verification_url"=>app.getProperty("verification_url")});
       } else { 
           Background.exit({"errorCode"=>responseCode});
@@ -104,7 +106,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function getPrimaryCalendar(){
-    Sys.println(Sys.getSystemStats().freeMemory + " on getPrimaryCalendar");
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on getPrimaryCalendar");
     Communications.makeWebRequest($.GoogleCalendarListUrl,
       {"maxResults"=>"15", "fields"=>"items(id,primary)", "minAccessRole"=>"owner", "showDeleted"=>false}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
       :headers=>{ "Authorization"=>"Bearer " + access_token}},
@@ -112,7 +114,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function onPrimaryCalendarCandidates(responseCode, data) {  // expects calendar list already parsed to array
-    Sys.println(Sys.getSystemStats().freeMemory + " on onPrimaryCalendarCandidates");
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on onPrimaryCalendarCandidates");
     //Sys.println(data);
     if (responseCode == 200) {
       data = data.get("items");
@@ -131,7 +133,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   function getNextCalendarEvents() {
     current_index++;
     if (current_index<calendar_ids.size()) {
-      Sys.println(calendar_ids[current_index]);
+      //Sys.println(calendar_ids[current_index]);
       getEvents(calendar_ids[current_index]);
       return true;
     } else {
@@ -140,7 +142,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function getEvents(calendar_id) {
-    Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
     var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     var sys_time = System.getClockTime();
     var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -157,12 +159,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       "maxResults"=>"8", "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
         :headers=>{ "Authorization"=>"Bearer " + access_token }},
       method(:onEvents));
-    Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
+    ///Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
   }
   
   var events_list_size = 0;
   function onEvents(responseCode, data) {
-    Sys.println(Sys.getSystemStats().freeMemory +" on onEvents");
+    ///Sys.println(Sys.getSystemStats().freeMemory +" on onEvents");
     if(responseCode == 200) { // TODO handle non 200 codes
       data = data.get("items");
       var eventsToSafelySend = primary_calendar ? 8 : 9;
@@ -170,7 +172,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         var event = data[i];
         data[i] = null;
         //if(events_list_size>500){break;}
-        Sys.println(event);
+        ///Sys.println(event);
         if(event["start"]){ // skip day events that have only "summary"
           try {
             var eventTrim = [
@@ -187,7 +189,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
                   eventTrim[3] = eventTrim[3].substring(0,split);
               }
             }
-            Sys.println(eventTrim);
+            //Sys.println(eventTrim);
             events_list.add(eventTrim);
             events_list_size += eventTrim.toString().length();
             eventTrim = null;
@@ -203,13 +205,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function exitWithData(){ // TODO don't return events on errors
-    Sys.println("exitWithData");
+    ///Sys.println("exitWithData");
     var code_events = {"refresh_token"=>refresh_token, "events"=>events_list};
     if(primary_calendar){
       code_events["primary_calendar"] = primary_calendar; 
     }
     try{  
-        Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
+        ///Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
         Background.exit(code_events);
     }catch(ex){
         code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;

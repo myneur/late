@@ -38,22 +38,20 @@ class lateApp extends App.AppBase {
 
     (:data)
     function scheduleDataLoading(){
-        Sys.println("scheduling");
+        ///Sys.println("scheduling");
         loadSettings();
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
             Background.registerForTemporalEvent(new Time.Duration(5*Gregorian.SECONDS_PER_MINUTE)); // get the first data as soon as possible
             if(app.getProperty("refresh_token") == null){
-                Sys.println("no auth");
+                ///Sys.println("no auth");
                 if(Sys.getDeviceSettings().phoneConnected){
                     if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
-                        
                         lastEvent = Time.now().compare(lastEvent).toNumber();
                     	lastEvent = 5*Gregorian.SECONDS_PER_MINUTE-lastEvent;
                         if(lastEvent < 0){
                             lastEvent = 0;
                         }
-                        Sys.println(lastEvent);
                         return ({"userPrompt"=>Ui.loadResource(Rez.Strings.Wait4login), "errorCode"=>511, "wait"=>lastEvent});
                     } else {
                         return ({"userPrompt"=>Ui.loadResource(Rez.Strings.Wait4login), "errorCode"=>511});
@@ -75,7 +73,7 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
-        Sys.println("onBackgroundData ");
+        //Sys.println("onBackgroundData ");
         try {
         	if(data.hasKey("refresh_token")){
                 app.setProperty("refresh_token", data.get("refresh_token"));
@@ -102,7 +100,7 @@ class lateApp extends App.AppBase {
             } 
             else if(data.get("errorCode")==401 || data.get("errorCode")==400){ // unauthorized || invalid user_code
                 ///Sys.println("unauthorized");
-                app.setProperty("code", null);
+                app.setProperty("refresh_token", null);
                 app.setProperty("user_code", null);
                 data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
             } else if(data.get("errorCode")==511){ // login prompt
@@ -125,15 +123,14 @@ class lateApp extends App.AppBase {
 
     (:data)
     function split(id_list){	
-    	id_list = id_list.toString();
-    	Sys.println(id_list);
+    	//Sys.println(id_list);
     	if(id_list instanceof Toybox.Lang.String){
 
     		// this really has to be that ugly, because monkey c cannot replace or split strings like human
 			var i; 
 			id_list = id_list.toCharArray();
     		for(i=0;i<id_list.size();i++){
-    			if(id_list[i]=='[' || id_list[i]==']' || id_list[i]==','){
+    			if(id_list[i]=='[' || id_list[i]==']' || id_list[i]==',' || id_list[i]=='\"'){
     				id_list[i] = ' ';
     			}
     		}
@@ -153,8 +150,7 @@ class lateApp extends App.AppBase {
 					break;
 				}
 			}
-			Sys.println(list.size());
-			Sys.println(list);
+			//Sys.println(list);
 			return list;
 		} else {
 			return id_list;

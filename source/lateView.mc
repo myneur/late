@@ -254,7 +254,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function showMessage(message){
-		Sys.println("message "+message);
+		//Sys.println("message "+message);
 		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			if(message.hasKey("wait")){
@@ -406,7 +406,7 @@ class lateView extends Ui.WatchFace {
 
 	function drawMinuteArc (dc){
 		var minutes = clockTime.min; 
-		Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
+		///Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
 		var angle =  minutes/60.0*2*Math.PI;
 		var cos = Math.cos(angle);
 		var sin = Math.sin(angle);

@@ -23,7 +23,7 @@ class lateView extends Ui.WatchFace {
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var fontSmall = null; hidden var fontMinutes = null; hidden var fontHours = null; hidden var fontCondensed = null;
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; //hidden var notifY;
-	hidden var event = {:start=>0, :end=>0, :name=>"", :location=>"", :prefix=>"", :mid=>0, :height=>22};
+	hidden var event = {:start=>0, :end=>0, :name=>"", :location=>"", :prefix=>"", :mid=>0, :height=>23};
 	hidden var events_list = [];
 	// redraw full watchface
 	hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -246,7 +246,7 @@ class lateView extends Ui.WatchFace {
 			drawBatteryLevel(dc);
 			drawMinuteArc(dc);
 			if(activity == 6 || showSunrise){
-				drawNowCircle(dc, h);
+				drawNowCircle(dc, clockTime.hour);
 			}
 		}
 		
@@ -254,7 +254,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function showMessage(message){
-		///Sys.println("message "+message);
+		Sys.println("message "+message);
 		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			if(message.hasKey("wait")){
@@ -262,7 +262,10 @@ class lateView extends Ui.WatchFace {
 			}
 			var context = message.hasKey("userContext") ? " "+ message["userContext"] : "";
 			var calendar = message.hasKey("permanent") ? -1 : 0;
-			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, message["userPrompt"].toString(), context, calendar, -1, 1]]; 
+
+			var degreeStart = ((nowError-Time.today().value())/(Calendar.SECONDS_PER_DAY.toFloat()/360)).toFloat(); // TODO bug: for some reason it won't show it at all althought the degrees are correct
+
+			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, message["userPrompt"].toString(), context, calendar, degreeStart, degreeStart+2]]; 
 		}
 	}
 
@@ -304,10 +307,10 @@ class lateView extends Ui.WatchFace {
 					event[:prefix] = "";
 				} else {
 					event[:prefix] = "";
-					if (tillStart < 60*60) {
-						event[:start] = tillStart/60 + "m";
+					if (tillStart < Calendar.SECONDS_PER_HOUR) {
+						event[:start] = tillStart/Calendar.SECONDS_PER_MINUTE + "m";
 					} else {
-						event[:start] = tillStart/3600 + "h" + tillStart%3600/60 ;
+						event[:start] = tillStart/Calendar.SECONDS_PER_HOUR + "h" + tillStart%Calendar.SECONDS_PER_HOUR/Calendar.SECONDS_PER_MINUTE ;
 					}
 				}
 				event[:location] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
@@ -336,7 +339,7 @@ class lateView extends Ui.WatchFace {
 
 	function drawNowCircle(dc, hour){
 		// show now in a day
-		var a = Math.PI/(12*60.0) * (hour*60+clockTime.min);
+		var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
 		/*var bitmapNow = sun;
 		if(a<sunset[SUNRISET_NOW] || a>sunrise[SUNRISET_NOW]){
 			bitmapNow = moon;
@@ -362,12 +365,16 @@ class lateView extends Ui.WatchFace {
 	function drawEvent(dc){
 		updateCurrentEvent(dc);
 		if(event[:start]){
-			
+			if(event[:start].length()==0){	// emphasized event without date
+				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
+			}
 			dc.drawText(centerX, activityY, fontCondensed, event[:name], Gfx.TEXT_JUSTIFY_CENTER);
 			dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 			// TODO remove prefix for simplicity and size limitations
 			dc.drawText(centerX-event[:mid], activityY+event[:height], fontCondensed, event[:prefix]+event[:start], Gfx.TEXT_JUSTIFY_RIGHT);
-			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+			if(event[:start].length()>0){
+				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+			}
 			dc.drawText(centerX-event[:mid], activityY+event[:height], fontCondensed, event[:location], Gfx.TEXT_JUSTIFY_LEFT);
 		}
 	}
@@ -376,10 +383,11 @@ class lateView extends Ui.WatchFace {
 	function drawEvents(dc){
 		dc.setPenWidth(5);
 		var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;
-		var tomorrow = Time.now().value()+3600*24;
+		var tomorrow = Time.now().value()+Calendar.SECONDS_PER_DAY;
 		var degreeStart;
 		var degreeEnd;
 		for(var i=0; i <events_list.size(); i++){
+			Sys.println(events_list[i]);
 			if(events_list[i][1]>=tomorrow && (events_list[i][6].toNumber() > nowBoundary )){ // crop tomorrow event overlapping now on 360° dial
 				degreeStart=events_list[i][5].toNumber()%360;
 				degreeEnd=nowBoundary-1;
@@ -406,7 +414,7 @@ class lateView extends Ui.WatchFace {
 
 	function drawMinuteArc (dc){
 		var minutes = clockTime.min; 
-		///Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
+		Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
 		var angle =  minutes/60.0*2*Math.PI;
 		var cos = Math.cos(angle);
 		var sin = Math.sin(angle);

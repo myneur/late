@@ -3,7 +3,7 @@ using Toybox.WatchUi as Ui;
 using Toybox.Background;
 using Toybox.System as Sys;
 using Toybox.Time as Time;
-using Toybox.Time.Gregorian;
+using Toybox.Time.Gregorian as Calendar;
 using Toybox.StringUtil as Str;
 
 
@@ -38,7 +38,7 @@ class lateApp extends App.AppBase {
 
     (:data)
     function scheduleDataLoading(){
-        ///Sys.println("scheduling");
+        Sys.println("scheduling");
         loadSettings();
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
@@ -51,7 +51,7 @@ class lateApp extends App.AppBase {
                 } else if(Sys.getDeviceSettings().phoneConnected){	// fast schedule till it gets data
                     if (lastEvent != null) { // login delayed because event freq can't be lass then 5 mins
                         lastEvent = Time.now().compare(lastEvent).toNumber();
-                    	lastEvent = 6*Gregorian.SECONDS_PER_MINUTE-lastEvent;
+                    	lastEvent = 6*Calendar.SECONDS_PER_MINUTE-lastEvent;
                         if(lastEvent < 0){
                             lastEvent = 0;
                         }
@@ -71,14 +71,14 @@ class lateApp extends App.AppBase {
 
 	(:data)
     function promptLogin(user_code, url){
-    	///Sys.println([user_code, url]);
+    	Sys.println([user_code, url]);
     	return ({"userPrompt"=>url.substring(url.find("www.")+4, url.length()), "userContext"=>user_code, "permanent"=>true});
     }
 
     (:data)
     function changeScheduleToMinutes(minutes){
-    	///Sys.println("changeScheduleToMinutes: "+minutes);
-    	return Background.registerForTemporalEvent(new Time.Duration( minutes * Gregorian.SECONDS_PER_MINUTE));
+    	Sys.println("changeScheduleToMinutes: "+minutes);
+    	return Background.registerForTemporalEvent(new Time.Duration( minutes * Calendar.SECONDS_PER_MINUTE));
     }
 
     (:data)
@@ -88,7 +88,7 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
-    	///Sys.println("onBackgroundData");Sys.println(data);
+    	Sys.println("onBackgroundData");Sys.println(data);
         try {
         	if(data.hasKey("refresh_token")){
                 app.setProperty("refresh_token", data.get("refresh_token"));
@@ -119,12 +119,12 @@ class lateApp extends App.AppBase {
             	}
             	
 	            if(error==401 || error==400){ // unauthorized || invalid user_code
-	                ///Sys.println("unauthorized");
+	                Sys.println("unauthorized");
 	                app.setProperty("refresh_token", null);
 	                app.setProperty("user_code", null);
 	                data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
 	            } else if(error==511){ // login prompt on oauth
-	                ///Sys.println("login request");
+	                Sys.println("login request");
 	                data["userPrompt"] = Ui.loadResource( Sys.getDeviceSettings().phoneConnected ? Rez.Strings.Wait4login : Rez.Strings.notConnected);
 	            }
 	        }
@@ -167,7 +167,7 @@ class lateApp extends App.AppBase {
 					break;
 				}
 			}
-			///Sys.println(list);
+			Sys.println(list);
 			return list;
 		} else {
 			return id_list;
@@ -190,7 +190,7 @@ class lateApp extends App.AppBase {
     (:data)
     function parseEvents(data){
         var events_list = [];
-        var dayDegrees = 3600*24.0/360;
+        var dayDegrees = Calendar.SECONDS_PER_DAY.toFloat()/360;
         var midnight = Time.today();
         
         
@@ -238,7 +238,7 @@ class lateApp extends App.AppBase {
             return null;
         }
 
-        var moment = Gregorian.moment({
+        var moment = Calendar.moment({
             :year => date.substring( 0, 4).toNumber(),
             :month => date.substring( 5, 7).toNumber(),
             :day => date.substring( 8, 10).toNumber(),
@@ -270,8 +270,8 @@ class lateApp extends App.AppBase {
             if (suffix.length() - tz < 6) {
                 return null;
             }
-            tzOffset = suffix.substring(tz + 1, tz + 3).toNumber() * Gregorian.SECONDS_PER_HOUR;
-            tzOffset += suffix.substring(tz + 4, tz + 6).toNumber() * Gregorian.SECONDS_PER_MINUTE;
+            tzOffset = suffix.substring(tz + 1, tz + 3).toNumber() * Calendar.SECONDS_PER_HOUR;
+            tzOffset += suffix.substring(tz + 4, tz + 6).toNumber() * Calendar.SECONDS_PER_MINUTE;
 
             var sign = suffix.substring(tz, tz + 1);
             if (sign.equals("+")) {

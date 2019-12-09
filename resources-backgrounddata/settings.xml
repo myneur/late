@@ -16,7 +16,7 @@
 		</settingConfig>
 	</setting>
 
-	<setting propertyKey="@Properties.activity" title="@Strings.ActivityTitle">
+	<setting propertyKey="@Properties.activity" title="@Strings.ActivityTitle" prompt="@Strings.CalendarPrompt">
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.DnD</listEntry>
 			<listEntry value="1">@Strings.Steps</listEntry>

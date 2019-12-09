@@ -5,9 +5,10 @@
 	
 	<string id="Calendar">Experimental: Google Calendar [here be dragons:]</string>
 	<string id="AddCalendars">Calendars to show</string>
-	<string id="CalendarPrompt">Calendar IDs (typically your mail) separated by space</string>
+	<string id="CalendarPrompt">For Calendar: Watch your watch to get code and link to log-in. Than wait at least 5 mins.</string>
+	<string id="CalendarsPrompt">Calendar IDs (typically your mail) separated by space</string>
 
-	<string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
+	<string id="refreshFrequency">Minutes to refresh calendar</string>
 	<string id="Wait4login">Wait to login</string>
 	<string id="EnterCode">Enter </string>
 	<string id="LinkPrefix"></string>

@@ -38,7 +38,7 @@ class lateApp extends App.AppBase {
 
     (:data)
     function scheduleDataLoading(){
-        Sys.println("scheduling");
+        ///Sys.println("scheduling");
         loadSettings();
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
@@ -71,13 +71,13 @@ class lateApp extends App.AppBase {
 
 	(:data)
     function promptLogin(user_code, url){
-    	Sys.println([user_code, url]);
+    	///Sys.println([user_code, url]);
     	return ({"userPrompt"=>url.substring(url.find("www.")+4, url.length()), "userContext"=>user_code, "permanent"=>true});
     }
 
     (:data)
     function changeScheduleToMinutes(minutes){
-    	Sys.println("changeScheduleToMinutes: ");
+    	///Sys.println("changeScheduleToMinutes: "+minutes);
     	return Background.registerForTemporalEvent(new Time.Duration( minutes * Gregorian.SECONDS_PER_MINUTE));
     }
 
@@ -88,10 +88,11 @@ class lateApp extends App.AppBase {
     
     (:data)
     function onBackgroundData(data) {
-    	Sys.println("onBackgroundData");Sys.println(data);
+    	///Sys.println("onBackgroundData");Sys.println(data);
         try {
         	if(data.hasKey("refresh_token")){
                 app.setProperty("refresh_token", data.get("refresh_token"));
+                app.setProperty("user_code", null);
                 /// TODO clear login prompt
             }
             if(data.hasKey("user_code")){ // prompt login
@@ -100,7 +101,8 @@ class lateApp extends App.AppBase {
         		app.setProperty("verification_url", data.get("verification_url")); 
         		app.setProperty("device_code", data.get("device_code")); 
             	
-            	promptLogin(data.get("user_code"), data.get("verification_url"));
+            	changeScheduleToMinutes(5);
+            	data = promptLogin(data.get("user_code"), data.get("verification_url"));
         	}
             if (data.hasKey("primary_calendar")){
             	app.setProperty("calendar_ids", [data["primary_calendar"]]);
@@ -111,19 +113,19 @@ class lateApp extends App.AppBase {
                 changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
             } 
             else if(data.hasKey("errorCode")){
-            	changeScheduleToMinutes(5);
-	            if(data.get("errorCode")==401 || data.get("errorCode")==400){ // unauthorized || invalid user_code
+            	var error = data["errorCode"];
+            	if(error != 404) {	// no internet but logged in
+            		changeScheduleToMinutes(5);	
+            	}
+            	
+	            if(error==401 || error==400){ // unauthorized || invalid user_code
 	                ///Sys.println("unauthorized");
 	                app.setProperty("refresh_token", null);
 	                app.setProperty("user_code", null);
 	                data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
-	            } else if(data.get("errorCode")==511){ // login prompt
+	            } else if(error==511){ // login prompt on oauth
 	                ///Sys.println("login request");
-	                if(Sys.getDeviceSettings().phoneConnected){
-	                    data["userPrompt"] = Ui.loadResource(Rez.Strings.Wait4login);
-	                } else {
-	                    data["userPrompt"] = Ui.loadResource(Rez.Strings.notConnected);
-	                }
+	                data["userPrompt"] = Ui.loadResource( Sys.getDeviceSettings().phoneConnected ? Rez.Strings.Wait4login : Rez.Strings.notConnected);
 	            }
 	        }
             if(watch){
@@ -138,7 +140,7 @@ class lateApp extends App.AppBase {
 
     (:data)
     function split(id_list){	
-    	Sys.println(id_list);
+    	//Sys.println(id_list);
     	if(id_list instanceof Toybox.Lang.String){
 
     		// this really has to be that ugly, because monkey c cannot replace or split strings like human
@@ -165,7 +167,7 @@ class lateApp extends App.AppBase {
 					break;
 				}
 			}
-			//Sys.println(list);
+			///Sys.println(list);
 			return list;
 		} else {
 			return id_list;

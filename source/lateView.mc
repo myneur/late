@@ -254,7 +254,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function showMessage(message){
-		//Sys.println("message "+message);
+		///Sys.println("message "+message);
 		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			if(message.hasKey("wait")){

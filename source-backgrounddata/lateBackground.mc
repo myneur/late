@@ -44,36 +44,44 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       if(connected){
         if (app.getProperty("user_code") == null){
           Sys.println("no code");
-          getAuthCode();
+          getOAuthUserCode();
         } else {
           Sys.println("got code");
           getTokensAndData();
         }
       } else {
-        Background.exit({"errorCode"=>511});
+        Background.exit({"errorCode"=>404}); // no response
       }
     }
   }
 
-  function getAuthCode(){
-    Sys.println(Sys.getSystemStats().freeMemory + " on getAuthCode");
+  function getOAuthUserCode(){
+    Sys.println(Sys.getSystemStats().freeMemory + " on getOAuthUserCode");
+    Sys.println([App.getApp().getProperty("client_id"), $.GoogleDeviceCodeUrl, $.GoogleScopes]);
+    Sys.println(app.getProperty("client_id"));
     Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
-      {"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes}, 
-      {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
-      method(:onAuthCode)); 
+      {"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+      method(:onOAuthUserCode)); 
   }
 
-  function onAuthCode(responseCode, data){ // {device_code, user_code, verification_url}
+  function onOAuthUserCode(responseCode, data){ // {device_code, user_code, verification_url}
     Sys.println(Sys.getSystemStats().freeMemory + " on AuthCode: "+responseCode); Sys.println(data);
     if(responseCode != 200){
-      data.put("error_code", responseCode);
-    }
-    //requestOAuth();
+      if(data == null) { // no data connection 
+        data = {"errorCode"=>responseCode};
+      } else {
+        data.put("errorCode", responseCode);
+      }
+    } /*else {
+      showInstructionOnMobile(data);
+    }*/
     Background.exit(data);  // prompt to login or show the error
   }
 
   function getTokensAndData(){ // device_code can tell if the user granted access
      Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); Sys.println(app.getProperty("user_code"));
+     Sys.println([$.GoogleTokenUrl,app.getProperty("device_code"),app.getProperty("client_id"),app.getProperty("client_secret"),"http://oauth.net/grant_type/device/1.0"]);
+    
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
       "code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onTokenRefresh2GetData));
@@ -94,8 +102,21 @@ class lateBackground extends Toybox.System.ServiceDelegate {
         getNextCalendarEvents();
       }
     } else {
-      if(responseCode == 400){ //{error=>invalid_grant, error_description=>Token has been expired or revoked.} {error=>expired_token, error_description=>Expired user code}
-        getAuthCode();
+       ///403: {error=>access_denied, error_description=>Forbidden}
+       ///429: {"error": "slow_down","error_description": "Rate Limit Exceeded"}
+
+      if(responseCode == 400 || responseCode == 403){ 
+      /*
+      401: invalid_client
+      400: 
+        {"error" : "authorization_pending","error_description": "Bad Request"}
+          invalid_request
+          unsupported_grant_type
+        {error=>invalid_grant, error_description=>Token has been expired or revoked.} 
+        {error=>expired_token, error_description=>Expired user code}
+      
+      */
+        getOAuthUserCode();
       } else if(responseCode == 428){ // polling for auth device user_code {error=>authorization_pending, error_description=>Precondition Failed}
         Background.exit({"user_code"=>app.getProperty("user_code"), "device_code"=>app.getProperty("device_code"), "verification_url"=>app.getProperty("verification_url")});
       } else { 
@@ -224,21 +245,24 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       method(:onTokenRefresh2GetData));
   }
 
+  function showInstructionOnMobile(data){
+    var user_code = data.hasKey("user_code") ? data["user_code"] : app.getProperty("user_code");
+    var verification_url = data.hasKey("verification_url") ? data["verification_url"] : app.getProperty("verification_url");
 
-  function showInstructionOnMobile(){
     Communications.makeOAuthRequest("https://sl8.ch/how-to-load-calendar#a03d3619-fe69-485d-bc8d-11680d15a24f", 
+      {"verification_url"=>verification_url, "user_code"=>user_code, "client_secret"=>app.getProperty("client_secret")}, 
+      "http://localhost", Communications.OAUTH_RESULT_TYPE_URL, 
+      {"refresh_token"=>"refresh_token", "calendar_ids"=>"calendar_ids"});
+  }
+
+  /*
+    function requestOAuth(){
+    Communications.makeOAuthRequest("https://myneur.github.io/late/docs/auth", 
       {"client_secret"=>app.getProperty("client_secret")}, 
       "https://localhost", Communications.OAUTH_RESULT_TYPE_URL, 
       {"refresh_token"=>"refresh_token", "calendar_indexes"=>"calendar_indexes"});
   }
-  /*function showInstructionOnMobile(verification_url){
-    Communications.makeOAuthRequest("https://sl8.ch/how-to-load-calendar#a03d3619-fe69-485d-bc8d-11680d15a24f", 
-      {"verification_url"=>verification_url, "client_secret"=>app.getProperty("client_secret")}, 
-      "http://localhost", Communications.OAUTH_RESULT_TYPE_URL, 
-      {"refresh_token"=>"refresh_token", "calendar_ids"=>"calendar_ids"});
-  }*/
-
-  /*function onOauthMessage(data) {
+  function onOauthMessage(data) {
     Sys.println("onOauthMessage " +data.data["refresh_token"]);
     code = {"refresh_token"=>data.data["refresh_token"]};
     calendar_indexes = data.data["calendar_indexes"];

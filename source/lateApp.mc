@@ -43,7 +43,6 @@ class lateApp extends App.AppBase {
         if(watch.dataLoading && watch.activity == 6) {
             var lastEvent = Background.getLastTemporalEventTime();
             changeScheduleToMinutes(5);
-            
             if(app.getProperty("refresh_token") == null){
                 Sys.println("no auth");
                 if(app.getProperty("user_code")){
@@ -60,7 +59,7 @@ class lateApp extends App.AppBase {
                         return ({"userPrompt"=>Ui.loadResource(Rez.Strings.Wait4login), "errorCode"=>511});
                     }
                 } else {
-                    return ({"userPrompt"=>Ui.loadResource(Rez.Strings.notConnected), "errorCode"=>511});
+                    return ({"userPrompt"=>Ui.loadResource(Rez.Strings.NotConnected), "errorCode"=>511});
                 }
             }  
         } else { // not supported by the watch
@@ -114,19 +113,22 @@ class lateApp extends App.AppBase {
             } 
             else if(data.hasKey("errorCode")){
             	var error = data["errorCode"];
-            	if(error != 404) {	// no internet but logged in
+            	var connected = Sys.getDeviceSettings().phoneConnected;
+            	if(error == 404){  // no internet	
+            		data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
+            	} else {
             		changeScheduleToMinutes(5);	
+            		if(error==401 || error==400 || error==403){ // unauthorized || invalid user_code || access denied
+		                Sys.println("unauthorized");
+		                app.setProperty("refresh_token", null);
+		                app.setProperty("user_code", null);
+		                data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
+		            } else if(error==511 ){ // login prompt on oauth 
+		                Sys.println("login request");
+		                data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);
+		            }
             	}
-            	
-	            if(error==401 || error==400){ // unauthorized || invalid user_code
-	                Sys.println("unauthorized");
-	                app.setProperty("refresh_token", null);
-	                app.setProperty("user_code", null);
-	                data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
-	            } else if(error==511){ // login prompt on oauth
-	                Sys.println("login request");
-	                data["userPrompt"] = Ui.loadResource( Sys.getDeviceSettings().phoneConnected ? Rez.Strings.Wait4login : Rez.Strings.notConnected);
-	            }
+
 	        }
             if(watch){
                 watch.onBackgroundData(data);

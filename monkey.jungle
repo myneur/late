@@ -19,7 +19,7 @@ fr45.resourcePath = $(base.resourcePath)
 
 # CIQ2 Biker Monkeys:
 vivoactive_hr.resourcePath = $(base.resourcePath);resources-CIQ2
-fr735xt.resourcePath = $(base.resourcePath);resources-CIQ2
+# fr735xt.resourcePath = $(base.resourcePath);resources-CIQ2 # it does not support floors 
 
 # CIQ1 Aikido Monkeys:
 # 218 px, but no data and less activities
@@ -35,3 +35,8 @@ d2bravo.resourcePath = $(base.resourcePath)
 d2bravo_titanium.excludeAnnotations = data
 d2bravo_titanium.sourcePath = source
 d2bravo_titanium.resourcePath = $(base.resourcePath)
+
+## don't support floors climbed
+approachs60.excludeAnnotations = data
+approachs60.sourcePath = source
+approachs60.resourcePath = $(base.resourcePath)

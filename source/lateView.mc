@@ -23,7 +23,7 @@ class lateView extends Ui.WatchFace {
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var fontSmall = null; hidden var fontMinutes = null; hidden var fontHours = null; hidden var fontCondensed = null;
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; //hidden var notifY;
-	hidden var event = {:start=>0, :end=>0, :name=>"", :location=>"", :prefix=>"", :mid=>0, :height=>23};
+	hidden var event = {:start=>0, :end=>0, :name=>"", :location=>"", :prefix=>"", :mid=>0, :height=>23, :marker=>null};
 	hidden var events_list = [];
 	// redraw full watchface
 	hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -97,7 +97,7 @@ class lateView extends Ui.WatchFace {
 				if(activity == 6){
 					if(dataLoading){
 						event["height"] = Gfx.getFontHeight(fontCondensed)-1;
-						activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
+						activityY = (centerY-radius+10)>>2 - event["height"]+4 + centerY+radius+10;
 						showMessage(App.getApp().scheduleDataLoading());
 					} else { 
 						activity = 0;
@@ -315,6 +315,8 @@ class lateView extends Ui.WatchFace {
 				}
 			}
 			event[:location] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
+
+			event[:marker] = tillStart<Calendar.SECONDS_PER_HOUR>>1 ? getMarkerCoords(events_list[i][0]) : null;
 			
 			if(events_list[i][4]<0){ // no calendar event, but prompt
 				event[:mid] = null;
@@ -342,23 +344,18 @@ class lateView extends Ui.WatchFace {
 	function drawNowCircle(dc, hour){
 		// show now in a day
 		var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
-		/*var bitmapNow = sun;
-		if(a<sunset[SUNRISET_NOW] || a>sunrise[SUNRISET_NOW]){
-			bitmapNow = moon;
-		} 
-		var r = centerX - 11;
-		dc.drawBitmap(centerX + (r * Math.sin(a))-bitmapNow.getWidth()>>1, centerY - (r * Math.cos(a))-bitmapNow.getWidth()>>1, bitmapNow);*/
-		
 		var r = centerX-9;
+		var x = centerX+(r*Math.sin(a));
+		var y = centerY-(r*Math.cos(a));
 		dc.setColor(backgroundColor, backgroundColor);
-		dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),5);
+		dc.fillCircle(x, y, 5);
 		if(activity == 6){
 			dc.setColor(dateColor, backgroundColor);
-			dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),4);
+			dc.fillCircle(x, y, 4);
 		} else {
 			dc.setColor(activityColor, backgroundColor);
 			dc.setPenWidth(1);
-			dc.drawCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),4);
+			dc.drawCircle(x, y, 4);
 		}
 		// line instead of circle dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
 	}
@@ -384,6 +381,12 @@ class lateView extends Ui.WatchFace {
 			} 
 			//else {dc.drawText(x,  height-batteryY, fontCondensed, event[:prefix]+event[:start], Gfx.TEXT_JUSTIFY_VCENTER);}
 			dc.drawText(x, activityY+event[:height], fontCondensed, event[:location], justify);
+		}
+		if(event[:marker]){
+			var coord = event[:marker];
+			dc.setPenWidth(1);
+			dc.setColor(dateColor, backgroundColor);
+			dc.drawCircle(coord[0], coord[1], 4);
 		}
 
 	}
@@ -419,6 +422,14 @@ class lateView extends Ui.WatchFace {
 				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}
 		}
+	}
+
+	(:data)
+	function getMarkerCoords(event){
+		var lastHourSeconds = Time.now().value()-(clockTime.min*60+clockTime.sec);
+		var a = (event-lastHourSeconds).toFloat()/Calendar.SECONDS_PER_HOUR * 2*Math.PI;
+		var r = radius-10;
+		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}
 
 	function drawMinuteArc (dc){
@@ -527,14 +538,8 @@ class lateView extends Ui.WatchFace {
 			a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
 			a *= Math.PI/(12 * 60.0);
 			dc.drawBitmap(centerX + (r * Math.sin(a))-sunst.getWidth()>>1, centerY - (r * Math.cos(a))-sunst.getWidth()>>1, sunst);
-			//System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"));
-
-			/*dc.setColor(0x555555, 0);
-			dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*/
-
-			/*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360;
-			System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a))));
-			dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
+			
+			//System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d")); /*dc.setColor(0x555555, 0); dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*//*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360; System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a)))); dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
 		}
 	}
 
@@ -596,15 +601,7 @@ class lateView extends Ui.WatchFace {
 			}
 		}
 
-		/*var sunriseInfoStr = new [SUNRISET_NBR];
-		var sunsetInfoStr = new [SUNRISET_NBR];
-		for (var i = 0; i < SUNRISET_NBR; i++)
-		{
-			sunriseInfoStr[i] = Lang.format("$1$:$2$", [sunrise[i].toNumber() % 24, ((sunrise[i] - sunrise[i].toNumber()) * 60).format("%.2d")]);
-			sunsetInfoStr[i] = Lang.format("$1$:$2$", [sunset[i].toNumber() % 24, ((sunset[i] - sunset[i].toNumber()) * 60).format("%.2d")]);
-			//var str = i+":"+ "sunrise:" + sunriseInfoStr[i] + " | sunset:" + sunsetInfoStr[i];
-			//Sys.println(str);
-		}*/
+		/*var sunriseInfoStr = new [SUNRISET_NBR]; var sunsetInfoStr = new [SUNRISET_NBR]; for (var i = 0; i < SUNRISET_NBR; i++){sunriseInfoStr[i] = Lang.format("$1$:$2$", [sunrise[i].toNumber() % 24, ((sunrise[i] - sunrise[i].toNumber()) * 60).format("%.2d")]); sunsetInfoStr[i] = Lang.format("$1$:$2$", [sunset[i].toNumber() % 24, ((sunset[i] - sunset[i].toNumber()) * 60).format("%.2d")]); //var str = i+":"+ "sunrise:" + sunriseInfoStr[i] + " | sunset:" + sunsetInfoStr[i]; //Sys.println(str);}*/
 		return;
 	}
 }

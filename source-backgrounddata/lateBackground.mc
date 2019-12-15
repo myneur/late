@@ -209,11 +209,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     if(responseCode == 200) { // TODO handle non 200 codes
       data = data.get("items");
       var eventsToSafelySend = primary_calendar ? 8 : 9;
+      Sys.println(Sys.getSystemStats().freeMemory);
       for (var i = 0; i < data.size() && events_list.size() < eventsToSafelySend; i++) { // 10 events not to get out of memory
         var event = data[i];
         data[i] = null;
         //if(events_list_size>500){break;}
-        Sys.println(event);
+        Sys.println(Sys.getSystemStats().freeMemory +" "+event);
         if(event["start"]){ // skip day events that have only "summary"
           try {
             var eventTrim = [
@@ -230,11 +231,16 @@ class lateBackground extends Toybox.System.ServiceDelegate {
                   eventTrim[3] = eventTrim[3].substring(0,split);
               }
             }
-            Sys.println(eventTrim);
+            Sys.println(Sys.getSystemStats().freeMemory +" "+eventTrim);
             events_list.add(eventTrim);
             events_list_size += eventTrim.toString().length();
             eventTrim = null;
+            /*if(Sys.getSystemStats().freeMemory<4800){
+              exitWithData();
+            }*/
           } catch(ex) {
+            events_list = events_list.size() ? [events_list[0]] : null;
+            exitWithData();
             Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
           }
         }

@@ -97,7 +97,7 @@ class lateView extends Ui.WatchFace {
 				if(activity == 6){
 					if(dataLoading){
 						event["height"] = Gfx.getFontHeight(fontCondensed)-1;
-						activityY = (centerY-radius+10)>>2 - event["height"]+4 + centerY+radius+10;
+						activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
 						showMessage(App.getApp().scheduleDataLoading());
 					} else { 
 						activity = 0;
@@ -208,6 +208,7 @@ class lateView extends Ui.WatchFace {
 			dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
 			drawBatteryLevel(dc);
+			drawMinuteArc(dc);
 			if(centerY>89){
 				// function drawDate(x, y){}
 				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
@@ -244,10 +245,7 @@ class lateView extends Ui.WatchFace {
 					}
 				}
 			}
-			drawMinuteArc(dc);
-			if(activity == 6 || showSunrise){
-				drawNowCircle(dc, clockTime.hour);
-			}
+			drawNowCircle(dc, clockTime.hour);
 		}
 		
 		if (0>redrawAll) { redrawAll--; }
@@ -298,15 +296,21 @@ class lateView extends Ui.WatchFace {
 			if(tillStart < -300){
 			  continue;  
 			}
-			event[:end] = new Time.Moment(events_list[i][1]); 
+			//event[:end] = (new Time.Moment(events_list[i][1])).value(); 
 			event[:name] = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21); 
 
 			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
-			
 			if( tillStart <0){
 				event[:start] = "now!";
 				event[:prefix] = "";
-			} else {
+				event[:marker] = null;
+			}
+			else {
+				if( tillStart < Calendar.SECONDS_PER_MINUTE*2 || tillStart > Calendar.SECONDS_PER_HOUR>>1 ) {
+					event[:marker] = null;				 
+				} else {
+					event[:marker] = getMarkerCoords(events_list[i][0]);
+				}
 				event[:prefix] = "";
 				if (tillStart < Calendar.SECONDS_PER_HOUR) {
 					event[:start] = tillStart/Calendar.SECONDS_PER_MINUTE + "m";
@@ -315,8 +319,6 @@ class lateView extends Ui.WatchFace {
 				}
 			}
 			event[:location] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
-
-			event[:marker] = tillStart<Calendar.SECONDS_PER_HOUR>>1 ? getMarkerCoords(events_list[i][0]) : null;
 			
 			if(events_list[i][4]<0){ // no calendar event, but prompt
 				event[:mid] = null;
@@ -330,6 +332,7 @@ class lateView extends Ui.WatchFace {
 			return;
 		}
 		event[:start] = null;
+		event[:marker] = null;
 	}
 
 
@@ -343,21 +346,23 @@ class lateView extends Ui.WatchFace {
 
 	function drawNowCircle(dc, hour){
 		// show now in a day
-		var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
-		var r = centerX-9;
-		var x = centerX+(r*Math.sin(a));
-		var y = centerY-(r*Math.cos(a));
-		dc.setColor(backgroundColor, backgroundColor);
-		dc.fillCircle(x, y, 5);
-		if(activity == 6){
-			dc.setColor(dateColor, backgroundColor);
-			dc.fillCircle(x, y, 4);
-		} else {
-			dc.setColor(activityColor, backgroundColor);
-			dc.setPenWidth(1);
-			dc.drawCircle(x, y, 4);
+		if(showSunrise || (activity == 6 && App.getApp().getProperty("refresh_token"))){
+			var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
+			var r = centerX-9;
+			var x = centerX+(r*Math.sin(a));
+			var y = centerY-(r*Math.cos(a));
+			dc.setColor(backgroundColor, backgroundColor);
+			dc.fillCircle(x, y, 5);
+			if(activity == 6){
+				dc.setColor(dateColor, backgroundColor);
+				dc.fillCircle(x, y, 4);
+			} else {
+				dc.setColor(activityColor, backgroundColor);
+				dc.setPenWidth(1);
+				dc.drawCircle(x, y, 4);
+			}
+			// line instead of circle dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
 		}
-		// line instead of circle dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
 	}
 
 	(:data)
@@ -384,11 +389,11 @@ class lateView extends Ui.WatchFace {
 		}
 		if(event[:marker]){
 			var coord = event[:marker];
-			dc.setPenWidth(1);
+			dc.setColor(backgroundColor, backgroundColor);
+			dc.fillCircle(coord[0], coord[1], 4);
 			dc.setColor(dateColor, backgroundColor);
-			dc.drawCircle(coord[0], coord[1], 4);
+			dc.fillCircle(coord[0], coord[1], 2);
 		}
-
 	}
 
 	(:data)
@@ -428,7 +433,7 @@ class lateView extends Ui.WatchFace {
 	function getMarkerCoords(event){
 		var lastHourSeconds = Time.now().value()-(clockTime.min*60+clockTime.sec);
 		var a = (event-lastHourSeconds).toFloat()/Calendar.SECONDS_PER_HOUR * 2*Math.PI;
-		var r = radius-10;
+		var r = radius;
 		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}
 

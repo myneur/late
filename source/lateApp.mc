@@ -65,7 +65,7 @@ class lateApp extends App.AppBase {
 		var lastEvent = Background.getLastTemporalEventTime();
 		//Sys.println("lastEvent: " + Time.now().compare(lastEvent));
 		if (lastEvent==null){
-			return Time.now();
+			return 0;
 		}
 		else {
 			var nextEvent = 6*Calendar.SECONDS_PER_MINUTE - Time.now().compare(lastEvent); 

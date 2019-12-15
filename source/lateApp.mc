@@ -15,7 +15,7 @@ class lateApp extends App.AppBase {
 	function initialize() {
 		AppBase.initialize();
 		app = App.getApp();
-		Sys.println([app, App.getApp()]);
+		///Sys.println([app, App.getApp()]);
 	}
 
 	function onStart(state) { }
@@ -39,14 +39,14 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		Sys.println("scheduling");
-		Sys.println([app, App.getApp()]);
+		///Sys.println("scheduling");
+		///Sys.println([app, App.getApp()]);
 		loadSettings();
 		if(watch.dataLoading && watch.activity == 6) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
 			if(app.getProperty("refresh_token") == null){
-				Sys.println("no auth");
+				///Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {
@@ -79,13 +79,13 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function promptLogin(user_code, url){
-		Sys.println([user_code, url]);
+		///Sys.println([user_code, url]);
 		return ({"userPrompt"=>url.substring(url.find("www.")+4, url.length()), "userContext"=>user_code, "permanent"=>true, "wait"=>durationToNextEvent()});
 	}
 
 	(:data)
 	function changeScheduleToMinutes(minutes){
-		Sys.println("changeScheduleToMinutes: "+minutes);
+		///Sys.println("changeScheduleToMinutes: "+minutes);
 		return Background.registerForTemporalEvent(new Time.Duration( minutes * Calendar.SECONDS_PER_MINUTE));
 	}
 
@@ -96,9 +96,9 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println("onBackgroundData");
-		Sys.println(data);
-		Sys.println([app, App.getApp()]);
+		///Sys.println("onBackgroundData");
+		///Sys.println(data);
+		///Sys.println([app, App.getApp()]);
 		try {
 			if(data.hasKey("refresh_token")){
 				app.setProperty("refresh_token", data.get("refresh_token"));
@@ -138,12 +138,12 @@ class lateApp extends App.AppBase {
 						data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
 					}
 					else if(data.hasKey("error")){	// when reason is passed from background
-						Sys.println(data["error"]);
+						///Sys.println(data["error"]);
 						data["userPrompt"] = data["error"];
 						data.put("permanent", true);
 					}
 					else if(error==400 || error==401 || error==403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
-						Sys.println("unauthorized");
+						///Sys.println("unauthorized");
 						app.setProperty("refresh_token", null);
 						app.setProperty("user_code", null);
 						data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
@@ -160,7 +160,7 @@ class lateApp extends App.AppBase {
 			}
 			Ui.requestUpdate();
 		} catch (ex){
-			Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
+			///Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
 			if(watch){
 				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
 			}
@@ -194,7 +194,7 @@ class lateApp extends App.AppBase {
 					break;
 				}
 			}
-			Sys.println(list);
+			///Sys.println(list);
 			return list;
 		} else {
 			return id_list;

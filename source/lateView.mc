@@ -181,7 +181,6 @@ class lateView extends Ui.WatchFace {
 	//! Update the view
 	function onUpdate (dc) {
 		clockTime = Sys.getClockTime();
-
 		if (lastRedrawMin != clockTime.min) { redrawAll = 1; }
 
 		if (redrawAll!=0){
@@ -219,6 +218,14 @@ class lateView extends Ui.WatchFace {
 				text += info.day.format("%0.1d");
 				dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
 
+				if(Sys.getDeviceSettings().notificationCount){
+					dc.setColor(activityColor, backgroundColor);
+					dc.fillCircle(centerX-dc.getTextWidthInPixels(text, fontSmall)>>1-14, dateY+dc.getFontHeight(fontSmall)>>1, 5);
+					/*dc.setColor(backgroundColor, backgroundColor);
+					dc.fillCircle(x-3, y, 2);
+					dc.fillCircle(x+3, y, 2);*/
+				}
+
 				/*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, CENTER);
 				dc.setPenWidth(2);
 				dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);
@@ -252,7 +259,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function showMessage(message){
-		Sys.println("message "+message);
+		///Sys.println("message "+message);
 		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			if(message.hasKey("wait")){
@@ -404,7 +411,7 @@ class lateView extends Ui.WatchFace {
 		var degreeStart;
 		var degreeEnd;
 		for(var i=0; i <events_list.size(); i++){
-			Sys.println(events_list[i]);
+			///Sys.println(events_list[i]);
 			if(events_list[i][1]>=tomorrow && (events_list[i][6].toNumber() > nowBoundary )){ // crop tomorrow event overlapping now on 360° dial
 				degreeStart=events_list[i][5].toNumber()%360;
 				degreeEnd=nowBoundary-1;
@@ -439,7 +446,7 @@ class lateView extends Ui.WatchFace {
 
 	function drawMinuteArc (dc){
 		var minutes = clockTime.min; 
-		Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
+		///Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
 		var angle =  minutes/60.0*2*Math.PI;
 		var cos = Math.cos(angle);
 		var sin = Math.sin(angle);

@@ -24,6 +24,17 @@ class lateView extends Ui.WatchFace {
 	hidden var fontSmall = null; hidden var fontMinutes = null; hidden var fontHours = null; hidden var fontCondensed = null;
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; //hidden var notifY;
 	hidden var event = {:start=>0, :end=>0, :name=>"", :location=>"", :prefix=>"", :mid=>0, :height=>23, :marker=>null};
+	
+
+	/*// red, orange, green, blue, violet, grey
+	[[[0xAA0000, 0xFFAA00, 0x0055FF], [0xFFAA00, 0xAA0000, 0x0055FF], [0xAA0055, 0xAA0000, 0x0055FF]],
+	[[0xFFAA00, 0xAA0000, 0x0055FF], [0xFF5500, 0xAA0000, 0x0055FF], [0xFFFF00, 0x00FF00, 0x00AAFF]],
+	[[0x00AA00, 0x0055FF, 0xFFFF55], [0x00FF00, 0x0055FF, 0xFFFF55], [0x55FFAA, 0x0055FF, 0xFFFF55]], 
+	[[0x0055FF, 0x00AAFF, 0xFFFF55], [0x00AAFF, 0x0055FF, 0xFFFF55], [0x00AAAA, 0x0055FF, 0xFFFF55]], 
+	[[0xAA55FF, 0x0055FF, 0xFFAA00], [0xFF55FF, 0x0055FF, 0xFFAA00], [0x5500FF, 0x0055FF, 0xFFAA00]], 
+	[[0x555555, 0xAAAAAA, 0x0055FF], [0xAAAAAA, 0x555555, 0x0055FF], [0xAAFFFF, 0xFFAA00, 0x0055FF]]*/
+	
+
 	hidden var events_list = [];
 	// redraw full watchface
 	hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -220,7 +231,7 @@ class lateView extends Ui.WatchFace {
 
 				if(Sys.getDeviceSettings().notificationCount){
 					dc.setColor(activityColor, backgroundColor);
-					dc.fillCircle(centerX-dc.getTextWidthInPixels(text, fontSmall)>>1-14, dateY+dc.getFontHeight(fontSmall)>>1, 5);
+					dc.fillCircle(centerX-dc.getTextWidthInPixels(text, fontSmall)>>1-14, dateY+dc.getFontHeight(fontSmall)>>1+1, 5);
 					/*dc.setColor(backgroundColor, backgroundColor);
 					dc.fillCircle(x-3, y, 2);
 					dc.fillCircle(x+3, y, 2);*/
@@ -313,16 +324,26 @@ class lateView extends Ui.WatchFace {
 				event[:marker] = null;
 			}
 			else {
-				if( tillStart < Calendar.SECONDS_PER_MINUTE*2 || tillStart > Calendar.SECONDS_PER_HOUR>>1 ) {
+				if(tillStart >= Calendar.SECONDS_PER_HOUR-Calendar.SECONDS_PER_MINUTE*2 ) {
 					event[:marker] = null;				 
 				} else {
-					event[:marker] = getMarkerCoords(events_list[i][0]);
+					event[:marker] = getMarkerCoords(events_list[i][0], tillStart);
 				}
 				event[:prefix] = "";
 				if (tillStart < Calendar.SECONDS_PER_HOUR) {
 					event[:start] = tillStart/Calendar.SECONDS_PER_MINUTE + "m";
-				} else {
+				} else if (tillStart < Calendar.SECONDS_PER_HOUR*8) {
 					event[:start] = tillStart/Calendar.SECONDS_PER_HOUR + "h" + tillStart%Calendar.SECONDS_PER_HOUR/Calendar.SECONDS_PER_MINUTE ;
+				} else {
+					var time = Calendar.info(event[:start], Calendar.FORMAT_SHORT);
+					if(Sys.getDeviceSettings().is24Hour){
+						event[:start] = time.hour + ":"+ time.min.format("%02d");
+					} else {
+						var h = time.hour;
+						if(h>11){ h-=12;}
+						if(0==h){ h=12;}
+						event[:start] = (h.toString() + ":"+ time.min.format("%02d"));
+					}
 				}
 			}
 			event[:location] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
@@ -437,10 +458,10 @@ class lateView extends Ui.WatchFace {
 	}
 
 	(:data)
-	function getMarkerCoords(event){
-		var lastHourSeconds = Time.now().value()-(clockTime.min*60+clockTime.sec);
-		var a = (event-lastHourSeconds).toFloat()/Calendar.SECONDS_PER_HOUR * 2*Math.PI;
-		var r = radius;
+	function getMarkerCoords(event, tillStart){
+		var secondsFromLastHour = event - (Time.now().value()-(clockTime.min*60+clockTime.sec));
+		var a = (secondsFromLastHour).toFloat()/Calendar.SECONDS_PER_HOUR * 2*Math.PI;
+		var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontMinutes)>>1;
 		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}
 

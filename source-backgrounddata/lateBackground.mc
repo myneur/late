@@ -43,7 +43,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       }
     } else {
       if(connected){
-        if (app.getProperty("user_code") == null){
+        if (app.getProperty("user_code") == null){ // && new Moment(app.getProperty("code_valid_till").compare(Time.now()) < -10))
           ///Sys.println("no code");
           getOAuthUserCode();
         } else {
@@ -91,8 +91,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
 
   function onTokenRefresh2GetData(responseCode, data){
-    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode); 
-    ///Sys.println(data);
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode); Sys.println(data);
     ///Sys.println([app, App.getApp()]);
     if (responseCode == 200) {
       access_token = data.get("access_token");

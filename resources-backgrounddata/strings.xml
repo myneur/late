@@ -5,7 +5,7 @@
 	
 	<string id="Calendar">Experimental: Google Calendar [here be dragons:]</string>
 	<string id="AddCalendars">Calendars to show</string>
-	<string id="CalendarPrompt">For Calendar: Watch your watch to get code and link to log-in. Than wait at least 5 mins.</string>
+	<string id="CalendarPrompt">For Calendar: Watch your watch to get code and link to log-in. Then wait at least 5 mins.</string>
 	<string id="CalendarsPrompt">Calendar IDs (typically your mail) separated by space</string>
 
 	<string id="refreshFrequency">Minutes to refresh calendar</string>
@@ -13,11 +13,12 @@
 	<string id="EnterCode">Enter </string>
 	<string id="LinkPrefix"></string>
 	<string id="Unauthorized">Wrong password</string>
+	<string id="Expired">Wait for new code</string>
 	<!--<string id="LogIn">Login by phone</string>
 	<string id="AuthContext">Garmin app</string>-->
 	<string id="NotSupportedData">Data not supported</string>
 	<string id="NotConnected">Connect to phone</string>
 	<string id="NoInternet">No internet</string>
 	<string id="NotFound">Page not found</string>
-	<string id="NastyError">Nasty Error</string>
+	<string id="NastyError">Auth Error</string>
 </strings>

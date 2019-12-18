@@ -96,8 +96,7 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		///Sys.println("onBackgroundData");
-		///Sys.println(data);
+		//Sys.println("onBackgroundData"); Sys.println(data);
 		///Sys.println([app, App.getApp()]);
 		try {
 			if(data.hasKey("refresh_token")){
@@ -118,6 +117,7 @@ class lateApp extends App.AppBase {
 				app.setProperty("user_code", data.get("user_code")); 
 				app.setProperty("verification_url", data.get("verification_url")); 
 				app.setProperty("device_code", data.get("device_code")); 
+				//app.setProperty("code_valid_till", new Time.now().value() + add(data.get("expires_in").toNumber()));
 				changeScheduleToMinutes(5);
 				data = promptLogin(data.get("user_code"), data.get("verification_url"));
 			}
@@ -146,7 +146,7 @@ class lateApp extends App.AppBase {
 						///Sys.println("unauthorized");
 						app.setProperty("refresh_token", null);
 						app.setProperty("user_code", null);
-						data["userPrompt"] = Ui.loadResource(Rez.Strings.Unauthorized);
+						data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
 					} 
 					else { // all other unanticipated errors
 						data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);

@@ -15,12 +15,7 @@ class lateApp extends App.AppBase {
 	function initialize() {
 		AppBase.initialize();
 		app = App.getApp();
-		///Sys.println([app, App.getApp()]);
 	}
-
-	function onStart(state) { }
-
-	function onStop(state) { }
 
 	function onSettingsChanged() {
 		watch.loadSettings();
@@ -39,14 +34,14 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		///Sys.println("scheduling");
+		//Sys.println("scheduling");
 		///Sys.println([app, App.getApp()]);
 		loadSettings();
 		if(watch.dataLoading && watch.activity == 6) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
 			if(app.getProperty("refresh_token") == null){
-				///Sys.println("no auth");
+				//Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {

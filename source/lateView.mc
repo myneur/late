@@ -42,11 +42,9 @@ class lateView extends Ui.WatchFace {
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
 	function initialize (){
-		//Sys.println("CIQ "+ Ui.loadResource(Rez.Strings.CIQ) +" free memory: "+Sys.getSystemStats().freeMemory);
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
-		var time=Sys.getTimer();
 		WatchFace.initialize();
 		var set=Sys.getDeviceSettings();
 		height = set.screenHeight;
@@ -165,22 +163,26 @@ class lateView extends Ui.WatchFace {
 
 	//! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
 	function onShow() {
+		//Sys.println("onShow");
 		redrawAll = 2;
 	}
 	
 	//! Called when this View is removed from the screen. Save the state of this View here. This includes freeing resources from memory.
 	function onHide(){
+		//Sys.println("onHide");
 		redrawAll =0;
 	}
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
 	function onExitSleep(){
+		//Sys.println("onExitSleep");
 		//wakeCount++;
-		redrawAll = 2;
+		redrawAll = 1;
 	}
 
 	//! Terminate any active timers and prepare for slow updates.
 	function onEnterSleep(){
+		//Sys.println("onEnterSleep");
 		redrawAll =0;
 	}
 
@@ -193,7 +195,7 @@ class lateView extends Ui.WatchFace {
 	function onUpdate (dc) {
 		clockTime = Sys.getClockTime();
 		if (lastRedrawMin != clockTime.min) { redrawAll = 1; }
-
+		//var ms = [Sys.getTimer()];
 		if (redrawAll!=0){
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.clear();
@@ -219,6 +221,7 @@ class lateView extends Ui.WatchFace {
 			dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
 			drawBatteryLevel(dc);
 			drawMinuteArc(dc);
+			//ms.add(Sys.getTimer()-ms[0]);
 			if(centerY>89){
 				// function drawDate(x, y){}
 				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
@@ -258,15 +261,19 @@ class lateView extends Ui.WatchFace {
 						dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
 						dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
 					} else { 
+						//ms.add(Sys.getTimer()-ms[0]);
 						drawEvent(dc);
+						//ms.add(Sys.getTimer()-ms[0]);
 						drawEvents(dc);
+						//ms.add(Sys.getTimer()-ms[0]);
 					}
 				}
 			}
 			drawNowCircle(dc, clockTime.hour);
 		}
-		
-		if (0>redrawAll) { redrawAll--; }
+		//ms.add(Sys.getTimer()-ms[0]);
+		//Sys.println("ms: " + ms + " sec: " + clockTime.sec + " redrawAll: " + redrawAll);
+		if (redrawAll>0) { redrawAll--; }
 	}
 
 	function showMessage(message){

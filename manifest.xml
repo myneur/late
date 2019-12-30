@@ -14,7 +14,6 @@
 			<!-- 240x240 with data 64 colors 94k memory-->
 			<iq:product id="fenix6s"/>
 			<iq:product id="fenix6spro"/>
-			<iq:product id="approachs60"/>
 			<iq:product id="fenix5"/> <!-- = Quatix 5 -->
 			<iq:product id="fenix5plus"/>
 			<iq:product id="fenix5x"/>
@@ -36,6 +35,8 @@
 			<iq:product id="marqcaptain"/>
 			<iq:product id="marqexpedition"/>
 			<iq:product id="marqdriver"/>
+			<!-- no support floors climbed -->
+			<iq:product id="approachs60"/>
 
 			<!-- 218x218 with data 16 colors 94k memory-->
 			<iq:product id="d2charlie"/>
@@ -48,7 +49,7 @@
 			<iq:product id="fenix5splus"/>
 			<iq:product id="vivoactive4s"/>
 
-			<!-- semi-round 215x180 with data 16c olors 65k memory CIQ2 -->
+			<!-- semi-round 215x180 with data 16c olors 65k memory CIQ2 no support floors climbed -->
 			<iq:product id="fr735xt"/>
 
 			<!-- rectangle 148x205 with data 64 colors 61k memory CIQ2 -->

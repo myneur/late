@@ -15,7 +15,7 @@ class lateView extends Ui.WatchFace {
 	hidden const CENTER = Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER;
 	hidden var dateForm; hidden var batThreshold = 33;
 	hidden var centerX; hidden var centerY; hidden var height;
-	hidden var color = Gfx.COLOR_YELLOW; hidden var dateColor = 0x555555; hidden var activityColor = 0x555555; hidden var backgroundColor = Gfx.COLOR_BLACK;
+	hidden var color; hidden var dateColor = 0x555555; hidden var activityColor = 0x555555; hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
 	var activity = 0; var showSunrise = false; var dataLoading = false;
 	hidden var icon = null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
@@ -23,7 +23,8 @@ class lateView extends Ui.WatchFace {
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var fontSmall = null; hidden var fontMinutes = null; hidden var fontHours = null; hidden var fontCondensed = null;
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; //hidden var notifY;
-	hidden var event = {:start=>0, :end=>0, :name=>"", :location=>"", :prefix=>"", :mid=>0, :height=>25};
+	
+	hidden var eventStart=null; hidden var eventName=""; hidden var eventLocation=""; hidden var eventTab=0; hidden var eventHeight=23; hidden var eventMarker=null; //eventEnd=0;
 	hidden var events_list = [];
 	// redraw full watchface
 	hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -31,11 +32,10 @@ class lateView extends Ui.WatchFace {
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
 	function initialize (){
-		//Sys.println("CIQ "+ Ui.loadResource(Rez.Strings.CIQ) +" free memory: "+Sys.getSystemStats().freeMemory);
+		//Sys.println("initialize");
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
-		var time=Sys.getTimer();
 		WatchFace.initialize();
 		var set=Sys.getDeviceSettings();
 		height = set.screenHeight;
@@ -96,8 +96,8 @@ class lateView extends Ui.WatchFace {
 				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
 				if(activity == 6){
 					if(dataLoading){
-						event["height"] = Gfx.getFontHeight(fontCondensed)-1;
-						activityY = (centerY-radius+10)>>2 - event["height"] + centerY+radius+10;
+						eventHeight = Gfx.getFontHeight(fontCondensed)-1;
+						activityY = (centerY-radius+10)>>2 - eventHeight + centerY+radius+10;
 						showMessage(App.getApp().scheduleDataLoading());
 					} else { 
 						activity = 0;
@@ -120,20 +120,37 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function loadSettings(){
-		color = App.getApp().getProperty("color");
-		dateForm = App.getApp().getProperty("dateForm");
-		activity = App.getApp().getProperty("activity");
-		showSunrise = App.getApp().getProperty("sunriset");
-		batThreshold = App.getApp().getProperty("bat");
-		circleWidth = App.getApp().getProperty("boldness");
-		dialSize = App.getApp().getProperty("dialSize");
+		//Sys.println("loadSettings");
+		var app = App.getApp();
+		dateForm = app.getProperty("dateForm");
+		activity = app.getProperty("activity");
+		showSunrise = app.getProperty("sunriset");
+		batThreshold = app.getProperty("bat");
+		circleWidth = app.getProperty("boldness");
+		dialSize = app.getProperty("dialSize");
 
-//color = 0x00AAFF;
-//activity = 1;
-//showSunrise = true;
-//batThreshold = 100;
-//dialSize = 1;
-//circleWidth = 3;
+		var palette = [
+			[0xFF0000, 0xFFAA00, 0x00FF00, 0x00AAFF, 0xFF00FF, 0xAAAAAA],
+			[0xAA0000, 0xFF5500, 0x00AA00, 0x0000FF, 0xAA00FF, 0x555555], 
+			[0xAA0055, 0xFFFF00, 0x55FFAA, 0x00AAAA, 0x5500FF, 0xAAFFFF]
+		];
+		var tone = app.getProperty("tone").toNumber()%3;
+		var mainColor = app.getProperty("mainColor").toNumber()%6;
+		color = palette[tone][mainColor];
+
+		if(app.getProperty("calendar_colors")){
+			calendarColors = Ui.loadResource(Rez.JsonData.calendarColors)[mainColor];
+			for(var i=0; i<calendarColors.size(); i++){
+				calendarColors[i] = calendarColors[i].toNumberWithBase(0x10);
+			}
+			app.setProperty("calendarColors", calendarColors);
+		} else {
+			if(app.getProperty("calendarColors")!=null){
+				calendarColors = app.getProperty("calendarColors");
+			} else {
+				app.setProperty("calendarColors", calendarColors);
+			}
+		}
 
 		// when running for the first time: load resources and compute sun positions
 		if(showSunrise){ // TODO recalculate when day or position changes
@@ -160,23 +177,27 @@ class lateView extends Ui.WatchFace {
 
 	//! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
 	function onShow() {
-		redrawAll = 2;
+		///Sys.println("onShow");
+		redrawAll=2;
 	}
 	
 	//! Called when this View is removed from the screen. Save the state of this View here. This includes freeing resources from memory.
 	function onHide(){
-		redrawAll =0;
+		//Sys.println("onHide");
+		redrawAll=0;
 	}
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
 	function onExitSleep(){
+		///Sys.println("onExitSleep");
 		//wakeCount++;
-		redrawAll = 2;
+		redrawAll=1;
 	}
 
 	//! Terminate any active timers and prepare for slow updates.
 	function onEnterSleep(){
-		redrawAll =0;
+		///Sys.println("onEnterSleep");
+		//redrawAll=0;
 	}
 
 	/*function openTheMenu(){
@@ -186,12 +207,12 @@ class lateView extends Ui.WatchFace {
 
 	//! Update the view
 	function onUpdate (dc) {
+		///Sys.println("onUpdate "+redrawAll);
 		clockTime = Sys.getClockTime();
-
-		if (lastRedrawMin != clockTime.min) { redrawAll = 1; }
-
-		if (redrawAll!=0){
-			dc.setColor(0x00, 0x00);
+		if (lastRedrawMin != clockTime.min && redrawAll==0) { redrawAll = 1; }
+		//var ms = [Sys.getTimer()];
+		//if (redrawAll>0){
+			dc.setColor(backgroundColor, backgroundColor);
 			dc.clear();
 			lastRedrawMin=clockTime.min;
 			var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
@@ -211,11 +232,14 @@ class lateView extends Ui.WatchFace {
 				if(0==h){ h=12;}
 			}
 			// TODO if(set.notificationCount){dc.drawBitmap(centerX, notifY, iconNotification);}
-			dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
+			dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
+			drawBatteryLevel(dc);
+			drawMinuteArc(dc);
+			//ms.add(Sys.getTimer()-ms[0]);
 			if(centerY>89){
 				// function drawDate(x, y){}
-				dc.setColor(dateColor, Gfx.COLOR_BLACK);
+				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 				var text = "";
 				if(dateForm != null){
 					text = Lang.format("$1$ ", ((dateForm == 0) ? [info.month] : [info.day_of_week]) );
@@ -223,12 +247,20 @@ class lateView extends Ui.WatchFace {
 				text += info.day.format("%0.1d");
 				dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
 
+				if(Sys.getDeviceSettings().notificationCount){
+					dc.setColor(activityColor, backgroundColor);
+					dc.fillCircle(centerX-dc.getTextWidthInPixels(text, fontSmall)>>1-14, dateY+dc.getFontHeight(fontSmall)>>1+1, 5);
+					/*dc.setColor(backgroundColor, backgroundColor);
+					dc.fillCircle(x-3, y, 2);
+					dc.fillCircle(x+3, y, 2);*/
+				}
+
 				/*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, CENTER);
 				dc.setPenWidth(2);
 				dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);
 				*/
 				//System.println(method(:humanizeNumber).invoke(100000)); // TODO this is how to save and invoke method callback to get rid of ugly ifelse like below
-				// The best circle for activity percentages: dc.setPenWidth(2);dc.setColor(Gfx.COLOR_DK_GRAY, 0); dc.drawArc(centerX, 190, 10, Gfx.ARC_CLOCKWISE, 90, 90-49*6);
+				// The best circle arc radius for activity percentages: dc.setPenWidth(2);dc.setColor(Gfx.COLOR_DK_GRAY, 0); dc.drawArc(centerX>>2, height-centerY>>1, 10, Gfx.ARC_CLOCKWISE, 90, 90-49*6);
 
 				if(activity > 0){
 					text = ActivityMonitor.getInfo();
@@ -239,35 +271,39 @@ class lateView extends Ui.WatchFace {
 					else if(activity == 5){ text = (text.floorsClimbed.toString()); }
 					else {text = "";}
 
-					dc.setColor(activityColor, Gfx.COLOR_BLACK);
+					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 					if(activity < 6){
 						dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
 						dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
 					} else { 
+						//ms.add(Sys.getTimer()-ms[0]);
 						drawEvent(dc);
+						//ms.add(Sys.getTimer()-ms[0]);
 						drawEvents(dc);
+						//ms.add(Sys.getTimer()-ms[0]);
 					}
 				}
 			}
-			drawBatteryLevel(dc);
-			drawMinuteArc(dc);
-			if(activity == 6 || showSunrise){
-				drawNowCircle(dc, h);
-			}
-		}
-		
-		if (0>redrawAll) { redrawAll--; }
+			drawNowCircle(dc, clockTime.hour);
+		//}
+		//ms.add(Sys.getTimer()-ms[0]);
+		//Sys.println("ms: " + ms + " sec: " + clockTime.sec + " redrawAll: " + redrawAll);
+		//if (redrawAll>0) { redrawAll--; }
 	}
 
 	function showMessage(message){
-		///Sys.println(message);
+		///Sys.println("message "+message);
 		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
-			var nowError = (Time.now()).value();
+			var nowError = Time.now().value();
 			if(message.hasKey("wait")){
-				nowError -= message["wait"].toNumber();
+				nowError += message["wait"].toNumber();
 			}
 			var context = message.hasKey("userContext") ? " "+ message["userContext"] : "";
-			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, message["userPrompt"].toString(), context, 0, -1, 1]]; 
+			var calendar = message.hasKey("permanent") ? -1 : 0;
+
+			var degreeStart = ((nowError-Time.today().value())/(Calendar.SECONDS_PER_DAY.toFloat()/360)).toFloat(); // TODO bug: for some reason it won't show it at all althought the degrees are correct. 
+
+			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, message["userPrompt"].toString(), context, calendar, degreeStart, degreeStart+2]]; 
 		}
 	}
 
@@ -287,9 +323,9 @@ class lateView extends Ui.WatchFace {
 	function updateCurrentEvent(dc){
 		for(var i=0; i<events_list.size(); i++){
 			
-			event[:start] = new Time.Moment(events_list[i][0]);
+			eventStart = new Time.Moment(events_list[i][0]);
 			var timeNow = Time.now();
-			var tillStart = event[:start].compare(timeNow);
+			var tillStart = eventStart.compare(timeNow);
 			var eventEnd = new Time.Moment(events_list[i][1]);
 			
 			if(eventEnd.compare(timeNow)<0){
@@ -299,29 +335,52 @@ class lateView extends Ui.WatchFace {
 			}
 			if(tillStart < -300){
 			  continue;  
-			} 
-			event[:name] = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21); 
+			}
+			//eventEnd = (new Time.Moment(events_list[i][1])).value(); 
+			eventName = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21); 
 
 			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
 			if( tillStart <0){
-				event[:start] = "now!";
-				event[:prefix] = "";
-			} else {
-				event[:prefix] = "";
-				if (tillStart < 60*60) {
-					event[:start] = tillStart/60 + "m";
+				eventStart = "now!";
+				eventMarker = null;
+			}
+			else {
+				if(tillStart >= Calendar.SECONDS_PER_HOUR-Calendar.SECONDS_PER_MINUTE*2 ) {
+					eventMarker = null;				 
 				} else {
-					event[:start] = tillStart/3600 + "h" + tillStart%3600/60 ;
+					eventMarker = getMarkerCoords(events_list[i][0], tillStart);
+				}
+				if (tillStart < Calendar.SECONDS_PER_HOUR) {
+					eventStart = tillStart/Calendar.SECONDS_PER_MINUTE + "m";
+				} else if (tillStart < Calendar.SECONDS_PER_HOUR*8) {
+					eventStart = tillStart/Calendar.SECONDS_PER_HOUR + "h" + tillStart%Calendar.SECONDS_PER_HOUR/Calendar.SECONDS_PER_MINUTE ;
+				} else {
+					var time = Calendar.info(eventStart, Calendar.FORMAT_SHORT);
+					if(Sys.getDeviceSettings().is24Hour){
+						eventStart = time.hour + ":"+ time.min.format("%02d");
+					} else {
+						var h = time.hour;
+						if(h>11){ h-=12;}
+						if(0==h){ h=12;}
+						eventStart = (h.toString() + ":"+ time.min.format("%02d"));
+					}
 				}
 			}
-			event[:location] = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
-			event[:mid] = (
-				dc.getTextWidthInPixels(event[:prefix]+event[:start]+event[:location], fontCondensed)>>1 
-				-(dc.getTextWidthInPixels(event[:prefix]+event[:start], fontCondensed))
-			);
+			eventLocation = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
+			
+			if(events_list[i][4]<0){ // no calendar event, but prompt
+				eventTab = null;
+				eventLocation = events_list[i][3];
+			} else {
+				eventTab = (
+					dc.getTextWidthInPixels(eventStart+eventLocation, fontCondensed)>>1 
+					-(dc.getTextWidthInPixels(eventStart, fontCondensed))
+				);
+			}
 			return;
 		}
-		event[:start] = null;
+		eventStart = null;
+		eventMarker = null;
 	}
 
 
@@ -335,38 +394,53 @@ class lateView extends Ui.WatchFace {
 
 	function drawNowCircle(dc, hour){
 		// show now in a day
-		var a = Math.PI/(12*60.0) * (hour*60+clockTime.min);
-		/*var bitmapNow = sun;
-		if(a<sunset[SUNRISET_NOW] || a>sunrise[SUNRISET_NOW]){
-			bitmapNow = moon;
-		} 
-		var r = centerX - 11;
-		dc.drawBitmap(centerX + (r * Math.sin(a))-bitmapNow.getWidth()>>1, centerY - (r * Math.cos(a))-bitmapNow.getWidth()>>1, bitmapNow);*/
-		
-		var r = centerX-9;
-		//dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
-		dc.setColor(0, 0);
-		dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),5);
-		if(activity == 6){
-			dc.setColor(dateColor, backgroundColor);
-			dc.fillCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),4);
-		} else {
-			dc.setColor(activityColor, backgroundColor);
-			dc.setPenWidth(1);
-			dc.drawCircle(centerX+((r)*Math.sin(a)), centerY-((r)*Math.cos(a)),4);
+		if(showSunrise || (activity == 6 && App.getApp().getProperty("refresh_token"))){
+			var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
+			var r = centerX-9;
+			var x = centerX+(r*Math.sin(a));
+			var y = centerY-(r*Math.cos(a));
+			dc.setColor(backgroundColor, backgroundColor);
+			dc.fillCircle(x, y, 5);
+			if(activity == 6){
+				dc.setColor(dateColor, backgroundColor);
+				dc.fillCircle(x, y, 4);
+			} else {
+				dc.setColor(activityColor, backgroundColor);
+				dc.setPenWidth(1);
+				dc.drawCircle(x, y, 4);
+			}
+			// line instead of circle dc.drawLine(centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a)),centerX+((r-11)*Math.sin(a)), centerY-((r-11)*Math.cos(a)));
 		}
 	}
 
 	(:data)
 	function drawEvent(dc){
 		updateCurrentEvent(dc);
-		if(event[:start]){
-			dc.drawText(centerX, activityY, fontCondensed, event[:name], Gfx.TEXT_JUSTIFY_CENTER);
-			dc.setColor(dateColor, backgroundColor);
+		if(eventStart){
+			if(eventTab==null){	// emphasized event without date
+				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
+			}
+			dc.drawText(centerX, activityY, fontCondensed, eventName, Gfx.TEXT_JUSTIFY_CENTER);
+			dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 			// TODO remove prefix for simplicity and size limitations
-			dc.drawText(centerX-event[:mid], activityY+event[:height], fontCondensed, event[:prefix]+event[:start], Gfx.TEXT_JUSTIFY_RIGHT);
-			dc.setColor(activityColor, Gfx.COLOR_BLACK);
-			dc.drawText(centerX-event[:mid], activityY+event[:height], fontCondensed, event[:location], Gfx.TEXT_JUSTIFY_LEFT);
+
+			var x = centerX;
+			var justify = Gfx.TEXT_JUSTIFY_CENTER;
+			if(eventTab!=null){
+				x-=eventTab;
+				dc.drawText(x, activityY+eventHeight, fontCondensed, eventStart, Gfx.TEXT_JUSTIFY_RIGHT);
+				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+				justify = Gfx.TEXT_JUSTIFY_LEFT;
+			} 
+			//else {dc.drawText(x,  height-batteryY, fontCondensed, eventStart, Gfx.TEXT_JUSTIFY_VCENTER);}
+			dc.drawText(x, activityY+eventHeight, fontCondensed, eventLocation, justify);
+		}
+		if(eventMarker){
+			var coord = eventMarker;
+			dc.setColor(backgroundColor, backgroundColor);
+			dc.fillCircle(coord[0], coord[1], 4);
+			dc.setColor(dateColor, backgroundColor);
+			dc.fillCircle(coord[0], coord[1], 2);
 		}
 	}
 
@@ -374,10 +448,11 @@ class lateView extends Ui.WatchFace {
 	function drawEvents(dc){
 		dc.setPenWidth(5);
 		var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;
-		var tomorrow = Time.now().value()+3600*24;
+		var tomorrow = Time.now().value()+Calendar.SECONDS_PER_DAY;
 		var degreeStart;
 		var degreeEnd;
 		for(var i=0; i <events_list.size(); i++){
+			///Sys.println(events_list[i]);
 			if(events_list[i][1]>=tomorrow && (events_list[i][6].toNumber() > nowBoundary )){ // crop tomorrow event overlapping now on 360° dial
 				degreeStart=events_list[i][5].toNumber()%360;
 				degreeEnd=nowBoundary-1;
@@ -394,10 +469,20 @@ class lateView extends Ui.WatchFace {
 			if(degreeEnd-1 >= degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
 				dc.setColor(backgroundColor, backgroundColor);
 				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
-				dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
+				if(events_list[i][4]>=0){
+					dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
+				}
 				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}
 		}
+	}
+
+	(:data)
+	function getMarkerCoords(event, tillStart){
+		var secondsFromLastHour = event - (Time.now().value()-(clockTime.min*60+clockTime.sec));
+		var a = (secondsFromLastHour).toFloat()/Calendar.SECONDS_PER_HOUR * 2*Math.PI;
+		var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontMinutes)>>1-1;
+		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}
 
 	function drawMinuteArc (dc){
@@ -409,11 +494,12 @@ class lateView extends Ui.WatchFace {
 		var offset=0;
 		var gap=0;
 
-		dc.setColor(Gfx.COLOR_WHITE, 0);
+		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontMinutes, minutes /*clockTime.min.format("%0.1d")*/, CENTER);
-
+		
+		
 		if(minutes>0){
-			dc.setColor(color, 0);
+			dc.setColor(color, backgroundColor);
 			dc.setPenWidth(circleWidth);
 			
 			/* kerning values not to have ugly gaps between arc and minutes
@@ -461,8 +547,6 @@ class lateView extends Ui.WatchFace {
 
 	function drawBatteryLevel (dc){
 		var bat = Sys.getSystemStats().battery;
-		//batThreshold=100;bat = 10;
-
 		if(bat<=batThreshold){
 
 			var xPos = centerX-10;
@@ -470,14 +554,14 @@ class lateView extends Ui.WatchFace {
 
 			// print the remaining %
 			//var str = bat.format("%d") + "%";
-			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+			dc.setColor(backgroundColor, backgroundColor);
 			dc.setPenWidth(1);
 			dc.fillRectangle(xPos,yPos,20, 10);
 
 			if(bat<=15){
-				dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_BLACK);
+				dc.setColor(Gfx.COLOR_RED, backgroundColor);
 			} else {
-				dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_BLACK);
+				dc.setColor(Gfx.COLOR_DK_GRAY, backgroundColor);
 			}
 				
 			// draw the battery
@@ -488,7 +572,7 @@ class lateView extends Ui.WatchFace {
 			var lvl = floor((15.0 * (bat / 99.0)));
 			if (1.0 <= lvl) { dc.fillRectangle(xPos + 2, yPos + 2, lvl, 6); }
 			else {
-				dc.setColor(Gfx.COLOR_ORANGE, Gfx.COLOR_BLACK);
+				dc.setColor(Gfx.COLOR_ORANGE, backgroundColor);
 				dc.fillRectangle(xPos + 1, yPos + 1, 1, 8);
 			}
 		}
@@ -507,14 +591,8 @@ class lateView extends Ui.WatchFace {
 			a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
 			a *= Math.PI/(12 * 60.0);
 			dc.drawBitmap(centerX + (r * Math.sin(a))-sunst.getWidth()>>1, centerY - (r * Math.cos(a))-sunst.getWidth()>>1, sunst);
-			//System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"));
-
-			/*dc.setColor(0x555555, 0);
-			dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*/
-
-			/*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360;
-			System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a))));
-			dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
+			
+			//System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d")); /*dc.setColor(0x555555, 0); dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*//*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360; System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a)))); dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
 		}
 	}
 
@@ -576,15 +654,7 @@ class lateView extends Ui.WatchFace {
 			}
 		}
 
-		/*var sunriseInfoStr = new [SUNRISET_NBR];
-		var sunsetInfoStr = new [SUNRISET_NBR];
-		for (var i = 0; i < SUNRISET_NBR; i++)
-		{
-			sunriseInfoStr[i] = Lang.format("$1$:$2$", [sunrise[i].toNumber() % 24, ((sunrise[i] - sunrise[i].toNumber()) * 60).format("%.2d")]);
-			sunsetInfoStr[i] = Lang.format("$1$:$2$", [sunset[i].toNumber() % 24, ((sunset[i] - sunset[i].toNumber()) * 60).format("%.2d")]);
-			//var str = i+":"+ "sunrise:" + sunriseInfoStr[i] + " | sunset:" + sunsetInfoStr[i];
-			//Sys.println(str);
-		}*/
+		/*var sunriseInfoStr = new [SUNRISET_NBR]; var sunsetInfoStr = new [SUNRISET_NBR]; for (var i = 0; i < SUNRISET_NBR; i++){sunriseInfoStr[i] = Lang.format("$1$:$2$", [sunrise[i].toNumber() % 24, ((sunrise[i] - sunrise[i].toNumber()) * 60).format("%.2d")]); sunsetInfoStr[i] = Lang.format("$1$:$2$", [sunset[i].toNumber() % 24, ((sunset[i] - sunset[i].toNumber()) * 60).format("%.2d")]); //var str = i+":"+ "sunrise:" + sunriseInfoStr[i] + " | sunset:" + sunsetInfoStr[i]; //Sys.println(str);}*/
 		return;
 	}
 }

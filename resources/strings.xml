@@ -5,18 +5,15 @@
 	<string id="DataLoading">0</string>
 
 	<string id="ColorTitle">Color</string>
-	<string id="ColorWhite">White</string>
-	<string id="ColorBlue">Blue</string>
-	<string id="ColorDarkBlue">Dark Blue</string>
+	<string id="ToneTitle">Tone</string>
+	<string id="Light">Light</string>
+	<string id="Dark">Dark</string>
+
 	<string id="ColorRed">Red</string>
-	<string id="ColorDarkRed">Dark Red</string>
 	<string id="ColorOrange">Orange</string>
-	<string id="ColorYellow">Yellow</string>
-	<string id="ColorPurple">Purple</string>
-	<string id="ColorPink">Pink</string>
+	<string id="ColorBlue">Blue</string>
 	<string id="ColorGreen">Green</string>
-	<string id="ColorDarkGreen">Dark Green</string>
-	<string id="ColorDarkGray">Dark Gray</string>
+	<string id="ColorPurple">Purple</string>
 	<string id="ColorGray">Gray</string>
 
 	<string id="DateFormTitle">Date Format</string>
@@ -41,7 +38,7 @@
 	<string id="b4">4</string>
 	<string id="b5">5</string>
 	<string id="b7">7</string>
-	<string id="b10">10</string>
+	<string id="b9">9</string>
 
 	<string id="DialSize">Dial flavor</string>
 	<string id="s0">Elegant</string>

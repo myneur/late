@@ -2,12 +2,28 @@
 	<string id="AppName">simply late! calendar</string>
 	<string id="CIQ">2</string>
 	<string id="DataLoading">1</string>
-	
-	<string id="Calendar">Experimental: Calendar [here be dragons:]</string>
 
-	<string id="refreshFrequency">Refresh frequency for calendar (minutes)</string>
-	<string id="LogIn">Login by phone</string>
-	<string id="LogInDelayed">Wait to login by phone</string>
-	<string id="AuthContext">Garmin app</string>
+	<string id="Vivid">Vivid</string>
+	
+	<string id="CalendarColors">Experimental: Calendar Colors</string>
+	<string id="CalendarNoChange">Do not change</string>
+	<string id="CalendarByColor">Watch color / Other color / Gray or cold</string>
+	<string id="Calendar">Experimental: Google Calendar [here be dragons:]</string>
+	<string id="AddCalendars">Calendars to show</string>
+	<string id="CalendarPrompt">For Calendar: Watch your watch to get code and link to log-in. Then wait at least 5 mins.</string>
+	<string id="CalendarsPrompt">Calendar IDs (typically your mail) separated by space</string>
+
+	<string id="refreshFrequency">Minutes to refresh calendar</string>
+	<string id="Wait4login">Wait to login</string>
+	<string id="EnterCode">Enter </string>
+	<string id="LinkPrefix"></string>
+	<string id="Unauthorized">Wrong password</string>
+	<string id="Expired">Wait for new code</string>
+	<!--<string id="LogIn">Login by phone</string>
+	<string id="AuthContext">Garmin app</string>-->
 	<string id="NotSupportedData">Data not supported</string>
+	<string id="NotConnected">Connect to phone</string>
+	<string id="NoInternet">No internet</string>
+	<string id="NotFound">Page not found</string>
+	<string id="NastyError">Auth Error</string>
 </strings>

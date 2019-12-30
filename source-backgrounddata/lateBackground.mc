@@ -30,7 +30,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   }
   
   function onTemporalEvent() {
-    Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
+    ///Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     ///Sys.println([app, App.getApp()]);
     app = App.getApp();
     var connected = Sys.getDeviceSettings().phoneConnected;
@@ -204,7 +204,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   
   var events_list_size = 0;
   function onEvents(responseCode, data) {
-    ///Sys.println(Sys.getSystemStats().freeMemory +" on onEvents");
+    //Sys.println(Sys.getSystemStats().freeMemory +" on onEvents"); Sys.println(data);
     if(responseCode == 200) { // TODO handle non 200 codes
       data = data.get("items");
       var eventsToSafelySend = primary_calendar ? 8 : 9;

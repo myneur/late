@@ -7,11 +7,12 @@
 * ...and get a sense of where you are within the hour (here analog watches are great)
 * this concept combines the best from both worlds
 
-Based on a [design concept](https://www.behance.net/gallery/33752138/Smart-watch-face-navigating-through-the-day) optimizing watch for daily usabilty. 
+Now with [Google Calendar](https://sl8.ch/). 
 Availabe in [Garmin Connect IQ Store](https://apps.garmin.com/en-US/apps/3532114a-c93c-447a-bc8e-25999ea599fc).
  
- If you can contribute to show calendar events in the watchface, that would be awesome! 
+Do you like it? [Would you like to join us and contribute with any of these?](https://portal.productboard.com/myneur/1-simply-late/tabs/9-are-you-developer). 
 
 ## Special thanks
-* To Diego Fernandez Bravo: Thank you for sharing your code which was base to this watch face
+* To Diego Fernandez Bravo: Thank you for sharing your code as a base for this watch face
+* To Deniz Uğur: Thank you for finding a way how to read a Google calendar despite all the traps from both Garmin and Google
 

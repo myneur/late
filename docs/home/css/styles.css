@@ -1,0 +1,114 @@
+body {
+  background-color: #ffffff;
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../res/fonts/Roboto-Thin.ttf");
+}
+
+@font-face {
+  font-family: "Robot Condensed";
+  src: url("../res/fonts/Roboto-Condensed.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Light";
+  src: url("../res/fonts/Roboto-Light.ttf");
+}
+
+@font-face {
+  font-family: "Alegreya Sans";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Alegreya Sans Light"), local("AlegreyaSans-Light"),
+    url(//themes.googleusercontent.com/static/fonts/alegreyasans/v1/11EDm-lum6tskJMBbdy9aaWGgEO1vGR9ucXjKCo8vxU.woff)
+      format("woff");
+}
+
+/* Body Tools */
+
+.center {
+  position: relative;
+  margin: 70px;
+  width: 650px;
+  height: 500px;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Title */
+
+a {
+  position: relative;
+  display: inline-block;
+  margin: 2px 5px;
+  outline: none;
+  color: rgb(0, 0, 0);
+  font-family: "Roboto Light", sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  font-size: 1.35em;
+}
+
+p {
+  color: rgb(0, 0, 0);
+  width: 300px;
+  font-size: 18px;
+  font-family: "Alegreya Sans", sans-serif;
+}
+
+.title a {
+  cursor: default;
+  overflow: hidden;
+  padding: 0 4px;
+  height: 40px;
+}
+
+.title a span {
+  font-size: 40px;
+  position: relative;
+  display: inline-block;
+  -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: -moz-transform 0.3s;
+  transition: transform 0.3s;
+}
+
+/* Device Frame */
+
+#device-frame {
+  position: absolute;
+  right: -70px;
+  top: -25%;
+  width: 420px;
+  height: 500px;
+}
+
+.fullscreenlayer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 640px;
+}
+
+#layer-wallpaper {
+  background-size: cover;
+  background-position: 50% 50%;
+}

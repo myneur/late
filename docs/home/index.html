@@ -1,0 +1,90 @@
+<!--
+Copyright 2015 Deniz Ugur
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-8">
+    <meta property="og:title" content="simple late!">
+    <meta property="og:description" content="simple late! is a Garmin watch face">
+    <title>simple late!</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/button.css">
+    <script language="javascript" type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery.cycle.lite.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body onload="init();">
+    <div class="center unselectable">
+        <div class="title">
+            <a>
+                <span>simply late!</span>
+            </a>
+        </div>
+        <svg class="hidden">
+            <defs>
+                <clipPath id="clipBox" clipPathUnits="objectBoundingBox">
+                    <polygon points="0,0 0,1 0.35,1 0.35,0.6 0.65,0.6 0.65,1 1,1 1,0"></polygon>
+                </clipPath>
+            </defs>
+        </svg>
+        <p><i><b>simply late!</b> combines best of both analog and digital watches.</i>
+            <br /><br />
+            You rarely need to know an exact hour and minute in the day. You rather need to know what is a current hour
+            quickly ...and get a sense of where you are within the hour. This watchface combines the best from both
+            worlds.
+        </p>
+        <div class="bg">
+            <button id="github" class="button button--itzel button--size-l button--border-thin button--text-thin">
+                <i class="button__icon icon">
+                    <img src="res/github.png">
+                </i>
+                <span>GitHub</span>
+            </button>
+        </div>
+        <div class="bg">
+            <button id="behance" class="button button--itzel button--size-l button--border-thin button--text-thin">
+                <i class="button__icon icon">
+                    <img src="res/behance.png">
+                </i>
+                <span>Behance</span>
+            </button>
+        </div>
+        <div class="bg">
+            <button id="ciq" class="button button--itzel button--size-l button--border-thin button--text-thin">
+                <i class="button__icon icon">
+                    <img src="res/ciq.png">
+                </i>
+                <span>CIQ</span>
+            </button>
+        </div>
+        <div id="device-frame">
+            <div id="device-screen">
+                <div id="layer-wallpaper" class="fullscreenlayer">
+                    <div id="device-screenshots">
+                        <img src="res/screenshots/1.png">
+                        <img src="res/screenshots/2.png">
+                        <img src="res/screenshots/3.png">
+                        <img src="res/screenshots/4.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

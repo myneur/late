@@ -1,0 +1,139 @@
+.bg {
+  background: #37474f;
+  color: rgb(0, 0, 0);
+}
+
+.button {
+  float: left;
+  min-width: 80px;
+  max-width: 90px;
+  display: block;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  padding: 1em 2em;
+  border: none;
+  background: none;
+  color: inherit;
+  vertical-align: middle;
+  position: relative;
+  z-index: 1;
+  -webkit-backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button > span {
+  vertical-align: middle;
+}
+
+.bg .button {
+  color: rgb(0, 0, 0);
+  border-color: rgb(0, 0, 0);
+}
+
+.button--size-l {
+  font-size: 18px;
+}
+
+.button--text-thin {
+  font-weight: 300;
+}
+
+.button--border-thin {
+  border: 1px solid;
+}
+
+.button--itzel {
+  border: none;
+  padding: 0px;
+  overflow: hidden;
+  width: 255px;
+}
+
+.button--itzel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid;
+  border-radius: inherit;
+  -webkit-clip-path: polygon(
+    0% 0%,
+    0% 100%,
+    35% 100%,
+    35% 60%,
+    65% 60%,
+    65% 100%,
+    100% 100%,
+    100% 0%
+  );
+  clip-path: url(../index.html#clipBox);
+  -webkit-transform: translate3d(0, 100%, 0) translate3d(0, -2px, 0);
+  transform: translate3d(0, 100%, 0) translate3d(0, -2px, 0);
+  -webkit-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+}
+
+.button--itzel.button--border-thin::before {
+  border: 1px solid;
+  -webkit-transform: translate3d(0, 100%, 0) translate3d(0, -1px, 0);
+  transform: translate3d(0, 100%, 0) translate3d(0, -1px, 0);
+}
+
+.button--itzel.button--border-thick::before {
+  border: 3px solid;
+  -webkit-transform: translate3d(0, 100%, 0) translate3d(0, -3px, 0);
+  transform: translate3d(0, 100%, 0) translate3d(0, -3px, 0);
+}
+
+.button--itzel::before,
+.button--itzel .button__icon {
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  -webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+  transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+}
+
+.button--itzel .button__icon {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  padding: 20px;
+  font-size: 20px;
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+}
+
+.button--itzel > span {
+  display: block;
+  padding: 20px;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+}
+
+.button--itzel:hover::before {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.button--itzel:hover .button__icon {
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+  -webkit-transform: translate3d(-50%, -100%, 0);
+  transform: translate3d(-50%, -100%, 0);
+}
+
+.button--itzel:hover > span {
+  opacity: 0;
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}

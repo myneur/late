@@ -91,7 +91,7 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		//Sys.println("onBackgroundData"); Sys.println(data);
+		Sys.println("onBackgroundData"); Sys.println(data);
 		///Sys.println([app, App.getApp()]);
 		try {
 			if(data.hasKey("refresh_token")){
@@ -164,6 +164,7 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function split(id_list){	
+		//id_list = "myneur@gmail.com petr.meissner@gmail.com bfq511otpmu8pmokapvmkrovm4@group.calendar.google.com";
 		if(id_list instanceof Toybox.Lang.String){
 			// this really has to be that ugly, because monkey c cannot replace or split strings like human
 			var i; 

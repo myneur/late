@@ -15,7 +15,7 @@ class lateView extends Ui.WatchFace {
 	hidden const CENTER = Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER;
 	hidden var dateForm; hidden var batThreshold = 33;
 	hidden var centerX; hidden var centerY; hidden var height;
-	hidden var color; hidden var dateColor = 0x555555; hidden var activityColor = 0x555555; hidden var backgroundColor = Gfx.COLOR_BLACK;
+	hidden var color; hidden var dateColor = Gfx.COLOR_LT_GRAY; hidden var activityColor = Gfx.COLOR_DK_GRAY; hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
 	var activity = 0; var showSunrise = false; var dataLoading = false;
 	hidden var icon = null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
@@ -115,7 +115,6 @@ class lateView extends Ui.WatchFace {
 		if(langTest.toNumber()>382){ // fallback for not-supported latin fonts 
 			fontSmall = Gfx.FONT_SMALL;
 		}
-		dateColor = 0xaaaaaa;
 		//Sys.println("Layout finish free memory: "+Sys.getSystemStats().freeMemory);
 	}
 
@@ -161,7 +160,7 @@ class lateView extends Ui.WatchFace {
 			computeSun();
 		}
 		if(activity>0){ 
-			dateColor = 0xaaaaaa;
+			dateColor = Gfx.COLOR_LT_GRAY;
 			if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }
 			else if(activity == 2) { icon = Ui.loadResource(Rez.Drawables.Cal); }
 			else if(activity >= 3 && !(ActivityMonitor.getInfo() has :activeMinutesDay)){ 
@@ -169,7 +168,10 @@ class lateView extends Ui.WatchFace {
 			} else if(activity <= 4) { icon = Ui.loadResource(Rez.Drawables.Minutes); }
 			else if(activity == 5) { icon = Ui.loadResource(Rez.Drawables.Floors); }
 		} else {
-			dateColor = 0x555555;
+			dateColor = Gfx.COLOR_DK_GRAY;
+		}
+		if(height==208){	// FR45 with 8 colors do not support gray. 
+			activityColor = Gfx.COLOR_LT_GRAY;
 		}
 		redrawAll = 2;
 		setLayoutVars();
@@ -282,6 +284,11 @@ class lateView extends Ui.WatchFace {
 						drawEvents(dc);
 						//ms.add(Sys.getTimer()-ms[0]);
 					}
+
+					/*var a = ActivityMonitor.getInfo(); // EXPERIMENT with racing activities
+					drawIcon(a.activeMinutesWeek.total.toFloat()/a.activeMinutesWeekGoal, Ui.loadResource(Rez.Drawables.Minutes), dc);
+					drawIcon(a.floorsClimbed.toFloat()/a.floorsClimbedGoal, Ui.loadResource(Rez.Drawables.Floors), dc);
+					drawIcon(a.steps.toFloat()/a.stepGoal, Ui.loadResource(Rez.Drawables.Steps), dc);*/
 				}
 			}
 			drawNowCircle(dc, clockTime.hour);
@@ -475,6 +482,13 @@ class lateView extends Ui.WatchFace {
 				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}
 		}
+	}
+
+	function drawIcon(percent, icon, dc){
+		var a = percent * 2*Math.PI;
+		var r = centerX-9;
+		dc.drawBitmap(centerX+(r*Math.sin(a))-8, centerY-(r*Math.cos(a))-8, icon);
+		return a;
 	}
 
 	(:data)

@@ -63,7 +63,7 @@
 			<iq:product id="d2bravo"/>
 			<iq:product id="d2bravo_titanium"/>
 
-			<!-- semi-round 215x180 no data 16c olors 65k memory CIQ2-->
+			<!-- semi-round 215x180 no data 16 colors 65k memory CIQ2-->
 			<iq:product id="fr230"/>
 			<iq:product id="fr235"/>
 			<iq:product id="fr630"/>
@@ -71,7 +71,7 @@
 			<!-- rectangle 205x148 no data 64 colors 65k memory CIQ2 -->
 			<iq:product id="vivoactive"/>
 			
-			<!-- 208x208 no data 49k memory -->
+			<!-- 208x208 no data 8 colors 49k memory -->
 			<iq:product id="fr45"/>
 			
 		</iq:products>

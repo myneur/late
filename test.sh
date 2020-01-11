@@ -1,3 +1,3 @@
 ./compile.sh
 connectiq 
-monkeydo bin/late.prg fr935
+monkeydo bin/late.prg fr735xt

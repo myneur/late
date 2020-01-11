@@ -116,6 +116,13 @@ class lateView extends Ui.WatchFace {
 			fontSmall = Gfx.FONT_SMALL;
 		}
 		//Sys.println("Layout finish free memory: "+Sys.getSystemStats().freeMemory);
+		/* color = 0xaaffff;
+		backgroundColor = 0x0055AA;
+		// hourColor = .. ;
+		// minuteColor = ...;
+		dateColor = 0xffffff;
+		activityColor = 0xffffff;
+		*/
 	}
 
 	function loadSettings(){
@@ -401,7 +408,7 @@ class lateView extends Ui.WatchFace {
 
 	function drawNowCircle(dc, hour){
 		// show now in a day
-		if(showSunrise || (activity == 6 && App.getApp().getProperty("refresh_token"))){
+		if(showSunrise || (activity == 6 && App.getApp().getProperty("refresh_token") != null)){
 			var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
 			var r = centerX-9;
 			var x = centerX+(r*Math.sin(a));

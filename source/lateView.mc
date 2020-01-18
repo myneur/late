@@ -143,7 +143,6 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%3;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 		color = palette[tone][mainColor];
-
 		if(app.getProperty("calendar_colors")){
 			calendarColors = Ui.loadResource(Rez.JsonData.calendarColors)[mainColor];
 			for(var i=0; i<calendarColors.size(); i++){
@@ -177,8 +176,9 @@ class lateView extends Ui.WatchFace {
 		} else {
 			dateColor = Gfx.COLOR_DK_GRAY;
 		}
-		if(height==208){	// FR45 with 8 colors do not support gray. 
-			activityColor = Gfx.COLOR_LT_GRAY;
+		if(height==208){	// FR45 with 8 colors do not support gray. Contrary the simluator, the real watch do not support even LT_GRAY. 
+			activityColor = Gfx.COLOR_WHITE;
+			dateColor = Gfx.COLOR_WHITE;
 		}
 		redrawAll = 2;
 		setLayoutVars();

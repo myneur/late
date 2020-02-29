@@ -272,23 +272,19 @@ class lateView extends Ui.WatchFace {
 
 				if(activity > 0){
 					text = ActivityMonitor.getInfo();
-					if(activity == 1){ text = humanizeNumber(text.steps); }
-					else if(activity == 2){ text = humanizeNumber(text.calories); }
-					else if(activity == 3){ text = (text.activeMinutesDay.total.toString());} // moderate + vigorous
-					else if(activity == 4){ text = humanizeNumber(text.activeMinutesWeek.total); }
-					else if(activity == 5){ text = (text.floorsClimbed.toString()); }
-					else {text = "";}
-
 					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 					if(activity < 6){
+						if(activity < 3){ //1,2
+							text = humanizeNumber( activity<2 ? text.steps : text.calories);
+						} else if (activity < 4){ //3
+							text = (text.activeMinutesDay.total.toString()); // moderate + vigorous
+						} else { //4,5
+							text = activity<5 ? humanizeNumber(text.activeMinutesWeek.total) : text.floorsClimbed.toString();
+						}
 						dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
 						dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
 					} else { 
-						//ms.add(Sys.getTimer()-ms[0]);
-						drawEvent(dc);
-						//ms.add(Sys.getTimer()-ms[0]);
 						drawEvents(dc);
-						//ms.add(Sys.getTimer()-ms[0]);
 					}
 
 					/*var a = ActivityMonitor.getInfo(); // EXPERIMENT with racing activities
@@ -303,6 +299,18 @@ class lateView extends Ui.WatchFace {
 		//Sys.println("ms: " + ms + " sec: " + clockTime.sec + " redrawAll: " + redrawAll);
 		//if (redrawAll>0) { redrawAll--; }
 	}
+
+/*	function positionMetric(icon, text, vertical) {
+		if(vertical){
+			y: icon/2 down, icon: (text+icon)/2 up -gap
+
+		} else {
+			x: icon/2 right icon: (text+icon)/2 left -gap
+			x: (text+icon)/2
+				+icon
+				-gap
+		}
+	}*/
 
 	function showMessage(message){
 		///Sys.println("message "+message);
@@ -459,6 +467,7 @@ class lateView extends Ui.WatchFace {
 
 	(:data)
 	function drawEvents(dc){
+		drawEvent(dc);
 		dc.setPenWidth(5);
 		var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;
 		var tomorrow = Time.now().value()+Calendar.SECONDS_PER_DAY;

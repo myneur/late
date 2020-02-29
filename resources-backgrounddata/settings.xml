@@ -34,7 +34,7 @@
 		</settingConfig>
 	</setting>
 
-	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars" prompt="@Strings.CalendarPrompt" helpUrl="https://calendar.google.com/calendar/r/settings">
+	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars" prompt="@Strings.CalendarsPrompt" helpUrl="https://calendar.google.com/calendar/r/settings">
 		<settingConfig type="alphaNumeric" />
 	</setting>
 </settings>

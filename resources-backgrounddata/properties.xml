@@ -1,11 +1,11 @@
 <properties>
-	<property id="activity" type="number">1</property>
+	<property id="activity" type="number">6</property>
 
 	<property id="compatibility" type="number">2</property>
 	
 	<property id="refresh_freq" type="number">60</property>
 	<property id="access_code" type="string"></property>
 	
-	<property id="calendar_colors" type="number">0</property>
+	<property id="calendar_colors" type="number">1</property>
 	<property id="calendar_ids" type="string"></property>
 </properties>

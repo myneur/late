@@ -2,6 +2,7 @@
 	<iq:application entry="lateApp" id="d3295dc1-304b-485c-a6ea-3835e7f919ed" launcherIcon="@Drawables.LauncherIcon" name="@Strings.AppName" type="watchface">
 
 		<iq:products>
+			<!-- product parameters are in connectiq-sdk-mac/bin/devices.xml -->
 			<!-- groups by shape, resolution, memory and # colors, -->
 			<!-- round & data-->
 			<!-- 280x280 with data 64 colors 94k memory -->

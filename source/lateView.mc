@@ -21,7 +21,7 @@ class lateView extends Ui.WatchFace {
 	hidden var icon = null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
-	hidden var fontSmall = null; hidden var fontMinutes = null; hidden var fontHours = null; hidden var fontCondensed = null;
+	hidden var fontSmall = null; hidden var fontHours = null; hidden var fontCondensed = null;
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; //hidden var notifY;
 	
 	hidden var eventStart=null; hidden var eventName=""; hidden var eventLocation=""; hidden var eventTab=0; hidden var eventHeight=23; hidden var eventMarker=null; //eventEnd=0;
@@ -62,22 +62,20 @@ class lateView extends Ui.WatchFace {
 		//Sys.println("Layout free memory: "+Sys.getSystemStats().freeMemory);
 		if(dialSize>0){ // strong design
 			fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
-			fontMinutes = Ui.loadResource(Rez.Fonts.MinuteStrong);
 			fontSmall = Ui.loadResource(Rez.Fonts.SmallStrong);
 			if(height>218){
-				dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-7;
+				dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontSmall)-7;
 				radius = 89;
 				circleWidth=circleWidth*3+1;
 				batteryY=height-15 ;
 			} else {
-				dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontMinutes)-6;
+				dateY = centerY-Gfx.getFontHeight(fontHours)>>1-Gfx.getFontHeight(fontSmall)-6;
 				radius = 81;
 				batteryY=height-15;
 				circleWidth=circleWidth*3;
 			}		
 		} else { // elegant design
 			fontHours = Ui.loadResource(Rez.Fonts.Hours);
-			fontMinutes = Ui.loadResource(Rez.Fonts.Minute);
 			fontSmall = Ui.loadResource(Rez.Fonts.Small);
 			if(height>218){
 				dateY = centerY-90-(Gfx.getFontHeight(fontSmall)>>1);
@@ -134,6 +132,7 @@ class lateView extends Ui.WatchFace {
 		batThreshold = app.getProperty("bat");
 		circleWidth = app.getProperty("boldness");
 		dialSize = app.getProperty("dialSize");
+		//if(activity == 6 && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		var palette = [
 			[0xFF0000, 0xFFAA00, 0x00FF00, 0x00AAFF, 0xFF00FF, 0xAAAAAA],
@@ -502,7 +501,7 @@ class lateView extends Ui.WatchFace {
 	function getMarkerCoords(event, tillStart){
 		var secondsFromLastHour = event - (Time.now().value()-(clockTime.min*60+clockTime.sec));
 		var a = (secondsFromLastHour).toFloat()/Calendar.SECONDS_PER_HOUR * 2*Math.PI;
-		var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontMinutes)>>1-1;
+		var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1;
 		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}
 
@@ -516,54 +515,50 @@ class lateView extends Ui.WatchFace {
 		var gap=0;
 
 		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontMinutes, minutes /*clockTime.min.format("%0.1d")*/, CENTER);
+		dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontSmall, minutes /*clockTime.min.format("%0.1d")*/, CENTER);
 		
 		
 		if(minutes>0){
 			dc.setColor(color, backgroundColor);
 			dc.setPenWidth(circleWidth);
 			
-			/* kerning values not to have ugly gaps between arc and minutes
-			minute:padding px
-			1:4 
-			2-6:6 
-			7-9:8 
-			10-11:10 
-			12-22:9 
-			23-51:10 
-			52-59:12
-			59:-3*/
-
-			// correct font kerning not to have wild gaps between arc and number
+			/* correct kerning not to have wild gaps between arc and minutes number
+				padding values in px:
+				1: 		4 
+				2-6: 	6 
+				7-9: 	8 
+				10-11: 	10 
+				12-22: 	9 
+				23-51: 	10 
+				52-59: 	12
+				59: start offsetted by 4
+			*/
 			if(minutes>=10){
 				if(minutes>=52){
-					offset=12;
+					offset=12;	// 52-59
 					if(minutes==59){
 						gap=4;	
 					} 
 				} else {
-					if(minutes>=12&&minutes<=22){
+					if(minutes>=12 && minutes<=22){ // 12-22
 						offset=9;
-					}
-					else {
-						offset=10;
+					} else {
+						offset=10;	// 10-11+23-51
 					}
 				}
 			} else {
 				if(minutes>=7){
-					offset=8;
+					offset=8;	// 7-9
 				} else {
 					if(minutes==1){
-						offset=4;
+						offset=4;	// 1
 					} else {
-						offset=6;
+						offset=6;	// 2-6
 					}
 				}
-
 			}
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
-		
 	}
 
 	function drawBatteryLevel (dc){
@@ -582,7 +577,7 @@ class lateView extends Ui.WatchFace {
 			if(bat<=15){
 				dc.setColor(Gfx.COLOR_RED, backgroundColor);
 			} else {
-				dc.setColor(Gfx.COLOR_DK_GRAY, backgroundColor);
+				dc.setColor(activityColor, backgroundColor);
 			}
 				
 			// draw the battery

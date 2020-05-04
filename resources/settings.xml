@@ -13,8 +13,11 @@
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.Light</listEntry>						
 			<listEntry value="1">@Strings.Dark</listEntry>
+			<listEntry value="3">@Strings.WhiteBg</listEntry>
+			<listEntry value="4">@Strings.ColorBg</listEntry>
 		</settingConfig>
 	</setting>
+
 	
 	<setting propertyKey="@Properties.dateForm" title="@Strings.DateFormTitle">
 		<settingConfig type="list">

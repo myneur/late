@@ -4,8 +4,11 @@
 			<listEntry value="0">@Strings.Light</listEntry>						
 			<listEntry value="1">@Strings.Dark</listEntry>
 			<listEntry value="2">@Strings.Vivid</listEntry>
+			<listEntry value="3">@Strings.WhiteBg</listEntry>
+			<listEntry value="4">@Strings.ColorBg</listEntry>
 		</settingConfig>
 	</setting>
+
 
 	<setting propertyKey="@Properties.activity" title="@Strings.ActivityTitle" prompt="@Strings.CalendarPrompt">
 		<settingConfig type="list">

@@ -34,14 +34,14 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		//Sys.println("scheduling");
+		Sys.println("scheduling");
 		///Sys.println([app, App.getApp()]);
 		loadSettings();
 		if(watch.dataLoading && watch.activity == 6) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
 			if(app.getProperty("refresh_token") == null){
-				//Sys.println("no auth");
+				Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {
@@ -74,13 +74,13 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function promptLogin(user_code, url){
-		///Sys.println([user_code, url]);
+		Sys.println([user_code, url]);
 		return ({"userPrompt"=>url.substring(url.find("www.")+4, url.length()), "userContext"=>user_code, "permanent"=>true, "wait"=>durationToNextEvent()});
 	}
 
 	(:data)
 	function changeScheduleToMinutes(minutes){
-		///Sys.println("changeScheduleToMinutes: "+minutes);
+		Sys.println("changeScheduleToMinutes: "+minutes);
 		return Background.registerForTemporalEvent(new Time.Duration( minutes * Calendar.SECONDS_PER_MINUTE));
 	}
 
@@ -91,8 +91,8 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		//Sys.println("onBackgroundData"); Sys.println(data);
-		///Sys.println([app, App.getApp()]);
+		Sys.println("onBackgroundData"); Sys.println(data);
+		Sys.println([app, App.getApp()]);
 		try {
 			if(data.hasKey("refresh_token")){
 				app.setProperty("refresh_token", data.get("refresh_token"));
@@ -180,7 +180,7 @@ class lateApp extends App.AppBase {
 			while(id_list.length()>1){
 				i = id_list.find(" ");
 				if(i != null){
-					if(i>6){ // id must be at least 7 chars
+					if(i>4){ // id must be at least 5 chars (can rise to 7)
 						list.add(id_list.substring(0, i));
 					}
 					id_list = id_list.substring(i+1, id_list.length());
@@ -189,7 +189,7 @@ class lateApp extends App.AppBase {
 					break;
 				}
 			}
-			///Sys.println(list);
+			Sys.println(list);
 			return list;
 		} else {
 			return id_list;

@@ -5,12 +5,17 @@
 			<!-- product parameters are in connectiq-sdk-mac/bin/devices.xml -->
 			<!-- groups by shape, resolution, memory and # colors, -->
 			<!-- round & data-->
+			<!-- 390x390 with data 64 colors 94k memory -->
+			<!--<iq:product id="venu"/>-->
+
 			<!-- 280x280 with data 64 colors 94k memory -->
-			<iq:product id="fenix6pro"/>
 			<iq:product id="fenix6xpro"/>
 			
 			<!-- 260x260 with data 94k memory -->
 			<iq:product id="fenix6"/>
+			<iq:product id="fenix6pro"/>
+			<iq:product id="legacyherofirstavenger"/>
+			<iq:product id="vivoactive4"/>
 			
 			<!-- 240x240 with data 64 colors 94k memory-->
 			<iq:product id="fenix6s"/>
@@ -30,7 +35,7 @@
 			<iq:product id="vivoactive3m"/>
 			<iq:product id="vivoactive3mlte"/>
 			<iq:product id="vivoactive3d"/>
-			<iq:product id="vivoactive4"/>
+			
 			<iq:product id="marqathlete"/>
 			<iq:product id="marqaviator"/>
 			<iq:product id="marqcaptain"/>
@@ -39,16 +44,15 @@
 			<!-- no support floors climbed -->
 			<iq:product id="approachs60"/>
 
-			<!-- 218x218 with data 16 colors 94k memory-->
+			<!-- 240x240 with data 16 colors 94k memory-->
 			<iq:product id="d2charlie"/>
 			<iq:product id="d2delta"/>
 			<iq:product id="d2deltas"/>
 			<iq:product id="d2deltapx"/>
-			<iq:product id="fenixchronos"/>
 			<iq:product id="descentmk1"/>
-			<iq:product id="fenix5s"/>
+			
 			<iq:product id="fenix5splus"/>
-			<iq:product id="vivoactive4s"/>
+			
 
 			<!-- semi-round 215x180 with data 16c olors 65k memory CIQ2 no support floors climbed no strong -->
 			<iq:product id="fr735xt"/>
@@ -63,6 +67,10 @@
 			<iq:product id="fenix3_hr"/>
 			<iq:product id="d2bravo"/>
 			<iq:product id="d2bravo_titanium"/>
+			<iq:product id="fenixchronos"/>
+			<iq:product id="fenix5s"/>
+			<iq:product id="vivoactive4s"/>
+			<iq:product id="legacyherocaptainmarvel"/>
 
 			<!-- semi-round 215x180 no data 16 colors 65k memory CIQ2 no strong-->
 			<iq:product id="fr230"/>

@@ -195,19 +195,21 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     var dateEnd = Lang.format("$1$-$2$-$3$T$4$:$5$:00", [today.year, today.month, today.day, today.hour, today.min]);
     dateEnd += sign + to;
 
+    calendar_id = Communications.encodeURL(calendar_id);
+    
     Sys.println($.GoogleCalendarEventsUrl + calendar_id + "/events");
     Sys.println({"maxResults"=>"8", "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"});
     Sys.println({"timeMin"=>dateStart, "timeMax"=>dateEnd});
     Sys.println({:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + access_token }});
 
-    Communications.makeWebRequest($.GoogleCalendarEventsUrl + calendar_id + "/events", {
-       "timeMin"=>dateStart, "timeMax"=>dateEnd}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + access_token }},
-      method(:onEvents));
-
     /*Communications.makeWebRequest($.GoogleCalendarEventsUrl + calendar_id + "/events", {
+       "timeMin"=>dateStart, "timeMax"=>dateEnd}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + access_token }},
+      method(:onEvents));*/
+
+    Communications.makeWebRequest($.GoogleCalendarEventsUrl + calendar_id + "/events", {
       "maxResults"=>"8", "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
         :headers=>{ "Authorization"=>"Bearer " + access_token }},
-      method(:onEvents));*/
+      method(:onEvents));
     Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
   }
   

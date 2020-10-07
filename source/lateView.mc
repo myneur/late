@@ -10,6 +10,11 @@ using Toybox.Math as Math;
 using Toybox.Application as App;
 
 enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
+//enum {night,day}
+var meteoColors =[
+[0,			0,			0x0055AA,	0x555555],
+[0xAAAA00,	0xFFAA00,	0x0055FF,	0xAAAAAA]];
+//enum {partly,clear,	rain,		snow}
 
 class lateView extends Ui.WatchFace {
 	hidden const CENTER = Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER;
@@ -26,13 +31,81 @@ class lateView extends Ui.WatchFace {
 	
 	hidden var eventStart=null; hidden var eventName=""; hidden var eventLocation=""; hidden var eventTab=0; hidden var eventHeight=23; hidden var eventMarker=null; //eventEnd=0;
 	hidden var events_list = [];
+	hidden var weatherHourly = [];
 	// redraw full watchface
 	hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
 	hidden var lastRedrawMin=-1;
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
+	(:data)
+	function drawWeather(dc){ // hardcoded testing how to render the forecast
+		/* TODO 
+			drop hours
+			lower frequency of loading 
+			location
+			settings
+			combine with calendar
+			day vs night colors
+		*/
+
+		var offset = 1;	// where in the array weather forecast starts
+		var h = Sys.getClockTime().hour; // first hour of the forecast
+		var startAngle =  90 - (h-1)*15 ;
+		Sys.println(Sys.getSystemStats().freeMemory);
+		Sys.println("weatherForecast: "+weatherHourly);
+		//weatherHourly = ["NaN",2,2,3,2,2,2,2,1,1,1,2,2,1,1,1,1,1,1,1,1,0,0,1,2];
+
+		/*weatherHourly = weatherHourly["hourly"]["data"];
+		var pointer = [0,0];
+		for(var w=offset; w<offset+24; w++){
+			pointer = [0,0];
+			if(weatherHourly[w]["summary"].find("Clear") != null || weatherHourly[w]["summary"].find("Partly") != null){
+				pointer[0]=5;
+			}
+			if(weatherHourly[w]["icon"].find("day") != null){
+				pointer[1]=1;
+			}
+			if(weatherHourly[w]["icon"].find("rain") != null || weatherHourly[w]["icon"].find("snow") != null || weatherHourly[w]["icon"].find("sleet") != null){
+				pointer[0]=7;
+			}
+			Sys.println([weatherHourly[w]["time"], pointer, meteoColors[pointer[1]][pointer[0]]]);
+			weatherHourly[w]=meteoColors[pointer[1]][pointer[0]];
+		}*/
+
+		Sys.println(Sys.getSystemStats().freeMemory);
+		dc.setPenWidth(2);
+		var color;
+		for(var i=offset;i<weatherHourly.size() &&i<24+offset;i++){
+			/* 
+				0: Clear skies
+				1: Partly Cloudy
+
+				2: Cloudy
+				3: Very Light Rain
+				4: Light Rain
+
+				5: Moderate Rain
+				6: Snow
+			*/
+			if(weatherHourly[i]<=1){
+				color = meteoColors[1][1];	// clear
+			} else if(weatherHourly[i]>=5){
+				if(weatherHourly[i]>=6){
+					color = meteoColors[1][3];	// snow
+				} else {
+					color = meteoColors[1][2];	// rain
+				}
+			} else {
+				color = Gfx.COLOR_TRANSPARENT;
+			}
+			//Sys.println([weatherHourly[i], color]);
+			dc.setColor(color, backgroundColor);
+			dc.drawArc(centerX, centerY, centerY-1, Gfx.ARC_CLOCKWISE, startAngle-i*360/24, startAngle-(i+1)*360/24);
+		}
+	}
+
 	function initialize (){
-		//Sys.println("initialize");
+		Sys.println("initialize");
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
@@ -47,6 +120,14 @@ class lateView extends Ui.WatchFace {
 			var events = App.getApp().getProperty("events");
 			if(events instanceof Toybox.Lang.Array){
 				events_list = events;
+			}
+		}
+		Sys.System.println(weatherHourly);
+		if(weatherHourly.size()==0){
+			var weather = App.getApp().getProperty("weather");
+			Sys.System.println(weather);
+			if(weather instanceof Toybox.Lang.Array){
+				weatherHourly = weather;
 			}
 		}
 	}
@@ -336,6 +417,7 @@ activity = 6;
 					drawIcon(a.floorsClimbed.toFloat()/a.floorsClimbedGoal, Ui.loadResource(Rez.Drawables.Floors), dc);
 					drawIcon(a.steps.toFloat()/a.stepGoal, Ui.loadResource(Rez.Drawables.Steps), dc);*/
 				}
+				drawWeather(dc);
 				drawNowCircle(dc, clockTime.hour);
 			}
 			
@@ -375,13 +457,18 @@ activity = 6;
 
 	(:data)
 	function onBackgroundData(data) {
-		Sys.System.println(data);
+		Sys.println(data);
 		//dataCount++;
-		if(data instanceof Array){
+		if(data instanceof Array){	
 			events_list = data;
 		} 
-		else if(data){
-			showMessage(data);
+		else if(data instanceof Toybox.Lang.Dictionary){
+			if(data.hasKey("weather")){
+				weatherHourly = data["weather"];
+			}
+			else if(data.hasKey("userPrompt")){
+				showMessage(data);
+			}
 		}
 		redrawAll = 1;
 	}

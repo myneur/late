@@ -94,59 +94,65 @@ class lateApp extends App.AppBase {
 		Sys.println("onBackgroundData"); Sys.println(data);
 		Sys.println([app, App.getApp()]);
 		try {
-			if(data.hasKey("refresh_token")){
-				app.setProperty("refresh_token", data.get("refresh_token"));
-				app.setProperty("user_code", null);
+			if(data instanceof Array){ // array with weaather forecast
+				app.setProperty("weather", data);
+				data = {"weather"=>data};
 			}
-			if (data.hasKey("primary_calendar")){
-				app.setProperty("calendar_ids", [data["primary_calendar"]]);
-			}
-			if (data.hasKey("events")) {
-				data = parseEvents(data.get("events"));
-				app.setProperty("events", data);
-				changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
-				// TODO mark moment of last data loading
-			} 
-			else if(data.hasKey("user_code")){ // prompt login
-				app.setProperty("refresh_token", null); 
-				app.setProperty("user_code", data.get("user_code")); 
-				app.setProperty("verification_url", data.get("verification_url")); 
-				app.setProperty("device_code", data.get("device_code")); 
-				//app.setProperty("code_valid_till", new Time.now().value() + add(data.get("expires_in").toNumber()));
-				changeScheduleToMinutes(5);
-				data = promptLogin(data.get("user_code"), data.get("verification_url"));
-			}
-			else if(data.hasKey("error_code")){
-				var error = data["error_code"];
-				var connected = Sys.getDeviceSettings().phoneConnected;
-
-				if (!(error==404 && app.getProperty("refresh_token")!=null)) {	// standard data loading with no connection or no internet: do not warn immediately
-					data["wait"] = durationToNextEvent();
+			else {
+				if(data.hasKey("refresh_token")){
+					app.setProperty("refresh_token", data.get("refresh_token"));
+					app.setProperty("user_code", null);
+				}
+				if (data.hasKey("primary_calendar")){
+					app.setProperty("calendar_ids", [data["primary_calendar"]]);
+				}
+				if (data.hasKey("events")) {
+					data = parseEvents(data.get("events"));
+					app.setProperty("events", data);
+					changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
+					// TODO mark moment of last data loading
+				} 
+				else if(data.hasKey("user_code")){ // prompt login
+					app.setProperty("refresh_token", null); 
+					app.setProperty("user_code", data.get("user_code")); 
+					app.setProperty("verification_url", data.get("verification_url")); 
+					app.setProperty("device_code", data.get("device_code")); 
+					//app.setProperty("code_valid_till", new Time.now().value() + add(data.get("expires_in").toNumber()));
 					changeScheduleToMinutes(5);
+					data = promptLogin(data.get("user_code"), data.get("verification_url"));
+				}
+				else if(data.hasKey("error_code")){
+					var error = data["error_code"];
+					var connected = Sys.getDeviceSettings().phoneConnected;
 
-					/* if(error==511 ){ // login prompt on OAuth 
-						Sys.println("login request");
-						data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);
-					} else */
-				
-					if(error == 404 ){  // no internet or not connected
-						data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
-					}
-					else if(data.hasKey("error")){	// when reason is passed from background
-						///Sys.println(data["error"]);
-						data["userPrompt"] = data["error"];
-						data.put("permanent", true);
-					}
-					else if(error==400 || error==401 || error==403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
-						///Sys.println("unauthorized");
-						app.setProperty("refresh_token", null);
-						app.setProperty("user_code", null);
-						data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
-					} 
-					else { // all other unanticipated errors
-						data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
-						data["userContext"] = data.get("error_code");
-						data.put("permanent", true);
+					if (!(error==404 && app.getProperty("refresh_token")!=null)) {	// standard data loading with no connection or no internet: do not warn immediately
+						data["wait"] = durationToNextEvent();
+						changeScheduleToMinutes(5);
+
+						/* if(error==511 ){ // login prompt on OAuth 
+							Sys.println("login request");
+							data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);
+						} else */
+					
+						if(error == 404 ){  // no internet or not connected
+							data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
+						}
+						else if(data.hasKey("error")){	// when reason is passed from background
+							///Sys.println(data["error"]);
+							data["userPrompt"] = data["error"];
+							data.put("permanent", true);
+						}
+						else if(error==400 || error==401 || error==403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
+							///Sys.println("unauthorized");
+							app.setProperty("refresh_token", null);
+							app.setProperty("user_code", null);
+							data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
+						} 
+						else { // all other unanticipated errors
+							data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
+							data["userContext"] = data.get("error_code");
+							data.put("permanent", true);
+						}
 					}
 				}
 			}

@@ -10,6 +10,7 @@ const GoogleTokenUrl = "https://oauth2.googleapis.com/token";
 const GoogleCalendarEventsUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const GoogleCalendarListUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
 const GoogleScopes = "https://www.googleapis.com/auth/calendar.readonly";
+const weatherApi = "https://almost-late-middleware.herokuapp.com/api/50.091357/14.389131/";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -35,6 +36,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     app = App.getApp();
     var connected = Sys.getDeviceSettings().phoneConnected;
     
+getWeatherForecast();return;
+
     if (app.getProperty("refresh_token") != null) { 
       Sys.println("has refresh_token");
       refresh_token = app.getProperty("refresh_token");
@@ -284,7 +287,23 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       method(:onTokenRefresh2GetData));
   }
 
-  function showInstructionOnMobile(data){
+  function getWeatherForecast() {
+    Communications.makeWebRequest($.weatherApi, {"api_key"=>app.getProperty("api_key"), "hour"=>Sys.getClockTime().hour, "unit"=>"c"}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
+      method(:onWeatherForecast));
+  }
+
+  function onWeatherForecast(responseCode, data){
+    Sys.println(Sys.getSystemStats().freeMemory + " on onWeatherForecast: "+responseCode); Sys.println(data);
+    Sys.println([app, App.getApp()]);
+    if (responseCode == 200) {
+      Background.exit(data);
+    } else {
+      Background.exit({"error_code"=>responseCode});
+    }
+  }
+
+
+/*  function showInstructionOnMobile(data){
     var user_code = data.hasKey("user_code") ? data["user_code"] : app.getProperty("user_code");
     var verification_url = data.hasKey("verification_url") ? data["verification_url"] : app.getProperty("verification_url");
 
@@ -293,7 +312,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
       "http://localhost", Communications.OAUTH_RESULT_TYPE_URL, 
       {"refresh_token"=>"refresh_token", "calendar_ids"=>"calendar_ids"});
     //Communications.openWebPage(url, params, options);
-  }
+  }*/
 
   /*
     function requestOAuth(){

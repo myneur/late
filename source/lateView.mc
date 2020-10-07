@@ -22,7 +22,7 @@ class lateView extends Ui.WatchFace {
 	hidden var centerX; hidden var centerY; hidden var height;
 	hidden var color; hidden var timeColor = Gfx.COLOR_WHITE; hidden var dateColor = Gfx.COLOR_LT_GRAY; hidden var activityColor = Gfx.COLOR_DK_GRAY; hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
-	var activity = 0; var showSunrise = false; var dataLoading = false;
+	var activity = 0; var showSunrise = false; var dataLoading = false; var showWeather = false;
 	hidden var icon = null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
@@ -213,6 +213,7 @@ class lateView extends Ui.WatchFace {
 		circleWidth = app.getProperty("boldness");
 		dialSize = app.getProperty("dialSize");
 activity = 6;
+showWeather = true;
 		//if(activity == 6 && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		var tone = app.getProperty("tone").toNumber()%5;
@@ -622,11 +623,11 @@ activity = 6;
 			}
 			if(degreeEnd-1 >= degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
 				dc.setColor(backgroundColor, backgroundColor);
-				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
+				dc.drawArc(centerX, centerY, centerY-4, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
 				if(events_list[i][4]>=0){
 					dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
 				}
-				dc.drawArc(centerX, centerY, centerY-2, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
+				dc.drawArc(centerX, centerY, centerY-4, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}
 		}
 	}

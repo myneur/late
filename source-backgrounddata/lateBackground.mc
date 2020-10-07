@@ -32,10 +32,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   
   function onTemporalEvent() {
     Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
-    Sys.println([app, App.getApp()]);
     app = App.getApp();
     var connected = Sys.getDeviceSettings().phoneConnected;
-    
+   
 getWeatherForecast();return;
 
     if (app.getProperty("refresh_token") != null) { 
@@ -63,7 +62,6 @@ getWeatherForecast();return;
     Sys.println(Sys.getSystemStats().freeMemory + " on getOAuthUserCode");
     Sys.println([App.getApp().getProperty("client_id"), $.GoogleDeviceCodeUrl, $.GoogleScopes]);
     Sys.println(app.getProperty("client_id"));
-    Sys.println([app, App.getApp()]);
     Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
       {"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onOAuthUserCode)); 
@@ -71,7 +69,6 @@ getWeatherForecast();return;
 
   function onOAuthUserCode(responseCode, data){ // {device_code, user_code, verification_url}
     Sys.println(Sys.getSystemStats().freeMemory + " onOAuthUserCode: "+responseCode); Sys.println(data);
-    Sys.println([app, App.getApp()]);
     if(responseCode != 200){
       if(data == null) { // no data connection 
         data = {"error_code"=>responseCode};
@@ -87,7 +84,6 @@ getWeatherForecast();return;
   function getTokensAndData(){ // device_code can tell if the user granted access
     Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); Sys.println(app.getProperty("user_code"));
     Sys.println([$.GoogleTokenUrl,app.getProperty("device_code"),app.getProperty("client_id"),app.getProperty("client_secret"),"http://oauth.net/grant_type/device/1.0"]);
-    Sys.println([app, App.getApp()]);
     Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
       "code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
       method(:onTokenRefresh2GetData));
@@ -95,7 +91,6 @@ getWeatherForecast();return;
 
   function onTokenRefresh2GetData(responseCode, data){
     Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode); Sys.println(data);
-    Sys.println([app, App.getApp()]);
     if (responseCode == 200) {
       access_token = data.get("access_token");
       if(data.get("refresh_token")){
@@ -288,13 +283,13 @@ getWeatherForecast();return;
   }
 
   function getWeatherForecast() {
+    Sys.println(Sys.getSystemStats().freeMemory + " on getWeatherForecast");
     Communications.makeWebRequest($.weatherApi, {"api_key"=>app.getProperty("api_key"), "hour"=>Sys.getClockTime().hour, "unit"=>"c"}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
       method(:onWeatherForecast));
   }
 
   function onWeatherForecast(responseCode, data){
     Sys.println(Sys.getSystemStats().freeMemory + " on onWeatherForecast: "+responseCode); Sys.println(data);
-    Sys.println([app, App.getApp()]);
     if (responseCode == 200) {
       Background.exit(data);
     } else {

@@ -35,13 +35,11 @@ class lateApp extends App.AppBase {
 	(:data)
 	function scheduleDataLoading(){
 		Sys.println("scheduling");
-		///Sys.println([app, App.getApp()]);
 		loadSettings();
-		if(watch.dataLoading && watch.activity == 6) {
+		if(watch.dataLoading && (watch.activity == 6 || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
-			if(app.getProperty("refresh_token") == null){
-				Sys.println("no auth");
+			if(app.getProperty("refresh_token") == null){	Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {
@@ -92,7 +90,6 @@ class lateApp extends App.AppBase {
 	(:data)
 	function onBackgroundData(data) {
 		Sys.println("onBackgroundData"); Sys.println(data);
-		Sys.println([app, App.getApp()]);
 		try {
 			if(data instanceof Array){ // array with weaather forecast
 				app.setProperty("weather", data);

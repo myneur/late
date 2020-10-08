@@ -39,6 +39,7 @@ class lateView extends Ui.WatchFace {
 
 	(:data)
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
+		Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory + " " + weatherHourly);
 		/* TODO 
 			drop hours
 			lower frequency of loading 
@@ -48,14 +49,12 @@ class lateView extends Ui.WatchFace {
 			day vs night colors
 		*/
 
-		var offset = 1;	// where in the array weather forecast starts
+		var offset = 2;	// where in the array weather forecast starts
 		var h = Sys.getClockTime().hour; // first hour of the forecast
+		h += weatherHourly[0] - h;	// if there was a delay in a forecast response
+		Sys.println("weather from hour: "+h);
 		var startAngle =  90 - (h-1)*15 ;
-		Sys.println(Sys.getSystemStats().freeMemory);
-		Sys.println("weatherForecast: "+weatherHourly);
-		//weatherHourly = ["NaN",2,2,3,2,2,2,2,1,1,1,2,2,1,1,1,1,1,1,1,1,0,0,1,2];
-
-		/*weatherHourly = weatherHourly["hourly"]["data"];
+		/* weatherHourly = weatherHourly["hourly"]["data"];
 		var pointer = [0,0];
 		for(var w=offset; w<offset+24; w++){
 			pointer = [0,0];
@@ -71,8 +70,6 @@ class lateView extends Ui.WatchFace {
 			Sys.println([weatherHourly[w]["time"], pointer, meteoColors[pointer[1]][pointer[0]]]);
 			weatherHourly[w]=meteoColors[pointer[1]][pointer[0]];
 		}*/
-
-		Sys.println(Sys.getSystemStats().freeMemory);
 		dc.setPenWidth(2);
 		var color;
 		for(var i=offset;i<weatherHourly.size() &&i<24+offset;i++){
@@ -214,6 +211,7 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 activity = 6;
 showWeather = true;
+showSunrise = true;
 		//if(activity == 6 && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		var tone = app.getProperty("tone").toNumber()%5;

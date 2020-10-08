@@ -10,7 +10,7 @@ const GoogleTokenUrl = "https://oauth2.googleapis.com/token";
 const GoogleCalendarEventsUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const GoogleCalendarListUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
 const GoogleScopes = "https://www.googleapis.com/auth/calendar.readonly";
-const weatherApi = "https://almost-late-middleware.herokuapp.com/api/50.091357/14.389131/";
+const WeatherApi = "https://almost-late-middleware.herokuapp.com/api/50.091357/14.389131/";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -37,19 +37,16 @@ class lateBackground extends Toybox.System.ServiceDelegate {
    
 getWeatherForecast();return;
 
-    if (app.getProperty("refresh_token") != null) { 
-      Sys.println("has refresh_token");
+    if (app.getProperty("refresh_token") != null) { Sys.println("has refresh_token");
       refresh_token = app.getProperty("refresh_token");
       if(connected){
         refreshTokenAndGetData();
       }
     } else {
       if(connected){
-        if (app.getProperty("user_code") == null){ // && new Moment(app.getProperty("code_valid_till").compare(Time.now()) < -10))
-          ///Sys.println("no code");
+        if (app.getProperty("user_code") == null){ // && new Moment(app.getProperty("code_valid_till").compare(Time.now()) < -10))  
           getOAuthUserCode();
-        } else {
-          ///Sys.println("got code");
+        } else {  
           getTokensAndData();
         }
       } else {
@@ -284,7 +281,7 @@ getWeatherForecast();return;
 
   function getWeatherForecast() {
     Sys.println(Sys.getSystemStats().freeMemory + " on getWeatherForecast");
-    Communications.makeWebRequest($.weatherApi, {"api_key"=>app.getProperty("api_key"), "hour"=>Sys.getClockTime().hour, "unit"=>"c"}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
+    Communications.makeWebRequest($.WeatherApi, {"api_key"=>app.getProperty("api_key"), "unit"=>"c"}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
       method(:onWeatherForecast));
   }
 

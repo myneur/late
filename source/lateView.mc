@@ -12,9 +12,9 @@ using Toybox.Application as App;
 enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
 //enum {night,day}
 var meteoColors =[
-[0,			0,			0x0055AA,	0x555555],
-[0xAAAA00,	0xFFAA00,	0x0055FF,	0xAAAAAA]];
-//enum {partly,clear,	rain,		snow}
+[0,			0,			-1, 	0x0055AA, 0x0055AA,	0x555555],
+[0xFFAA00,	0xAAAA00,	-1, 	0x0055AA, 0x0055FF,	0xAAAAAA]];
+//enum {clear, partly, 	cloudy, lghtrain, rain,		snow}
 
 class lateView extends Ui.WatchFace {
 	hidden const CENTER = Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER;
@@ -39,11 +39,9 @@ class lateView extends Ui.WatchFace {
 
 	(:data)
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
-		Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory + " " + weatherHourly);
+		Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		/* TODO 
-			drop hours
 			lower frequency of loading 
-			location
 			settings
 			combine with calendar
 			day vs night colors
@@ -51,9 +49,18 @@ class lateView extends Ui.WatchFace {
 
 		var offset = 2;	// where in the array weather forecast starts
 		var h = Sys.getClockTime().hour; // first hour of the forecast
-		h += weatherHourly[0] - h;	// if there was a delay in a forecast response
-		Sys.println("weather from hour: "+h);
-		var startAngle =  90 - (h-1)*15 ;
+		if (weatherHourly.size()>offset){
+			if(weatherHourly[0]<h){
+				Sys.println("offset++: "+ [weatherHourly[0], h]);
+				offset += h - weatherHourly[0];
+			} else if (weatherHourly[0]>h){
+				Sys.println("h++: "+ [weatherHourly[0], h]);
+				h += weatherHourly[0] - h;
+			}
+		} else {
+			return; 
+		}	
+		Sys.println("weather from hour: "+h + " offset: "+offset);
 		/* weatherHourly = weatherHourly["hourly"]["data"];
 		var pointer = [0,0];
 		for(var w=offset; w<offset+24; w++){
@@ -70,9 +77,10 @@ class lateView extends Ui.WatchFace {
 			Sys.println([weatherHourly[w]["time"], pointer, meteoColors[pointer[1]][pointer[0]]]);
 			weatherHourly[w]=meteoColors[pointer[1]][pointer[0]];
 		}*/
-		dc.setPenWidth(2);
+		dc.setPenWidth(3);
 		var color;
-		for(var i=offset;i<weatherHourly.size() &&i<24+offset;i++){
+		var center;
+		for(var i=offset; i<weatherHourly.size() &&i<24+offset; i++, h++){
 			/* 
 				0: Clear skies
 				1: Partly Cloudy
@@ -84,20 +92,26 @@ class lateView extends Ui.WatchFace {
 				5: Moderate Rain
 				6: Snow
 			*/
-			if(weatherHourly[i]<=1){
+			color = weatherHourly[i];
+			if(color>2){color=color-1;} // correcting missing value of very light rain
+			color = meteoColors[1][color];
+			h = h%24;
+			center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
+			/*if(weatherHourly[i]<=1){
 				color = meteoColors[1][1];	// clear
-			} else if(weatherHourly[i]>=5){
+			} else if(weatherHourly[i]>=4){
 				if(weatherHourly[i]>=6){
-					color = meteoColors[1][3];	// snow
+					color = meteoColors[1][4];	// snow
 				} else {
-					color = meteoColors[1][2];	// rain
+					color = meteoColors[1][3];	// rain
 				}
 			} else {
 				color = Gfx.COLOR_TRANSPARENT;
-			}
-			//Sys.println([weatherHourly[i], color]);
+			}*/
+
+			//Sys.println([i, h, weatherHourly[i], color]);
 			dc.setColor(color, backgroundColor);
-			dc.drawArc(centerX, centerY, centerY-1, Gfx.ARC_CLOCKWISE, startAngle-i*360/24, startAngle-(i+1)*360/24);
+			dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*15, 90-(h+1)*15);
 		}
 	}
 
@@ -119,14 +133,15 @@ class lateView extends Ui.WatchFace {
 				events_list = events;
 			}
 		}
-		Sys.System.println(weatherHourly);
+		Sys.println("init: "+ weatherHourly);
 		if(weatherHourly.size()==0){
 			var weather = App.getApp().getProperty("weather");
-			Sys.System.println(weather);
+
 			if(weather instanceof Toybox.Lang.Array){
 				weatherHourly = weather;
 			}
 		}
+		Sys.println("init: "+ weatherHourly);
 	}
 
 	//! Load your resources here
@@ -456,7 +471,7 @@ showSunrise = true;
 
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println(data);
+		Sys.println("onBackgroundData: "+ data);
 		//dataCount++;
 		if(data instanceof Array){	
 			events_list = data;
@@ -764,6 +779,7 @@ showSunrise = true;
 			pos = pos.toDegrees();
 			App.getApp().setProperty("location", pos); // save the location to fix a Fenix 5 bug that is loosing the location often
 		}
+		Sys.System.println("computeSun: "+pos);
 		// use absolute to get west as positive
 		lonW = pos[1].toFloat();
 		latN = pos[0].toFloat();

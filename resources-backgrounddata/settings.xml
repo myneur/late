@@ -40,4 +40,8 @@
 	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars" prompt="@Strings.CalendarsPrompt" helpUrl="https://calendar.google.com/calendar/r/settings">
 		<settingConfig type="alphaNumeric" />
 	</setting>
+
+	<setting propertyKey="@Properties.weather" title="@Strings.Weather">
+		<settingConfig type="boolean" />
+	</setting>
 </settings>

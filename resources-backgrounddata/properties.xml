@@ -8,4 +8,6 @@
 	
 	<property id="calendar_colors" type="number">1</property>
 	<property id="calendar_ids" type="string"></property>
+
+	<property id="weather" type="boolean">true</property>
 </properties>

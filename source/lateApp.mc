@@ -89,11 +89,13 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println("onBackgroundData"); Sys.println(data);
+		Sys.println("onBackgroundData: " +Sys.println(data));
 		try {
 			if(data instanceof Array){ // array with weaather forecast
 				app.setProperty("weather", data);
 				data = {"weather"=>data};
+				changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
+app.setProperty("lastLoad", 'w');
 			}
 			else {
 				if(data.hasKey("refresh_token")){
@@ -106,7 +108,10 @@ class lateApp extends App.AppBase {
 				if (data.hasKey("events")) {
 					data = parseEvents(data.get("events"));
 					app.setProperty("events", data);
-					changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
+					if(!(app.getProperty("weather")==true)){
+						changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
+					}
+app.setProperty("lastLoad", 'c');
 					// TODO mark moment of last data loading
 				} 
 				else if(data.hasKey("user_code")){ // prompt login
@@ -158,7 +163,7 @@ class lateApp extends App.AppBase {
 			}
 			Ui.requestUpdate();
 		} catch (ex){
-			///Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
+			//Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
 			if(watch){
 				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
 			}

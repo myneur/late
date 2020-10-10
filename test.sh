@@ -1,3 +1,3 @@
 ./compile.sh
 connectiq 
-monkeydo bin/late.prg legacyherocaptainmarvel
+monkeydo bin/late.prg fenix6xpro

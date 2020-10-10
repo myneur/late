@@ -10,7 +10,7 @@ const GoogleTokenUrl = "https://oauth2.googleapis.com/token";
 const GoogleCalendarEventsUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const GoogleCalendarListUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
 const GoogleScopes = "https://www.googleapis.com/auth/calendar.readonly";
-const WeatherApi = "https://almost-late-middleware.herokuapp.com/api/50.091357/14.389131/";
+const WeatherApi = "https://almost-late-middleware.herokuapp.com/api/";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -34,23 +34,25 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     app = App.getApp();
     var connected = Sys.getDeviceSettings().phoneConnected;
-   
-getWeatherForecast();return;
 
-    if (app.getProperty("refresh_token") != null) { Sys.println("has refresh_token");
-      refresh_token = app.getProperty("refresh_token");
-      if(connected){
-        refreshTokenAndGetData();
-      }
+    if (app.getProperty("lastLoad")=='c'){
+      getWeatherForecast();
     } else {
-      if(connected){
-        if (app.getProperty("user_code") == null){ // && new Moment(app.getProperty("code_valid_till").compare(Time.now()) < -10))  
-          getOAuthUserCode();
-        } else {  
-          getTokensAndData();
+      if (app.getProperty("refresh_token") != null) { Sys.println("has refresh_token");
+        refresh_token = app.getProperty("refresh_token");
+        if(connected){
+          refreshTokenAndGetData();
         }
       } else {
-        Background.exit({"error_code"=>404}); // no response
+        if(connected){
+          if (app.getProperty("user_code") == null){ // && new Moment(app.getProperty("code_valid_till").compare(Time.now()) < -10))  
+            getOAuthUserCode();
+          } else {  
+            getTokensAndData();
+          }
+        } else {
+          Background.exit({"error_code"=>404}); // no response
+        }
       }
     }
   }
@@ -281,7 +283,15 @@ getWeatherForecast();return;
 
   function getWeatherForecast() {
     Sys.println(Sys.getSystemStats().freeMemory + " on getWeatherForecast");
-    Communications.makeWebRequest($.WeatherApi, {"api_key"=>app.getProperty("api_key"), "unit"=>"c"}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
+    var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
+    if(pos == null){
+      Sys.println("no pos: "+pos);
+      Background.exit({"error"=>"Get GPS location", "error_code"=>100});
+      return;
+    }
+pos = [50.11, 14.49];
+    Sys.println("location: "+pos);
+    Communications.makeWebRequest($.WeatherApi+pos[0].toFloat()+"/"+pos[1].toFloat(), {"api_key"=>app.getProperty("api_key"), "unit"=>"c"}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
       method(:onWeatherForecast));
   }
 

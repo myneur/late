@@ -6,7 +6,10 @@
 			<!-- groups by shape, resolution, memory and # colors, -->
 			<!-- round & data-->
 			<!-- 390x390 with data 64 colors 94k memory -->
-			<!--<iq:product id="venu"/>-->
+			<!--
+			<iq:product id="venu"/>
+			<iq:product id="d2air"/>
+		-->
 
 			<!-- 280x280 with data 64 colors 94k memory -->
 			<iq:product id="fenix6xpro"/>
@@ -16,6 +19,7 @@
 			<iq:product id="fenix6pro"/>
 			<iq:product id="legacyherofirstavenger"/>
 			<iq:product id="vivoactive4"/>
+			<iq:product id="legacysagadarthvader"/>
 			
 			<!-- 240x240 with data 64 colors 94k memory-->
 			<iq:product id="fenix6s"/>
@@ -41,8 +45,12 @@
 			<iq:product id="marqcaptain"/>
 			<iq:product id="marqexpedition"/>
 			<iq:product id="marqdriver"/>
+			<iq:product id="marqgolfer"/>
+			<iq:product id="marqcommander"/>
+			<iq:product id="marqadventurer"/>
 			<!-- no support floors climbed -->
 			<iq:product id="approachs60"/>
+			<iq:product id="approachs62"/>
 
 			<!-- 240x240 with data 16 colors 94k memory-->
 			<iq:product id="d2charlie"/>
@@ -56,6 +64,7 @@
 
 			<!-- semi-round 215x180 with data 16c olors 65k memory CIQ2 no support floors climbed no strong -->
 			<iq:product id="fr735xt"/>
+			<iq:product id="fr745"/>
 
 			<!-- rectangle 148x205 with data 64 colors 61k memory CIQ2 no strong -->
 			<iq:product id="vivoactive_hr"/>
@@ -71,6 +80,7 @@
 			<iq:product id="fenix5s"/>
 			<iq:product id="vivoactive4s"/>
 			<iq:product id="legacyherocaptainmarvel"/>
+			<iq:product id="legacysagarey"/>
 
 			<!-- semi-round 215x180 no data 16 colors 65k memory CIQ2 no strong-->
 			<iq:product id="fr230"/>
@@ -79,6 +89,7 @@
 			
 			<!-- rectangle 205x148 no data 64 colors 65k memory CIQ2 no strong-->
 			<iq:product id="vivoactive"/>
+			<!--<iq:product id="fr920xt"/>-->
 			
 			<!-- 208x208 no data 8 colors 49k memory -->
 			<iq:product id="fr45"/>

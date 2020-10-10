@@ -5,7 +5,7 @@ using Toybox.System as Sys;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Calendar;
 using Toybox.StringUtil as Str;
-
+using Toybox.Weather as Weather;
 
 class lateApp extends App.AppBase {
 
@@ -36,6 +36,11 @@ class lateApp extends App.AppBase {
 	function scheduleDataLoading(){
 		Sys.println("scheduling");
 		loadSettings();
+var f = Weather.getHourlyForecast();
+for(var j=0;j<f.size();j++){
+	Sys.println([f[j].condition,f[j].precipitationChance]);
+}
+
 		if(watch.dataLoading && (watch.activity == 6 || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);

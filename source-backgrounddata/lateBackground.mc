@@ -284,12 +284,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   function getWeatherForecast() {
     Sys.println(Sys.getSystemStats().freeMemory + " on getWeatherForecast");
     var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
+pos = [50.11, 14.49];
     if(pos == null){
       Sys.println("no pos: "+pos);
       Background.exit({"error"=>"Get GPS location", "error_code"=>100});
       return;
     }
-pos = [50.11, 14.49];
     Sys.println("location: "+pos);
     Communications.makeWebRequest($.WeatherApi+pos[0].toFloat()+"/"+pos[1].toFloat(), {"api_key"=>app.getProperty("api_key"), "unit"=>"c"}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
       method(:onWeatherForecast));

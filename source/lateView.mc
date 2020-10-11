@@ -87,7 +87,7 @@ class lateView extends Ui.WatchFace {
 		}
 		if(weatherHourly.size()>1){
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(centerX+centerX>>1, centerY>>1-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, Math.round(weatherHourly[1]).format("%0d")+'', Gfx.TEXT_JUSTIFY_CENTER);	
+			dc.drawText(centerX+centerX>>1, centerY>>1-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, Math.round(weatherHourly[1]).format("%0d")+'°', Gfx.TEXT_JUSTIFY_CENTER);	
 		}
 	}
 
@@ -205,6 +205,7 @@ class lateView extends Ui.WatchFace {
 activity = 6;
 showWeather = true;
 showSunrise = true;
+dialSize=0;
 		//if(activity == 6 && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		var tone = app.getProperty("tone").toNumber()%5;

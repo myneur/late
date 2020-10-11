@@ -101,15 +101,6 @@ class lateApp extends App.AppBase {
 				Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
 				data = Weather.getHourlyForecast();
 				for(var j=0; j<data.size(); j++){
-						// 0: Clear skies
-						// 1: Partly Cloudy
-
-						// 2: Cloudy
-						// 3: Very Light Rain
-
-						// 4: Light Rain
-						// 5: Moderate Rain
-						// 6: Snow
 					c = data[j].condition;
 					
 					// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
@@ -122,12 +113,11 @@ class lateApp extends App.AppBase {
 
 					else if(c==Weather.CONDITION_SNOW || c>=Weather.CONDITION_LIGHT_SNOW && c<=Weather.CONDITION_HEAVY_RAIN_SNOW || c==Weather.CONDITION_ICE_SNOW || c==Weather.CONDITION_HAIL)
 					{c=6;} // snow
-					
+
 					if(c>6){c=6;} // ignoring everything else
 					data[j]=c;
 				}
-				data = {"weather"=>[13, 0].addAll(data)};
-				Sys.System.println(data);*/
+				data = {"weather"=>[13, 0].addAll(data)};*/
 				changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
 app.setProperty("lastLoad", 'w');
 			}

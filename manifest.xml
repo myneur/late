@@ -6,10 +6,11 @@
 			<!-- groups by shape, resolution, memory and # colors, -->
 			<!-- round & data-->
 			<!-- 390x390 with data 64 colors 94k memory -->
-			<!--
 			<iq:product id="venu"/>
+			<iq:product id="venusq"/>
+			<iq:product id="venusqm"/>
+			<iq:product id="venud"/>
 			<iq:product id="d2air"/>
-		-->
 
 			<!-- 280x280 with data 64 colors 94k memory -->
 			<iq:product id="fenix6xpro"/>

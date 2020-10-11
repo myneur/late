@@ -36,10 +36,6 @@ class lateApp extends App.AppBase {
 	function scheduleDataLoading(){
 		Sys.println("scheduling");
 		loadSettings();
-var f = Weather.getHourlyForecast();
-for(var j=0;j<f.size();j++){
-	Sys.println([f[j].condition,f[j].precipitationChance]);
-}
 
 		if(watch.dataLoading && (watch.activity == 6 || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
@@ -99,6 +95,39 @@ for(var j=0;j<f.size();j++){
 			if(data instanceof Array){ // array with weaather forecast
 				app.setProperty("weather", data);
 				data = {"weather"=>data};
+				
+				/* var c;
+				data = Weather.getCurrentConditions();
+				Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
+				data = Weather.getHourlyForecast();
+				for(var j=0; j<data.size(); j++){
+						// 0: Clear skies
+						// 1: Partly Cloudy
+
+						// 2: Cloudy
+						// 3: Very Light Rain
+
+						// 4: Light Rain
+						// 5: Moderate Rain
+						// 6: Snow
+					c = data[j].condition;
+					
+					// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
+					if(c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR){c=1;} // Partly Cloudy 
+					
+					else if( c==Weather.CONDITION_LIGHT_RAIN || c==Weather.CONDITION_DRIZZLE || c==Weather.CONDITION_SHOWERS || c==Weather.CONDITION_HEAVY_SHOWERS ){c=4;} // Light rain 
+					else if(c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_TORNADO || 
+					c==Weather.CONDITION_SANDSTORM || c==Weather.CONDITION_HURRICANE || c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_FREEZING_RAIN || 
+					c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_SLEET){c=5;} // rain
+
+					else if(c==Weather.CONDITION_SNOW || c>=Weather.CONDITION_LIGHT_SNOW && c<=Weather.CONDITION_HEAVY_RAIN_SNOW || c==Weather.CONDITION_ICE_SNOW || c==Weather.CONDITION_HAIL)
+					{c=6;} // snow
+					
+					if(c>6){c=6;} // ignoring everything else
+					data[j]=c;
+				}
+				data = {"weather"=>[13, 0].addAll(data)};
+				Sys.System.println(data);*/
 				changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
 app.setProperty("lastLoad", 'w');
 			}
@@ -168,7 +197,7 @@ app.setProperty("lastLoad", 'c');
 			}
 			Ui.requestUpdate();
 		} catch (ex){
-			//Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
+			Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
 			if(watch){
 				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
 			}

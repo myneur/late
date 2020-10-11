@@ -10,7 +10,8 @@ const GoogleTokenUrl = "https://oauth2.googleapis.com/token";
 const GoogleCalendarEventsUrl = "https://www.googleapis.com/calendar/v3/calendars/";
 const GoogleCalendarListUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
 const GoogleScopes = "https://www.googleapis.com/auth/calendar.readonly";
-const WeatherApi = "https://almost-late-middleware.herokuapp.com/api/";
+//const WeatherApi = "https://almost-late-middleware.herokuapp.com/api/";
+const WeatherApi = "https://almost-late-middleware.herokuapp.com/api2/";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -34,6 +35,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
     Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
     app = App.getApp();
     var connected = Sys.getDeviceSettings().phoneConnected;
+
+//Background.exit([]); // bypassing in favor of local API
 
     if (app.getProperty("lastLoad")=='c'){
       getWeatherForecast();
@@ -284,7 +287,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
   function getWeatherForecast() {
     Sys.println(Sys.getSystemStats().freeMemory + " on getWeatherForecast");
     var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
-pos = [50.11, 14.49];
+//pos = [50.11, 14.49];
     if(pos == null){
       Sys.println("no pos: "+pos);
       Background.exit({"error"=>"Get GPS location", "error_code"=>100});

@@ -13,7 +13,8 @@ enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
 //enum {night,day}
 var meteoColors =[
 [0,			0,			0x0055AA, 0x0055AA,	0x555555],
-[0xFFAA00,	0xAAAA00,	0x0055AA, 0x0055FF,	0xAAAAAA]];
+//[0x6ED06F, 0xEFAF75,  0xB3CBE5, 0x79A4D1, 0x578DC6],
+[0xFFAA00,	0xAA5500,	0x0000AA, 0x0055FF,	0xAAAAAA]];
 //enum {clear, partly, 	lghtrain, rain,		snow}
 
 class lateView extends Ui.WatchFace {
@@ -86,15 +87,29 @@ class lateView extends Ui.WatchFace {
 				1: Partly Cloudy
 
 				2: Cloudy
+
 				3: Very Light Rain
 				4: Light Rain
-
 				5: Moderate Rain
 				6: Snow
 			*/
 			color = weatherHourly[i];
-			if(color < 2 || color >3){	// we don't show just clody or light rain
-				if(color>2){color=color-2;} // correcting missing value of very light rain
+			if(color<=9){color = 6;}
+			else if(color==10){color=2;}
+			else if(color<=13){color=5;}
+			else if(color<=15){color=4;}
+			else if(color<=19){color=2;}
+			else if(color==20){color=1;}
+			else if(color>=21){color=0;}
+
+			//if(color==0 || color==1 || color==){color=4;}
+			if(color!=2){	// we don't show just clody or light rain
+				if(color>3){color=color-2;} else if (color==3){color=2;}// correcting missing value of very light rain
+				
+
+			
+			//Sys.System.println(color);
+
 				color = meteoColors[1][color];
 				h = h%24;
 				center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
@@ -110,9 +125,9 @@ class lateView extends Ui.WatchFace {
 					color = Gfx.COLOR_TRANSPARENT;
 				}*/
 
-				//Sys.println([i, h, weatherHourly[i], color]);
+				Sys.println([i, h, weatherHourly[i], color]);
 				//if(dc has :setAntiAlias) {dc.setAntiAlias(false);}
-				dc.setColor(color, Gfx.COLOR_TRANSPARENT);
+				//dc.setColor(color, Gfx.COLOR_TRANSPARENT);
 				dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*15, 90-(h+1)*15);
 			}
 		}
@@ -365,7 +380,6 @@ showSunrise = true;
 			if(dc has :setAntiAlias) {
 				dc.setAntiAlias(true);
 			}
-
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.clear();
 			lastRedrawMin=clockTime.min;
@@ -497,7 +511,7 @@ showSunrise = true;
 	(:data)
 	function updateCurrentEvent(dc){
 		for(var i=0; i<events_list.size(); i++){
-			
+			Sys.System.println("updateCurrentEvent: "+events_list);
 			eventStart = new Time.Moment(events_list[i][0]);
 			var timeNow = Time.now();
 			var tillStart = eventStart.compare(timeNow);
@@ -783,11 +797,11 @@ showSunrise = true;
 				return;
 			}			
 		} else {
-			//pos = pos.toDegrees();
+			pos = pos.toDegrees();
 			App.getApp().setProperty("location", pos); // save the location to fix a Fenix 5 bug that is loosing the location often
 		}
-		pos = [50.11, 14.49];
-		Sys.System.println("computeSun: "+pos);
+		//pos = [50.11, 14.49];
+		//Sys.System.println("computeSun: "+pos);
 		// use absolute to get west as positive
 		lonW = pos[1].toFloat();
 		latN = pos[0].toFloat();

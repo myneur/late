@@ -40,7 +40,7 @@ class lateView extends Ui.WatchFace {
 
 	(:data)
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
-		Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
+		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		/* TODO 
 			lower frequency of loading 
 			settings
@@ -61,22 +61,15 @@ class lateView extends Ui.WatchFace {
 		} else {
 			return; 
 		}	
-		Sys.println("weather from hour: "+h + " offset: "+offset);
+		//Sys.println("weather from hour: "+h + " offset: "+offset);
 		dc.setPenWidth(3);
 		var color;
 		var center;
 		//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
 		for(var i=offset; i<weatherHourly.size() &&i<24+offset; i++, h++){
 			color = weatherHourly[i];
-			if(color<=9){color = 4;}	// snow
-			else if(color==10){color=-1;}	// clouds
-			else if(color<=13){color=3;}	// rain
-			else if(color<=15){color=2;}	// light rain
-			else if(color<=19){color=-1;}	// clouds
-			else if(color==20){color=1;}	// partly cloudy
-			else if(color>=21){color=0;}	// sun
 			//Sys.System.println([i, offset, color]);
-			if(color>=0){
+			if(color>=0 && color < meteoColors[1].size()){
 				color = meteoColors[1][color];
 				h = h%24;
 				center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
@@ -87,7 +80,7 @@ class lateView extends Ui.WatchFace {
 		}
 		if(weatherHourly.size()>1){
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(centerX+centerX>>1, centerY>>1-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, Math.round(weatherHourly[1]).format("%0d")+'°', Gfx.TEXT_JUSTIFY_CENTER);	
+			dc.drawText(centerX+centerX>>1, centerY>>1-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
 		}
 	}
 
@@ -206,6 +199,7 @@ activity = 6;
 showWeather = true;
 showSunrise = true;
 dialSize=0;
+circleWidth=7;
 		//if(activity == 6 && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		var tone = app.getProperty("tone").toNumber()%5;
@@ -322,7 +316,7 @@ dialSize=0;
 	//! Terminate any active timers and prepare for slow updates.
 	function onEnterSleep(){
 		///Sys.println("onEnterSleep");
-		//redrawAll=0;
+		redrawAll=0;
 	}
 
 	/*function openTheMenu(){
@@ -332,12 +326,12 @@ dialSize=0;
 
 	//! Update the view
 	function onUpdate (dc) {
-		Sys.println("onUpdate "+redrawAll);
+		//Sys.println("onUpdate "+redrawAll);
 		clockTime = Sys.getClockTime();
-		Sys.println(clockTime.min);
 		if (lastRedrawMin != clockTime.min && redrawAll==0) { redrawAll = 1; }
 		//var ms = [Sys.getTimer()];
-		//if (redrawAll>0){
+		if (redrawAll>0){
+			Sys.println([clockTime.min, redrawAll]);
 			if(dc has :setAntiAlias) {
 				dc.setAntiAlias(true);
 			}
@@ -417,10 +411,10 @@ dialSize=0;
 				drawNowCircle(dc, clockTime.hour);
 			}
 			
-		//}
+		}
 		//ms.add(Sys.getTimer()-ms[0]);
 		//Sys.println("ms: " + ms + " sec: " + clockTime.sec + " redrawAll: " + redrawAll);
-		//if (redrawAll>0) { redrawAll--; }
+		if (redrawAll>0) { redrawAll--; }
 	}
 
 /*	function positionMetric(icon, text, vertical) {
@@ -453,7 +447,7 @@ dialSize=0;
 
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println("onBackgroundData: "+ data);
+		Sys.println("onBackgroundData view: "+ data);
 		//dataCount++;
 		if(data instanceof Array){	
 			events_list = data;
@@ -472,7 +466,7 @@ dialSize=0;
 	(:data)
 	function updateCurrentEvent(dc){
 		for(var i=0; i<events_list.size(); i++){
-			Sys.System.println("updateCurrentEvent: "+events_list);
+			//Sys.System.println("updateCurrentEvent: "+events_list);
 			eventStart = new Time.Moment(events_list[i][0]);
 			var timeNow = Time.now();
 			var tillStart = eventStart.compare(timeNow);

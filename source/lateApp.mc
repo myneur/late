@@ -25,6 +25,7 @@ class lateApp extends App.AppBase {
 
 	function loadSettings(){
 		app.setProperty("calendar_ids", split(app.getProperty("calendar_ids")));	//?? how will it show in the properties?
+//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	}
 
 	function getInitialView() {
@@ -90,36 +91,52 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println("onBackgroundData: " +Sys.println(data));
+		Sys.println("onBackgroundData app: " +Sys.println(data));
 		try {
 			if(data instanceof Array){ // array with weaather forecast
-				app.setProperty("weather", data);
-				data = {"weather"=>data};
 				
-				/* var c;
-				data = Weather.getCurrentConditions();
-				Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
-				data = Weather.getHourlyForecast();
-				for(var j=0; j<data.size(); j++){
-					c = data[j].condition;
+				if(data.size()>2){
+					var color;
+					data[1] = Math.round(data[1]).toNumber(); // current temperature
+					for(var i=2; i<data.size();i++){
+						color = data[i];
+						if(color<=9){color = 4;}	// snow
+						else if(color==10){color=-1;}	// clouds
+						else if(color<=13){color=3;}	// rain
+						else if(color<=15){color=2;}	// light rain
+						else if(color<=19){color=-1;}	// clouds
+						else if(color==20){color=1;}	// partly cloudy
+						else if(color>=21){color=0;}	// sun
+						data[i] = color;
+					}
+					app.setProperty("weather", data);
+					data = {"weather"=>data};
 					
-					// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
-					if(c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR){c=1;} // Partly Cloudy 
-					
-					else if( c==Weather.CONDITION_LIGHT_RAIN || c==Weather.CONDITION_DRIZZLE || c==Weather.CONDITION_SHOWERS || c==Weather.CONDITION_HEAVY_SHOWERS ){c=4;} // Light rain 
-					else if(c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_TORNADO || 
-					c==Weather.CONDITION_SANDSTORM || c==Weather.CONDITION_HURRICANE || c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_FREEZING_RAIN || 
-					c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_SLEET){c=5;} // rain
+					/* var c;
+					data = Weather.getCurrentConditions();
+					Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
+					data = Weather.getHourlyForecast();
+					for(var j=0; j<data.size(); j++){
+						c = data[j].condition;
+						
+						// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
+						if(c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR){c=1;} // Partly Cloudy 
+						
+						else if( c==Weather.CONDITION_LIGHT_RAIN || c==Weather.CONDITION_DRIZZLE || c==Weather.CONDITION_SHOWERS || c==Weather.CONDITION_HEAVY_SHOWERS ){c=4;} // Light rain 
+						else if(c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_TORNADO || 
+						c==Weather.CONDITION_SANDSTORM || c==Weather.CONDITION_HURRICANE || c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_FREEZING_RAIN || 
+						c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_SLEET){c=5;} // rain
 
-					else if(c==Weather.CONDITION_SNOW || c>=Weather.CONDITION_LIGHT_SNOW && c<=Weather.CONDITION_HEAVY_RAIN_SNOW || c==Weather.CONDITION_ICE_SNOW || c==Weather.CONDITION_HAIL)
-					{c=6;} // snow
+						else if(c==Weather.CONDITION_SNOW || c>=Weather.CONDITION_LIGHT_SNOW && c<=Weather.CONDITION_HEAVY_RAIN_SNOW || c==Weather.CONDITION_ICE_SNOW || c==Weather.CONDITION_HAIL)
+						{c=6;} // snow
 
-					if(c>6){c=6;} // ignoring everything else
-					data[j]=c;
-				}
-				data = {"weather"=>[13, 0].addAll(data)};*/
-				changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
+						if(c>6){c=6;} // ignoring everything else
+						data[j]=c;
+					}
+					data = {"weather"=>[13, 0].addAll(data)};*/
+					changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
 app.setProperty("lastLoad", 'w');
+				}
 			}
 			else {
 				if(data.hasKey("refresh_token")){

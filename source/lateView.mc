@@ -28,7 +28,7 @@ class lateView extends Ui.WatchFace {
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var fontSmall = null; hidden var fontHours = null; hidden var fontCondensed = null;
-	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; hidden var sunR;//hidden var notifY;
+	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; hidden var sunR; //hidden var temp; //hidden var notifY;
 	
 	hidden var eventStart=null; hidden var eventName=""; hidden var eventLocation=""; hidden var eventTab=0; hidden var eventHeight=23; hidden var eventMarker=null; //eventEnd=0;
 	hidden var events_list = [];
@@ -62,74 +62,32 @@ class lateView extends Ui.WatchFace {
 			return; 
 		}	
 		Sys.println("weather from hour: "+h + " offset: "+offset);
-		/* weatherHourly = weatherHourly["hourly"]["data"];
-		var pointer = [0,0];
-		for(var w=offset; w<offset+24; w++){
-			pointer = [0,0];
-			if(weatherHourly[w]["summary"].find("Clear") != null || weatherHourly[w]["summary"].find("Partly") != null){
-				pointer[0]=5;
-			}
-			if(weatherHourly[w]["icon"].find("day") != null){
-				pointer[1]=1;
-			}
-			if(weatherHourly[w]["icon"].find("rain") != null || weatherHourly[w]["icon"].find("snow") != null || weatherHourly[w]["icon"].find("sleet") != null){
-				pointer[0]=7;
-			}
-			Sys.println([weatherHourly[w]["time"], pointer, meteoColors[pointer[1]][pointer[0]]]);
-			weatherHourly[w]=meteoColors[pointer[1]][pointer[0]];
-		}*/
 		dc.setPenWidth(3);
 		var color;
 		var center;
+		//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
 		for(var i=offset; i<weatherHourly.size() &&i<24+offset; i++, h++){
-			/* 
-				0: Clear skies
-				1: Partly Cloudy
-
-				2: Cloudy
-
-				3: Very Light Rain
-				4: Light Rain
-				5: Moderate Rain
-				6: Snow
-			*/
 			color = weatherHourly[i];
-			if(color<=9){color = 6;}
-			else if(color==10){color=2;}
-			else if(color<=13){color=5;}
-			else if(color<=15){color=4;}
-			else if(color<=19){color=2;}
-			else if(color==20){color=1;}
-			else if(color>=21){color=0;}
-
-			//if(color==0 || color==1 || color==){color=4;}
-			if(color!=2){	// we don't show just clody or light rain
-				if(color>3){color=color-2;} else if (color==3){color=2;}// correcting missing value of very light rain
-				
-
-			
-			//Sys.System.println(color);
-
+			if(color<=9){color = 4;}	// snow
+			else if(color==10){color=-1;}	// clouds
+			else if(color<=13){color=3;}	// rain
+			else if(color<=15){color=2;}	// light rain
+			else if(color<=19){color=-1;}	// clouds
+			else if(color==20){color=1;}	// partly cloudy
+			else if(color>=21){color=0;}	// sun
+			//Sys.System.println([i, offset, color]);
+			if(color>=0){
 				color = meteoColors[1][color];
 				h = h%24;
 				center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
-				/*if(weatherHourly[i]<=1){
-					color = meteoColors[1][1];	// clear
-				} else if(weatherHourly[i]>=4){
-					if(weatherHourly[i]>=6){
-						color = meteoColors[1][4];	// snow
-					} else {
-						color = meteoColors[1][3];	// rain
-					}
-				} else {
-					color = Gfx.COLOR_TRANSPARENT;
-				}*/
-
-				Sys.println([i, h, weatherHourly[i], color]);
-				//if(dc has :setAntiAlias) {dc.setAntiAlias(false);}
-				//dc.setColor(color, Gfx.COLOR_TRANSPARENT);
+				//Sys.println([i, h, weatherHourly[i], color]);
+				dc.setColor(color, Gfx.COLOR_TRANSPARENT);
 				dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*15, 90-(h+1)*15);
 			}
+		}
+		if(weatherHourly.size()>1){
+			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+			dc.drawText(centerX+centerX>>1, centerY>>1-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, Math.round(weatherHourly[1]).format("%0d")+'', Gfx.TEXT_JUSTIFY_CENTER);	
 		}
 	}
 
@@ -190,9 +148,11 @@ class lateView extends Ui.WatchFace {
 			dateY = (centerY-(radius+Gfx.getFontHeight(fontSmall))*1.17).toNumber();
 			batteryY = centerY+0.6*radius;			
 		}
-
-		if(activity>0){
+		if(activity>0 || showWeather){
 			fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
+		}
+		if(activity>0){
+			
 			if(dialSize==0){
 				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
 				if(activity == 6){

@@ -91,7 +91,8 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println("onBackgroundData app: " +Sys.println(data));
+		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app:");
+		Sys.println(data);
 		try {
 			if(data instanceof Array){ // array with weaather forecast
 				
@@ -100,42 +101,43 @@ class lateApp extends App.AppBase {
 					data[1] = Math.round(data[1]).toNumber(); // current temperature
 					for(var i=2; i<data.size();i++){
 						color = data[i];
-						if(color<=9){color = 4;}	// snow
-						else if(color==10){color=-1;}	// clouds
-						else if(color<=13){color=3;}	// rain
-						else if(color<=15){color=2;}	// light rain
-						else if(color<=19){color=-1;}	// clouds
-						else if(color==20){color=1;}	// partly cloudy
-						else if(color>=21){color=0;}	// sun
+						if(color<=9){color = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light]
+						else if(color==10){color=-1;}	// clouds: [flurries]
+						else if(color<=13){color=3;}	// rain: [tstorm, rain_heavy, rain]
+						else if(color<=15){color=2;}	// light rain: [rain_light, drizzle]
+						else if(color<=19){color=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy]
+						else if(color==20){color=1;}	// partly cloudy: [partly, cloudy]
+						else if(color>=21){color=0;}	// sun: [clear, mostly_clear]
 						data[i] = color;
 					}
 					app.setProperty("weather", data);
 					data = {"weather"=>data};
 					
-					/* var c;
-					data = Weather.getCurrentConditions();
-					Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
-					data = Weather.getHourlyForecast();
-					for(var j=0; j<data.size(); j++){
-						c = data[j].condition;
-						
-						// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
-						if(c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR){c=1;} // Partly Cloudy 
-						
-						else if( c==Weather.CONDITION_LIGHT_RAIN || c==Weather.CONDITION_DRIZZLE || c==Weather.CONDITION_SHOWERS || c==Weather.CONDITION_HEAVY_SHOWERS ){c=4;} // Light rain 
-						else if(c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_TORNADO || 
-						c==Weather.CONDITION_SANDSTORM || c==Weather.CONDITION_HURRICANE || c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_FREEZING_RAIN || 
-						c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_SLEET){c=5;} // rain
+					/* // Garmin Weather API 12h
+						var c;
+						data = Weather.getCurrentConditions();
+						Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
+						data = Weather.getHourlyForecast();
+						for(var j=0; j<data.size(); j++){
+							c = data[j].condition;
+							
+							// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
+							if(c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR){c=1;} // Partly Cloudy 
+							
+							else if( c==Weather.CONDITION_LIGHT_RAIN || c==Weather.CONDITION_DRIZZLE || c==Weather.CONDITION_SHOWERS || c==Weather.CONDITION_HEAVY_SHOWERS ){c=4;} // Light rain 
+							else if(c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_TORNADO || 
+							c==Weather.CONDITION_SANDSTORM || c==Weather.CONDITION_HURRICANE || c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_FREEZING_RAIN || 
+							c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_SLEET){c=5;} // rain
 
-						else if(c==Weather.CONDITION_SNOW || c>=Weather.CONDITION_LIGHT_SNOW && c<=Weather.CONDITION_HEAVY_RAIN_SNOW || c==Weather.CONDITION_ICE_SNOW || c==Weather.CONDITION_HAIL)
-						{c=6;} // snow
+							else if(c==Weather.CONDITION_SNOW || c>=Weather.CONDITION_LIGHT_SNOW && c<=Weather.CONDITION_HEAVY_RAIN_SNOW || c==Weather.CONDITION_ICE_SNOW || c==Weather.CONDITION_HAIL)
+							{c=6;} // snow
 
-						if(c>6){c=6;} // ignoring everything else
-						data[j]=c;
-					}
+							if(c>6){c=6;} // ignoring everything else
+							data[j]=c;
+						}
 					data = {"weather"=>[13, 0].addAll(data)};*/
 					changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
-app.setProperty("lastLoad", 'w');
+					app.setProperty("lastLoad", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
 				}
 			}
 			else {
@@ -150,10 +152,11 @@ app.setProperty("lastLoad", 'w');
 					data = parseEvents(data.get("events"));
 					app.setProperty("events", data);
 					if(!(app.getProperty("weather")==true)){
-						changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
+						changeScheduleToMinutes(5);	// load also weather as soon as possible
+					} else {
+						changeScheduleToMinutes(app.getProperty("refresh_freq")); // all loaded, wait for next data loading period 
 					}
-app.setProperty("lastLoad", 'c');
-					// TODO mark moment of last data loading
+					app.setProperty("lastLoad", 'c'); // for background process to know the next time what was loaded to alternate between weather and calendar loading
 				} 
 				else if(data.hasKey("user_code")){ // prompt login
 					app.setProperty("refresh_token", null); 
@@ -168,6 +171,10 @@ app.setProperty("lastLoad", 'c');
 					var error = data["error_code"];
 					var connected = Sys.getDeviceSettings().phoneConnected;
 
+					if(error==-300){ // no internet
+						return;
+					}
+
 					if (!(error==404 && app.getProperty("refresh_token")!=null)) {	// standard data loading with no connection or no internet: do not warn immediately
 						data["wait"] = durationToNextEvent();
 						changeScheduleToMinutes(5);
@@ -177,7 +184,7 @@ app.setProperty("lastLoad", 'c');
 							data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);
 						} else */
 					
-						if(error == 404 ){  // no internet or not connected
+						if(error == 404 ){  // no internet or not connected when logging in
 							data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
 						}
 						else if(data.hasKey("error")){	// when reason is passed from background
@@ -190,7 +197,9 @@ app.setProperty("lastLoad", 'c');
 							app.setProperty("refresh_token", null);
 							app.setProperty("user_code", null);
 							data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
-						} 
+						} else if(error==-403){
+							data["userPrompt"] = Ui.loadResource(Rez.Strings.OutOfMemory);
+						}
 						else { // all other unanticipated errors
 							data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
 							data["userContext"] = data.get("error_code");

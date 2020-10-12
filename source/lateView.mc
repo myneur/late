@@ -42,20 +42,19 @@ class lateView extends Ui.WatchFace {
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
 		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		/* TODO 
-			lower frequency of loading 
-			settings
-			combine with calendar
-			day vs night colors
+			- load accoringly to the frequency settings, just with 5 min delay to do the loads. 
+			- memory optimisations
+			- day vs night colors
 		*/
 
 		var offset = 2;	// where in the array weather forecast starts
 		var h = Sys.getClockTime().hour; // first hour of the forecast
 		if (weatherHourly.size()>offset){
 			if(weatherHourly[0]<h){
-				Sys.println("offset++: "+ [weatherHourly[0], h]);
+				//Sys.println("offset++: "+ [weatherHourly[0], h]);
 				offset += h - weatherHourly[0];
 			} else if (weatherHourly[0]>h){
-				Sys.println("h++: "+ [weatherHourly[0], h]);
+				//Sys.println("h++: "+ [weatherHourly[0], h]);
 				h += weatherHourly[0] - h;
 			}
 		} else {
@@ -195,6 +194,7 @@ class lateView extends Ui.WatchFace {
 		batThreshold = app.getProperty("bat");
 		circleWidth = app.getProperty("boldness");
 		dialSize = app.getProperty("dialSize");
+		showWeather = app.getProperty("weather");
 activity = 6;
 showWeather = true;
 showSunrise = true;
@@ -331,7 +331,7 @@ circleWidth=7;
 		if (lastRedrawMin != clockTime.min && redrawAll==0) { redrawAll = 1; }
 		//var ms = [Sys.getTimer()];
 		if (redrawAll>0){
-			Sys.println([clockTime.min, redrawAll]);
+			Sys.println([clockTime.min, redrawAll, Sys.getSystemStats().freeMemory]);
 			if(dc has :setAntiAlias) {
 				dc.setAntiAlias(true);
 			}
@@ -447,7 +447,8 @@ circleWidth=7;
 
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println("onBackgroundData view: "+ data);
+		Sys.println("onBackgroundData view:");
+		Sys.println(data);
 		//dataCount++;
 		if(data instanceof Array){	
 			events_list = data;

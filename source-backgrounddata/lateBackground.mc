@@ -5,13 +5,7 @@ using Toybox.Application as App;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 
-const GoogleDeviceCodeUrl = "https://accounts.google.com/o/oauth2/device/code";
 const GoogleTokenUrl = "https://oauth2.googleapis.com/token";
-const GoogleCalendarEventsUrl = "https://www.googleapis.com/calendar/v3/calendars/";
-const GoogleCalendarListUrl = "https://www.googleapis.com/calendar/v3/users/me/calendarList";
-const GoogleScopes = "https://www.googleapis.com/auth/calendar.readonly";
-//const WeatherApi = "https://almost-late-middleware.herokuapp.com/api/";
-const WeatherApi = "https://almost-late-middleware.herokuapp.com/api2/";
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -23,7 +17,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	var events_list = [];
 	var primary_calendar = false;
 	var app;
-	var maxResults = 4;
+	var maxResults = 6;
 
 	function initialize() {
 		Sys.println(Sys.getSystemStats().freeMemory + " on init");
@@ -33,14 +27,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function onTemporalEvent() {
-		Sys.println(Sys.getSystemStats().freeMemory + " on onTemporalEvent");
+		Sys.println(Sys.getSystemStats().freeMemory + " onTemporalEvent");
 		app = App.getApp();
 		var connected = Sys.getDeviceSettings().phoneConnected;
 
-if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c'){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
+	if(app.getProperty("weather")==true && app.getProperty("lastLoad")=='c'){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
-			if (app.getProperty("refresh_token") != null) { Sys.println("has refresh_token");
+			if (app.getProperty("refresh_token") != null) { 
+				//Sys.println("has refresh_token");
 				refresh_token = app.getProperty("refresh_token");
 				if(connected){
 					refreshTokenAndGetData();
@@ -60,16 +55,16 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 	}
 
 	function getOAuthUserCode(){
-		Sys.println(Sys.getSystemStats().freeMemory + " on getOAuthUserCode");
-		Sys.println([App.getApp().getProperty("client_id"), $.GoogleDeviceCodeUrl, $.GoogleScopes]);
-		Sys.println(app.getProperty("client_id"));
-		Communications.makeWebRequest($.GoogleDeviceCodeUrl, 
-			{"client_id"=>app.getProperty("client_id"), "scope"=>$.GoogleScopes}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+		Sys.println(Sys.getSystemStats().freeMemory + " getOAuthUserCode");
+		//Sys.println([App.getApp().getProperty("client_id"), $.GoogleDeviceCodeUrl, $.GoogleScopes]);
+		//Sys.println(app.getProperty("client_id"));
+		Communications.makeWebRequest("https://accounts.google.com/o/oauth2/device/code", 
+			{"client_id"=>app.getProperty("client_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onOAuthUserCode)); 
 	}
 
 	function onOAuthUserCode(responseCode, data){ // {device_code, user_code, verification_url}
-		Sys.println(Sys.getSystemStats().freeMemory + " onOAuthUserCode: "+responseCode); Sys.println(data);
+		Sys.println(Sys.getSystemStats().freeMemory + " onOAuthUserCode: "+responseCode); //Sys.println(data);
 		if(responseCode != 200){
 			if(data == null) { // no data connection 
 				data = {"error_code"=>responseCode};
@@ -83,15 +78,15 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 	}
 
 	function getTokensAndData(){ // device_code can tell if the user granted access
-		Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); Sys.println(app.getProperty("user_code"));
-		Sys.println([$.GoogleTokenUrl,app.getProperty("device_code"),app.getProperty("client_id"),app.getProperty("client_secret"),"http://oauth.net/grant_type/device/1.0"]);
+		Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); //Sys.println(app.getProperty("user_code"));
+		//Sys.println([$.GoogleTokenUrl,app.getProperty("device_code"),app.getProperty("client_id"),app.getProperty("client_secret"),"http://oauth.net/grant_type/device/1.0"]);
 		Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
 			"code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onTokenRefresh2GetData));
 	}
 
 	function onTokenRefresh2GetData(responseCode, data){
-		Sys.println(Sys.getSystemStats().freeMemory + " on onTokenRefresh2GetData: "+responseCode); Sys.println(data);
+		Sys.println(Sys.getSystemStats().freeMemory + " onTokenRefresh2GetData: "+responseCode); //Sys.println(data);
 		if (responseCode == 200) {
 			access_token = data.get("access_token");
 			if(data.get("refresh_token")){
@@ -99,7 +94,7 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 			}
 
 			calendar_ids = app.getProperty("calendar_ids");
-			Sys.println(calendar_ids);
+			//Sys.println(calendar_ids);
 			if(calendar_ids == null || !(calendar_ids instanceof Toybox.Lang.Array) || calendar_ids.size()==0){ // because of [] and white-spaces
 				getPrimaryCalendar();
 			} 
@@ -145,16 +140,16 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 	}
 
 	function getPrimaryCalendar(){
-		Sys.println(Sys.getSystemStats().freeMemory + " on getPrimaryCalendar");
-		Communications.makeWebRequest($.GoogleCalendarListUrl,
+		Sys.println(Sys.getSystemStats().freeMemory + " getPrimaryCalendar");
+		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/users/me/calendarList",
 			{"maxResults"=>"15", "fields"=>"items(id,primary)", "minAccessRole"=>"owner"/*, "showDeleted"=>false*/}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
 			:headers=>{ "Authorization"=>"Bearer " + access_token}},
 			method(:onPrimaryCalendarCandidates));
 	}
 
 	function onPrimaryCalendarCandidates(responseCode, data) {  // expects calendar list already parsed to array
-		Sys.println(Sys.getSystemStats().freeMemory + " on onPrimaryCalendarCandidates");
-		Sys.println(data);
+		Sys.println(Sys.getSystemStats().freeMemory + " onPrimaryCalendarCandidates");
+		//Sys.println(data);
 		if (responseCode == 200) {
 			data = data.get("items");
 			for(var i=0; i < data.size(); i++){
@@ -172,7 +167,7 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 	function getNextCalendarEvents() {
 		current_index++;
 		if (current_index<calendar_ids.size()) {
-			Sys.println(calendar_ids[current_index]);
+			//Sys.println(calendar_ids[current_index]);
 			getEvents(calendar_ids[current_index]);
 			return true;
 		} else {
@@ -181,7 +176,7 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 	}
 	
 	function getEvents(calendar_id) {
-		Sys.println(Sys.getSystemStats().freeMemory + " on getCalendarData");
+		Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		var sys_time = System.getClockTime();
 		var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -204,8 +199,8 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 		/*Communications.makeWebRequest($.GoogleCalendarEventsUrl + calendar_id + "/events", {
 			 "timeMin"=>dateStart, "timeMax"=>dateEnd}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + access_token }},
 			method(:onEvents));*/
-		Sys.println({"maxResults"=>maxResults.toString()});
-		Communications.makeWebRequest($.GoogleCalendarEventsUrl + calendar_id + "/events", {
+		Sys.println("maxResults: "+maxResults.toString());
+		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/calendars/" + calendar_id + "/events", {
 			"maxResults"=>maxResults.toString(), "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
 				:headers=>{ "Authorization"=>"Bearer " + access_token }},
 			method(:onEvents));
@@ -215,7 +210,7 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 	
 	var events_list_size = 0;
 	function onEvents(responseCode, data) {
-		Sys.println(Sys.getSystemStats().freeMemory +" on onEvents: "+responseCode); 
+		Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode); 
 		//Sys.println(data);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
@@ -225,7 +220,7 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 				var event = data[i];
 				data[i] = null;
 				//if(events_list_size>500){break;}
-				Sys.println(Sys.getSystemStats().freeMemory +" "+event);
+				Sys.println(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
 				if(event["start"]){ // skip day events that have only "summary"
 					try {
 						var eventTrim = [
@@ -242,7 +237,6 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 									eventTrim[3] = eventTrim[3].substring(0,split);
 							}
 						}
-						Sys.println(Sys.getSystemStats().freeMemory +" "+eventTrim);
 						events_list.add(eventTrim);
 						events_list_size += eventTrim.toString().length();
 						eventTrim = null;
@@ -252,8 +246,8 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 						}*/
 					} catch(ex) {
 						events_list = events_list.size() ? [events_list[0]] : null;
-						exitWithDataAndToken(responseCode);
 						Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
+						exitWithDataAndToken(responseCode);
 					}
 				}
 			}
@@ -301,22 +295,22 @@ if( false && app.getProperty("weather")==true && app.getProperty("lastLoad")=='c
 	}
 
 	function getWeatherForecast() {
-		Sys.println(Sys.getSystemStats().freeMemory + " on getWeatherForecast");
+		Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast");
 		var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
-		//pos = [50.11, 14.49];
+		pos = [50.11, 14.49];
 		if(pos == null){
-			Sys.println("no pos: "+pos);
+			//Sys.println("no pos: "+pos);
 			Background.exit({"error"=>"Get GPS location", "error_code"=>100});
 			return;
 		}
-		Sys.println("location: "+pos);
-		Communications.makeWebRequest($.WeatherApi+pos[0].toFloat()+"/"+pos[1].toFloat(), {"api_key"=>app.getProperty("api_key"), "unit"=>"c"}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
+		Sys.println(pos);
+		Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api2/"+pos[0].toFloat()+"/"+pos[1].toFloat(), {"api_key"=>app.getProperty("api_key"), "unit"=>"c"}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
 			method(:onWeatherForecast));
 	}
 
 	function onWeatherForecast(responseCode, data){
-		Sys.println(Sys.getSystemStats().freeMemory + " on onWeatherForecast: "+responseCode); 
-		Sys.println(data);
+		Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode); 
+		//Sys.println(data);
 		if (responseCode == 200) {
 			try { 
 				Background.exit(data);

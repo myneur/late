@@ -133,6 +133,10 @@ class lateView extends Ui.WatchFace {
 			dateY = (centerY-radius*.5-Gfx.getFontHeight(fontSmall)).toNumber();
 			circleWidth=circleWidth*3;
 			batteryY=height-14;
+			if(height<208){
+				radius -= 11;
+				dateY += 7;
+			}
 		} else { // elegant design
 			fontHours = Ui.loadResource(Rez.Fonts.Hours);
 			fontSmall = Ui.loadResource(Rez.Fonts.Small);
@@ -158,6 +162,9 @@ class lateView extends Ui.WatchFace {
 				}
 			} else {
 				activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
+				if(height<208){
+					activityY -= 7;
+				}
 				if(activity==6){
 					activityY -=Gfx.getFontHeight(fontSmall)>>1; 
 					showMessage(App.getApp().scheduleDataLoading());
@@ -196,7 +203,8 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 activity = 6;
-showWeather = true;
+showWeather = false;
+app.setProperty("weather", showWeather);
 showSunrise = true;
 dialSize=0;
 circleWidth=7;
@@ -407,7 +415,9 @@ circleWidth=7;
 					drawIcon(a.floorsClimbed.toFloat()/a.floorsClimbedGoal, Ui.loadResource(Rez.Drawables.Floors), dc);
 					drawIcon(a.steps.toFloat()/a.stepGoal, Ui.loadResource(Rez.Drawables.Steps), dc);*/
 				}
-				drawWeather(dc);
+				if(showWeather){
+					drawWeather(dc);
+				}
 				drawNowCircle(dc, clockTime.hour);
 			}
 			
@@ -636,9 +646,10 @@ circleWidth=7;
 		var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1;
 		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}
-
+	//var m = 0; testing rendering
 	function drawMinuteArc (dc){
 		var minutes = clockTime.min; 
+		// minutes=m; m++; // testing rendering
 		///Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
 		var angle =  minutes/60.0*2*Math.PI;
 		var cos = Math.cos(angle);
@@ -659,9 +670,9 @@ circleWidth=7;
 				1: 		4 
 				2-6: 	6 
 				7-9: 	8 
-				10-11: 	10 
+				10-11: 	11 
 				12-22: 	9 
-				23-51: 	10 
+				23-51: 	11 
 				52-59: 	12
 				59: start offsetted by 4
 			*/
@@ -675,7 +686,7 @@ circleWidth=7;
 					if(minutes>=12 && minutes<=22){ // 12-22
 						offset=9;
 					} else {
-						offset=10;	// 10-11+23-51
+						offset=11;	// 10-11+23-51
 					}
 				}
 			} else {

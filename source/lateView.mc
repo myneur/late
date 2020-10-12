@@ -45,6 +45,7 @@ class lateView extends Ui.WatchFace {
 			- load accoringly to the frequency settings, just with 5 min delay to do the loads. 
 			- memory optimisations
 			- day vs night colors
+			- unit settings 
 		*/
 
 		var offset = 2;	// where in the array weather forecast starts
@@ -203,7 +204,7 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 activity = 6;
-showWeather = false;
+showWeather = true;
 app.setProperty("weather", showWeather);
 showSunrise = true;
 dialSize=0;

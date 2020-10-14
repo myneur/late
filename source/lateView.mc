@@ -11,11 +11,8 @@ using Toybox.Application as App;
 
 enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
 //enum {night,day}
-var meteoColors =[
-[0,			0,			0x0055AA, 0x0055AA,	0x555555],
-//[0x6ED06F, 0xEFAF75,  0xB3CBE5, 0x79A4D1, 0x578DC6],
-[0xFFAA00,	0xAA5500,	0x0000AA, 0x0055FF,	0xAAAAAA]];
-//enum {clear, partly, 	lghtrain, rain,		snow}
+var meteoColors =	[0xFFAA00,	0xAA5500,	0x0000AA, 0x0055FF,	0xAAAAAA];
+//enum {			clear, 		partly, 	lghtrain, rain,		snow} // clear moon can be 0x555500
 
 class lateView extends Ui.WatchFace {
 	hidden const CENTER = Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER;
@@ -34,20 +31,13 @@ class lateView extends Ui.WatchFace {
 	hidden var events_list = [];
 	hidden var weatherHourly = [];
 	// redraw full watchface
-	hidden var redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
+	hidden var redrawAll=2; 
 	hidden var lastRedrawMin=-1;
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
 	(:data)
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
-		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
-		/* TODO 
-			- load accoringly to the frequency settings, just with 5 min delay to do the loads. 
-			- memory optimisations
-			- day vs night colors
-			- unit settings 
-		*/
-
+		///Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		var offset = 2;	// where in the array weather forecast starts
 		var h = Sys.getClockTime().hour; // first hour of the forecast
 		if (weatherHourly.size()>offset){
@@ -69,8 +59,8 @@ class lateView extends Ui.WatchFace {
 		for(var i=offset; i<weatherHourly.size() &&i<24+offset; i++, h++){
 			color = weatherHourly[i];
 			//Sys.System.println([i, offset, color]);
-			if(color>=0 && color < meteoColors[1].size()){
-				color = meteoColors[1][color];
+			if(color>=0 && color < meteoColors.size()){
+				color = meteoColors[color];
 				h = h%24;
 				center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
 				//Sys.println([i, h, weatherHourly[i], color]);
@@ -85,7 +75,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function initialize (){
-		Sys.println("initialize");
+		///Sys.println("initialize");
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
@@ -102,15 +92,15 @@ class lateView extends Ui.WatchFace {
 				events_list = events;
 			}
 		}
-		Sys.println("init: "+ weatherHourly);
+		///Sys.println("init: "+ weatherHourly);
 		if(weatherHourly.size()==0){
-			var weather = App.getApp().getProperty("weather");
+			var weather = App.getApp().getProperty("weatherHourly");
 
 			if(weather instanceof Toybox.Lang.Array){
 				weatherHourly = weather;
 			}
 		}
-		Sys.println("init: "+ weatherHourly);
+		///Sys.println("init: "+ weatherHourly);
 	}
 
 	//! Load your resources here
@@ -121,7 +111,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function setLayoutVars(){
-		Sys.println("Layout free memory: "+Sys.getSystemStats().freeMemory);
+		//Sys.println("Layout free memory: "+Sys.getSystemStats().freeMemory);
 		sunR = centerX-9;
 		if(dialSize>0){ // strong design
 			fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
@@ -193,7 +183,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	function loadSettings(){
-		Sys.println("loadSettings");
+		///Sys.println("loadSettings");
 		var app = App.getApp();
 		
 		dateForm = app.getProperty("dateForm");
@@ -299,14 +289,19 @@ circleWidth=7;
 			}
 		}
 
-		redrawAll = 2;
 		setLayoutVars();
+		onShow();
 	}
 
 	//! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
 	function onShow() {
 		///Sys.println("onShow");
-		redrawAll=2;
+		
+		if(Sys.getDeviceSettings().isTouchScreen || centerX <=104){ // FR 45 and Vivoactive 4 (touch) need to redraw the display every second
+			redrawAll=100;
+		} else {
+			redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
+		}
 	}
 	
 	//! Called when this View is removed from the screen. Save the state of this View here. This includes freeing resources from memory.
@@ -319,7 +314,7 @@ circleWidth=7;
 	function onExitSleep(){
 		///Sys.println("onExitSleep");
 		//wakeCount++;
-		redrawAll=1;
+		onShow();
 	}
 
 	//! Terminate any active timers and prepare for slow updates.
@@ -340,7 +335,7 @@ circleWidth=7;
 		if (lastRedrawMin != clockTime.min && redrawAll==0) { redrawAll = 1; }
 		//var ms = [Sys.getTimer()];
 		if (redrawAll>0){
-			Sys.println([clockTime.min, redrawAll, Sys.getSystemStats().freeMemory]);
+			///Sys.println([clockTime.min, redrawAll, Sys.getSystemStats().freeMemory]);
 			if(dc has :setAntiAlias) {
 				dc.setAntiAlias(true);
 			}
@@ -408,7 +403,7 @@ circleWidth=7;
 						dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
 						dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
 					} else { 
-						drawEvents(dc);
+						drawEvent(dc);
 					}
 
 					/*var a = ActivityMonitor.getInfo(); // EXPERIMENT with racing activities
@@ -418,6 +413,9 @@ circleWidth=7;
 				}
 				if(showWeather){
 					drawWeather(dc);
+				}
+				if(activity == 6){
+					drawEvents(dc);
 				}
 				drawNowCircle(dc, clockTime.hour);
 			}
@@ -441,7 +439,7 @@ circleWidth=7;
 	}*/
 
 	function showMessage(message){
-		Sys.println("message "+message);
+		///Sys.println("message "+message);
 		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			if(message.hasKey("wait")){
@@ -458,8 +456,8 @@ circleWidth=7;
 
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println("onBackgroundData view:");
-		Sys.println(data);
+		///Sys.println("onBackgroundData view:");
+		///Sys.println(data);
 		//dataCount++;
 		if(data instanceof Array){	
 			events_list = data;
@@ -472,7 +470,7 @@ circleWidth=7;
 				showMessage(data);
 			}
 		}
-		redrawAll = 1;
+		onShow();
 	}
 
 	(:data)
@@ -496,7 +494,7 @@ circleWidth=7;
 			eventName = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21); 
 
 			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
-			if( tillStart <0){
+			if( tillStart <=0){
 				eventStart = "now!";
 				eventMarker = null;
 			}
@@ -601,7 +599,6 @@ circleWidth=7;
 
 	(:data)
 	function drawEvents(dc){
-		drawEvent(dc);
 		dc.setPenWidth(5);
 		var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;
 		var tomorrow = Time.now().value()+Calendar.SECONDS_PER_DAY;
@@ -758,6 +755,7 @@ circleWidth=7;
 
 	function computeSun() {
 		var pos = Activity.getActivityInfo().currentLocation;
+		//pos = [50.11, 14.49];
 		if (pos == null){
 			pos = App.getApp().getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){

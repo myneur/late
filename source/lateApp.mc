@@ -35,13 +35,13 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		Sys.println("scheduling");
+		///Sys.println("scheduling");
 		loadSettings();
 
 		if(watch.dataLoading && (watch.activity == 6 || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
-			if(app.getProperty("refresh_token") == null){	Sys.println("no auth");
+			if(app.getProperty("refresh_token") == null){	///Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {
@@ -74,13 +74,13 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function promptLogin(user_code, url){
-		Sys.println([user_code, url]);
+		///Sys.println([user_code, url]);
 		return ({"userPrompt"=>url.substring(url.find("www.")+4, url.length()), "userContext"=>user_code, "permanent"=>true, "wait"=>durationToNextEvent()});
 	}
 
 	(:data)
 	function changeScheduleToMinutes(minutes){
-		Sys.println("changeScheduleToMinutes: "+minutes);
+		///Sys.println("changeScheduleToMinutes: "+minutes);
 		return Background.registerForTemporalEvent(new Time.Duration( minutes * Calendar.SECONDS_PER_MINUTE));
 	}
 
@@ -91,11 +91,11 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app:");
-		Sys.println(data);
+		///Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app:");
+		///Sys.println(data);
 		try {
 			if(data instanceof Array){ // array with weaather forecast
-				
+				///Sys.println("Array weather");
 				if(data.size()>2){
 					var color;
 					data[1] = Math.round(data[1]).toNumber(); // current temperature
@@ -110,7 +110,7 @@ class lateApp extends App.AppBase {
 						else if(color>=21){color=0;}	// sun: [clear, mostly_clear]
 						data[i] = color;
 					}
-					app.setProperty("weather", data);
+					app.setProperty("weatherHourly", data);
 					data = {"weather"=>data};
 					
 					/* // Garmin Weather API 12h
@@ -149,6 +149,7 @@ class lateApp extends App.AppBase {
 					app.setProperty("calendar_ids", [data["primary_calendar"]]);
 				}
 				if (data.hasKey("events")) {
+					///Sys.println("dict events");
 					data = parseEvents(data.get("events"));
 					app.setProperty("events", data);
 					if(!(app.getProperty("weather")==true)){
@@ -186,6 +187,8 @@ class lateApp extends App.AppBase {
 					
 						if(error == 404 ){  // no internet or not connected when logging in
 							data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
+						} else if (error == -204){
+							data["userPrompt"] = Ui.loadResource(Rez.Strings.NoGPS);
 						}
 						else if(data.hasKey("error")){	// when reason is passed from background
 							///Sys.println(data["error"]);
@@ -213,7 +216,7 @@ class lateApp extends App.AppBase {
 			}
 			Ui.requestUpdate();
 		} catch (ex){
-			Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
+			///Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
 			if(watch){
 				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
 			}
@@ -247,7 +250,7 @@ class lateApp extends App.AppBase {
 					break;
 				}
 			}
-			Sys.println(list);
+			///Sys.println(list);
 			return list;
 		} else {
 			return id_list;

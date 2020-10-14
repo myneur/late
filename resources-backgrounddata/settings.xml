@@ -27,7 +27,7 @@
 	</setting>
 
 	<setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
-		<settingConfig type="numeric" min="5" max="1440" />
+		<settingConfig type="numeric" min="60" max="1440" />
 	</setting>
 
 	<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors">

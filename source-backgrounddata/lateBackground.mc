@@ -210,12 +210,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	
 	var events_list_size = 0;
 	function onEvents(responseCode, data) {
-		///Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode); 
+		//Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode); 
 		//Sys.println(data);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
 			var eventsToSafelySend = primary_calendar ? 8 : 9;
-			//Sys.println(Sys.getSystemStats().freeMemory + " events: "+ data.size());
+			///Sys.println(Sys.getSystemStats().freeMemory + " events: "+ data.size());
 			for (var i = 0; i < data.size() && events_list.size() < eventsToSafelySend; i++) { // 10 events not to get out of memory
 				var event = data[i];
 				data[i] = null;
@@ -301,8 +301,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	function getWeatherForecast() {
 		///Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast");
-		//Sys.println([app.getProperty("lock"),app.getProperty("key"), app.getProperty("lock").find(app.getProperty("key"))]);
-		if(app.getProperty("key").find(app.getProperty("lock"))!= null){
+		///Sys.println([app.getProperty("lock"),app.getProperty("key"), app.getProperty("lock").find(app.getProperty("key"))]);
+		if(true || app.getProperty("key").find(app.getProperty("lock"))!= null){
 			var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){
 				Background.exit({"error_code"=>-204});

@@ -392,6 +392,14 @@ circleWidth=7;
 				if(activity > 0){
 					text = ActivityMonitor.getInfo();
 					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+
+					icon = Ui.loadResource(Rez.Drawables.Steps);
+					dc.drawText(centerX>>2, centerY, fontCondensed, 293+humanizeNumber(text[:steps]), Gfx.TEXT_JUSTIFY_CENTER); 
+					dc.drawBitmap(centerX>>2-icon.getWidth()>>1, centerY-icon.getHeight(), icon);
+					icon = Ui.loadResource(Rez.Drawables.Cal);
+					dc.drawText(centerX<<1-centerX>>2, centerY, fontCondensed, 309+humanizeNumber(text.calories), Gfx.TEXT_JUSTIFY_CENTER); 
+					dc.drawBitmap(centerX<<1-centerX>>2-icon.getWidth()>>1, centerY-icon.getHeight(), icon);
+
 					if(activity < 6){
 						if(activity < 3){ //1,2
 							text = humanizeNumber( activity<2 ? text.steps : text.calories);

@@ -1,5 +1,5 @@
 <properties>
-	<property id="activity" type="number">6</property>
+	<property id="activity" type="number">1</property>
 
 	<property id="compatibility" type="number">2</property>
 	
@@ -9,7 +9,7 @@
 	<property id="calendar_colors" type="number">1</property>
 	<property id="calendar_ids" type="string"></property>
 
-	<property id="weather" type="boolean">true</property>
+	<property id="weather" type="boolean">false</property>
 	<property id="units" type="number">1</property>
 	<property id="key" type="string"></property>
 </properties>

@@ -20,7 +20,7 @@ class lateView extends Ui.WatchFace {
 	hidden var centerX; hidden var centerY; hidden var height;
 	hidden var color; hidden var timeColor = Gfx.COLOR_WHITE; hidden var dateColor = Gfx.COLOR_LT_GRAY; hidden var activityColor = Gfx.COLOR_DK_GRAY; hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
-	var activity=0; var activityL=0; var activityR=0; var showSunrise = false; var dataLoading = false; var showWeather = false;
+	var activity=0; var activityL=0; var activityR=0; var showSunrise = false; var dataLoading = false; var showWeather = false; var percentage = false;
 	hidden var icon=null; hidden var iconL=null; hidden var iconR=null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
@@ -211,6 +211,7 @@ class lateView extends Ui.WatchFace {
 		circleWidth = app.getProperty("boldness");
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
+		percentage = app.getProperty("percents");
 activity = 6;
 activityL = 1;
 activityR = 4;
@@ -219,6 +220,7 @@ app.setProperty("weather", showWeather);
 showSunrise = true;
 dialSize=0;
 circleWidth=7;
+percentage = true;
 App.getApp().setProperty("location", [50.11, 14.49]);
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == 6 && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
@@ -468,7 +470,6 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		return percentage ? info.floorsClimbed.toFloat()/info.floorsClimbedGoal : info.floorsClimbed.toString();
 	}*/
 
-var percentage = true;
 	function drawActivity(dc, activity, icon, x, y, horizontal){
 		var info = ActivityMonitor.getInfo();
 
@@ -506,8 +507,17 @@ var percentage = true;
 		
 		if(percentage){
 			dc.setPenWidth(2);
+			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 			dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);
 			if(info>0.0001){
+				if(info>1){
+					dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
+					if(info<2){
+						dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90-info*360-10, 100); 
+					} else {
+						dc.drawCircle(x, y, 14);
+					}
+				}
 				dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90, 90-info*360); 
 			}
 		} else {

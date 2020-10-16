@@ -22,14 +22,17 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function initialize() {
 		///Sys.println(Sys.getSystemStats().freeMemory + " on init");
 		Sys.ServiceDelegate.initialize();
+		Communications.registerForOAuthMessages(method(:onPurchase));
 		app = App.getApp();
-		/*Communications.registerForOAuthMessages(method(:onOauthMessage));*/
 	}
 	
 	function onTemporalEvent() {
 		///Sys.println(Sys.getSystemStats().freeMemory + " onTemporalEvent");
 		app = App.getApp();
 		var connected = Sys.getDeviceSettings().phoneConnected;
+
+		buySubscription(); 
+		return;
 
 		if(app.getProperty("weather")==true && app.getProperty("lastLoad")=='c'){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
@@ -332,6 +335,18 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
+
+	function buySubscription(){
+		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay", 
+			{}, 
+			"http://localhost/", Communications.OAUTH_RESULT_TYPE_URL, 
+			{"sub_id"=>"sub_id"});
+	}
+	function onPurchase(message) {
+		Sys.println("onPurchase: ");
+		Sys.println(message.data);
+		//Communications.openWebPage(url, params, options);
+	}
 
 /*  function showInstructionOnMobile(data){
 		var user_code = data.hasKey("user_code") ? data["user_code"] : app.getProperty("user_code");

@@ -47,6 +47,9 @@
 			<listEntry value="2">@Strings.Calories</listEntry>
 		</settingConfig>
 	</setting>
+	<setting propertyKey="@Properties.percents" title="@Strings.showPercents">
+		<settingConfig type="boolean" />
+	</setting>
 
 	<setting propertyKey="@Properties.bat" title="@Strings.BatteryTitle">
 		<settingConfig type="list">

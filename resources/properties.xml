@@ -11,5 +11,6 @@
 	<property id="bat" type="number">33</property>
 	<property id="dialSize" type="number">0</property>
 	<property id="boldness" type="number">5</property>
+	<property id="percents" type="boolean">false</property>
 	<property id="compatibility" type="number">0</property>
 </properties>

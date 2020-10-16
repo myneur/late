@@ -18,6 +18,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	var primary_calendar = false;
 	var app;
 	var maxResults = 7;
+	var subs_id;
 
 	function initialize() {
 		///Sys.println(Sys.getSystemStats().freeMemory + " on init");
@@ -306,17 +307,21 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function getWeatherForecast() {
 		///Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast");
 		///Sys.println([app.getProperty("lock"),app.getProperty("key"), app.getProperty("lock").find(app.getProperty("key"))]);
-		if(true || app.getProperty("key").find(app.getProperty("lock"))!= null){
+		subs_id = app.getProperty("subs_id");
+		if(subs_id != null){
 			var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){
 				Background.exit({"error_code"=>-204});
 				return;
 			}
 			///Sys.println(pos);
-			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), {"api_key"=>app.getProperty("api_key"), "unit"=>(app.getProperty("units") ? "c":"f" )}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
+			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
+				{"api_key"=>app.getProperty("api_key"), "unit"=>(app.getProperty("units") ? "c":"f"),
+				"subs_id"=>subs_id}, 
+				{:method => Communications.HTTP_REQUEST_METHOD_GET},
 				method(:onWeatherForecast));
 		} else {
-			Background.exit({"error_code"=>401});
+			buySubscription();
 		}
 	}
 
@@ -337,14 +342,21 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 
 	function buySubscription(){
-		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay", 
+		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), 
 			{}, 
 			"http://localhost/token", Communications.OAUTH_RESULT_TYPE_URL, 
 			{"subs_id"=>"subs_id"});
 	}
-	function onPurchase(message) {
+	function onPurchase(message)  {
 		Sys.println("onPurchase: ");
 		Sys.println(message.data);
+		if(message != null && message.data != null && message.data has :subs_id){
+			Sys.println(message.data);
+			subs_id = message.data["subs_id"];
+			getWeatherForecast();
+		} 
+		//else {Background.exit({"error_code"=>402});}
+
 		//Communications.openWebPage(url, params, options);
 	}
 

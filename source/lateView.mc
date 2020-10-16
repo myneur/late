@@ -37,18 +37,22 @@ class lateView extends Ui.WatchFace {
 
 	(:data)
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
-		///Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
-		var offset = 2;	// where in the array weather forecast starts
+		Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		var h = Sys.getClockTime().hour; // first hour of the forecast
-		if (weatherHourly.size()>offset){
-			if(weatherHourly[0]<h){
-				//Sys.println("offset++: "+ [weatherHourly[0], h]);
-				offset += h - weatherHourly[0];
+		if (weatherHourly.size()>2){
+			if(weatherHourly[0]<h){	// delayed response or time passed
+				weatherHourly = weatherHourly.slice(0, 2).addAll(weatherHourly.slice(2+h-weatherHourly[0], null));
+				weatherHourly[0]=h;
+				App.getApp().setProperty("weatherHourly", weatherHourly);
+				Sys.println("trunc: "+ [h, weatherHourly]);
 			} else if (weatherHourly[0]>h){
-				//Sys.println("h++: "+ [weatherHourly[0], h]);
-				h += weatherHourly[0] - h;
+				weatherHourly = weatherHourly.slice(0, 2).addAll(weatherHourly.slice(2+h+24-weatherHourly[0], null));
+				weatherHourly[0]=h;
+				App.getApp().setProperty("weatherHourly", weatherHourly);
+				Sys.println("trunc: "+ [h, weatherHourly]);
 			}
 		} else {
+			App.getApp().setProperty("weatherHourly", []);
 			return; 
 		}	
 		//Sys.println("weather from hour: "+h + " offset: "+offset);
@@ -56,7 +60,7 @@ class lateView extends Ui.WatchFace {
 		
 		var color; var center;
 		//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
-		for(var i=offset; i<weatherHourly.size() &&i<24+offset; i++, h++){
+		for(var i=2; i<weatherHourly.size() &&i<26; i++, h++){
 			color = weatherHourly[i];
 			/*if(i==10){color=3;}	// testing colors
 			if(i==12){color=0;}

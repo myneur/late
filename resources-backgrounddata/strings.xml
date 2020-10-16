@@ -13,6 +13,8 @@
 	<string id="CalendarPrompt">For Calendar: Watch your watch to get code and link to log-in. Then wait at least 5 mins.</string>
 	<string id="CalendarsPrompt">Calendar IDs (typically your mail) separated by space or comma</string>
 
+	<string id="ActivityTitle">Activity or Events</string>
+
 	<string id="refreshFrequency">Minutes to refresh calendar</string>
 	<string id="Wait4login">Wait to login</string>
 	<string id="EnterCode">Enter </string>
@@ -26,7 +28,7 @@
 	<string id="NoInternet">No internet</string>
 	<string id="NotFound">Page not found</string>
 	<string id="OutOfMemory">Out Of Memory</string>
-	<string id="NastyError">Auth Error</string>
+	<string id="NastyError">Login Error</string>
 	<string id="NoGPS">Get GPS location</string>
 
 	<string id="Weather">Only on invitation: Show Weather Forecast</string>

@@ -25,7 +25,6 @@ class lateApp extends App.AppBase {
 
 	function loadSettings(){
 		app.setProperty("calendar_ids", split(app.getProperty("calendar_ids")));	//?? how will it show in the properties?
-//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	}
 
 	function getInitialView() {
@@ -176,7 +175,7 @@ class lateApp extends App.AppBase {
 						return;
 					}
 
-					if (!(error==404 && app.getProperty("refresh_token")!=null)) {	// standard data loading with no connection or no internet: do not warn immediately
+					if (!(error==404 && app.getProperty("lastLoad")=="c" && app.getProperty("refresh_token")!=null)) {	// standard data loading with no connection or no internet: do not warn immediately
 						data["wait"] = durationToNextEvent();
 						changeScheduleToMinutes(5);
 

@@ -11,7 +11,7 @@ using Toybox.Application as App;
 
 enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
 //enum {night,day}
-var meteoColors =	[0xFFAA00,	0xAA5500,	0x0000AA, 0x0055FF,	0xAAAAAA];
+var meteoColors =	[0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA];
 //enum {			clear, 		partly, 	lghtrain, rain,		snow} // clear moon can be 0x555500
 
 class lateView extends Ui.WatchFace {
@@ -20,8 +20,8 @@ class lateView extends Ui.WatchFace {
 	hidden var centerX; hidden var centerY; hidden var height;
 	hidden var color; hidden var timeColor = Gfx.COLOR_WHITE; hidden var dateColor = Gfx.COLOR_LT_GRAY; hidden var activityColor = Gfx.COLOR_DK_GRAY; hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
-	var activity = 0; var showSunrise = false; var dataLoading = false; var showWeather = false;
-	hidden var icon = null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
+	var activity=0; var activityL=0; var activityR=0; var showSunrise = false; var dataLoading = false; var showWeather = false;
+	hidden var icon=null; hidden var iconL=null; hidden var iconR=null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var fontSmall = null; hidden var fontHours = null; hidden var fontCondensed = null;
@@ -53,11 +53,14 @@ class lateView extends Ui.WatchFace {
 		}	
 		//Sys.println("weather from hour: "+h + " offset: "+offset);
 		dc.setPenWidth(3);
-		var color;
-		var center;
+		
+		var color; var center;
 		//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
 		for(var i=offset; i<weatherHourly.size() &&i<24+offset; i++, h++){
 			color = weatherHourly[i];
+			/*if(i==10){color=3;}	// testing colors
+			if(i==12){color=0;}
+			if(i==13){color=1;}*/
 			//Sys.System.println([i, offset, color]);
 			if(color>=0 && color < meteoColors.size()){
 				color = meteoColors[color];
@@ -70,7 +73,11 @@ class lateView extends Ui.WatchFace {
 		}
 		if(weatherHourly.size()>1){
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(centerX+centerX>>1, centerY>>1-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
+			if(dialSize==0){
+				dc.drawText(centerX+centerX>>1, centerY>>1-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
+			} else {
+				dc.drawText(centerX+centerX>>1, centerY-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, "  "+weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
+			}
 		}
 	}
 
@@ -181,24 +188,39 @@ class lateView extends Ui.WatchFace {
 		}
 		//Sys.println("Layout finish free memory: "+Sys.getSystemStats().freeMemory);
 	}
+	function loadIcon(activity){
+		var icon = null;
+		if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }
+		else if(activity == 2) { icon = Ui.loadResource(Rez.Drawables.Cal); }
+		else if(activity >= 3 && !(ActivityMonitor.getInfo() has :activeMinutesDay)){ 
+			activity = 0;   // reset not supported activities
+		} else if(activity <= 4) { icon = Ui.loadResource(Rez.Drawables.Minutes); }
+		else if(activity == 5) { icon = Ui.loadResource(Rez.Drawables.Floors); }
+		return icon;
+	}
 
 	function loadSettings(){
 		///Sys.println("loadSettings");
 		var app = App.getApp();
-		
 		dateForm = app.getProperty("dateForm");
 		activity = app.getProperty("activity");
+		activityL = app.getProperty("activityL");
+		activityR = app.getProperty("activityR");
 		showSunrise = app.getProperty("sunriset");
 		batThreshold = app.getProperty("bat");
 		circleWidth = app.getProperty("boldness");
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 activity = 6;
+activityL = 1;
+activityR = 4;
 showWeather = true;
 app.setProperty("weather", showWeather);
 showSunrise = true;
 dialSize=0;
 circleWidth=7;
+App.getApp().setProperty("location", [50.11, 14.49]);
+app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == 6 && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		var tone = app.getProperty("tone").toNumber()%5;
@@ -212,14 +234,20 @@ circleWidth=7;
 			utcOffset = clockTime.timeZoneOffset;
 			computeSun();
 		}
-		if(activity>0){ 
-			if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }
-			else if(activity == 2) { icon = Ui.loadResource(Rez.Drawables.Cal); }
-			else if(activity >= 3 && !(ActivityMonitor.getInfo() has :activeMinutesDay)){ 
-				activity = 0;   // reset not supported activities
-			} else if(activity <= 4) { icon = Ui.loadResource(Rez.Drawables.Minutes); }
-			else if(activity == 5) { icon = Ui.loadResource(Rez.Drawables.Floors); }
+		if(activity>0 && activity<6){ 
+			icon = loadIcon(activity);
 		} 
+		if(centerX>100 && dialSize==0){
+			if(activityL>0){ 
+				iconL = loadIcon(activityL);
+			} 
+			if(activityR>0){ 
+				iconR = loadIcon(activityR);
+			} 
+		} else {
+			activityL = 0;
+			activityR = 0;
+		}
 		color = [
 			[0xFF0000, 0xFFAA00, 0x00FF00, 0x00AAFF, 0xFF00FF, 0xAAAAAA],
 			[0xAA0000, 0xFF5500, 0x00AA00, 0x0000FF, 0xAA00FF, 0x555555], 
@@ -389,27 +417,16 @@ circleWidth=7;
 				//System.println(method(:humanizeNumber).invoke(100000)); // TODO this is how to save and invoke method callback to get rid of ugly ifelse like below
 				// The best circle arc radius for activity percentages: dc.setPenWidth(2);dc.setColor(Gfx.COLOR_DK_GRAY, 0); dc.drawArc(centerX>>2, height-centerY>>1, 10, Gfx.ARC_CLOCKWISE, 90, 90-49*6);
 
+				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+				if(activityL > 0){
+					drawActivity(dc, activityL, iconL, centerX>>2, centerY, false);
+				}
+				if(activityR > 0){
+					drawActivity(dc, activityR, iconR, centerX<<1-centerX>>2, centerY, false);
+				}
 				if(activity > 0){
-					text = ActivityMonitor.getInfo();
-					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-
-					icon = Ui.loadResource(Rez.Drawables.Steps);
-					dc.drawText(centerX>>2, centerY, fontCondensed, 293+humanizeNumber(text[:steps]), Gfx.TEXT_JUSTIFY_CENTER); 
-					dc.drawBitmap(centerX>>2-icon.getWidth()>>1, centerY-icon.getHeight(), icon);
-					icon = Ui.loadResource(Rez.Drawables.Cal);
-					dc.drawText(centerX<<1-centerX>>2, centerY, fontCondensed, 309+humanizeNumber(text.calories), Gfx.TEXT_JUSTIFY_CENTER); 
-					dc.drawBitmap(centerX<<1-centerX>>2-icon.getWidth()>>1, centerY-icon.getHeight(), icon);
-
 					if(activity < 6){
-						if(activity < 3){ //1,2
-							text = humanizeNumber( activity<2 ? text.steps : text.calories);
-						} else if (activity < 4){ //3
-							text = (text.activeMinutesDay.total.toString()); // moderate + vigorous
-						} else { //4,5
-							text = activity<5 ? humanizeNumber(text.activeMinutesWeek.total) : text.floorsClimbed.toString();
-						}
-						dc.drawText(centerX + icon.getWidth()>>1, activityY, fontCondensed, text, Gfx.TEXT_JUSTIFY_CENTER); 
-						dc.drawBitmap(centerX - dc.getTextWidthInPixels(text, fontCondensed)>>1 - icon.getWidth()>>1-2, activityY+5, icon);
+						drawActivity(dc, activity, icon, centerX, activityY, true);
 					} else { 
 						drawEvent(dc);
 					}
@@ -432,6 +449,76 @@ circleWidth=7;
 		//ms.add(Sys.getTimer()-ms[0]);
 		//Sys.println("ms: " + ms + " sec: " + clockTime.sec + " redrawAll: " + redrawAll);
 		if (redrawAll>0) { redrawAll--; }
+	}
+
+	
+	/*function steps(info){
+		return percentage ? info.steps.toFloat()/info.stepGoal : info.steps;
+	}
+	function calories(info){
+		return percentage ? info.calories.toFloat()/ActivityMonitor.getHistory.calories : info.calories;
+	}
+	function activeMinutesDay(info){
+		return percentage ? info.activeMinutesDay.total.toFloat()/(info.activeMinutesWeekGoal.toFloat()/7) : humanizeNumber(info.activeMinutesDay.total);
+	}
+	function activeMinutesWeek(info){
+		return percentage ? info.activeMinutesWeek.total.toFloat()/info.activeMinutesWeekGoal : humanizeNumber(info.activeMinutesWeek.total);
+	}
+	function floors(info){
+		return percentage ? info.floorsClimbed.toFloat()/info.floorsClimbedGoal : info.floorsClimbed.toString();
+	}*/
+
+var percentage = true;
+	function drawActivity(dc, activity, icon, x, y, horizontal){
+		var info = ActivityMonitor.getInfo();
+
+		/*info = method(:steps).invoke(info);
+		if(precentage){
+
+		} else {
+			var act = :steps;
+			info = info[act];
+			if(activity==3 || activity==4){
+				info = info.total;
+			}
+			info = humanizeNumber(info);
+		}
+		var m = :floorsClimbed;
+		Sys.println([info[m]]);*/
+		
+		if(activity < 3){ //1-2
+			if(activity==1){
+				info = percentage ? info.steps.toFloat()/info.stepGoal : info.steps;
+			} else {
+				info = percentage ? info.calories.toFloat()/ActivityMonitor.getHistory.calories : info.calories;
+			}
+		} else if (activity < 5){ //3-4
+			if(activity==3){
+				info =percentage ? info.activeMinutesDay.total.toFloat()/(info.activeMinutesWeekGoal.toFloat()/7) : humanizeNumber(info.activeMinutesDay.total);
+			} else {
+				info = percentage ? info.activeMinutesWeek.total.toFloat()/info.activeMinutesWeekGoal : humanizeNumber(info.activeMinutesWeek.total);
+			}
+
+		} else { //5
+			info = percentage ? info.floorsClimbed.toFloat()/info.floorsClimbedGoal : info.floorsClimbed.toString();
+		}
+
+		
+		if(percentage){
+			dc.setPenWidth(2);
+			dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);
+			if(info>0.0001){
+				dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90, 90-info*360); 
+			}
+		} else {
+			if(horizontal){	// bottom activity
+				dc.drawText(x + icon.getWidth()>>1, y, fontCondensed, info, Gfx.TEXT_JUSTIFY_CENTER); 
+				dc.drawBitmap(x - dc.getTextWidthInPixels(info, fontCondensed)>>1 - icon.getWidth()>>1-2, y+5, icon);
+			} else {
+				dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight(), icon);
+				dc.drawText(x, y, fontCondensed, info, Gfx.TEXT_JUSTIFY_CENTER); 
+			}
+		}
 	}
 
 /*	function positionMetric(icon, text, vertical) {

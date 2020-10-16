@@ -33,6 +33,20 @@
 			<listEntry value="2">@Strings.Calories</listEntry>
 		</settingConfig>
 	</setting>
+	<setting propertyKey="@Properties.activityL" title="@Strings.ActivityTitleL">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.DnD</listEntry>
+			<listEntry value="1">@Strings.Steps</listEntry>
+			<listEntry value="2">@Strings.Calories</listEntry>
+		</settingConfig>
+	</setting>
+	<setting propertyKey="@Properties.activityR" title="@Strings.ActivityTitleR">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.DnD</listEntry>
+			<listEntry value="1">@Strings.Steps</listEntry>
+			<listEntry value="2">@Strings.Calories</listEntry>
+		</settingConfig>
+	</setting>
 
 	<setting propertyKey="@Properties.bat" title="@Strings.BatteryTitle">
 		<settingConfig type="list">

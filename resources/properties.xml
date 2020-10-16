@@ -4,6 +4,8 @@
 
 	<property id="dateForm" type="number">0</property>
 	<property id="activity" type="number">1</property>
+	<property id="activityL" type="number">0</property>
+	<property id="activityR" type="number">0</property>
 
 	<property id="sunriset" type="boolean">true</property>
 	<property id="bat" type="number">33</property>

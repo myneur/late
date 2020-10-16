@@ -31,7 +31,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		app = App.getApp();
 		var connected = Sys.getDeviceSettings().phoneConnected;
 
-	if(app.getProperty("weather")==true && app.getProperty("lastLoad")=='c'){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
+		if(app.getProperty("weather")==true && app.getProperty("lastLoad")=='c'){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
 			if (app.getProperty("refresh_token") != null) { 
@@ -78,7 +78,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function getTokensAndData(){ // device_code can tell if the user granted access
-		///Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); //Sys.println(app.getProperty("user_code"));
+		//Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); //Sys.println(app.getProperty("user_code"));
 		//Sys.println([$.GoogleTokenUrl,app.getProperty("device_code"),app.getProperty("client_id"),app.getProperty("client_secret"),"http://oauth.net/grant_type/device/1.0"]);
 		Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
 			"code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
@@ -148,8 +148,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function onPrimaryCalendarCandidates(responseCode, data) {  // expects calendar list already parsed to array
-		///Sys.println(Sys.getSystemStats().freeMemory + " onPrimaryCalendarCandidates");
-		//Sys.println(data);
+		///Sys.println(Sys.getSystemStats().freeMemory + " onPrimaryCalendarCandidates: "+responseCode);
+		///Sys.println(data);
 		if (responseCode == 200) {
 			data = data.get("items");
 			for(var i=0; i < data.size(); i++){
@@ -167,7 +167,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function getNextCalendarEvents() {
 		current_index++;
 		if (current_index<calendar_ids.size()) {
-			//Sys.println(calendar_ids[current_index]);
+			///Sys.println(calendar_ids[current_index]);
 			getEvents(calendar_ids[current_index]);
 			return true;
 		} else {
@@ -210,7 +210,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	
 	var events_list_size = 0;
 	function onEvents(responseCode, data) {
-		//Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode); 
+		///Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode); 
 		//Sys.println(data);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
@@ -285,7 +285,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			///Sys.println(Sys.getSystemStats().freeMemory);
 			Background.exit(code_events);
 		} catch(ex) {
-				Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
+				///Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
 				///Sys.println(Sys.getSystemStats().freeMemory);
 				code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
 				///Sys.println(Sys.getSystemStats().freeMemory);
@@ -294,6 +294,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function refreshTokenAndGetData() {
+		///Sys.println([app.getProperty("lock"),app.getProperty("key"), app.getProperty("lock").find(app.getProperty("key"))]);
 		Communications.makeWebRequest($.GoogleTokenUrl, {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id"), 
 			"refresh_token"=>refresh_token, "grant_type"=>"refresh_token"}, {:method => Communications.HTTP_REQUEST_METHOD_POST},
 			method(:onTokenRefresh2GetData));
@@ -309,7 +310,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				return;
 			}
 			///Sys.println(pos);
-			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api2/"+pos[0].toFloat()+"/"+pos[1].toFloat(), {"api_key"=>app.getProperty("api_key"), "unit"=>(app.getProperty("units") ? "c":"f" )}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
+			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), {"api_key"=>app.getProperty("api_key"), "unit"=>(app.getProperty("units") ? "c":"f" )}, {:method => Communications.HTTP_REQUEST_METHOD_GET},
 				method(:onWeatherForecast));
 		} else {
 			Background.exit({"error_code"=>401});
@@ -317,7 +318,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function onWeatherForecast(responseCode, data){
-		///Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode); 
+		//Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode); 
 		//Sys.println(data);
 		if (responseCode == 200) {
 			try { 

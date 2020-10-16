@@ -37,7 +37,7 @@ class lateApp extends App.AppBase {
 		///Sys.println("scheduling");
 		loadSettings();
 
-		if(watch.dataLoading && (watch.activity == 6 || watch.showWeather)) {
+		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
 			if(app.getProperty("refresh_token") == null){	///Sys.println("no auth");

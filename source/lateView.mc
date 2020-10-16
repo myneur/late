@@ -20,7 +20,7 @@ class lateView extends Ui.WatchFace {
 	hidden var centerX; hidden var centerY; hidden var height;
 	hidden var color; hidden var timeColor = Gfx.COLOR_WHITE; hidden var dateColor = Gfx.COLOR_LT_GRAY; hidden var activityColor = Gfx.COLOR_DK_GRAY; hidden var backgroundColor = Gfx.COLOR_BLACK;
 	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
-	var activity=0; var activityL=0; var activityR=0; var showSunrise = false; var dataLoading = false; var showWeather = false; var percentage = false;
+	var activity=null; var activityL=null; var activityR=null; var showSunrise = false; var dataLoading = false; var showWeather = false; var percentage = false;
 	hidden var icon=null; hidden var iconL=null; hidden var iconR=null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
@@ -117,104 +117,25 @@ class lateView extends Ui.WatchFace {
 		loadSettings();
 	}
 
-	function setLayoutVars(){
-		//Sys.println("Layout free memory: "+Sys.getSystemStats().freeMemory);
-		sunR = centerX-9;
-		if(dialSize>0){ // strong design
-			fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
-			fontSmall = Ui.loadResource(Rez.Fonts.SmallStrong);
-			radius = (Gfx.getFontHeight(fontHours)*1.07).toNumber();
-			if(centerX-radius-circleWidth>>1 <= 15){	// shrinking radius to fit day cirlce and sunriset on small screens
-				radius = centerX-15-circleWidth>>1;
-				sunR+=4;	
-			}
-			dateY = (centerY-radius*.5-Gfx.getFontHeight(fontSmall)).toNumber();
-			circleWidth=circleWidth*3;
-			batteryY=height-14;
-			if(height<208){
-				radius -= 11;
-				dateY += 7;
-			}
-		} else { // elegant design
-			fontHours = Ui.loadResource(Rez.Fonts.Hours);
-			fontSmall = Ui.loadResource(Rez.Fonts.Small);
-			radius = (Gfx.getFontHeight(fontHours)).toNumber();
-			dateY = (centerY-(radius+Gfx.getFontHeight(fontSmall))*1.17).toNumber();
-			batteryY = centerY+0.6*radius;			
-		}
-		if(activity>0 || showWeather){
-			fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
-		}
-		if(activity>0){
-			
-			if(dialSize==0){
-				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
-				if(activity == 6){
-					if(dataLoading){
-						eventHeight = Gfx.getFontHeight(fontCondensed)-1;
-						activityY = (centerY-radius+10)>>2 - eventHeight + centerY+radius+10;
-						showMessage(App.getApp().scheduleDataLoading());
-					} else { 
-						activity = 0;
-					}
-				}
-			} else {
-				activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
-				if(height<208){
-					activityY -= 7;
-				}
-				if(activity==6){
-					activityY -=Gfx.getFontHeight(fontSmall)>>1; 
-					showMessage(App.getApp().scheduleDataLoading());
-				}
-			}
-		}
-		/*if(batteryY<centerY+radius+circleWidth>>1){
-			if(activity<6){
-				batteryY = activityY - 10;
-				activityY += 10;
-			} else {
-				batteryY = dateY+Gfx.getFontHeight(fontSmall);
-			}
-			
-		}*/
-		if(dataLoading && activity != 6){
-			App.getApp().unScheduleDataLoading();
-		}
-
-		var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
-		if(langTest.toNumber()>382){ // fallback for not-supported latin fonts 
-			fontSmall = Gfx.FONT_SMALL;
-		}
-		//Sys.println("Layout finish free memory: "+Sys.getSystemStats().freeMemory);
-	}
-	function loadIcon(activity){
-		var icon = null;
-		if(activity == 1) { icon = Ui.loadResource(Rez.Drawables.Steps); }
-		else if(activity == 2) { icon = Ui.loadResource(Rez.Drawables.Cal); }
-		else if(activity >= 3 && !(ActivityMonitor.getInfo() has :activeMinutesDay)){ 
-			activity = 0;   // reset not supported activities
-		} else if(activity <= 4) { icon = Ui.loadResource(Rez.Drawables.Minutes); }
-		else if(activity == 5) { icon = Ui.loadResource(Rez.Drawables.Floors); }
-		return icon;
-	}
-
 	function loadSettings(){
 		///Sys.println("loadSettings");
 		var app = App.getApp();
 		dateForm = app.getProperty("dateForm");
-		activity = app.getProperty("activity");
-		activityL = app.getProperty("activityL");
-		activityR = app.getProperty("activityR");
+		
+		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floors, :calendar];
+		activity = activities[app.getProperty("activity")];
+		activityL = activities[app.getProperty("activityL")];
+		activityR = activities[app.getProperty("activityR")];
+
 		showSunrise = app.getProperty("sunriset");
 		batThreshold = app.getProperty("bat");
 		circleWidth = app.getProperty("boldness");
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 		percentage = app.getProperty("percents");
-activity = 6;
-activityL = 1;
-activityR = 4;
+activity = :calendar;
+activityL = :steps;
+activityR = :activeMinutesWeek;
 showWeather = true;
 app.setProperty("weather", showWeather);
 showSunrise = true;
@@ -223,7 +144,7 @@ circleWidth=7;
 percentage = true;
 App.getApp().setProperty("location", [50.11, 14.49]);
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-		//if(activity == 6 && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
+		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
@@ -236,19 +157,18 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			utcOffset = clockTime.timeZoneOffset;
 			computeSun();
 		}
-		if(activity>0 && activity<6){ 
+		if(activity != :calendar){ 
 			icon = loadIcon(activity);
 		} 
 		if(centerX>100 && dialSize==0){
-			if(activityL>0){ 
-				iconL = loadIcon(activityL);
-			} 
-			if(activityR>0){ 
-				iconR = loadIcon(activityR);
-			} 
+			iconL = loadIcon(activityL);
+			if(iconL==null){ activityL=null; }
+
+			iconR = loadIcon(activityR);
+			if(iconR==null){ activityR=null; }
 		} else {
-			activityL = 0;
-			activityR = 0;
+			activityL = null;
+			activityR = null;
 		}
 		color = [
 			[0xFF0000, 0xFFAA00, 0x00FF00, 0x00AAFF, 0xFF00FF, 0xAAAAAA],
@@ -299,7 +219,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			dateColor = Gfx.COLOR_WHITE;
 		}
 
-		if(activity==6){
+		if(activity == :calendar){
 			if(app.getProperty("calendar_colors")){	// match calendar colors to watch
 				calendarColors = Ui.loadResource(Rez.JsonData.calendarColors)[mainColor];
 				for(var i=0; i<calendarColors.size(); i++){
@@ -321,6 +241,86 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 
 		setLayoutVars();
 		onShow();
+	}
+
+	function loadIcon(activity){
+		if(activity==null){return null;}
+		if(!(ActivityMonitor.getInfo() has :activeMinutesDay) && !(activity==:steps || activity==:calories)){
+			return null;
+		}
+		return Ui.loadResource( activity==:activeMinutesDay ? :activeMinutesWeek : Rez.Drawables[activity]);	// sharing icon for active minutes Day and Week
+	}
+
+	function setLayoutVars(){
+		//Sys.println("Layout free memory: "+Sys.getSystemStats().freeMemory);
+		sunR = centerX-9;
+		if(dialSize>0){ // strong design
+			fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
+			fontSmall = Ui.loadResource(Rez.Fonts.SmallStrong);
+			radius = (Gfx.getFontHeight(fontHours)*1.07).toNumber();
+			if(centerX-radius-circleWidth>>1 <= 15){	// shrinking radius to fit day cirlce and sunriset on small screens
+				radius = centerX-15-circleWidth>>1;
+				sunR+=4;	
+			}
+			dateY = (centerY-radius*.5-Gfx.getFontHeight(fontSmall)).toNumber();
+			circleWidth=circleWidth*3;
+			batteryY=height-14;
+			if(height<208){
+				radius -= 11;
+				dateY += 7;
+			}
+		} else { // elegant design
+			fontHours = Ui.loadResource(Rez.Fonts.Hours);
+			fontSmall = Ui.loadResource(Rez.Fonts.Small);
+			radius = (Gfx.getFontHeight(fontHours)).toNumber();
+			dateY = (centerY-(radius+Gfx.getFontHeight(fontSmall))*1.17).toNumber();
+			batteryY = centerY+0.6*radius;			
+		}
+		if(activity != null || showWeather){
+			fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
+		}
+		if(activity != null){
+			
+			if(dialSize==0){
+				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
+				if(activity == :calendar){
+					if(dataLoading){
+						eventHeight = Gfx.getFontHeight(fontCondensed)-1;
+						activityY = (centerY-radius+10)>>2 - eventHeight + centerY+radius+10;
+						showMessage(App.getApp().scheduleDataLoading());
+					} else { 
+						activity = null;
+					}
+				}
+			} else {
+				activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
+				if(height<208){
+					activityY -= 7;
+				}
+				if(activity==:calendar){
+					activityY -=Gfx.getFontHeight(fontSmall)>>1; 
+					showMessage(App.getApp().scheduleDataLoading());
+				}
+			}
+		}
+		/*if(batteryY<centerY+radius+circleWidth>>1){
+			if(activity!=:calendar){
+				batteryY = activityY - 10;
+				activityY += 10;
+			} else {
+				batteryY = dateY+Gfx.getFontHeight(fontSmall);
+			}
+			
+		}*/
+		if(dataLoading && activity != :calendar){
+			App.getApp().unScheduleDataLoading();
+		}
+
+		var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
+		if(langTest.toNumber()>382){ // fallback for not-supported latin fonts 
+			fontSmall = Gfx.FONT_SMALL;
+		}
+		//Sys.println("Layout finish free memory: "+Sys.getSystemStats().freeMemory);
 	}
 
 	//! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
@@ -420,14 +420,14 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				// The best circle arc radius for activity percentages: dc.setPenWidth(2);dc.setColor(Gfx.COLOR_DK_GRAY, 0); dc.drawArc(centerX>>2, height-centerY>>1, 10, Gfx.ARC_CLOCKWISE, 90, 90-49*6);
 
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				if(activityL > 0){
+				if(activityL != null){
 					drawActivity(dc, activityL, iconL, centerX>>2, centerY, false);
 				}
-				if(activityR > 0){
+				if(activityR != null){
 					drawActivity(dc, activityR, iconR, centerX<<1-centerX>>2, centerY, false);
 				}
-				if(activity > 0){
-					if(activity < 6){
+				if(activity != null){
+					if(activity != :calendar){
 						drawActivity(dc, activity, icon, centerX, activityY, true);
 					} else { 
 						drawEvent(dc);
@@ -441,7 +441,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				if(showWeather){
 					drawWeather(dc);
 				}
-				if(activity == 6){
+				if(activity == :calendar){
 					drawEvents(dc);
 				}
 				drawNowCircle(dc, clockTime.hour);
@@ -454,58 +454,27 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	}
 
 	
-	/*function steps(info){
-		return percentage ? info.steps.toFloat()/info.stepGoal : info.steps;
+	function steps(info){
+		return info.steps.toFloat()/info.stepGoal;
 	}
 	function calories(info){
-		return percentage ? info.calories.toFloat()/ActivityMonitor.getHistory.calories : info.calories;
+		return info.calories.toFloat()/ActivityMonitor.getHistory.calories;
 	}
 	function activeMinutesDay(info){
-		return percentage ? info.activeMinutesDay.total.toFloat()/(info.activeMinutesWeekGoal.toFloat()/7) : humanizeNumber(info.activeMinutesDay.total);
+		return info.activeMinutesDay.total.toFloat()/(info.activeMinutesWeekGoal.toFloat()/7);
 	}
 	function activeMinutesWeek(info){
-		return percentage ? info.activeMinutesWeek.total.toFloat()/info.activeMinutesWeekGoal : humanizeNumber(info.activeMinutesWeek.total);
+		return info.activeMinutesWeek.total.toFloat()/info.activeMinutesWeekGoal;
 	}
 	function floors(info){
-		return percentage ? info.floorsClimbed.toFloat()/info.floorsClimbedGoal : info.floorsClimbed.toString();
-	}*/
+		return info.floorsClimbed.toFloat()/info.floorsClimbedGoal;
+	}
 
 	function drawActivity(dc, activity, icon, x, y, horizontal){
 		var info = ActivityMonitor.getInfo();
 
-		/*info = method(:steps).invoke(info);
-		if(precentage){
-
-		} else {
-			var act = :steps;
-			info = info[act];
-			if(activity==3 || activity==4){
-				info = info.total;
-			}
-			info = humanizeNumber(info);
-		}
-		var m = :floorsClimbed;
-		Sys.println([info[m]]);*/
-		
-		if(activity < 3){ //1-2
-			if(activity==1){
-				info = percentage ? info.steps.toFloat()/info.stepGoal : info.steps;
-			} else {
-				info = percentage ? info.calories.toFloat()/ActivityMonitor.getHistory.calories : info.calories;
-			}
-		} else if (activity < 5){ //3-4
-			if(activity==3){
-				info =percentage ? info.activeMinutesDay.total.toFloat()/(info.activeMinutesWeekGoal.toFloat()/7) : humanizeNumber(info.activeMinutesDay.total);
-			} else {
-				info = percentage ? info.activeMinutesWeek.total.toFloat()/info.activeMinutesWeekGoal : humanizeNumber(info.activeMinutesWeek.total);
-			}
-
-		} else { //5
-			info = percentage ? info.floorsClimbed.toFloat()/info.floorsClimbedGoal : info.floorsClimbed.toString();
-		}
-
-		
 		if(percentage){
+			info = method(:steps).invoke(info);
 			dc.setPenWidth(2);
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 			dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);
@@ -521,6 +490,8 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90, 90-info*360); 
 			}
 		} else {
+			info = info[:steps];
+			info = humanizeNumber(activity==:activeMinutesDay || activity==:activeMinutesWeek ? info : info.total);
 			if(horizontal){	// bottom activity
 				dc.drawText(x + icon.getWidth()>>1, y, fontCondensed, info, Gfx.TEXT_JUSTIFY_CENTER); 
 				dc.drawBitmap(x - dc.getTextWidthInPixels(info, fontCondensed)>>1 - icon.getWidth()>>1-2, y+5, icon);
@@ -659,7 +630,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			var y = centerY-(sunR*Math.cos(a));
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.fillCircle(x, y, 5);
-			if(activity == 6){
+			if(activity == :calendar){
 				dc.setColor(dateColor, backgroundColor);
 				dc.fillCircle(x, y, 4);
 			} else {

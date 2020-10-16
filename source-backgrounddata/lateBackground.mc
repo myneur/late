@@ -339,8 +339,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function buySubscription(){
 		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay", 
 			{}, 
-			"http://localhost/", Communications.OAUTH_RESULT_TYPE_URL, 
-			{"sub_id"=>"sub_id"});
+			"http://localhost/token", Communications.OAUTH_RESULT_TYPE_URL, 
+			{"subs_id"=>"subs_id"});
 	}
 	function onPurchase(message) {
 		Sys.println("onPurchase: ");

@@ -2,9 +2,9 @@
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
     <bitmap id="Sunset" filename="moon.png" />
     <bitmap id="Sunrise" filename="sun.png" />
-    <bitmap id="Cal" filename="calories.png" />
-    <bitmap id="Steps" filename="steps.png" />
-    <bitmap id="Minutes" filename="minutes.png" />
-    <bitmap id="Floors" filename="floors.png" />
+    <bitmap id="calories" filename="calories.png" />
+    <bitmap id="steps" filename="steps.png" />
+    <bitmap id="activeMinutesWeek" filename="minutes.png" />
+    <bitmap id="floors" filename="floors.png" />
     <bitmap id="Bat" filename="battery-low.png" />
 </drawables>

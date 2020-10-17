@@ -28,7 +28,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function onTemporalEvent() {
-		///Sys.println(Sys.getSystemStats().freeMemory + " onTemporalEvent");
+		Sys.println(Sys.getSystemStats().freeMemory + " onTemporalEvent");
 		app = App.getApp();
 		var connected = Sys.getDeviceSettings().phoneConnected;
 
@@ -342,15 +342,18 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 
 	function buySubscription(){
-		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), 
-			{}, 
-			"http://localhost/token", Communications.OAUTH_RESULT_TYPE_URL, 
-			{"subs_id"=>"subs_id"});
+		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), 
+		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
+			"http://127.0.0.1/", Communications.OAUTH_RESULT_TYPE_URL, 
+			//"http://localhost/token", Communications.OAUTH_RESULT_TYPE_URL, 
+			{"testval"=>"testval"});
+			//{"subscription_id"=>"subscription_id"});
+
 	}
 	function onPurchase(message)  {
 		Sys.println("onPurchase: ");
 		Sys.println(message.data);
-		if(message != null && message.data != null && message.data has :subs_id){
+		if(message != null && message.data != null /*&& message.data has :subs_id*/){
 			Sys.println(message.data);
 			subs_id = message.data["subs_id"];
 			getWeatherForecast();

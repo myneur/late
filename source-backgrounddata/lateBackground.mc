@@ -18,7 +18,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	var primary_calendar = false;
 	var app;
 	var maxResults = 7;
-	var subs_id;
+	var subscription_id;
 
 	function initialize() {
 		///Sys.println(Sys.getSystemStats().freeMemory + " on init");
@@ -32,8 +32,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		app = App.getApp();
 		var connected = Sys.getDeviceSettings().phoneConnected;
 
-		buySubscription(); 
-		return;
+getWeatherForecast(); // testing and ignoring anything else
+return;
 
 		if(app.getProperty("weather")==true && app.getProperty("lastLoad")=='c'){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
@@ -298,7 +298,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function refreshTokenAndGetData() {
-		///Sys.println([app.getProperty("lock"),app.getProperty("key"), app.getProperty("lock").find(app.getProperty("key"))]);
 		Communications.makeWebRequest($.GoogleTokenUrl, {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id"), 
 			"refresh_token"=>refresh_token, "grant_type"=>"refresh_token"}, {:method => Communications.HTTP_REQUEST_METHOD_POST},
 			method(:onTokenRefresh2GetData));
@@ -306,21 +305,20 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	function getWeatherForecast() {
 		///Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast");
-		///Sys.println([app.getProperty("lock"),app.getProperty("key"), app.getProperty("lock").find(app.getProperty("key"))]);
 		app = App.getApp();
-		if(subs_id==null){
-			subs_id = app.getProperty("subs_id");
+		if(subscription_id==null){
+			subscription_id = app.getProperty("subs");
 		}
-		if(subs_id != null){
+		if(subscription_id != null){
 			var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){
 				Background.exit({"error_code"=>-204});
 				return;
 			}
-			///Sys.println(pos);
+			Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat()+"/"+{"api_key"=>app.getProperty("api_key"), "unit"=>(app.getProperty("units") ? "c":"f"),"subscription_id"=>subscription_id});
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"api_key"=>app.getProperty("api_key"), "unit"=>(app.getProperty("units") ? "c":"f"),
-				"subs_id"=>subs_id}, 
+				"subscription_id"=>subscription_id}, 
 				{:method => Communications.HTTP_REQUEST_METHOD_GET},
 				method(:onWeatherForecast));
 		} else {
@@ -329,7 +327,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function onWeatherForecast(responseCode, data){
-		//Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode); 
+		Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode); 
 		//Sys.println(data);
 		if (responseCode == 200) {
 			try { 
@@ -356,9 +354,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function onPurchase(message)  {
 		Sys.println("onPurchase: ");
 		Sys.println(message);
-		if(message != null && message.data != null /*&& message.data has :subs_id*/){
+		if(message != null && message.data != null /*&& message.data has :subscription_id*/){
 			Sys.println(message.data);
-			subs_id = message.data["subs_id"];
+			subscription_id = message.data["subscription_id"];
 			getWeatherForecast();
 		} 
 		//else {Background.exit({"error_code"=>402});}

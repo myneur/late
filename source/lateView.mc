@@ -137,16 +137,18 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 		percentage = app.getProperty("percents");
-activity = :calories;
+activity = :calendar;
 activityL = :steps;
-activityR = :activeMinutesDay;
+activityR = :activeMinutesWeek;
 showWeather = true;
 app.setProperty("weather", showWeather);
 showSunrise = true;
 dialSize=0;
 circleWidth=7;
-percentage = false;
-App.getApp().setProperty("location", [50.11, 14.49]);
+percentage = true;
+app.getApp().setProperty("location", [50.11, 14.49]);
+app.getApp().setProperty("subs", "sub_IDdJnTSSqhcy9Z");
+
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 

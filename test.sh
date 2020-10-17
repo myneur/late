@@ -1,3 +1,3 @@
 ./compile.sh
 connectiq 
-monkeydo bin/late.prg fenix5splus
+monkeydo bin/late.prg fenix6xpro

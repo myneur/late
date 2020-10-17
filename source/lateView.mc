@@ -126,7 +126,7 @@ class lateView extends Ui.WatchFace {
 		var app = App.getApp();
 		dateForm = app.getProperty("dateForm");
 		
-		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floors, :calendar];
+		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
 		activity = activities[app.getProperty("activity")];
 		activityL = activities[app.getProperty("activityL")];
 		activityR = activities[app.getProperty("activityR")];
@@ -137,15 +137,15 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 		percentage = app.getProperty("percents");
-activity = :calendar;
+activity = :calories;
 activityL = :steps;
-activityR = :activeMinutesWeek;
+activityR = :activeMinutesDay;
 showWeather = true;
 app.setProperty("weather", showWeather);
 showSunrise = true;
 dialSize=0;
 circleWidth=7;
-percentage = true;
+percentage = false;
 App.getApp().setProperty("location", [50.11, 14.49]);
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
@@ -163,6 +163,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		}
 		if(activity != :calendar){ 
 			icon = loadIcon(activity);
+			if(icon==null){ activity=null; }
 		} 
 		if(centerX>100 && dialSize==0){
 			iconL = loadIcon(activityL);
@@ -248,11 +249,10 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	}
 
 	function loadIcon(activity){
-		if(activity==null){return null;}
-		if(!(ActivityMonitor.getInfo() has :activeMinutesDay) && !(activity==:steps || activity==:calories)){
+		if(activity==null || (!(ActivityMonitor.getInfo() has :activeMinutesDay) && !(activity==:steps || activity==:calories))){
 			return null;
 		}
-		return Ui.loadResource( activity==:activeMinutesDay ? :activeMinutesWeek : Rez.Drawables[activity]);	// sharing icon for active minutes Day and Week
+		return Ui.loadResource(Rez.Drawables[ activity==:activeMinutesDay ? :activeMinutesWeek : activity]);	// sharing icon for active minutes Day and Week
 	}
 
 	function setLayoutVars(){
@@ -478,7 +478,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		var info = ActivityMonitor.getInfo();
 
 		if(percentage){
-			info = method(:steps).invoke(info);
+			info = method(activity).invoke(info);
 			dc.setPenWidth(2);
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 			dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);
@@ -494,8 +494,8 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90, 90-info*360); 
 			}
 		} else {
-			info = info[:steps];
-			info = humanizeNumber(activity==:activeMinutesDay || activity==:activeMinutesWeek ? info : info.total);
+			info = info[activity];
+			info = humanizeNumber( (activity==:activeMinutesDay || activity==:activeMinutesWeek) ? info.total : info);
 			if(horizontal){	// bottom activity
 				dc.drawText(x + icon.getWidth()>>1, y, fontCondensed, info, Gfx.TEXT_JUSTIFY_CENTER); 
 				dc.drawBitmap(x - dc.getTextWidthInPixels(info, fontCondensed)>>1 - icon.getWidth()>>1-2, y+5, icon);

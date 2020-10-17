@@ -307,7 +307,10 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function getWeatherForecast() {
 		///Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast");
 		///Sys.println([app.getProperty("lock"),app.getProperty("key"), app.getProperty("lock").find(app.getProperty("key"))]);
-		subs_id = app.getProperty("subs_id");
+		app = App.getApp();
+		if(subs_id==null){
+			subs_id = app.getProperty("subs_id");
+		}
 		if(subs_id != null){
 			var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){
@@ -342,17 +345,17 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 
 	function buySubscription(){
-		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), 
-		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
-			"http://127.0.0.1/", Communications.OAUTH_RESULT_TYPE_URL, 
-			//"http://localhost/token", Communications.OAUTH_RESULT_TYPE_URL, 
-			{"testval"=>"testval"});
-			//{"subscription_id"=>"subscription_id"});
+		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), {}, 
+		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
+			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
+			"http://localhost/checkout/success", Communications.OAUTH_RESULT_TYPE_URL, 
+			//{"testval"=>"testval"});
+			{"subscription_id"=>"subscription_id"});
 
 	}
 	function onPurchase(message)  {
 		Sys.println("onPurchase: ");
-		Sys.println(message.data);
+		Sys.println(message);
 		if(message != null && message.data != null /*&& message.data has :subs_id*/){
 			Sys.println(message.data);
 			subs_id = message.data["subs_id"];

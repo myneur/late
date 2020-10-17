@@ -90,18 +90,17 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app:");
-		Sys.println(data);
+		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app [w,s,e,t] "+[data.hasKey("weather"), data.hasKey("subscription_id"), data.hasKey("events"), data.hasKey("refresh_token")]);
 		try {
 			if(!(data instanceof Toybox.Lang.Dictionary)){
 				return;
 			}
 			if(data.hasKey("subscription_id")){
 					app.setProperty("subs", data["subscription_id"]);
-					System.println("saved "+data["subscription_id"]);
+					//System.println("saved "+data["subscription_id"]);
 				}
 			if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
-				System.println(["weather array ", data["weather"].size(), data["weather"]]);
+				//System.println(["weather array ", data["weather"].size(), data["weather"]]);
 				if(data["weather"].size()>2){
 					var color;
 					data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
@@ -116,7 +115,7 @@ class lateApp extends App.AppBase {
 						else if(color>=21){color=0;}	// sun: [clear, mostly_clear]
 						data["weather"][i] = color;
 					}
-					System.println(data["weather"]	);
+					//System.println(data["weather"]	);
 					app.setProperty("weatherHourly", data["weather"]);
 					
 					/* // Garmin Weather API 12h
@@ -200,7 +199,7 @@ class lateApp extends App.AppBase {
 							///Sys.println(data["error"]);
 							data["userPrompt"] = data["error"];
 							data.put("permanent", true);
-						} else if(error==403 && data.hasKey("who") && data["who"]=="weather"){	// expired weather subscription
+						} else if(error==403 && data.hasKey("who") && data["who"]=="weather"){	// subscription is not in db: expired or wasn't paid at all
 							app.setProperty("subscription_id", null);
 							data["userPrompt"] = "Subscription expired. Contact sl8.ch";
 						}

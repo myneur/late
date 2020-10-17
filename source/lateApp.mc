@@ -90,16 +90,18 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		///Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app:");
+		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app:");
 		///Sys.println(data);
 		try {
-			if(data instanceof Array){ // array with weaather forecast
-				///Sys.println("Array weather");
-				if(data.size()>2){
+			if(data.hasKey("weather")){ // array with weaather forecast
+				if(data["weather"].hasKey("subscription_id")){
+					app.setProperty("subs", data["weather"]["subscription_id"]);
+				}
+				if(data["weather"].size()>2){
 					var color;
-					data[1] = Math.round(data[1]).toNumber(); // current temperature
-					for(var i=2; i<data.size();i++){
-						color = data[i];
+					data["weather"][1] = Math.round(data["weather"][1]).toNumber(); // current temperature
+					for(var i=2; i<data["weather"].size();i++){
+						color = data["weather"][i];
 						if(color<=9){color = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light]
 						else if(color==10){color=-1;}	// clouds: [flurries]
 						else if(color<=13){color=3;}	// rain: [tstorm, rain_heavy, rain]
@@ -107,10 +109,9 @@ class lateApp extends App.AppBase {
 						else if(color<=19){color=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy]
 						else if(color==20){color=1;}	// partly cloudy: [partly, cloudy]
 						else if(color>=21){color=0;}	// sun: [clear, mostly_clear]
-						data[i] = color;
+						data["weather"][i] = color;
 					}
-					app.setProperty("weatherHourly", data);
-					data = {"weather"=>data};
+					app.setProperty("weatherHourly", data["weather"]);
 					
 					/* // Garmin Weather API 12h
 						var c;
@@ -193,6 +194,9 @@ class lateApp extends App.AppBase {
 							///Sys.println(data["error"]);
 							data["userPrompt"] = data["error"];
 							data.put("permanent", true);
+						} else if(error==403 && data.hasKey("who") && data["who"]=="weather"){	// expired weather subscription
+							app.setProperty("subscription_id", null);
+							data["userPrompt"] = "Subscription expired. Contact sl8.ch";
 						}
 						else if(error==400 || error==401 || error==403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
 							///Sys.println("unauthorized");

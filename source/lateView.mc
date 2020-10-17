@@ -37,7 +37,7 @@ class lateView extends Ui.WatchFace {
 
 	(:data)
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
-		Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
+		///Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		var h = Sys.getClockTime().hour; // first hour of the forecast
 		if (weatherHourly.size()>2){
 			if(weatherHourly[0]<h){	// delayed response or time passed
@@ -148,7 +148,6 @@ circleWidth=7;
 percentage = true;
 app.getApp().setProperty("location", [50.11, 14.49]);
 //app.getApp().setProperty("subs", "sub_IDeVROBKmQx8oS");
-
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 

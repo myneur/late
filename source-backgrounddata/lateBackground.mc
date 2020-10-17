@@ -28,14 +28,14 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function onTemporalEvent() {
-		Sys.println(Sys.getSystemStats().freeMemory + " onTemporalEvent");
+		Sys.println(Sys.getSystemStats().freeMemory + " onTemporalEvent, subscription_id "+subscription_id);
 		app = App.getApp();
 		var connected = Sys.getDeviceSettings().phoneConnected;
 
-getWeatherForecast(); // testing and ignoring anything else
-return;
+		//getWeatherForecast();return; // testing and ignoring anything else
 
-		if(app.getProperty("weather")==true && app.getProperty("lastLoad")=='c'){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
+		System.println([app.getProperty("weather"),app.getProperty("lastLoad"), app.getProperty("refresh_token"),app.getProperty("user_code")]);
+		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")==:calendar)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
 			if (app.getProperty("refresh_token") != null) { 
@@ -309,17 +309,17 @@ return;
 		if(subscription_id==null){
 			subscription_id = app.getProperty("subs");
 		}
-		if(subscription_id != null){
+		System.println([subscription_id]);
+		if(subscription_id != null && subscription_id has :length && subscription_id.length()>0){
 			var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){
 				Background.exit({"error_code"=>-204});
 				return;
 			}
-			Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat()+"/"+{"api_key"=>app.getProperty("api_key"), "unit"=>(app.getProperty("units") ? "c":"f"),"subscription_id"=>subscription_id});
+			Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat()+"/"+{ "Authorization"=>"Bearer " + subscription_id });
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
-				{"api_key"=>app.getProperty("api_key"), "unit"=>(app.getProperty("units") ? "c":"f"),
-				"subscription_id"=>subscription_id}, 
-				{:method => Communications.HTTP_REQUEST_METHOD_GET},
+				{"api_key"=>app.getProperty("api_key"), "unit"=>(app.getProperty("units") ? "c":"f")}, 
+				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id }},
 				method(:onWeatherForecast));
 		} else {
 			buySubscription();
@@ -328,7 +328,7 @@ return;
 
 	function onWeatherForecast(responseCode, data){
 		Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode); 
-		//Sys.println(data);
+		Sys.println(data);
 		if (responseCode == 200) {
 			try { 
 				Background.exit(data);
@@ -337,12 +337,13 @@ return;
 				Background.exit(data);
 			}
 		} else {
-			Background.exit({"error_code"=>responseCode});
+			Background.exit({"error_code"=>responseCode, "who"=>"weather"});
 		}
 	}
 
 
 	function buySubscription(){
+		System.println("buySubscription");
 		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), {}, 
 		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
 			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
@@ -358,9 +359,12 @@ return;
 		if(message != null && message.data != null /*&& message.data has :subscription_id*/){
 			Sys.println(message.data);
 			subscription_id = message.data["subscription_id"];
-			getWeatherForecast();
+			// getWeatherForecast(); // The new event will call it for us, so we needn't to
 		} 
-		//else {Background.exit({"error_code"=>402});}
+		/*else {
+			buySubscription();
+			//Background.exit({"error_code"=>402});
+		}*/
 
 		//Communications.openWebPage(url, params, options);
 	}

@@ -91,15 +91,20 @@ class lateApp extends App.AppBase {
 	(:data)
 	function onBackgroundData(data) {
 		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app:");
-		///Sys.println(data);
+		Sys.println(data);
 		try {
-			if(data.hasKey("weather")){ // array with weaather forecast
-				if(data["weather"].hasKey("subscription_id")){
-					app.setProperty("subs", data["weather"]["subscription_id"]);
+			if(!(data instanceof Toybox.Lang.Dictionary)){
+				return;
+			}
+			if(data.hasKey("subscription_id")){
+					app.setProperty("subs", data["subscription_id"]);
+					System.println("saved "+data["subscription_id"]);
 				}
+			if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
+				System.println(["weather array ", data["weather"].size(), data["weather"]]);
 				if(data["weather"].size()>2){
 					var color;
-					data["weather"][1] = Math.round(data["weather"][1]).toNumber(); // current temperature
+					data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
 					for(var i=2; i<data["weather"].size();i++){
 						color = data["weather"][i];
 						if(color<=9){color = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light]
@@ -111,6 +116,7 @@ class lateApp extends App.AppBase {
 						else if(color>=21){color=0;}	// sun: [clear, mostly_clear]
 						data["weather"][i] = color;
 					}
+					System.println(data["weather"]	);
 					app.setProperty("weatherHourly", data["weather"]);
 					
 					/* // Garmin Weather API 12h

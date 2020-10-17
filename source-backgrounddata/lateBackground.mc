@@ -331,13 +331,18 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Sys.println(data);
 		if (responseCode == 200) {
 			try { 
-				Background.exit(data);
+				if(subscription_id!=null){
+					Background.exit({"weather"=>data, "subscription_id"=>subscription_id});
+				} else {
+					Background.exit({"weather"=>data});
+				}
+				
 			} catch(ex){
 				Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
-				Background.exit(data);
+				Background.exit({"weather"=>data});
 			}
 		} else {
-			Background.exit({"error_code"=>responseCode, "who"=>"weather"});
+			Background.exit({"error_code"=>responseCode, "who"=>"weather", "weather"=>data});
 		}
 	}
 

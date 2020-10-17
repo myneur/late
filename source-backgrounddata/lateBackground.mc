@@ -304,7 +304,7 @@ return;
 	}
 
 	function getWeatherForecast() {
-		///Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast");
+		Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast");
 		app = App.getApp();
 		if(subscription_id==null){
 			subscription_id = app.getProperty("subs");
@@ -346,7 +346,7 @@ return;
 		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), {}, 
 		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
 			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
-			"http://localhost/checkout/success", Communications.OAUTH_RESULT_TYPE_URL, 
+			"http://simplylate", Communications.OAUTH_RESULT_TYPE_URL, 
 			//{"testval"=>"testval"});
 			{"subscription_id"=>"subscription_id"});
 
@@ -354,6 +354,7 @@ return;
 	function onPurchase(message)  {
 		Sys.println("onPurchase: ");
 		Sys.println(message);
+		Sys.println(message.data);
 		if(message != null && message.data != null /*&& message.data has :subscription_id*/){
 			Sys.println(message.data);
 			subscription_id = message.data["subscription_id"];

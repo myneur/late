@@ -147,7 +147,7 @@ dialSize=0;
 circleWidth=7;
 percentage = true;
 app.getApp().setProperty("location", [50.11, 14.49]);
-app.getApp().setProperty("subs", "sub_IDdJnTSSqhcy9Z");
+//app.getApp().setProperty("subs", "sub_IDeVROBKmQx8oS");
 
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}

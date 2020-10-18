@@ -79,7 +79,7 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function changeScheduleToMinutes(minutes){
-		///Sys.println("changeScheduleToMinutes: "+minutes);
+		Sys.println("changeScheduleToMinutes: "+minutes);
 		return Background.registerForTemporalEvent(new Time.Duration( minutes * Calendar.SECONDS_PER_MINUTE));
 	}
 
@@ -90,7 +90,8 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app [w,s,e,t] "+[data.hasKey("weather"), data.hasKey("subscription_id"), data.hasKey("events"), data.hasKey("refresh_token")]);
+		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+(data.hasKey("weather")? "weather ":"")+(data.hasKey("subscription_id")?"subscription ":"")+(data.hasKey("events")?"events ":"")+(data.hasKey("refresh_token")?"token ":""));
+		Sys.println(data);
 		try {
 			if(!(data instanceof Toybox.Lang.Dictionary)){
 				return;
@@ -177,45 +178,53 @@ class lateApp extends App.AppBase {
 					var error = data["error_code"];
 					var connected = Sys.getDeviceSettings().phoneConnected;
 
-					if(error==-300){ // no internet
+					if(error==-300 || (error==404 && app.getProperty("lastLoad")=="c" && app.getProperty("refresh_token")!=null)){ // no internet
 						return;
 					}
+					data["wait"] = durationToNextEvent();
 
-					if (!(error==404 && app.getProperty("lastLoad")=="c" && app.getProperty("refresh_token")!=null)) {	// standard data loading with no connection or no internet: do not warn immediately
-						data["wait"] = durationToNextEvent();
+					if(error==429){
+						if(data.hasKey("msBeforeNext")){
+							if(data["wait"]*1000 < data["msBeforeNext"]){
+								data["wait"]=data["msBeforeNext"]/1000;
+							}							
+						}
+						changeScheduleToMinutes(data["wait"]);
+						} else {
 						changeScheduleToMinutes(5);
+					}
 
-						/* if(error==511 ){ // login prompt on OAuth 
-							Sys.println("login request");
-							data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);
-						} else */
-					
-						if(error == 404 ){  // no internet or not connected when logging in
-							data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
-						} else if (error == -204){
-							data["userPrompt"] = Ui.loadResource(Rez.Strings.NoGPS);
-						}
-						else if(data.hasKey("error")){	// when reason is passed from background
-							///Sys.println(data["error"]);
-							data["userPrompt"] = data["error"];
-							data.put("permanent", true);
-						} else if(error==403 && data.hasKey("who") && data["who"]=="weather"){	// subscription is not in db: expired or wasn't paid at all
+					/* if(error==511 ){ // login prompt on OAuth 
+						Sys.println("login request");
+						data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);
+					} else */
+				
+					if(error == 404 ){  // no internet or not connected when logging in
+						data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
+					} else if (error == -204){
+						data["userPrompt"] = Ui.loadResource(Rez.Strings.NoGPS);
+					}
+					else if(data.hasKey("error")){	// when reason is passed from background
+						///Sys.println(data["error"]);
+						data["userPrompt"] = data["error"];
+						data.put("permanent", true);
+					} else if(error==400 || error==401 || error==403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
+						///Sys.println("unauthorized");
+						if(data.hasKey("subscription_id")){	// subscription is not in db: expired or wasn't paid at all
 							app.setProperty("subscription_id", null);
-							data["userPrompt"] = "Subscription expired. Contact sl8.ch";
-						}
-						else if(error==400 || error==401 || error==403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
-							///Sys.println("unauthorized");
+							data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
+						} else {
 							app.setProperty("refresh_token", null);
 							app.setProperty("user_code", null);
 							data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
-						} else if(error==-403){
-							data["userPrompt"] = Ui.loadResource(Rez.Strings.OutOfMemory);
 						}
-						else { // all other unanticipated errors
-							data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
-							data["userContext"] = data.get("error_code");
-							data.put("permanent", true);
-						}
+					} else if(error==-403){
+						data["userPrompt"] = Ui.loadResource(Rez.Strings.OutOfMemory);
+					}
+					else { // all other unanticipated errors
+						data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
+						data["userContext"] = data.get("error_code");
+						data.put("permanent", true);
 					}
 				}
 			}

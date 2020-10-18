@@ -32,7 +32,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		app = App.getApp();
 		var connected = Sys.getDeviceSettings().phoneConnected;
 
-		System.println([app.getProperty("lastLoad"), app.getProperty("weather"), app.getProperty("activity")]);
+		System.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")?" calendar":""));
 		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")==:calendar)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
@@ -327,9 +327,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); 
 		Sys.println(data instanceof Array ? data.slice(0, 3)+"..." : data);
 		
-		if (responseCode == 200) {
+		if (responseCode==200) {
 			try { 
-				data = {"weather"=>data};
+				data = {"weather"=>data};	// returning array with the wheather forecast
 				if(subscription_id!=null){
 					data.put("subscription_id", subscription_id);
 				} 
@@ -344,32 +344,50 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				}
 			}
 		} else {
-			Background.exit({"error_code"=>responseCode, "who"=>"weather", "weather"=>data});
+			if(responseCode==429 || responseCode==500 ){ // API rate limiting || errors. We will also ignore server errors so far. 
+				if(data instanceof Toybox.Lang.Dictionary){
+					Background.exit(data.put("error_code", 429));
+				} else {
+					Background.exit({"error_code"=>429}); // no internet
+				}
+				return;
+			} else if(responseCode==401 ){ // TODO 403: authentication errors should be rather ignored expired token {msg=>Invalid subscriptionId!, code=>INV_SUBS_ID}
+				buySubscription();				
+				Background.exit({"error_code"=>responseCode, "subscription_id"=>null});
+
+			} else {
+				Background.exit({"error_code"=>responseCode, "weather"=>data});
+			}
 		}
 	}
-
 
 	function buySubscription(){
 		System.println("buySubscription");
 		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), {}, 
-		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
-			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
 			"http://simplylate", Communications.OAUTH_RESULT_TYPE_URL, 
+			{"subscription_id"=>"subscription_id", "responseCode" => "error_code", "responseError" => "error"});
+			//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
+			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
 			//{"testval"=>"testval"});
-			{"subscription_id"=>"subscription_id", "responseCode" => "OAUTH_CODE", "responseError" => "OAUTH_ERROR"});
-
 	}
 	function onPurchase(message)  {
 		Sys.println("onPurchase: " + message.data);
-		if(message != null && message.data != null /*&& message.data has :subscription_id*/){
-			Sys.println(message.data["subscription_id"]);
-			subscription_id = message.data["subscription_id"];
+		if(message != null && message.data != null){
+			if(message.data has :subscription_id && message.data["subscription_id"] != null && message.data["subscription_id"].length()>0){ // OK: 200 || 301
+				Sys.println(message.data["subscription_id"]);
+				subscription_id = message.data["subscription_id"];
+				Background.exit({"subscription_id"=>subscription_id}); // Don’t request API immediately after success. It takes around 10-20 seconds for Stripe.com to make a request to our server.
+				var error = message.data["error_code"];
+			} else if(error==401 || error==403 || error==500){ 	// error interrupted probably won't propagate to the watch: //canceled or no internet/data => prompt to turn off // interupted subs: probably unreachable http://simplylate/?error=true =>
+				buySubscription();
+			}
+			Background.exit(message.data); // error==429: throttling => returns msBeforeNext to wait
+			return;
 			// getWeatherForecast(); // The new event will call it for us, so we needn't to
 		} 
-		/*else {
-			buySubscription();
-			//Background.exit({"error_code"=>402});
-		}*/
+		// no data means error: start again
+		buySubscription();
+		Background.exit(message.data); 
 
 		//Communications.openWebPage(url, params, options);
 	}

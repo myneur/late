@@ -56,7 +56,8 @@ class lateView extends Ui.WatchFace {
 			return; 
 		}	
 		//Sys.println("weather from hour: "+h + " offset: "+offset);
-		dc.setPenWidth(3);
+		
+		dc.setPenWidth(width>=390 ? 5 : 3);
 		
 		var color; var center;
 		//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
@@ -629,7 +630,7 @@ percentage = true;
 
 	function drawNowCircle(dc, hour){
 		// show now in a day
-		if(showSunrise || (activity == 6 && App.getApp().getProperty("refresh_token") != null)){
+		if(showSunrise || (activity == :calendar && App.getApp().getProperty("refresh_token") != null)){
 			var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
 			var x = centerX+(sunR*Math.sin(a));
 			var y = centerY-(sunR*Math.cos(a));
@@ -680,7 +681,14 @@ percentage = true;
 
 	(:data)
 	function drawEvents(dc){
-		dc.setPenWidth(5);
+		var radius = centerY-4;
+		if(height >= 390){
+			radius = centerY-8;
+			dc.setPenWidth(9);
+		} else {
+			dc.setPenWidth(5);	
+		}
+		
 		var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;
 		var tomorrow = Time.now().value()+Calendar.SECONDS_PER_DAY;
 		var degreeStart;
@@ -702,11 +710,11 @@ percentage = true;
 			}
 			if(degreeEnd-1 >= degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
 				dc.setColor(backgroundColor, backgroundColor);
-				dc.drawArc(centerX, centerY, centerY-4, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
+				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
 				if(events_list[i][4]>=0){
 					dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
 				}
-				dc.drawArc(centerX, centerY, centerY-4, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
+				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}
 		}
 	}

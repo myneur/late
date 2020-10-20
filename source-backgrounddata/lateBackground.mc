@@ -366,7 +366,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), {}, 
 			"http://simplylate", Communications.OAUTH_RESULT_TYPE_URL, 
 			{"subscription_id"=>"subscription_id", "responseCode" => "error_code", "responseError" => "error"});
-			//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
+		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
 			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
 			//{"testval"=>"testval"});
 	}

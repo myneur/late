@@ -138,7 +138,8 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 		percentage = app.getProperty("percents");
-activity = :activeMinutesWeek;
+activity = :calendar;
+app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :calories;
 showWeather = true;
@@ -147,8 +148,8 @@ showSunrise = true;
 dialSize=0;
 circleWidth=7;
 percentage = true;
-//app.getApp().setProperty("location", [50.11, 14.49]);
-//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+app.getApp().setProperty("location", [50.11, 14.49]);
+app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		var tone = app.getProperty("tone").toNumber()%5;
@@ -543,8 +544,8 @@ percentage = true;
 
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println("onBackgroundData view:");
-		///Sys.println(data);
+		Sys.println("onBackgroundData view");
+		//Sys.println(data);
 		//dataCount++;
 		if(data instanceof Array){	
 			events_list = data;

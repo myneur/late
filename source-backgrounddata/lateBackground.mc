@@ -32,8 +32,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		app = App.getApp();
 		var connected = Sys.getDeviceSettings().phoneConnected;
 
-		System.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")?" calendar":""));
-		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")==:calendar)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
+		System.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
+		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
 			if (app.getProperty("refresh_token") != null) { 
@@ -303,10 +303,10 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function getWeatherForecast() {
 		app = App.getApp();
 		if(subscription_id==null){
-			subscription_id = app.getProperty("subs");
+			subscription_id = app.getProperty("subs");	// must be read at first call (which is this one) so we don't lose it
 		}
 		Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
-		if(subscription_id instanceof String){
+		if(subscription_id instanceof String && subscription_id.length()>0){
 			var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){
 				Background.exit({"error_code"=>-204});
@@ -319,56 +319,57 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id }},
 				method(:onWeatherForecast));
 		} else {
-			buySubscription();
+			getSubscriptionId();
 		}
 	}
 
-	function onWeatherForecast(responseCode, data){
-		Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); 
-		Sys.println(data instanceof Array ? data.slice(0, 3)+"..." : data);
-		
+	function onWeatherForecast(responseCode, data){	Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 3)+"..." : data);
 		if (responseCode==200) {
 			try { 
 				data = {"weather"=>data};	// returning array with the wheather forecast
-				if(subscription_id!=null){
+				if(subscription_id instanceof String && subscription_id.length()>0){
 					data.put("subscription_id", subscription_id);
 				} 
-				
 			} catch(ex){
 				Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
-				data = subscription_id!=null ? {"subscription_id"=>subscription_id} : {"weather"=>data};	// priority is to keep the subscription_id
+				data = (subscription_id instanceof String && subscription_id.length()>0) ? {"subscription_id"=>subscription_id} : {"weather"=>data};	// priority is to keep the subscription_id
 			}
 		} else {
-			// 429 rate limiting 
-			// 401 expired / 402 not paid yet {msg=>Invalid subscriptionId!, code=>INV_SUBS_ID}
-			if(responseCode == 404){
-				System.println(404);
-				subscription_id = null;
-				buySubscription();	
-				return;
+			// 403-404 unknown id
+			if(responseCode == 404 || responseCode == 403){
+				subscription_id = false;
+				getSubscriptionId();	
+				return;	// there will be a second call
 			}
+			// 429 throttling with msBeforeNext to wait
+			// 500 server error
 			if(!(data instanceof Toybox.Lang.Dictionary)){
 				data = {};
 			}
-			data.put("error_code", responseCode);		
-			if(responseCode==401 ||  responseCode==402 ){ 
-				buySubscription();				
+			data.put("error_code", responseCode);
+			// 401 expired / 402 not paid yet with data like {msg=>Invalid subscriptionId!, code=>INV_SUBS_ID}	
+			if(responseCode==401 || responseCode==402 ){ 
+				buySubscription(responseCode);
+				return;				
 			}
 		}
 		Background.exit(data);
 	}
 
-	function buySubscription(){
-		System.println("buySubscription");
-		if(subscription_id==null){	// get identifier for the watch
-			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
-				{"client_id"=>app.getProperty("weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
-				method(:onSubscriptionId));
-		} else {	// prompt to pay
-			Communications.openWebPage("https://almost-late-middleware.herokuapp.com/checkout/pay", 
-				{"device_code"=>subscription_id, "client_id"=>app.getProperty("weather_id")}, {:method=>Communications.HTTP_REQUEST_METHOD_GET});
-				Background.exit({"subscription_id"=>subscription_id}); 
+	function getSubscriptionId(){	System.println("getWeatherId");
+		Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
+			{"client_id"=>app.getProperty("weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
+			method(:onSubscriptionId));
+	}
+	
+	function buySubscription(responseCode){	System.println("buySubscription "+responseCode);
+		Communications.openWebPage("https://almost-late-middleware.herokuapp.com/checkout/pay", 
+			{"responseCode"=> responseCode.toString(), "device_code"=>subscription_id, "client_id"=>app.getProperty("weather_id")}, {:method=>Communications.HTTP_REQUEST_METHOD_GET}); 
+		var data = {"subscription_id"=>subscription_id};
+		if(responseCode!=200){
+			data.put("error_code", responseCode);
 		}
+		Background.exit(data);
 		/*Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/auth/code?r=" + Math.rand(), {}, 
 			"http://simplylate", Communications.OAUTH_RESULT_TYPE_URL, 
 			{"subscription_id"=>"subscription_id", "responseCode" => "error_code", "responseError" => "error"});
@@ -389,27 +390,42 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}*/
 
 
-	function onSubscriptionId(responseCode, data) {	// todo 429, 403/404 device_code missing, 500
-		Sys.println("onPurchase: " + responseCode +data);
+	function onSubscriptionId(responseCode, data) {		Sys.println("onPurchase: " + responseCode +" "+data);
 		if (responseCode == 200 || responseCode == 301) {
 			//data = data.get("items");
 			if(data instanceof Toybox.Lang.Dictionary && data.hasKey("device_code") && data["device_code"] instanceof String ){ 
-				subscription_id = data["device_code"];
 				Sys.System.println("have it: "+subscription_id);
-				buySubscription();
+				if(subscription_id == false){	// expired subscription
+					responseCode = 401;
+				} 
+				subscription_id = data["device_code"];
+				buySubscription(responseCode); 
+				return;
 			} 
 		} else {
-			if(error == 404){
-				subscription_id = null;
-				buySubscription();	
+			/*if(responseCode == 404){
+				subscription_id = false;
+				getSubscriptionId();	
+				return;*/
+			// 403: no id
+			if(responseCode == 403){
+				responseCode = 400;
+			// 401: No Quota
+			} else if(responseCode == 401){
+				responseCode = 403;
 			}
-			// 401: No Quota, 403: No client_id provided, 500: Internal server error
-			// 429: throttling => returns msBeforeNext to wait
+			// 429 throttling with msBeforeNext to wait
+			// 500: Internal server error
+			
+			
+
 			if(!(data instanceof Toybox.Lang.Dictionary)){
 				data = {};
 			}
-			data.put(data.put("error_code", responseCode));
+			data.put("subscription_id", subscription_id);
+			data.put("error_code", responseCode);
 		}
+		Background.exit(data);
 	}
 
 	/*function onPurchase(message)  {

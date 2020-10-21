@@ -89,152 +89,134 @@ class lateApp extends App.AppBase {
 	}
 	
 	(:data)
-	function onBackgroundData(data) {
+	function onBackgroundData(data) {	
 		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+(data.hasKey("weather")? "weather ":"")+(data.hasKey("subscription_id")?"subscription ":"")+(data.hasKey("events")?"events ":"")+(data.hasKey("refresh_token")?"token ":""));
-		Sys.println(data);
+		//Sys.println(data);
 		try {
-			if(!(data instanceof Toybox.Lang.Dictionary)){
-				return;
-			}
-			if(data.hasKey("subscription_id")){
-				app.setProperty("subs", data["subscription_id"]);
-				// TODO add message
-				System.println("saved "+data["subscription_id"]);
-			}
-			if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
-				//System.println(["weather array ", data["weather"].size(), data["weather"]]);
-				if(data["weather"].size()>2){
-					var color;
-					data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
-					for(var i=2; i<data["weather"].size();i++){
-						color = data["weather"][i];
-						if(color<=9){color = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light]
-						else if(color==10){color=-1;}	// clouds: [flurries]
-						else if(color<=13){color=3;}	// rain: [tstorm, rain_heavy, rain]
-						else if(color<=15){color=2;}	// light rain: [rain_light, drizzle]
-						else if(color<=19){color=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy]
-						else if(color==20){color=1;}	// partly cloudy: [partly, cloudy]
-						else if(color>=21){color=0;}	// sun: [clear, mostly_clear]
-						data["weather"][i] = color;
-					}
-					//System.println(data["weather"]	);
-					app.setProperty("weatherHourly", data["weather"]);
-					
-					/* // Garmin Weather API 12h
-						var c;
-						data = Weather.getCurrentConditions();
-						Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
-						data = Weather.getHourlyForecast();
-						for(var j=0; j<data.size(); j++){
-							c = data[j].condition;
-							
-							// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
-							if(c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR){c=1;} // Partly Cloudy 
-							
-							else if( c==Weather.CONDITION_LIGHT_RAIN || c==Weather.CONDITION_DRIZZLE || c==Weather.CONDITION_SHOWERS || c==Weather.CONDITION_HEAVY_SHOWERS ){c=4;} // Light rain 
-							else if(c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_TORNADO || 
-							c==Weather.CONDITION_SANDSTORM || c==Weather.CONDITION_HURRICANE || c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_FREEZING_RAIN || 
-							c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_SLEET){c=5;} // rain
-
-							else if(c==Weather.CONDITION_SNOW || c>=Weather.CONDITION_LIGHT_SNOW && c<=Weather.CONDITION_HEAVY_RAIN_SNOW || c==Weather.CONDITION_ICE_SNOW || c==Weather.CONDITION_HAIL)
-							{c=6;} // snow
-
-							if(c>6){c=6;} // ignoring everything else
-							data[j]=c;
+			if(data instanceof Toybox.Lang.Dictionary){
+				if(data.hasKey("subscription_id")){	
+					app.setProperty("subs", data["subscription_id"]);
+				}
+				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
+					System.println(["weather array ", data["weather"].size(), data["weather"]]);
+					if(data["weather"].size()>2){
+						var color;
+						data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
+						for(var i=2; i<data["weather"].size();i++){
+							color = data["weather"][i];
+							if(color<=9){color = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light]
+							else if(color==10){color=-1;}	// clouds: [flurries]
+							else if(color<=13){color=3;}	// rain: [tstorm, rain_heavy, rain]
+							else if(color<=15){color=2;}	// light rain: [rain_light, drizzle]
+							else if(color<=19){color=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy]
+							else if(color==20){color=1;}	// partly cloudy: [partly, cloudy]
+							else if(color>=21){color=0;}	// sun: [clear, mostly_clear]
+							data["weather"][i] = color;
 						}
-					data = {"weather"=>[13, 0].addAll(data)};*/
-					changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
-					app.setProperty("lastLoad", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
-				}
-			}
-			else {
-				if(data.hasKey("refresh_token")){
-					app.setProperty("refresh_token", data.get("refresh_token"));
-					app.setProperty("user_code", null);
-				}
-				if (data.hasKey("primary_calendar")){
-					app.setProperty("calendar_ids", [data["primary_calendar"]]);
-				}
-				if (data.hasKey("events")) {
-					///Sys.println("dict events");
-					data = parseEvents(data.get("events"));
-					app.setProperty("events", data);
-					if(!(app.getProperty("weather")==true)){
-						changeScheduleToMinutes(5);	// load also weather as soon as possible
-					} else {
-						changeScheduleToMinutes(app.getProperty("refresh_freq")); // all loaded, wait for next data loading period 
-					}
-					app.setProperty("lastLoad", 'c'); // for background process to know the next time what was loaded to alternate between weather and calendar loading
-				} 
-				else if(data.hasKey("user_code")){ // prompt login
-					app.setProperty("refresh_token", null); 
-					app.setProperty("user_code", data.get("user_code")); 
-					app.setProperty("verification_url", data.get("verification_url")); 
-					app.setProperty("device_code", data.get("device_code")); 
-					//app.setProperty("code_valid_till", new Time.now().value() + add(data.get("expires_in").toNumber()));
-					changeScheduleToMinutes(5);
-					data = promptLogin(data.get("user_code"), data.get("verification_url"));
-				}
-				else if(data.hasKey("error_code")){
-					var error = data["error_code"];
-					var connected = Sys.getDeviceSettings().phoneConnected;
+						//System.println(data["weather"]	);
+						app.setProperty("weatherHourly", data["weather"]);
+						
+						/* // Garmin Weather API 12h
+							var c;
+							data = Weather.getCurrentConditions();
+							Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
+							data = Weather.getHourlyForecast();
+							for(var j=0; j<data.size(); j++){
+								c = data[j].condition;
+								
+								// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
+								if(c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR){c=1;} // Partly Cloudy 
+								
+								else if( c==Weather.CONDITION_LIGHT_RAIN || c==Weather.CONDITION_DRIZZLE || c==Weather.CONDITION_SHOWERS || c==Weather.CONDITION_HEAVY_SHOWERS ){c=4;} // Light rain 
+								else if(c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_TORNADO || 
+								c==Weather.CONDITION_SANDSTORM || c==Weather.CONDITION_HURRICANE || c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_FREEZING_RAIN || 
+								c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_SLEET){c=5;} // rain
 
-					if(error==-300 || (error==404 && app.getProperty("lastLoad")=="c" && app.getProperty("refresh_token")!=null)){ // no internet
-						return;
-					}
-					data["wait"] = durationToNextEvent();
+								else if(c==Weather.CONDITION_SNOW || c>=Weather.CONDITION_LIGHT_SNOW && c<=Weather.CONDITION_HEAVY_RAIN_SNOW || c==Weather.CONDITION_ICE_SNOW || c==Weather.CONDITION_HAIL)
+								{c=6;} // snow
 
-					if(error==429){
-						if(data.hasKey("msBeforeNext")){
-							if(data["wait"]*1000 < data["msBeforeNext"]){
-								data["wait"]=data["msBeforeNext"]/1000;
-							}							
-						}
-						changeScheduleToMinutes(data["wait"]);
-						} else {
+								if(c>6){c=6;} // ignoring everything else
+								data[j]=c;
+							}
+						data = {"weather"=>[13, 0].addAll(data)};*/
+						changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
+						app.setProperty("lastLoad", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
+					}
+				} else {
+					if(data.hasKey("refresh_token")){
+						app.setProperty("refresh_token", data.get("refresh_token"));
+						app.setProperty("user_code", null);
+					}
+					if (data.hasKey("primary_calendar")){
+						app.setProperty("calendar_ids", [data["primary_calendar"]]);
+					}
+					if (data.hasKey("events")) {
+						data = parseEvents(data.get("events"));
+						app.setProperty("events", data);
+						app.setProperty("lastLoad", 'c'); // for background process to know the next time what was loaded to alternate between weather and calendar loading
+						changeScheduleToMinutes(app.getProperty("weather")==true ? app.getProperty("refresh_freq") : 5);	// when weather not loaded yet, load ASAP					
+					} else if(data.hasKey("user_code")){ // prompt login
+						app.setProperty("refresh_token", null); 
+						app.setProperty("user_code", data.get("user_code")); 
+						app.setProperty("verification_url", data.get("verification_url")); 
+						app.setProperty("device_code", data.get("device_code")); 
 						changeScheduleToMinutes(5);
-					}
-
-					/* if(error==511 ){ // login prompt on OAuth 
-						Sys.println("login request");
-						data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);
-					} else */
-				
-					if(error == 404 ){  // no internet or not connected when logging in
-						data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
-					} else if (error == -204){
-						data["userPrompt"] = Ui.loadResource(Rez.Strings.NoGPS);
-					}
-					else if(data.hasKey("error")){	// when reason is passed from background
-						///Sys.println(data["error"]);
-						data["userPrompt"] = data["error"];
-						data.put("permanent", true);
-					} else if(error>=400 && error<=403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
-						///Sys.println("unauthorized");
-						if(data.hasKey("subscription_id")){	// subscription is not in db: expired or wasn't paid at all
-							app.setProperty("subscription_id", null);
-							data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
-						} else {
-							app.setProperty("refresh_token", null);
-							app.setProperty("user_code", null);
-							data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
+						data = promptLogin(data.get("user_code"), data.get("verification_url"));
+						//app.setProperty("code_valid_till", new Time.now().value() + add(data.get("expires_in").toNumber()));
+					} else if(data.hasKey("error_code")){
+						var error = data["error_code"];
+						var connected = Sys.getDeviceSettings().phoneConnected;
+						if(error==-300 || (error==404 && app.getProperty("lastLoad")=="c")){ // no internet
+							if(app.getProperty("refresh_token")!=null){
+								return;
+							} else {	// no internet or not connected when logging in
+								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
+							}
 						}
-					} else if(error==-403){
-						data["userPrompt"] = Ui.loadResource(Rez.Strings.OutOfMemory);
-					}
-					else { // all other unanticipated errors
-						data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
-						data["userContext"] = data.get("error_code");
-						data.put("permanent", true);
+						data["wait"] = durationToNextEvent();
+						if(error==429){
+							if(data.hasKey("msBeforeNext")){
+								if(data["wait"]*1000 < data["msBeforeNext"]){
+									data["wait"]=data["msBeforeNext"]/1000;
+								}							
+							}
+							changeScheduleToMinutes(data["wait"]);
+						} else {
+							changeScheduleToMinutes(5);
+							// if(error==511 ){ // Sys.println("login request");// login prompt on OAuth data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);} else 
+							if (error == -204){
+								data["userPrompt"] = Ui.loadResource(Rez.Strings.NoGPS);
+							} else if(data.hasKey("error")){	// when reason is passed from background
+								///Sys.println(data["error"]);
+								data["userPrompt"] = data["error"];
+								data.put("permanent", true);
+							} else if(error>=400 && error<=403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
+								if(data.hasKey("subscription_id")){	// subscription is not in db: expired or wasn't paid at all
+									app.setProperty("subscription_id", null);
+									data["userPrompt"] = Ui.loadResource(Rez.Strings.Subscribe);
+									Sys.println(Ui.loadResource(Rez.Strings.Subscribe));
+								} else {
+									app.setProperty("refresh_token", null);
+									app.setProperty("user_code", null);
+									data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
+								}
+							} else if(error==-403){
+								data["userPrompt"] = Ui.loadResource(Rez.Strings.OutOfMemory);
+							}
+							else { // all other unanticipated errors
+								data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
+								data["userContext"] = data.get("error_code");
+								data.put("permanent", true);
+							}
+						}
 					}
 				}
+				if(watch){
+					watch.onBackgroundData(data);
+				}
+				Ui.requestUpdate();
 			}
-			if(watch){
-				watch.onBackgroundData(data);
-			}
-			Ui.requestUpdate();
-		} catch (ex){
-			///Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
+		} catch(ex){	///Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
 			if(watch){
 				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
 			}

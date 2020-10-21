@@ -1,3 +1,3 @@
 ./compile.sh
 connectiq 
-monkeydo bin/late.prg venu
+monkeydo bin/late.prg fenix5plus

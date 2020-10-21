@@ -97,9 +97,10 @@ class lateApp extends App.AppBase {
 				return;
 			}
 			if(data.hasKey("subscription_id")){
-					app.setProperty("subs", data["subscription_id"]);
-					//System.println("saved "+data["subscription_id"]);
-				}
+				app.setProperty("subs", data["subscription_id"]);
+				// TODO add message
+				System.println("saved "+data["subscription_id"]);
+			}
 			if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
 				//System.println(["weather array ", data["weather"].size(), data["weather"]]);
 				if(data["weather"].size()>2){
@@ -208,7 +209,7 @@ class lateApp extends App.AppBase {
 						///Sys.println(data["error"]);
 						data["userPrompt"] = data["error"];
 						data.put("permanent", true);
-					} else if(error==400 || error==401 || error==403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
+					} else if(error>=400 && error<=403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
 						///Sys.println("unauthorized");
 						if(data.hasKey("subscription_id")){	// subscription is not in db: expired or wasn't paid at all
 							app.setProperty("subscription_id", null);

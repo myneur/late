@@ -23,7 +23,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function initialize() {
 		///Sys.println(Sys.getSystemStats().freeMemory + " on init");
 		Sys.ServiceDelegate.initialize();
-		Communications.registerForOAuthMessages(method(:onPurchase));
+		//Communications.registerForOAuthMessages(method(:onPurchase));
 		app = App.getApp();
 	}
 	
@@ -306,7 +306,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			subscription_id = app.getProperty("subs");
 		}
 		Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
-		if(subscription_id != null && subscription_id has :length && subscription_id.length()>0){
+		if(subscription_id instanceof String){
 			var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){
 				Background.exit({"error_code"=>-204});
@@ -333,44 +333,86 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				if(subscription_id!=null){
 					data.put("subscription_id", subscription_id);
 				} 
-				Background.exit(data);
 				
 			} catch(ex){
 				Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
-				if(subscription_id!=null){
-					Background.exit({"subscription_id"=>subscription_id});	// priority is to keep the subscription_id
-				} else {
-					Background.exit({"weather"=>data});
-				}
+				data = subscription_id!=null ? {"subscription_id"=>subscription_id} : {"weather"=>data};	// priority is to keep the subscription_id
 			}
 		} else {
-			if(responseCode==429 || responseCode==500 ){ // API rate limiting || errors. We will also ignore server errors so far. 
-				if(data instanceof Toybox.Lang.Dictionary){
-					Background.exit(data.put("error_code", 429));
-				} else {
-					Background.exit({"error_code"=>429}); // no internet
-				}
+			// 429 rate limiting 
+			// 401 expired / 402 not paid yet {msg=>Invalid subscriptionId!, code=>INV_SUBS_ID}
+			if(responseCode == 404){
+				System.println(404);
+				subscription_id = null;
+				buySubscription();	
 				return;
-			} else if(responseCode==401 ){ // TODO 403: authentication errors should be rather ignored expired token {msg=>Invalid subscriptionId!, code=>INV_SUBS_ID}
+			}
+			if(!(data instanceof Toybox.Lang.Dictionary)){
+				data = {};
+			}
+			data.put("error_code", responseCode);		
+			if(responseCode==401 ||  responseCode==402 ){ 
 				buySubscription();				
-				Background.exit({"error_code"=>responseCode, "subscription_id"=>null});
-
-			} else {
-				Background.exit({"error_code"=>responseCode, "weather"=>data});
 			}
 		}
+		Background.exit(data);
 	}
 
 	function buySubscription(){
 		System.println("buySubscription");
-		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/checkout/pay?rand=" + Math.rand(), {}, 
+		if(subscription_id==null){	// get identifier for the watch
+			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
+				{"client_id"=>app.getProperty("weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
+				method(:onSubscriptionId));
+		} else {	// prompt to pay
+			Communications.openWebPage("https://almost-late-middleware.herokuapp.com/checkout/pay", 
+				{"device_code"=>subscription_id, "client_id"=>app.getProperty("weather_id")}, {:method=>Communications.HTTP_REQUEST_METHOD_GET});
+				Background.exit({"subscription_id"=>subscription_id}); 
+		}
+		/*Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/auth/code?r=" + Math.rand(), {}, 
+			"http://simplylate", Communications.OAUTH_RESULT_TYPE_URL, 
+			{"subscription_id"=>"subscription_id", "responseCode" => "error_code", "responseError" => "error"});
+		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
+			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
+			//{"testval"=>"testval"});*/
+	}
+
+
+	/*function buySubscription(){
+		System.println("buySubscription");
+		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/auth/code?r=" + Math.rand(), {}, 
 			"http://simplylate", Communications.OAUTH_RESULT_TYPE_URL, 
 			{"subscription_id"=>"subscription_id", "responseCode" => "error_code", "responseError" => "error"});
 		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
 			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
 			//{"testval"=>"testval"});
+	}*/
+
+
+	function onSubscriptionId(responseCode, data) {	// todo 429, 403/404 device_code missing, 500
+		Sys.println("onPurchase: " + responseCode +data);
+		if (responseCode == 200 || responseCode == 301) {
+			//data = data.get("items");
+			if(data instanceof Toybox.Lang.Dictionary && data.hasKey("device_code") && data["device_code"] instanceof String ){ 
+				subscription_id = data["device_code"];
+				Sys.System.println("have it: "+subscription_id);
+				buySubscription();
+			} 
+		} else {
+			if(error == 404){
+				subscription_id = null;
+				buySubscription();	
+			}
+			// 401: No Quota, 403: No client_id provided, 500: Internal server error
+			// 429: throttling => returns msBeforeNext to wait
+			if(!(data instanceof Toybox.Lang.Dictionary)){
+				data = {};
+			}
+			data.put(data.put("error_code", responseCode));
+		}
 	}
-	function onPurchase(message)  {
+
+	/*function onPurchase(message)  {
 		Sys.println("onPurchase: " + message.data);
 		if(message != null && message.data != null){
 			if(message.data has :subscription_id && message.data["subscription_id"] != null && message.data["subscription_id"].length()>0){ // OK: 200 || 301
@@ -388,9 +430,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		// no data means error: start again
 		buySubscription();
 		Background.exit(message.data); 
-
-		//Communications.openWebPage(url, params, options);
-	}
+	}*/
 
 /*  function showInstructionOnMobile(data){
 		var user_code = data.hasKey("user_code") ? data["user_code"] : app.getProperty("user_code");

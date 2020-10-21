@@ -39,7 +39,7 @@ class lateView extends Ui.WatchFace {
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
 		///Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		var h = Sys.getClockTime().hour; // first hour of the forecast
-		if (weatherHourly.size()>2){
+		if (weatherHourly instanceof Array && weatherHourly.size()>2){
 			if(weatherHourly[0]<h){	// delayed response or time passed
 				weatherHourly = weatherHourly.slice(0, 2).addAll(weatherHourly.slice(2+h-weatherHourly[0], null));
 				weatherHourly[0]=h;
@@ -57,7 +57,7 @@ class lateView extends Ui.WatchFace {
 		}	
 		//Sys.println("weather from hour: "+h + " offset: "+offset);
 		
-		dc.setPenWidth(width>=390 ? 5 : 3);
+		dc.setPenWidth(height>=390 ? 5 : 3);
 		
 		var color; var center;
 		//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
@@ -138,9 +138,9 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 		percentage = app.getProperty("percents");
-activity = :calendar;
+activity = :activeMinutesWeek;
 activityL = :steps;
-activityR = :activeMinutesWeek;
+activityR = :calories;
 showWeather = true;
 app.setProperty("weather", showWeather);
 showSunrise = true;
@@ -148,7 +148,6 @@ dialSize=0;
 circleWidth=7;
 percentage = true;
 //app.getApp().setProperty("location", [50.11, 14.49]);
-//app.getApp().setProperty("subs", "sub_IDeVROBKmQx8oS");
 //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
@@ -464,7 +463,13 @@ percentage = true;
 		return info.steps.toFloat()/info.stepGoal;
 	}
 	function calories(info){
-		return info.calories.toFloat()/ActivityMonitor.getHistory.calories;
+		var h = ActivityMonitor.getHistory();
+		if(h.size()>0){
+			return info.calories.toFloat()/ActivityMonitor.getHistory()[0].calories;	
+		} else {
+			return 0;
+		}
+		
 	}
 	function activeMinutesDay(info){
 		return info.activeMinutesDay.total.toFloat()/(info.activeMinutesWeekGoal.toFloat()/7);
@@ -472,7 +477,7 @@ percentage = true;
 	function activeMinutesWeek(info){
 		return info.activeMinutesWeek.total.toFloat()/info.activeMinutesWeekGoal;
 	}
-	function floors(info){
+	function floorsClimbed(info){
 		return info.floorsClimbed.toFloat()/info.floorsClimbedGoal;
 	}
 
@@ -482,13 +487,13 @@ percentage = true;
 		if(percentage){
 			info = method(activity).invoke(info);
 			dc.setPenWidth(2);
-			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 			dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);
 			if(info>0.0001){
-				if(info>1){
-					dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
+				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+				if(info>1){	
 					if(info<2){
 						dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90-info*360-10, 100); 
+						dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 					} else {
 						dc.drawCircle(x, y, 14);
 					}
@@ -538,7 +543,7 @@ percentage = true;
 
 	(:data)
 	function onBackgroundData(data) {
-		///Sys.println("onBackgroundData view:");
+		Sys.println("onBackgroundData view:");
 		///Sys.println(data);
 		//dataCount++;
 		if(data instanceof Array){	

@@ -1,0 +1,39 @@
+
+---
+Error: Unexpected Type Error
+Details: 'Failed invoking <symbol>'
+Time: 2020-10-21T04:59:18Z
+Part-Number: 006-B3291-00
+Firmware-Version: '11.10'
+Language-Code: eng
+ConnectIQ-Version: 3.2.1
+Filename: late
+Appname: 'simply late! calendar'
+Stack: 
+  - pc: 0x10002c84
+    File: '/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc'
+    Line: 42
+    Function: drawWeather
+  - pc: 0x10004646
+    File: '/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc'
+    Line: 447
+    Function: onUpdate
+---
+Error: Unexpected Type Error
+Details: 'Failed invoking <symbol>'
+Time: 2020-10-21T11:24:22Z
+Part-Number: 006-B3291-00
+Firmware-Version: '11.10'
+Language-Code: eng
+ConnectIQ-Version: 3.2.1
+Filename: late
+Appname: 'simply late! calendar'
+Stack: 
+  - pc: 0x10002c84
+    File: '/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc'
+    Line: 42
+    Function: drawWeather
+  - pc: 0x10004646
+    File: '/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc'
+    Line: 447
+    Function: onUpdate

@@ -98,7 +98,7 @@ class lateApp extends App.AppBase {
 					app.setProperty("subs", data["subscription_id"]);
 				}
 				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
-					System.println(["weather array ", data["weather"].size(), data["weather"]]);
+					//System.println(["weather array ", data["weather"].size(), data["weather"]]);
 					if(data["weather"].size()>2){
 						var color;
 						data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature

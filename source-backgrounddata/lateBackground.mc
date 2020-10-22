@@ -363,9 +363,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function buySubscription(responseCode){	System.println("buySubscription "+responseCode);
+		var data = {"device_code"=>subscription_id, "client_id"=>app.getProperty("weather_id")};
+		if(responseCode!=200){
+			data.put("error_code", responseCode.toString());
+		}
 		Communications.openWebPage("https://almost-late-middleware.herokuapp.com/checkout/pay", 
-			{"responseCode"=> responseCode.toString(), "device_code"=>subscription_id, "client_id"=>app.getProperty("weather_id")}, {:method=>Communications.HTTP_REQUEST_METHOD_GET}); 
-		var data = {"subscription_id"=>subscription_id};
+			data, {:method=>Communications.HTTP_REQUEST_METHOD_GET}); 
+		data = {"subscription_id"=>subscription_id};
 		if(responseCode!=200){
 			data.put("error_code", responseCode);
 		}

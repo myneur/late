@@ -50,8 +50,7 @@
 			<listEntry value="0">@Strings.Fahrenheit</listEntry>
 		</settingConfig>
 	</setting>
-	<setting propertyKey="@Properties.key" title="@Strings.Key">
+	<!--<setting propertyKey="@Properties.key" title="@Strings.Key">
 		<settingConfig type="alphaNumeric" />
-	</setting>
-
+	</setting>-->
 </settings>

@@ -335,23 +335,23 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				data = (subscription_id instanceof String && subscription_id.length()>0) ? {"subscription_id"=>subscription_id} : {"weather"=>data};	// priority is to keep the subscription_id
 			}
 		} else {
-			// 403-404 unknown id
-			if(responseCode == 404 || responseCode == 403){
-				subscription_id = false;
-				getSubscriptionId();	
-				return;	// there will be a second call
-			}
+			// 400: missing ID
+			// 401 unknown device
+			// 404: no internet
 			// 429 throttling with msBeforeNext to wait
 			// 500 server error
+			// 403 expired / 402 not paid yet with data like {msg=>Invalid subscriptionId!, code=>INV_SUBS_ID}  
+			if(responseCode == 401){
+				subscription_id = false;	// indicating to callBack that reason was expired subscription
+	  		}
+			if(responseCode>=401 && responseCode<=403 ){ 
+				buySubscription(responseCode);
+				return; // there will be a second call to exit
+			}
 			if(!(data instanceof Toybox.Lang.Dictionary)){
 				data = {};
 			}
 			data.put("error_code", responseCode);
-			// 401 expired / 402 not paid yet with data like {msg=>Invalid subscriptionId!, code=>INV_SUBS_ID}	
-			if(responseCode==401 || responseCode==402 ){ 
-				buySubscription(responseCode);
-				return;				
-			}
 		}
 		Background.exit(data);
 	}
@@ -365,9 +365,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function buySubscription(responseCode){	System.println("buySubscription "+responseCode);
 		var data = {"device_code"=>subscription_id, "client_id"=>app.getProperty("weather_id")};
 		if(responseCode!=200){
-			data.put("error_code", responseCode.toString());
+			data.put("expired", "1");
 		}
-		Communications.openWebPage("https://almost-late-middleware.herokuapp.com/checkout/pay", 
+		Communications.openWebPage("https://almost-late-middleware.herokuapp.com/checkout/" + (responseCode==407 ? "wait" : "pay"), 
 			data, {:method=>Communications.HTTP_REQUEST_METHOD_GET}); 
 		data = {"subscription_id"=>subscription_id};
 		if(responseCode!=200){
@@ -395,34 +395,26 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 
 	function onSubscriptionId(responseCode, data) {		Sys.println("onPurchase: " + responseCode +" "+data);
-		if (responseCode == 200 || responseCode == 301) {
+		if (responseCode == 200) {
 			//data = data.get("items");
 			if(data instanceof Toybox.Lang.Dictionary && data.hasKey("device_code") && data["device_code"] instanceof String ){ 
 				Sys.System.println("have it: "+subscription_id);
-				if(subscription_id == false){	// expired subscription
-					responseCode = 401;
+				if(subscription_id == false){	// indicating to the subscriptino page that the subscription expired
+					responseCode = 403;
 				} 
 				subscription_id = data["device_code"];
 				buySubscription(responseCode); 
 				return;
 			} 
 		} else {
-			/*if(responseCode == 404){
-				subscription_id = false;
-				getSubscriptionId();	
-				return;*/
-			// 403: no id
-			if(responseCode == 403){
-				responseCode = 400;
-			// 401: No Quota
-			} else if(responseCode == 401){
-				responseCode = 403;
-			}
+			// 404: no internet
+			// 407: No Quota
 			// 429 throttling with msBeforeNext to wait
 			// 500: Internal server error
-			
-			
-
+			if(responseCode == 407){
+				buySubscription(responseCode); 
+				return;
+			}
 			if(!(data instanceof Toybox.Lang.Dictionary)){
 				data = {};
 			}

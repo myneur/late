@@ -165,16 +165,17 @@ class lateApp extends App.AppBase {
 						//app.setProperty("code_valid_till", new Time.now().value() + add(data.get("expires_in").toNumber()));
 					} else if(data.hasKey("error_code")){
 						var error = data["error_code"];
-						var connected = Sys.getDeviceSettings().phoneConnected;
-						if(error==-300 || (error==404 && app.getProperty("lastLoad")=="c")){ // no internet
-							if(app.getProperty("refresh_token")!=null){
-								return;
-							} else {	// no internet or not connected when logging in
-								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
-							}
-						}
 						data["wait"] = durationToNextEvent();
-						if(error==429){
+						System.println(error);
+						var connected = Sys.getDeviceSettings().phoneConnected;
+						if(error==-300 || error==404){ // no internet
+							//System.println([watch.activity == :calendar , app.getProperty("lastLoad")!="c", watch.showWeather==false, app.getProperty("refresh_token")==null]);
+							if(watch.activity == :calendar && (app.getProperty("lastLoad")!="c" || showWeather==false) && app.getProperty("refresh_token")==null){	// no internet or not connected when logging in
+								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
+							} else {	
+								return;
+							}
+						} else if(error==429){
 							if(data.hasKey("msBeforeNext")){
 								if(data["wait"]*1000 < data["msBeforeNext"]){
 									data["wait"]=data["msBeforeNext"]/1000;

@@ -4,6 +4,8 @@
 	<string id="DataLoading">1</string>
 
 	<string id="Vivid">Vivid</string>
+
+	<string id="ActivityTitle">Activity or Events</string>
 	
 	<string id="CalendarColors">Calendar Colors</string>
 	<string id="CalendarNoChange">Do not change</string>
@@ -12,10 +14,8 @@
 	<string id="AddCalendars">Calendars to show</string>
 	<string id="CalendarPrompt">For Calendar: Watch your watch to get code and link to log-in. Then wait at least 5 mins.</string>
 	<string id="CalendarsPrompt">Calendar IDs (typically your mail) separated by space or comma</string>
-
-	<string id="ActivityTitle">Activity or Events</string>
-
 	<string id="refreshFrequency">Minutes to refresh calendar</string>
+	
 	<string id="Wait4login">Wait to login</string>
 	<string id="EnterCode">Enter </string>
 	<string id="LinkPrefix"></string>
@@ -32,9 +32,8 @@
 	<string id="NastyError">Login Error</string>
 	<string id="NoGPS">Get GPS location</string>
 
-	<string id="Weather">Only on invitation: Show Weather Forecast</string>
+	<string id="Weather">Experimental: Premium: Only on invitation: Show Weather Forecast</string>
 	<string id="Units">Temperature units</string>
 	<string id="Celsius">Celsius</string>
 	<string id="Fahrenheit">Fahrenheit</string>
-	<string id="Key">Ask for Key</string>
 </strings>

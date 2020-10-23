@@ -11,7 +11,7 @@ using Toybox.Application as App;
 
 enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
 //enum {night,day}
-var meteoColors =	[0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA];
+var meteoColors =	[0xFFFF55,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA];
 //enum {			clear, 		partly, 	lghtrain, rain,		snow} // clear moon can be 0x555500
 
 class lateView extends Ui.WatchFace {
@@ -66,7 +66,7 @@ class lateView extends Ui.WatchFace {
 			/*if(i==10){color=3;}	// testing colors
 			if(i==12){color=0;}
 			if(i==13){color=1;}*/
-			//Sys.System.println([i, offset, color]);
+			//Sys.println([i, offset, color]);
 			if(color>=0 && color < meteoColors.size()){
 				color = meteoColors[color];
 				h = h%24;
@@ -138,18 +138,17 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 		percentage = app.getProperty("percents");
-activity = :calendar;
-app.setProperty("activity", 6);
-activityL = :steps;
-activityR = :calories;
-showWeather = true;
-app.setProperty("weather", showWeather);
+activity = :steps;
+app.setProperty("activity", 1);
+activityL = :floorsClimbed;
+activityR = :activeMinutesWeek;
+showWeather = true; app.setProperty("weather", showWeather);
 showSunrise = true;
 dialSize=0;
 circleWidth=7;
 percentage = true;
-app.getApp().setProperty("location", [50.11, 14.49]);
-app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+//app.getApp().setProperty("location", [50.11, 14.49]);
+//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		var tone = app.getProperty("tone").toNumber()%5;
@@ -564,7 +563,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	(:data)
 	function updateCurrentEvent(dc){
 		for(var i=0; i<events_list.size(); i++){
-			//Sys.System.println("updateCurrentEvent: "+events_list);
+			//Sys.println("updateCurrentEvent: "+events_list);
 			eventStart = new Time.Moment(events_list[i][0]);
 			var timeNow = Time.now();
 			var tillStart = eventStart.compare(timeNow);
@@ -862,7 +861,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			App.getApp().setProperty("location", pos); // save the location to fix a Fenix 5 bug that is loosing the location often
 		}
 		//pos = [50.11, 14.49];
-		//Sys.System.println("computeSun: "+pos);
+		//Sys.println("computeSun: "+pos);
 		// use absolute to get west as positive
 		lonW = pos[1].toFloat();
 		latN = pos[0].toFloat();

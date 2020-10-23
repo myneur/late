@@ -25,10 +25,11 @@ class lateView extends Ui.WatchFace {
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var fontSmall = null; hidden var fontHours = null; hidden var fontCondensed = null;
-	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; hidden var sunR; //hidden var temp; //hidden var notifY;
+	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; hidden var messageY; hidden var sunR; //hidden var temp; //hidden var notifY;
 	
 	hidden var eventStart=null; hidden var eventName=""; hidden var eventLocation=""; hidden var eventTab=0; hidden var eventHeight=23; hidden var eventMarker=null; //eventEnd=0;
 	hidden var events_list = [];
+	hidden var message = false;
 	hidden var weatherHourly = [];
 	// redraw full watchface
 	hidden var redrawAll=2; 
@@ -138,21 +139,22 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather");
 		percentage = app.getProperty("percents");
-activity = :steps;
-app.setProperty("activity", 1);
-activityL = :floorsClimbed;
+		var tone = app.getProperty("tone").toNumber()%5;
+		var mainColor = app.getProperty("mainColor").toNumber()%6;
+
+activity = :calendar;
+app.setProperty("activity", 6);
+activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
 showSunrise = true;
 dialSize=0;
 circleWidth=7;
 percentage = true;
+mainColor = 3;
 //app.getApp().setProperty("location", [50.11, 14.49]);
-//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
-
-		var tone = app.getProperty("tone").toNumber()%5;
-		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
 		// when running for the first time: load resources and compute sun positions
 		if(showSunrise){ // TODO recalculate when day or position changes
@@ -283,29 +285,26 @@ percentage = true;
 		}
 		if(activity != null || showWeather){
 			fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
-		}
-		if(activity != null){
-			
 			if(dialSize==0){
 				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
-				if(activity == :calendar){
-					if(dataLoading){
-						eventHeight = Gfx.getFontHeight(fontCondensed)-1;
-						activityY = (centerY-radius+10)>>2 - eventHeight + centerY+radius+10;
-						showMessage(App.getApp().scheduleDataLoading());
-					} else { 
-						activity = null;
-					}
+				if(dataLoading && (activity == :calendar || showWeather)){
+					eventHeight = Gfx.getFontHeight(fontCondensed)-1;
+					messageY = (centerY-radius+10)>>2 - eventHeight + centerY+radius+10;						
+				} else { 
+					activity = null;
 				}
 			} else {
 				activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
 				if(height<208){
 					activityY -= 7;
 				}
-				if(activity==:calendar){
-					activityY -=Gfx.getFontHeight(fontSmall)>>1; 
-					showMessage(App.getApp().scheduleDataLoading());
+				if(activity==:calendar || showWeather){
+					messageY =activityY - Gfx.getFontHeight(fontSmall)>>1; 
 				}
+			}
+			if(activity == :calendar){
+				activityY = messageY;	
+				showMessage(App.getApp().scheduleDataLoading());
 			}
 		}
 		/*if(batteryY<centerY+radius+circleWidth>>1){
@@ -431,11 +430,11 @@ percentage = true;
 				if(activityR != null){
 					drawActivity(dc, activityR, iconR, centerX<<1-centerX>>2, centerY, false);
 				}
-				if(activity != null){
-					if(activity != :calendar){
-						drawActivity(dc, activity, icon, centerX, activityY, true);
-					} else { 
+				if(activity != null || message){
+					if(activity == :calendar || message){
 						drawEvent(dc);
+					} else { 
+						drawActivity(dc, activity, icon, centerX, activityY, true);
 					}
 
 					/*var a = ActivityMonitor.getInfo(); // EXPERIMENT with racing activities
@@ -489,11 +488,11 @@ percentage = true;
 			dc.setPenWidth(2);
 			dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);
 			if(info>0.0001){
-				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+				dc.setColor(info<1 ? activityColor : dateColor, Gfx.COLOR_TRANSPARENT);	
 				if(info>1){	
-					if(info<2){
+					if(info<3){
 						dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90-info*360-10, 100); 
-						dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
+						dc.setColor( info<2 ? dateColor : color, Gfx.COLOR_TRANSPARENT);
 					} else {
 						dc.drawCircle(x, y, 14);
 					}
@@ -525,19 +524,20 @@ percentage = true;
 		}
 	}*/
 
-	function showMessage(message){
-		///Sys.println("message "+message);
-		if(message instanceof Toybox.Lang.Dictionary && message.hasKey("userPrompt")){
+	function showMessage(msg){
+		Sys.println("message "+message);
+		if(msg instanceof Toybox.Lang.Dictionary && msg.hasKey("userPrompt")){
 			var nowError = Time.now().value();
-			if(message.hasKey("wait")){
-				nowError += message["wait"].toNumber();
+			message = true;
+			if(msg.hasKey("wait")){
+				nowError += msg["wait"].toNumber();
 			}
-			var context = message.hasKey("userContext") ? " "+ message["userContext"] : "";
-			var calendar = message.hasKey("permanent") ? -1 : 0;
+			var context = msg.hasKey("userContext") ? " "+ msg["userContext"] : "";
+			var calendar = msg.hasKey("permanent") ? -1 : 0;
 
 			var degreeStart = ((nowError-Time.today().value())/(Calendar.SECONDS_PER_DAY.toFloat()/360)).toFloat(); // TODO bug: for some reason it won't show it at all althought the degrees are correct. 
 
-			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, message["userPrompt"].toString(), context, calendar, degreeStart, degreeStart+2]]; 
+			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, msg["userPrompt"].toString(), context, calendar, degreeStart, degreeStart+2]]; 
 		}
 	}
 
@@ -571,6 +571,9 @@ percentage = true;
 			
 			if(eventEnd.compare(timeNow)<0){
 				events_list.remove(events_list[i]);
+				if(events_list.size()==0){
+					message = false;
+				}
 				i--;
 				continue;
 			}
@@ -660,7 +663,7 @@ percentage = true;
 			if(eventTab==null){	// emphasized event without date
 				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 			}
-			dc.drawText(centerX, activityY, fontCondensed, eventName, Gfx.TEXT_JUSTIFY_CENTER);
+			dc.drawText(centerX, messageY, fontCondensed, eventName, Gfx.TEXT_JUSTIFY_CENTER);
 			dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 			// TODO remove prefix for simplicity and size limitations
 
@@ -668,12 +671,12 @@ percentage = true;
 			var justify = Gfx.TEXT_JUSTIFY_CENTER;
 			if(eventTab!=null){
 				x-=eventTab;
-				dc.drawText(x, activityY+eventHeight, fontCondensed, eventStart, Gfx.TEXT_JUSTIFY_RIGHT);
+				dc.drawText(x, messageY+eventHeight, fontCondensed, eventStart, Gfx.TEXT_JUSTIFY_RIGHT);
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 				justify = Gfx.TEXT_JUSTIFY_LEFT;
 			} 
 			//else {dc.drawText(x,  height-batteryY, fontCondensed, eventStart, Gfx.TEXT_JUSTIFY_VCENTER);}
-			dc.drawText(x, activityY+eventHeight, fontCondensed, eventLocation, justify);
+			dc.drawText(x, messageY+eventHeight, fontCondensed, eventLocation, justify);
 		}
 		if(eventMarker){
 			var coord = eventMarker;

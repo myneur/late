@@ -168,7 +168,7 @@ class lateApp extends App.AppBase {
 						data["wait"] = durationToNextEvent();
 						System.println(error);
 						var connected = Sys.getDeviceSettings().phoneConnected;
-						if(error==-300 || error==404){ // no internet
+						if(error==-300 || error==404 || error==-2){ // no internet or bluetooth
 							//System.println([watch.activity == :calendar , app.getProperty("lastLoad")!="c", watch.showWeather==false, app.getProperty("refresh_token")==null]);
 							if(watch.activity == :calendar && (app.getProperty("lastLoad")!="c" || showWeather==false) && app.getProperty("refresh_token")==null){	// no internet or not connected when logging in
 								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);

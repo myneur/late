@@ -142,8 +142,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-activity = :calendar;
-app.setProperty("activity", 6);
+activity = :calories;
+app.setProperty("activity", 2);
 activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
@@ -152,7 +152,7 @@ dialSize=0;
 circleWidth=7;
 percentage = true;
 mainColor = 3;
-//app.getApp().setProperty("location", [50.11, 14.49]);
+app.getApp().setProperty("location", [50.11, 14.49]);
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
@@ -488,12 +488,13 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			dc.setPenWidth(2);
 			dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);
 			if(info>0.0001){
-				dc.setColor(info<1 ? activityColor : dateColor, Gfx.COLOR_TRANSPARENT);	
+				dc.setColor(info<2 ? activityColor : dateColor, Gfx.COLOR_TRANSPARENT);	
 				if(info>1){	
 					if(info<3){
 						dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90-info*360-10, 100); 
 						dc.setColor( info<2 ? dateColor : color, Gfx.COLOR_TRANSPARENT);
 					} else {
+						dc.setColor( color, Gfx.COLOR_TRANSPARENT);
 						dc.drawCircle(x, y, 14);
 					}
 				}
@@ -525,7 +526,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	}*/
 
 	function showMessage(msg){
-		Sys.println("message "+message);
+		//Sys.println("message "+message);
 		if(msg instanceof Toybox.Lang.Dictionary && msg.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			message = true;

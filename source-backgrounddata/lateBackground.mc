@@ -337,6 +337,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		} else {
 			// 400: missing ID
 			// 401 unknown device
+			// 402 payment required
 			// 404: no internet
 			// 429 throttling with msBeforeNext to wait
 			// 500 server error

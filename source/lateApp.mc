@@ -177,11 +177,12 @@ class lateApp extends App.AppBase {
 							}
 						} else if(error==429){
 							if(data.hasKey("msBeforeNext")){
+								System.println([data["wait"], data["msBeforeNext"]]);
 								if(data["wait"]*1000 < data["msBeforeNext"]){
 									data["wait"]=data["msBeforeNext"]/1000;
 								}							
 							}
-							changeScheduleToMinutes(data["wait"]);
+							changeScheduleToMinutes(data["wait"]/60);
 						} else {
 							changeScheduleToMinutes(5);
 							// if(error==511 ){ // Sys.println("login request");// login prompt on OAuth data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);} else 

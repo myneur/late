@@ -315,7 +315,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			System.println("location: "+pos);
 			//Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat()+"/"+{ "Authorization"=>"Bearer " + subscription_id });
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
-				{"unit"=>(app.getProperty("units") ? "c":"f")}, 
+				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"yrno"}, 
 				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id }},
 				method(:onWeatherForecast));
 		} else {

@@ -100,18 +100,27 @@ class lateApp extends App.AppBase {
 				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
 					//System.println(["weather array ", data["weather"].size(), data["weather"]]);
 					if(data["weather"].size()>2){
-						var color;
+						var c;
 						data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
 						for(var i=2; i<data["weather"].size();i++){
-							color = data["weather"][i];
-							if(color<=9){color = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light]
-							else if(color==10){color=-1;}	// clouds: [flurries]
-							else if(color<=13){color=3;}	// rain: [tstorm, rain_heavy, rain]
-							else if(color<=15){color=2;}	// light rain: [rain_light, drizzle]
-							else if(color<=19){color=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy]
-							else if(color==20){color=1;}	// partly cloudy: [partly, cloudy]
-							else if(color>=21){color=0;}	// sun: [clear, mostly_clear]
-							data["weather"][i] = color;
+							c = data["weather"][i];
+							/*// climacell
+							if(c<=9){c = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light]
+							else if(c==10){c=-1;}	// clouds: [flurries]
+							else if(c<=13){c=3;}	// rain: [tstorm, rain_heavy, rain]
+							else if(c<=15){c=2;}	// light rain: [rain_light, drizzle]
+							else if(c<=19){c=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy]
+							else if(c==20){c=1;}	// partly cloudy: [partly, cloudy]
+							else if(c>=21){c=0;}	// sun: [clear, mostly_clear] */
+							// yr.no
+							if(c>=24&&c<28){c=1;}	// partly
+							else if((c>=48&&c<52) || (c>=33&&c<37)){c=0;}	// clear
+							else if(c==23 || c==45){c=-1;} // cloudy
+							else if(c==28 || c==32 || c==38 || (c>=41&&c<46) || c==52 || (c<=58&&c>62) || c==83 || (c>=91&&c<99)){c=4;} // snow
+							else if(c<19 || c==31 || c==37 || c==40 || c==47 || (c>=62&&c<66) || c==70 || (c>=79&&c<83) || c==99){c=3;} // rain
+							else {c=2;} // light rain
+							//Sys.println([data["weather"][i], c]);
+							data["weather"][i] = c;
 						}
 						//System.println(data["weather"]	);
 						app.setProperty("weatherHourly", data["weather"]);

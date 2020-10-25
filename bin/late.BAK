@@ -1,0 +1,152 @@
+ changeScheduleToMinutes: 5
+6424 onTemporalEvent 
+last: c weather  calendar
+6424 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+6136 onWeatherForecast: 200
+[10, 13.580000, 19]...
+61904 onBackgroundData app+ weather subscription 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6360 onTemporalEvent 
+last: w weather  calendar
+61952 onBackgroundData app+ events token 
+changeScheduleToMinutes: 60
+onBackgroundData view
+trunc: [11, [11, 14, 1, 1, 1, -1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1]]
+6368 onTemporalEvent 
+last: c weather  calendar
+6368 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+trunc: [12, [12, 14, 1, 1, -1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1]]
+changeScheduleToMinutes: 5
+6376 onTemporalEvent 
+last: c weather  calendar
+6376 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+6088 onWeatherForecast: 200
+[12, 15.870000, 20]...
+61856 onBackgroundData app+ weather subscription 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6360 onTemporalEvent 
+last: w weather  calendar
+61952 onBackgroundData app+ events token 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6360 onTemporalEvent 
+last: c weather  calendar
+6360 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+6072 onWeatherForecast: 200
+[12, 15.870000, 20]...
+61840 onBackgroundData app+ weather subscription 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6360 onTemporalEvent 
+last: w weather  calendar
+61952 onBackgroundData app+ events token 
+changeScheduleToMinutes: 60
+onBackgroundData view
+trunc: [13, [13, 16, 1, -1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1]]
+changeScheduleToMinutes: 5
+6368 onTemporalEvent 
+last: c weather  calendar
+6368 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+6080 onWeatherForecast: 200
+[13, 16.410000, 20]...
+61848 onBackgroundData app+ weather subscription 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6360 onTemporalEvent 
+last: w weather  calendar
+61952 onBackgroundData app+ events token 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6360 onTemporalEvent 
+last: c weather  calendar
+6360 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+6072 onWeatherForecast: 200
+[13, 16.410000, 20]...
+61840 onBackgroundData app+ weather subscription 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6360 onTemporalEvent 
+last: w weather  calendar
+61952 onBackgroundData app+ events token 
+changeScheduleToMinutes: 60
+onBackgroundData view
+trunc: [14, [14, 16, -1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1, -1]]
+6368 onTemporalEvent 
+last: c weather  calendar
+6368 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+6080 onWeatherForecast: 200
+[14, 16.639999, 18]...
+61848 onBackgroundData app+ weather subscription 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6360 onTemporalEvent 
+last: w weather  calendar
+61952 onBackgroundData app+ events token 
+changeScheduleToMinutes: 60
+onBackgroundData view
+trunc: [15, [15, 17, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1, -1, -1, 1, 0]]
+6368 onTemporalEvent 
+last: c weather  calendar
+6368 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+6080 onWeatherForecast: 200
+[15, 16.840000, 22]...
+61848 onBackgroundData app+ weather subscription 
+changeScheduleToMinutes: 60
+onBackgroundData view
+trunc: [16, [16, 17, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1, -1, -1, 1, 0, -1]]
+changeScheduleToMinutes: 5
+6368 onTemporalEvent 
+last: w weather  calendar
+61960 onBackgroundData app+ events token 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6368 onTemporalEvent 
+last: c weather  calendar
+6368 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+changeScheduleToMinutes: 5
+changeScheduleToMinutes: 5
+trunc: [17, [17, 17, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1, -1, -1, 1, 0, -1]]
+changeScheduleToMinutes: 5
+6376 onTemporalEvent 
+last: c weather  calendar
+6376 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+6088 onWeatherForecast: 200
+[17, 16.209999, 19]...
+61856 onBackgroundData app+ weather subscription 
+changeScheduleToMinutes: 60
+onBackgroundData view
+trunc: [18, [18, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1, -1, -1, 1, 0, -1, 0, 0]]
+6368 onTemporalEvent 
+last: w weather  calendar
+61960 onBackgroundData app+ events token 
+changeScheduleToMinutes: 60
+onBackgroundData view
+changeScheduleToMinutes: 5
+6368 onTemporalEvent 
+last: c weather  calendar
+6368 getWeatherForecast paid by: RyIaBOrcR8Ah_6U6zc2KE
+location: [50.108462, 14.485617]
+6080 onWeatherForecast: 200
+[18, 14.760000, 22]...
+61848 onBackgroundData app+ weather subscription 

@@ -11,15 +11,14 @@ using Toybox.Application as App;
 
 enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
 //enum {night,day}
-var meteoColors =	[0xFFFF55,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA];
+var meteoColors =	[0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA];
 //enum {			clear, 		partly, 	lghtrain, rain,		snow} // clear moon can be 0x555500
 
 class lateView extends Ui.WatchFace {
-	hidden const CENTER = Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER;
 	hidden var dateForm; hidden var batThreshold = 33;
 	hidden var centerX; hidden var centerY; hidden var height;
 	hidden var color; hidden var timeColor = Gfx.COLOR_WHITE; hidden var dateColor = Gfx.COLOR_LT_GRAY; hidden var activityColor = Gfx.COLOR_DK_GRAY; hidden var backgroundColor = Gfx.COLOR_BLACK;
-	hidden var calendarColors = [0x00AAFF, 0x00AA00, 0x0055FF];
+	hidden var calendarColors;
 	var activity=null; var activityL=null; var activityR=null; var showSunrise = false; var dataLoading = false; var showWeather = false; var percentage = false;
 	hidden var icon=null; hidden var iconL=null; hidden var iconR=null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
@@ -142,8 +141,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-activity = :calories;
-app.setProperty("activity", 2);
+activity = :calendar;
+app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
@@ -152,7 +151,7 @@ dialSize=0;
 circleWidth=7;
 percentage = true;
 mainColor = 3;
-app.getApp().setProperty("location", [50.11, 14.49]);
+//app.getApp().setProperty("location", [50.11, 14.49]);
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
@@ -416,7 +415,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 					dc.fillCircle(x+3, y, 2);*/
 				}
 
-				/*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, CENTER);
+				/*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 				dc.setPenWidth(2);
 				dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);
 				*/
@@ -754,7 +753,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		var gap=0;
 
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontSmall, minutes /*clockTime.min.format("%0.1d")*/, CENTER);
+		dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontSmall, minutes /*clockTime.min.format("%0.1d")*/, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 		
 		
 		if(minutes>0){

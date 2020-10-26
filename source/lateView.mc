@@ -377,14 +377,6 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			lastRedrawMin=clockTime.min;
 			var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
 			var h=clockTime.hour;
-			if(showSunrise){
-				if(day != info.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
-					computeSun();
-				}
-				drawSunBitmaps(dc);
-			}
-			// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
-
 			// draw hour
 			var set = Sys.getDeviceSettings();
 			if(set.is24Hour == false){
@@ -447,9 +439,15 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				if(activity == :calendar){
 					drawEvents(dc);
 				}
+				if(showSunrise){
+					if(day != info.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
+						computeSun();
+					}
+					drawSunBitmaps(dc);
+				}
+				// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 				drawNowCircle(dc, clockTime.hour);
 			}
-			
 		}
 		//ms.add(Sys.getTimer()-ms[0]);
 		//Sys.println("ms: " + ms + " sec: " + clockTime.sec + " redrawAll: " + redrawAll);
@@ -644,7 +642,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			var y = centerY-(sunR*Math.cos(a));
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.fillCircle(x, y, 5);
-			if(activity == :calendar){
+			if(activity == :calendar || showWeather){
 				dc.setColor(dateColor, backgroundColor);
 				dc.fillCircle(x, y, 4);
 			} else {
@@ -660,9 +658,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	function drawEvent(dc){
 		updateCurrentEvent(dc);
 		if(eventStart){
-			if(eventTab==null){	// emphasized event without date
-				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
-			}
+			dc.setColor(eventTab==null ? dateColor : activityColor, Gfx.COLOR_TRANSPARENT); // emphasized event without date
 			dc.drawText(centerX, messageY, fontCondensed, eventName, Gfx.TEXT_JUSTIFY_CENTER);
 			dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 			// TODO remove prefix for simplicity and size limitations
@@ -689,18 +685,26 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 
 	(:data)
 	function drawEvents(dc){
-		var radius = centerY-4;
+		var radius;
+		var width;
 		if(height >= 390){
 			radius = centerY-8;
-			dc.setPenWidth(9);
+			width = 9;
 		} else {
-			dc.setPenWidth(5);	
+			radius = centerY-4;
+			width = 6;	
 		}
 		
 		var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;
 		var tomorrow = Time.now().value()+Calendar.SECONDS_PER_DAY;
 		var degreeStart;
 		var degreeEnd;
+
+		var idx=2;	// offset 
+		var weatherStart;
+		var weatherEnd;
+		var h;
+
 		for(var i=0; i <events_list.size(); i++){
 			///Sys.println(events_list[i]);
 			if(events_list[i][1]>=tomorrow && (events_list[i][6].toNumber() > nowBoundary )){ // crop tomorrow event overlapping now on 360° dial
@@ -717,11 +721,45 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				degreeEnd = events_list[i][6]-1;
 			}
 			if(degreeEnd-1 >= degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
+				if(showWeather){
+					// counting overlap
+					/*// first attempt
+					weatherStart = ((weatherHourly[0]+idx-2)*360/24)%360;
+					weatherEnd = ((weatherHourly[0]+idx-2+1)*360/24)%360;
+					degreeStart = degreeStart.toNumber()%360;
+					degreeEnd = degreeEnd.toNumber()%360;
+					while(idx<weatherHourly.size() && (degreeStart>weatherEnd || degreeEnd<weatherStart)){
+						idx++;
+					}
+					radius = centerY - (idx<weatherHourly.size()? 2:7);
+					*/
+					// second attempt
+					weatherStart = (degreeStart*24.0/360).toNumber()%24;
+					weatherEnd = Math.ceil(degreeEnd*24.0/360).toNumber()%24;
+					h = weatherStart;
+					idx = h-weatherHourly[0]+2; //Sys.println([weatherHourly[0], idx, weatherStart, weatherEnd]);
+					if(idx<2){
+						idx = 24-weatherHourly[0]+weatherStart+2;
+					}
+					//Sys.println([idx, h, weatherStart, weatherEnd]);
+					while(h<weatherEnd && idx<weatherHourly.size()){
+						//Sys.println([idx, weatherHourly[idx]]);
+						if(weatherHourly[idx]!=-1){	// checking there is a weather we will draw
+							break;	
+						}
+						idx++;
+						h++;
+					}
+					radius = centerY - (h<weatherEnd? 8:2); //System.println([h,weatherEnd,radius]);
+				}
+				// drawing
 				dc.setColor(backgroundColor, backgroundColor);
-				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
+				dc.setPenWidth(width);
+				dc.drawArc(centerX, centerY, radius+2, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
 				if(events_list[i][4]>=0){
 					dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
 				}
+				dc.setPenWidth(width);
 				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
 			}
 		}

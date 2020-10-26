@@ -17,7 +17,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	var events_list = [];
 	var primary_calendar = false;
 	var app;
-	var maxResults = 7;
+	var maxResults = 6;
 	var subscription_id;
 
 	function initialize() {
@@ -211,7 +211,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	
 	var events_list_size = 0;
 	function onEvents(responseCode, data) {
-		///Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode); 
+		Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode); 
 		//Sys.println(data);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
@@ -221,7 +221,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				var event = data[i];
 				data[i] = null;
 				//if(events_list_size>500){break;}
-				///Sys.println(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
+				Sys.println(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
 				if(event["start"]){ // skip day events that have only "summary"
 					try {
 						var eventTrim = [
@@ -241,13 +241,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 						events_list.add(eventTrim);
 						events_list_size += eventTrim.toString().length();
 						eventTrim = null;
-						///Sys.println(Sys.getSystemStats().freeMemory);
+						Sys.println(Sys.getSystemStats().freeMemory);
 						/*if(Sys.getSystemStats().freeMemory<4800){
 							exitWithDataAndToken();
 						}*/
 					} catch(ex) {
 						events_list = events_list.size() ? [events_list[0]] : null;
-						///Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
+						Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
 						exitWithDataAndToken(responseCode);
 					}
 				}

@@ -151,7 +151,7 @@ dialSize=0;
 circleWidth=7;
 percentage = true;
 mainColor = 3;
-//app.getApp().setProperty("location", [50.11, 14.49]);
+app.getApp().setProperty("location", [50.11, 14.49]);
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
@@ -721,7 +721,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				degreeEnd = events_list[i][6]-1;
 			}
 			if(degreeEnd-1 >= degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
-				if(showWeather){
+				if(showWeather && weatherHourly.size()>2){
 					// counting overlap
 					/*// first attempt
 					weatherStart = ((weatherHourly[0]+idx-2)*360/24)%360;

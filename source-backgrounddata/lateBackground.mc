@@ -5,8 +5,6 @@ using Toybox.Application as App;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 
-const GoogleTokenUrl = "https://oauth2.googleapis.com/token";
-
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
 
@@ -36,20 +34,10 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
-			if (app.getProperty("refresh_token") != null) { 
-				//Sys.println("has refresh_token");
-				refresh_token = app.getProperty("refresh_token");
-				if(connected){
-					refreshTokenAndGetData();
-				}
+			if(connected){
+				getTokensAndData();
 			} else {
-				if(connected){
-					if (app.getProperty("user_code") == null){ // && new Moment(app.getProperty("code_valid_till").compare(Time.now()) < -10))  
-						getOAuthUserCode();
-					} else {  
-						getTokensAndData();
-					}
-				} else {
+				if(app.getProperty("refresh_token") == null){
 					Background.exit({"error_code"=>404}); // no phone connection = no internet
 				}
 			}
@@ -81,8 +69,23 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function getTokensAndData(){ // device_code can tell if the user granted access
 		//Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); //Sys.println(app.getProperty("user_code"));
 		//Sys.println([$.GoogleTokenUrl,app.getProperty("device_code"),app.getProperty("client_id"),app.getProperty("client_secret"),"http://oauth.net/grant_type/device/1.0"]);
-		Communications.makeWebRequest($.GoogleTokenUrl, {"client_id"=>app.getProperty("client_id"), "client_secret"=>app.getProperty("client_secret"),
-			"code"=>app.getProperty("device_code"), "grant_type"=>"http://oauth.net/grant_type/device/1.0"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+		var url = "https://oauth2.googleapis.com/token";
+		var params = {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id")};
+		if (app.getProperty("refresh_token") != null) { 
+			//Sys.println("has refresh_token");
+			refresh_token = app.getProperty("refresh_token");
+			params.put("refresh_token",refresh_token);
+			params.put("grant_type","refresh_token");
+		} else {
+			if (app.getProperty("user_code") == null){ // && new Moment(app.getProperty("code_valid_till").compare(Time.now()) < -10))  
+				getOAuthUserCode();
+				return;
+			} else {  
+				params.put("code",app.getProperty("device_code"));
+				params.put("grant_type","http://oauth.net/grant_type/device/1.0");
+			}
+		}
+		Communications.makeWebRequest(url, params, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onTokenRefresh2GetData));
 	}
 
@@ -292,12 +295,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				///Sys.println(Sys.getSystemStats().freeMemory);
 				Background.exit(code_events);
 		}
-	}
-	
-	function refreshTokenAndGetData() {
-		Communications.makeWebRequest($.GoogleTokenUrl, {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id"), 
-			"refresh_token"=>refresh_token, "grant_type"=>"refresh_token"}, {:method => Communications.HTTP_REQUEST_METHOD_POST},
-			method(:onTokenRefresh2GetData));
 	}
 
 	function getWeatherForecast() {

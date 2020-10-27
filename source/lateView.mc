@@ -86,8 +86,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-activity = :calendar;
-app.setProperty("activity", 6);
+activity = :floorsClimbed;
+app.setProperty("activity", 5);
 activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
@@ -96,10 +96,15 @@ dialSize=0;
 circleWidth=7;
 percentage = true;
 mainColor = 3;
-app.getApp().setProperty("location", [50.11, 14.49]);
-app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+tone=0;
+//app.getApp().setProperty("location", [50.11, 14.49]);
+//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
+		if(dialSize>0){
+			activityL=null;
+			activityR=null;
+		}
 		// when running for the first time: load resources and compute sun positions
 		if(showSunrise){ // TODO recalculate when day or position changes
 			clockTime = Sys.getClockTime();
@@ -212,7 +217,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			dateY = (centerY-(radius+Gfx.getFontHeight(fontSmall))*1.17).toNumber();
 			batteryY = centerY+0.6*radius;			
 		}
-		if(activity != null || showWeather){
+		if(activity != null){
 			fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
 			if(dialSize==0){
 				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
@@ -231,10 +236,6 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 					messageY =activityY - Gfx.getFontHeight(fontSmall)>>1; 
 				}
 			}
-			if(activity == :calendar ){
-				activityY = messageY;	
-				showMessage(App.getApp().scheduleDataLoading());
-			}
 		}
 		/*if(batteryY<centerY+radius+circleWidth>>1){
 			if(activity!=:calendar){
@@ -245,7 +246,10 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			}
 			
 		}*/
-		if(dataLoading && activity != :calendar){
+		if(activity == :calendar || showWeather){
+			activityY = messageY;	
+			showMessage(App.getApp().scheduleDataLoading());
+		} else {
 			App.getApp().unScheduleDataLoading();
 		}
 
@@ -825,11 +829,14 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		}
 		if(weatherHourly.size()>1){
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+			var x=centerX+centerX>>1;
+			var y = centerY-(dc.getFontHeight(fontCondensed)>>1);
 			if(dialSize==0){
-				dc.drawText(centerX+centerX>>1, centerY>>1-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
+				y -= centerY>>1;
 			} else {
-				dc.drawText(centerX+centerX>>1, centerY-(dc.getFontHeight(fontCondensed)>>1), fontCondensed, "  "+weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
+				x += dc.getFontHeight(icons)>>2;
 			}
+			dc.drawText(x, y, fontCondensed, weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
 		}
 	}
 

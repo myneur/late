@@ -15,7 +15,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	var events_list = [];
 	var primary_calendar = false;
 	var app;
-	var maxResults = 4;
+	var maxResults = 5;
 	var subscription_id;
 
 	function initialize() {
@@ -26,9 +26,10 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function onTemporalEvent() {
-		Sys.println(Sys.getSystemStats().freeMemory + " onTemporalEvent ");
+		System.println(Sys.getSystemStats().freeMemory + " onTemporalEvent ");
 		app = App.getApp();
-		System.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
+		//getTokensAndData();return;
+		///*/Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
 		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
@@ -160,7 +161,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 	
-	function getEvents(calendar_id) { Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
+	function getEvents(calendar_id) { //Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		var sys_time = System.getClockTime();
 		var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -179,19 +180,19 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				:headers=>{ "Authorization"=>"Bearer " + access_token }},
 			method(:onEvents));
 		// TODO optimize memory to load more events: if there are too many items (probably memory limit) onEvents gets -403 responseCode although the response is good
-		Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
+		///*/ln(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
 	}
 	
 	function onEvents(responseCode, data) {
-		Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
+		///*/ln(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
 			var event;
 			//var eventsToSafelySend = primary_calendar ? 7 : 8;
-			for (var i = 0; i < data.size() && events_list.size() < 8; i++) { // limit events not to get out of memory
+			for (var i = 0; i < data.size() && events_list.size() < 9; i++) { // limit events not to get out of memory
 				event = data[i];
 				data[i] = null;
-				Sys.println(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
+				///*/ln(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
 				if(event["start"]){ // skip day events that have only "summary"
 					try {
 						var eventTrim = [
@@ -261,14 +262,14 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if(subscription_id==null){
 			subscription_id = app.getProperty("subs");	// must be read at first call (which is this one) so we don't lose it
 		}
-		Sys.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
+		///*/ln(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
 		if(subscription_id instanceof String && subscription_id.length()>0){
 			var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){
 				Background.exit({"error_code"=>-204});
 				return;
 			}
-			Sys.println("location: "+pos);
+			///*/ln("location: "+pos);
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"yrno"}, 
 				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id }},
@@ -278,7 +279,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-	function onWeatherForecast(responseCode, data){	Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 3)+"..." : data);
+	function onWeatherForecast(responseCode, data){	///*/ln(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 3)+"..." : data);
 		if (responseCode==200) {
 			try { 
 				data = {"weather"=>data};	// returning array with the wheather forecast
@@ -332,7 +333,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Background.exit(data);
 	}
 
-	function onSubscriptionId(responseCode, data) {		Sys.println("onPurchase: " + responseCode +" "+data);
+	function onSubscriptionId(responseCode, data) {		///*/ln("onPurchase: " + responseCode +" "+data);
 		if (responseCode == 200) {
 			//data = data.get("items");
 			if(data instanceof Toybox.Lang.Dictionary && data.hasKey("device_code") && data["device_code"] instanceof String ){ 

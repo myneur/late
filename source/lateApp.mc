@@ -34,7 +34,7 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		Sys.println("scheduling");
+		System.println("scheduling");
 		loadSettings();
 
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {

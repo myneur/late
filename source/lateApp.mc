@@ -90,7 +90,7 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {	
-		///Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+(data.hasKey("weather")? "weather ":"")+(data.hasKey("subscription_id")?"subscription ":"")+(data.hasKey("events")?"events ":"")+(data.hasKey("refresh_token")?"token ":""));
+		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+(data.hasKey("weather")? "weather ":"")+(data.hasKey("subscription_id")?"subscription ":"")+(data.hasKey("events")?"events ":"")+(data.hasKey("refresh_token")?"token ":""));
 		/////Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary){
@@ -100,11 +100,29 @@ class lateApp extends App.AppBase {
 				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
 					//System.println(["weather array ", data["weather"].size(), data["weather"]]);
 					if(data["weather"].size()>2){
+						System.println(data);
 						var c;
 						data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
 						for(var i=2; i<data["weather"].size();i++){
 							c = data["weather"][i];
+							/*if(c<8){c=0;}
+							else if(c<12){c=1;}
+							else if(c<36){c=2;}
+							else if(c<73){c=3;}
+							else if(c<79){c=4;}
+							else if(c<98){c=5;}
+							else {c=-1;}*/
+
 							/*// climacell
+							if(c<3){c=0;}
+							else if(c<4){c=1;}
+							else if(c<8){c=2;}
+							else if(c<13){c=3;}
+							else if(c<15){c=4;}
+							else if(c<19){c=5;}
+							else {c=-1;}
+							*/
+							/*// old climacell
 							if(c<=9){c = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light]
 							else if(c==10){c=-1;}	// clouds: [flurries]
 							else if(c<=13){c=3;}	// rain: [tstorm, rain_heavy, rain]
@@ -113,12 +131,12 @@ class lateApp extends App.AppBase {
 							else if(c==20){c=1;}	// partly cloudy: [partly, cloudy]
 							else if(c>=21){c=0;}	// sun: [clear, mostly_clear] */
 							// yr.no
-							if(c>=24&&c<28){c=1;}	// partly
+							/* old yrno if(c>=24&&c<28){c=1;}	// partly
 							else if((c>=48&&c<52) || (c>=33&&c<37)){c=0;}	// clear
 							else if(c==23 || c==45){c=-1;} // cloudy
 							else if(c==28 || c==32 || c==38 || (c>=41&&c<46) || c==52 || (c<=58&&c>62) || c==83 || (c>=91&&c<99)){c=4;} // snow
 							else if(c<19 || c==31 || c==37 || c==40 || c==47 || (c>=62&&c<66) || c==70 || (c>=79&&c<83) || c==99){c=3;} // rain
-							else {c=2;} // light rain
+							else {c=2;} // light rain*/
 							/////Sys.println([data["weather"][i], c]);
 							data["weather"][i] = c;
 						}

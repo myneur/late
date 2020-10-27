@@ -11,8 +11,8 @@ using Toybox.Application as App;
 
 enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
 //enum {night,day}
-var meteoColors =	[0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA];
-//enum {			clear, 		partly, 	lghtrain, rain,		snow} // clear moon can be 0x555500
+var meteoColors =	[0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0x555555, 0xAAAAAA];
+//enum {			clear, 		partly, 	lghtrain, rain,	 	mild snow, snow} // clear moon can be 0x555500
 
 class lateView extends Ui.WatchFace {
 	hidden var dateForm; hidden var batThreshold = 33;
@@ -247,8 +247,10 @@ tone=0;
 			
 		}*/
 		if(activity == :calendar || showWeather){
-			activityY = messageY;	
 			showMessage(App.getApp().scheduleDataLoading());
+			if(activity == :calendar){
+				activityY = messageY;
+			}
 		} else {
 			App.getApp().unScheduleDataLoading();
 		}
@@ -473,8 +475,8 @@ tone=0;
 
 	(:data)
 	function onBackgroundData(data) {
-		///Sys.println("onBackgroundData view");
-		/////Sys.println(data);
+		Sys.println("onBackgroundData view");
+		Sys.println(data);
 		//dataCount++;
 		if(data instanceof Array){	
 			events_list = data;

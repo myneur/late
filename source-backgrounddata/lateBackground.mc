@@ -28,7 +28,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function onTemporalEvent() {
 		Sys.println(Sys.getSystemStats().freeMemory + " onTemporalEvent ");
 		app = App.getApp();
-
 		System.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
 		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
@@ -53,10 +52,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function onOAuthUserCode(responseCode, data){ // {device_code, user_code, verification_url} ///Sys.println(Sys.getSystemStats().freeMemory + " onOAuthUserCode: "+responseCode); //Sys.println(data);
 		if(responseCode != 200){
 			if(data == null) { // no data connection 
-				data = {"error_code"=>responseCode};
-			} else {
-				data.put("error_code", responseCode);
-			}
+				data = {};
+			} 
+			data.put("error_code", responseCode);
 		} /*else { showInstructionOnMobile(data);	// wasn't reliable, but if it gets reliable in the future, it would be better experience }*/
 		Background.exit(data);  // prompt to login or show the error
 	}
@@ -112,12 +110,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				// 400: invalid_request || unsupported_grant_type
 				// 401: invalid_client
 				// 429: {error=> slow_down, error_description=>Rate Limit Exceeded}
-				if(data==null){
-					data = {"error_code"=>responseCode};
-				} else {
-					data.put("error_code", responseCode);
-				}
-				Background.exit(data);
+				onOAuthUserCode(responseCode, data); // returning the error same way 
 			}
 		}
 	}
@@ -167,7 +160,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 	
-	function getEvents(calendar_id) { ///Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
+	function getEvents(calendar_id) { Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		var sys_time = System.getClockTime();
 		var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -186,7 +179,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				:headers=>{ "Authorization"=>"Bearer " + access_token }},
 			method(:onEvents));
 		// TODO optimize memory to load more events: if there are too many items (probably memory limit) onEvents gets -403 responseCode although the response is good
-		//Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
+		Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
 	}
 	
 	function onEvents(responseCode, data) {

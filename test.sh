@@ -1,3 +1,3 @@
 ./compile.sh
 connectiq 
-monkeydo bin/late.prg vivoactive4
+monkeydo bin/late.prg fenix6xpro

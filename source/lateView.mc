@@ -86,8 +86,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-activity = :floorsClimbed;
-app.setProperty("activity", 5);
+activity = :calendar;
+app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
@@ -476,7 +476,7 @@ tone=0;
 	(:data)
 	function onBackgroundData(data) {
 		Sys.println("onBackgroundData view");
-		Sys.println(data);
+		//Sys.println(data);
 		//dataCount++;
 		if(data instanceof Array){	
 			events_list = data;

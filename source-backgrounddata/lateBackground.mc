@@ -33,7 +33,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
-			if(Sys.getDeviceSettings().phoneConnected){
+			if(Sys.getDeviceSettings().phoneConnected==true){
 				getTokensAndData();
 			} else {
 				if(app.getProperty("refresh_token") == null){

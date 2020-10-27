@@ -100,7 +100,7 @@ class lateApp extends App.AppBase {
 				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
 					//System.println(["weather array ", data["weather"].size(), data["weather"]]);
 					if(data["weather"].size()>2){
-						System.println(data);
+						//System.println(data);
 						var c;
 						data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
 						for(var i=2; i<data["weather"].size();i++){
@@ -195,9 +195,11 @@ class lateApp extends App.AppBase {
 						data["wait"] = durationToNextEvent();
 						System.println(error);
 						var connected = Sys.getDeviceSettings().phoneConnected;
-						if(error==-300 || error==404 || error==-2){ // no internet or bluetooth
+						if(error==-300 || error==404 || error==-2 || error==-104){ // no internet or bluetooth
 							//System.println([watch.activity == :calendar , app.getProperty("lastLoad")!="c", watch.showWeather==false, app.getProperty("refresh_token")==null]);
-							if(watch.activity == :calendar && (app.getProperty("lastLoad")!="c" || showWeather==false) && app.getProperty("refresh_token")==null){	// no internet or not connected when logging in
+							//System.println([watch.activity == :calendar ,app.getProperty("refresh_token") , watch.showWeather ,app.getProperty("subs")]);
+							if((watch.activity == :calendar && app.getProperty("refresh_token")==null) || (watch.showWeather && app.getProperty("subs")==null) ){
+							//if(watch.activity == :calendar && (app.getProperty("lastLoad")!="c" || showWeather==false) && app.getProperty("refresh_token")==null){	// no internet or not connected when logging in
 								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
 							} else {	
 								return;

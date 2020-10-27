@@ -34,13 +34,13 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		///Sys.println("scheduling");
+		//////Sys.println("scheduling");
 		loadSettings();
 
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
-			if(app.getProperty("refresh_token") == null){	///Sys.println("no auth");
+			if(app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {
@@ -57,7 +57,7 @@ class lateApp extends App.AppBase {
 	(:data)
 	function durationToNextEvent(){
 		var lastEvent = Background.getLastTemporalEventTime();
-		//Sys.println("lastEvent: " + Time.now().compare(lastEvent));
+		/////Sys.println("lastEvent: " + Time.now().compare(lastEvent));
 		if (lastEvent==null){
 			return 0;
 		}
@@ -66,20 +66,20 @@ class lateApp extends App.AppBase {
 			if(nextEvent<0){
 				nextEvent = 0;
 			}
-			//Sys.println(nextEvent);
+			/////Sys.println(nextEvent);
 			return nextEvent;
 		}
 	}
 
 	(:data)
 	function promptLogin(user_code, url){
-		///Sys.println([user_code, url]);
+		//////Sys.println([user_code, url]);
 		return ({"userPrompt"=>url.substring(url.find("www.")+4, url.length()), "userContext"=>user_code, "permanent"=>true, "wait"=>durationToNextEvent()});
 	}
 
 	(:data)
 	function changeScheduleToMinutes(minutes){
-		Sys.println("changeScheduleToMinutes: "+minutes);
+		///Sys.println("changeScheduleToMinutes: "+minutes);
 		return Background.registerForTemporalEvent(new Time.Duration( minutes * Calendar.SECONDS_PER_MINUTE));
 	}
 
@@ -90,8 +90,8 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {	
-		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+(data.hasKey("weather")? "weather ":"")+(data.hasKey("subscription_id")?"subscription ":"")+(data.hasKey("events")?"events ":"")+(data.hasKey("refresh_token")?"token ":""));
-		//Sys.println(data);
+		///Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+(data.hasKey("weather")? "weather ":"")+(data.hasKey("subscription_id")?"subscription ":"")+(data.hasKey("events")?"events ":"")+(data.hasKey("refresh_token")?"token ":""));
+		/////Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary){
 				if(data.hasKey("subscription_id")){	
@@ -119,7 +119,7 @@ class lateApp extends App.AppBase {
 							else if(c==28 || c==32 || c==38 || (c>=41&&c<46) || c==52 || (c<=58&&c>62) || c==83 || (c>=91&&c<99)){c=4;} // snow
 							else if(c<19 || c==31 || c==37 || c==40 || c==47 || (c>=62&&c<66) || c==70 || (c>=79&&c<83) || c==99){c=3;} // rain
 							else {c=2;} // light rain
-							//Sys.println([data["weather"][i], c]);
+							/////Sys.println([data["weather"][i], c]);
 							data["weather"][i] = c;
 						}
 						//System.println(data["weather"]	);
@@ -128,7 +128,7 @@ class lateApp extends App.AppBase {
 						/* // Garmin Weather API 12h
 							var c;
 							data = Weather.getCurrentConditions();
-							Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
+							///Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
 							data = Weather.getHourlyForecast();
 							for(var j=0; j<data.size(); j++){
 								c = data[j].condition;
@@ -194,18 +194,18 @@ class lateApp extends App.AppBase {
 							changeScheduleToMinutes(data["wait"]/60);
 						} else {
 							changeScheduleToMinutes(5);
-							// if(error==511 ){ // Sys.println("login request");// login prompt on OAuth data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);} else 
+							// if(error==511 ){ // ///Sys.println("login request");// login prompt on OAuth data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);} else 
 							if (error == -204){
 								data["userPrompt"] = Ui.loadResource(Rez.Strings.NoGPS);
 							} else if(data.hasKey("error")){	// when reason is passed from background
-								///Sys.println(data["error"]);
+								//////Sys.println(data["error"]);
 								data["userPrompt"] = data["error"];
 								data.put("permanent", true);
 							} else if(error>=400 && error<=403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
 								if(data.hasKey("subscription_id")){	// subscription is not in db: expired or wasn't paid at all
 									app.setProperty("subscription_id", null);
 									data["userPrompt"] = Ui.loadResource(Rez.Strings.Subscribe);
-									Sys.println(Ui.loadResource(Rez.Strings.Subscribe));
+									///Sys.println(Ui.loadResource(Rez.Strings.Subscribe));
 								} else {
 									app.setProperty("refresh_token", null);
 									app.setProperty("user_code", null);
@@ -227,7 +227,7 @@ class lateApp extends App.AppBase {
 				}
 				Ui.requestUpdate();
 			}
-		} catch(ex){	///Sys.println("ex: " + ex.getErrorMessage());Sys.println( ex.printStackTrace());
+		} catch(ex){	//////Sys.println("ex: " + ex.getErrorMessage());///Sys.println( ex.printStackTrace());
 			if(watch){
 				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
 			}
@@ -261,7 +261,7 @@ class lateApp extends App.AppBase {
 					break;
 				}
 			}
-			///Sys.println(list);
+			//////Sys.println(list);
 			return list;
 		} else {
 			return id_list;

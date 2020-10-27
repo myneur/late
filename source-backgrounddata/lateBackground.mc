@@ -15,7 +15,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	var events_list = [];
 	var primary_calendar = false;
 	var app;
-	var maxResults = 6;
+	var maxResults = 4;
 	var subscription_id;
 
 	function initialize() {
@@ -28,13 +28,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function onTemporalEvent() {
 		Sys.println(Sys.getSystemStats().freeMemory + " onTemporalEvent ");
 		app = App.getApp();
-		var connected = Sys.getDeviceSettings().phoneConnected;
 
 		System.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
 		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
-			if(connected){
+			if(Sys.getDeviceSettings().phoneConnected){
 				getTokensAndData();
 			} else {
 				if(app.getProperty("refresh_token") == null){
@@ -46,30 +45,23 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	function getOAuthUserCode(){
 		///Sys.println(Sys.getSystemStats().freeMemory + " getOAuthUserCode");
-		//Sys.println([App.getApp().getProperty("client_id"), $.GoogleDeviceCodeUrl, $.GoogleScopes]);
 		Communications.makeWebRequest("https://accounts.google.com/o/oauth2/device/code", 
 			{"client_id"=>app.getProperty("client_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onOAuthUserCode)); 
 	}
 
-	function onOAuthUserCode(responseCode, data){ // {device_code, user_code, verification_url}
-		///Sys.println(Sys.getSystemStats().freeMemory + " onOAuthUserCode: "+responseCode); //Sys.println(data);
+	function onOAuthUserCode(responseCode, data){ // {device_code, user_code, verification_url} ///Sys.println(Sys.getSystemStats().freeMemory + " onOAuthUserCode: "+responseCode); //Sys.println(data);
 		if(responseCode != 200){
 			if(data == null) { // no data connection 
 				data = {"error_code"=>responseCode};
 			} else {
 				data.put("error_code", responseCode);
 			}
-		} /*else {
-			showInstructionOnMobile(data);	// wasn't reliable, but if it gets reliable in the future, it would be better experience
-		}*/
+		} /*else { showInstructionOnMobile(data);	// wasn't reliable, but if it gets reliable in the future, it would be better experience }*/
 		Background.exit(data);  // prompt to login or show the error
 	}
 
-	function getTokensAndData(){ // device_code can tell if the user granted access
-		//Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); //Sys.println(app.getProperty("user_code"));
-		//Sys.println([$.GoogleTokenUrl,app.getProperty("device_code"),app.getProperty("client_id"),app.getProperty("client_secret"),"http://oauth.net/grant_type/device/1.0"]);
-		var url = "https://oauth2.googleapis.com/token";
+	function getTokensAndData(){ // device_code can tell if the user granted access //Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); //Sys.println(app.getProperty("user_code"));
 		var params = {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id")};
 		if (app.getProperty("refresh_token") != null) { 
 			//Sys.println("has refresh_token");
@@ -85,7 +77,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				params.put("grant_type","http://oauth.net/grant_type/device/1.0");
 			}
 		}
-		Communications.makeWebRequest(url, params, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+		Communications.makeWebRequest("https://oauth2.googleapis.com/token", params, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onTokenRefresh2GetData));
 	}
 
@@ -101,8 +93,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			//Sys.println(calendar_ids);
 			if(calendar_ids == null || !(calendar_ids instanceof Toybox.Lang.Array) || calendar_ids.size()==0){ // because of [] and white-spaces
 				getPrimaryCalendar();
-			} 
-			else {
+			} else {
 				getNextCalendarEvents();
 			}
 		} 
@@ -151,9 +142,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			method(:onPrimaryCalendarCandidates));
 	}
 
-	function onPrimaryCalendarCandidates(responseCode, data) {  // expects calendar list already parsed to array
-		///Sys.println(Sys.getSystemStats().freeMemory + " onPrimaryCalendarCandidates: "+responseCode);
-		///Sys.println(data);
+	function onPrimaryCalendarCandidates(responseCode, data) {  // expects calendar list already parsed to array ///Sys.println(Sys.getSystemStats().freeMemory + " onPrimaryCalendarCandidates: "+responseCode); ///Sys.println(data);
 		if (responseCode == 200) {
 			data = data.get("items");
 			for(var i=0; i < data.size(); i++){
@@ -170,8 +159,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		
 	function getNextCalendarEvents() {
 		current_index++;
-		if (current_index<calendar_ids.size()) {
-			///Sys.println(calendar_ids[current_index]);
+		if (current_index<calendar_ids.size()) { ///Sys.println(calendar_ids[current_index]);
 			getEvents(calendar_ids[current_index]);
 			return true;
 		} else {
@@ -179,8 +167,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 	
-	function getEvents(calendar_id) {
-		///Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
+	function getEvents(calendar_id) { ///Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		var sys_time = System.getClockTime();
 		var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -194,16 +181,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		dateEnd += sign + to;
 
 		calendar_id = Communications.encodeURL(calendar_id);
-		
-		//Sys.println($.GoogleCalendarEventsUrl + calendar_id + "/events");
-		//Sys.println({"maxResults"=>"8", "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"});
-		//Sys.println({"timeMin"=>dateStart, "timeMax"=>dateEnd});
-		//Sys.println({:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + access_token }});
-
-		/*Communications.makeWebRequest($.GoogleCalendarEventsUrl + calendar_id + "/events", {
-			 "timeMin"=>dateStart, "timeMax"=>dateEnd}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + access_token }},
-			method(:onEvents));*/
-		///Sys.println("maxResults: "+maxResults.toString());
 		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/calendars/" + calendar_id + "/events", {
 			"maxResults"=>maxResults.toString(), "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
 				:headers=>{ "Authorization"=>"Bearer " + access_token }},
@@ -212,18 +189,15 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		//Sys.println(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
 	}
 	
-	var events_list_size = 0;
 	function onEvents(responseCode, data) {
-		Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode); 
-		//Sys.println(data);
+		Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
-			var eventsToSafelySend = primary_calendar ? 8 : 9;
-			///Sys.println(Sys.getSystemStats().freeMemory + " events: "+ data.size());
-			for (var i = 0; i < data.size() && events_list.size() < eventsToSafelySend; i++) { // 10 events not to get out of memory
-				var event = data[i];
+			var event;
+			//var eventsToSafelySend = primary_calendar ? 7 : 8;
+			for (var i = 0; i < data.size() && events_list.size() < 8; i++) { // limit events not to get out of memory
+				event = data[i];
 				data[i] = null;
-				//if(events_list_size>500){break;}
 				Sys.println(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
 				if(event["start"]){ // skip day events that have only "summary"
 					try {
@@ -234,23 +208,20 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 							i<= 3 ? event.get("location") : null,
 							current_index
 						];
-						if(eventTrim[3]){  // trimming and event to fit the screen right 
+						if(eventTrim[3]){  // trimming and event to fit the screen nicely
 							eventTrim[3] = eventTrim[3].substring(0,12);
 							var split = eventTrim[3].find(",");
 							if(split && split>0){
-									eventTrim[3] = eventTrim[3].substring(0,split);
+								eventTrim[3] = eventTrim[3].substring(0,split);
 							}
 						}
 						events_list.add(eventTrim);
-						events_list_size += eventTrim.toString().length();
-						eventTrim = null;
-						Sys.println(Sys.getSystemStats().freeMemory);
 						/*if(Sys.getSystemStats().freeMemory<4800){
 							exitWithDataAndToken();
 						}*/
 					} catch(ex) {
 						events_list = events_list.size() ? [events_list[0]] : null;
-						Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
+						//Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
 						exitWithDataAndToken(responseCode);
 					}
 				}
@@ -272,27 +243,22 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		} 
 	}
 
-	function exitWithDataAndToken(responseCode){ // TODO don't return events on errors
-		///Sys.println("exitWithDataAndToken");
+	function exitWithDataAndToken(responseCode){ // TODO don't return events on errors ///Sys.println("exitWithDataAndToken");
 		var code_events = {"refresh_token"=>refresh_token};
 		if(primary_calendar){
 			code_events["primary_calendar"] = primary_calendar; 
 		}
-		try {  
-			///Sys.println(Sys.getSystemStats().freeMemory +" before exit with "+ events_list.size() +" events taking "+events_list_size);
-			///Sys.println(Sys.getSystemStats().freeMemory);
+		try {  ///Sys.println(Sys.getSystemStats().freeMemory);
 			if(responseCode==200){
 				code_events.put("events", events_list);
 			} else {
 				code_events.put("error_code", responseCode);
 			}
-			///Sys.println(Sys.getSystemStats().freeMemory);
+			refresh_token=null; access_token=null; calendar_ids=null; events_list=null;// cleaning memory before exiting
+			Sys.println(Sys.getSystemStats().freeMemory +" exiting");
 			Background.exit(code_events);
-		} catch(ex) {
-				///Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
-				///Sys.println(Sys.getSystemStats().freeMemory);
+		} catch(ex) { ///Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
 				code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
-				///Sys.println(Sys.getSystemStats().freeMemory);
 				Background.exit(code_events);
 		}
 	}
@@ -309,8 +275,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				Background.exit({"error_code"=>-204});
 				return;
 			}
-			System.println("location: "+pos);
-			//Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat()+"/"+{ "Authorization"=>"Bearer " + subscription_id });
+			Sys.println("location: "+pos);
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"yrno"}, 
 				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id }},
@@ -372,25 +337,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			data.put("error_code", responseCode);
 		}
 		Background.exit(data);
-		/*Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/auth/code?r=" + Math.rand(), {}, 
-			"http://simplylate", Communications.OAUTH_RESULT_TYPE_URL, 
-			{"subscription_id"=>"subscription_id", "responseCode" => "error_code", "responseError" => "error"});
-		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
-			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
-			//{"testval"=>"testval"});*/
 	}
-
-
-	/*function buySubscription(){
-		System.println("buySubscription");
-		Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/auth/code?r=" + Math.rand(), {}, 
-			"http://simplylate", Communications.OAUTH_RESULT_TYPE_URL, 
-			{"subscription_id"=>"subscription_id", "responseCode" => "error_code", "responseError" => "error"});
-		//Communications.makeOAuthRequest("https://almost-late-middleware.herokuapp.com/test?rand=" + Math.rand(), {}, 
-			//"http://localhost/callback", Communications.OAUTH_RESULT_TYPE_URL, 
-			//{"testval"=>"testval"});
-	}*/
-
 
 	function onSubscriptionId(responseCode, data) {		Sys.println("onPurchase: " + responseCode +" "+data);
 		if (responseCode == 200) {
@@ -421,35 +368,4 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 		Background.exit(data);
 	}
-
-	/*function onPurchase(message)  {
-		Sys.println("onPurchase: " + message.data);
-		if(message != null && message.data != null){
-			if(message.data has :subscription_id && message.data["subscription_id"] != null && message.data["subscription_id"].length()>0){ // OK: 200 || 301
-				Sys.println(message.data["subscription_id"]);
-				subscription_id = message.data["subscription_id"];
-				Background.exit({"subscription_id"=>subscription_id}); // Don’t request API immediately after success. It takes around 10-20 seconds for Stripe.com to make a request to our server.
-				var error = message.data["error_code"];
-			} else if(error==401 || error==403 || error==500){ 	// error interrupted probably won't propagate to the watch: //canceled or no internet/data => prompt to turn off // interupted subs: probably unreachable http://simplylate/?error=true =>
-				buySubscription();
-			}
-			Background.exit(message.data); // error==429: throttling => returns msBeforeNext to wait
-			return;
-			// getWeatherForecast(); // The new event will call it for us, so we needn't to
-		} 
-		// no data means error: start again
-		buySubscription();
-		Background.exit(message.data); 
-	}*/
-
-/*  function showInstructionOnMobile(data){
-		var user_code = data.hasKey("user_code") ? data["user_code"] : app.getProperty("user_code");
-		var verification_url = data.hasKey("verification_url") ? data["verification_url"] : app.getProperty("verification_url");
-
-		Communications.makeOAuthRequest("https://sl8.ch/how-to-load-calendar", 
-			{"verification_url"=>verification_url, "user_code"=>user_code, "client_secret"=>app.getProperty("client_secret")}, 
-			"http://localhost", Communications.OAUTH_RESULT_TYPE_URL, 
-			{"refresh_token"=>"refresh_token", "calendar_ids"=>"calendar_ids"});
-		//Communications.openWebPage(url, params, options);
-	}*/
 }

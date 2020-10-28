@@ -96,6 +96,9 @@ class lateApp extends App.AppBase {
 			if(data instanceof Toybox.Lang.Dictionary){
 				if(data.hasKey("subscription_id")){	
 					app.setProperty("subs", data["subscription_id"]);
+					if(watch.activity != :calendar){ // clearing the potential message
+						watch.message = false;
+					}
 				}
 				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
 					//System.println(["weather array ", data["weather"].size(), data["weather"]]);

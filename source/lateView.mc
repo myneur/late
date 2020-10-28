@@ -29,7 +29,7 @@ class lateView extends Ui.WatchFace {
 	
 	hidden var eventStart=null; hidden var eventName=""; hidden var eventLocation=""; hidden var eventTab=0; hidden var eventHeight=23; hidden var eventMarker=null; //eventEnd=0;
 	hidden var events_list = [];
-	hidden var message = false;
+	var message = false;
 	hidden var weatherHourly = [];
 	// redraw full watchface
 	hidden var redrawAll=2; 
@@ -97,7 +97,8 @@ circleWidth=7;
 percentage = true;
 mainColor = 3;
 tone=0;
-//app.getApp().setProperty("location", [50.11, 14.49]);
+app.setProperty("units", 1);
+app.setProperty("location", [50.11, 14.49]);
 //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 

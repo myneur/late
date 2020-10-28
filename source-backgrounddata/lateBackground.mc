@@ -337,7 +337,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if (responseCode == 200) {
 			//data = data.get("items");
 			if(data instanceof Toybox.Lang.Dictionary && data.hasKey("device_code") && data["device_code"] instanceof String ){ 
-				Sys.System.println("have it: "+subscription_id);
+				//Sys.System.println("have it: "+subscription_id);
 				if(subscription_id == false){	// indicating to the subscriptino page that the subscription expired
 					responseCode = 403;
 				} 

@@ -10,9 +10,7 @@ using Toybox.Math as Math;
 using Toybox.Application as App;
 
 enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
-//enum {night,day}
-var meteoColors =	[0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0x555555, 0xAAAAAA];
-//enum {			clear, 		partly, 	lghtrain, rain,	 	mild snow, snow} // clear moon can be 0x555500
+var meteoColors;
 
 class lateView extends Ui.WatchFace {
 	hidden var dateForm; hidden var batThreshold = 33;
@@ -86,7 +84,7 @@ class lateView extends Ui.WatchFace {
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
 activity = :calendar;
-app.setProperty("activity", 1);
+app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
@@ -94,7 +92,7 @@ showSunrise = true;
 dialSize=0;
 circleWidth=7;
 percentage = true;
-mainColor = 3;
+mainColor = 1;
 tone=0;
 app.setProperty("units", 1);
 //app.setProperty("location", [50.11, 14.49]);
@@ -141,6 +139,12 @@ app.setProperty("units", 1);
 			timeColor = 0xFFFFFF;
 			dateColor = 0xAAAAAA;
 			activityColor = 0x555555;
+		}
+
+		meteoColors = [0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF];
+			//enum {	clear, 		partly, 	lghtrain, rain,	 	mild snow, snow} // clean moon can be 555555 instead of sun and mostly cloudy can be skipped
+		if(mainColor == 1 && tone == 4){	// dark yellow
+			meteoColors[0]=0xFFFF55;
 		}
 
 		/*var colorsToOverride = app.getProperty("cheat");

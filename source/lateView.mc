@@ -92,8 +92,9 @@ showSunrise = true;
 dialSize=0;
 circleWidth=7;
 percentage = true;
-mainColor = 1;
-tone=0;
+mainColor = 3;
+tone=4;
+weatherHourly = [21, 9, 0, 1, 2, 3, 4, 5];
 app.setProperty("units", 1);
 //app.setProperty("location", [50.11, 14.49]);
 //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
@@ -109,6 +110,7 @@ app.setProperty("units", 1);
 			utcOffset = clockTime.timeZoneOffset;
 			computeSun();
 		}
+		//	red, 	, yellow, 	green, 		blue, 	violet, 	grey
 		color = [
 			[0xFF0000, 0xFFAA00, 0x00FF00, 0x00AAFF, 0xFF00FF, 0xAAAAAA],
 			[0xAA0000, 0xFF5500, 0x00AA00, 0x0000FF, 0xAA00FF, 0x555555], 
@@ -143,8 +145,17 @@ app.setProperty("units", 1);
 
 		meteoColors = [0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF];
 			//enum {	clear, 		partly, 	lghtrain, rain,	 	mild snow, snow} // clean moon can be 555555 instead of sun and mostly cloudy can be skipped
-		if(mainColor == 1 && tone == 4){	// dark yellow
-			meteoColors[0]=0xFFFF55;
+		if(tone>2){
+			meteoColors[2]=0x0055FF;
+			meteoColors[3]=0x00AAFF;
+			if(tone==4){		// color bg
+				meteoColors[0]=0xFFFF55;
+				meteoColors[1]=0xFFAA00;
+				if(mainColor==2 || mainColor==3){	// green || blue
+					meteoColors[2]=0;
+					meteoColors[3]=0x0055FF;
+				}
+			}
 		}
 
 		/*var colorsToOverride = app.getProperty("cheat");

@@ -37,7 +37,6 @@ class lateView extends Ui.WatchFace {
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
 	function initialize (){
-		//////Sys.println("initialize");
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
@@ -87,7 +86,7 @@ class lateView extends Ui.WatchFace {
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
 activity = :calendar;
-app.setProperty("activity", 6);
+app.setProperty("activity", 1);
 activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
@@ -98,7 +97,7 @@ percentage = true;
 mainColor = 3;
 tone=0;
 app.setProperty("units", 1);
-app.setProperty("location", [50.11, 14.49]);
+//app.setProperty("location", [50.11, 14.49]);
 //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
@@ -225,7 +224,7 @@ app.setProperty("location", [50.11, 14.49]);
 				if(dataLoading && (activity == :calendar || showWeather)){
 					eventHeight = Gfx.getFontHeight(fontCondensed)-1;
 					messageY = (centerY-radius+10)>>2 - eventHeight + centerY+radius+10;						
-				} else { 
+				} else if(activity == :calendar){ 
 					activity = null;
 				}
 			} else {
@@ -247,13 +246,15 @@ app.setProperty("location", [50.11, 14.49]);
 			}
 			
 		}*/
-		if(activity == :calendar || showWeather){
-			showMessage(App.getApp().scheduleDataLoading());
-			if(activity == :calendar){
-				activityY = messageY;
+		if(dataLoading){
+			if(activity == :calendar || showWeather){
+				showMessage(App.getApp().scheduleDataLoading());
+				if(activity == :calendar){
+					activityY = messageY;
+				}
+			} else {
+				App.getApp().unScheduleDataLoading();
 			}
-		} else {
-			App.getApp().unScheduleDataLoading();
 		}
 
 		var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
@@ -267,7 +268,7 @@ app.setProperty("location", [50.11, 14.49]);
 	function onShow() {
 		//////Sys.println("onShow");
 		
-		if(Sys.getDeviceSettings().isTouchScreen || centerX <=104){ // FR 45 and Vivoactive 4 (touch) need to redraw the display every second
+		if(centerX <=104){ // FR 45 needs to redraw the display every second
 			redrawAll=100;
 		} else {
 			redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
@@ -290,7 +291,12 @@ app.setProperty("location", [50.11, 14.49]);
 	//! Terminate any active timers and prepare for slow updates.
 	function onEnterSleep(){
 		//////Sys.println("onEnterSleep");
-		redrawAll=0;
+		if(centerX <=104){ // FR 45 needs to redraw the display every second
+			redrawAll=100;
+			Ui.requestUpdate();
+		} else {
+			redrawAll=0; // 2: 2 clearDC() because of lag of refresh of the screen ?
+		}
 	}
 
 	/*function openTheMenu(){
@@ -343,8 +349,9 @@ app.setProperty("location", [50.11, 14.49]);
 
 				/*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);dc.setPenWidth(2);dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);*/
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				drawActivity(dc, activityL, centerX>>2, 			centerY, false);
-				drawActivity(dc, activityR, centerX<<1-centerX>>2, 	centerY, false);
+				var x = centerX-radius - (sunR-radius)>>1-(dc.getTextWidthInPixels("1", fontSmall)/3).toNumber();	// scale 4 with resolution
+				drawActivity(dc, activityL, x, centerY, false);
+				drawActivity(dc, activityR, centerX<<1-x, centerY, false);
 				if(activity != null || message){
 					if(activity == :calendar || message){
 						drawEvent(dc);
@@ -399,9 +406,11 @@ app.setProperty("location", [50.11, 14.49]);
 	function drawActivity(dc, activity, x, y, horizontal){
 		if(activity != null){
 			var info = ActivityMonitor.getInfo();
-			var activityChar = activity.toString().toCharArray()[0];	// replace with something less silly everywhere
+			var activityChar = activity.toString().toCharArray()[0];	// replace with something less silly everywhere, like swithing everything to invoke and keeping just 1 char as the identifier
 			if(percentage){
 				info = method(activity).invoke(info);
+info = 1.8;
+				var r = Gfx.getFontHeight(icons)-3;
 				dc.setPenWidth(2);
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);	
 				drawIcon(dc, x, y, activityChar); // dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);
@@ -409,14 +418,14 @@ app.setProperty("location", [50.11, 14.49]);
 					dc.setColor(info<2 ? activityColor : dateColor, Gfx.COLOR_TRANSPARENT);	
 					if(info>1){	
 						if(info<3){
-							dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90-info*360-10, 100); 
+							dc.drawArc(x, y, r, Gfx.ARC_CLOCKWISE, 90-info*360-10, 100); 
 							dc.setColor( info<2 ? dateColor : color, Gfx.COLOR_TRANSPARENT);
 						} else {
 							dc.setColor( color, Gfx.COLOR_TRANSPARENT);
-							dc.drawCircle(x, y, 14);
+							dc.drawCircle(x, y, r);
 						}
 					}
-					dc.drawArc(x, y, 14, Gfx.ARC_CLOCKWISE, 90, 90-info*360); 
+					dc.drawArc(x, y, r, Gfx.ARC_CLOCKWISE, 90, 90-info*360); 
 				}
 			} else {
 				info = info[activity];

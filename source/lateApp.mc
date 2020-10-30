@@ -34,10 +34,10 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		System.println("scheduling");
+		//System.println("scheduling");
 		loadSettings();
 
-		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
+		if(watch!=null && (watch.dataLoading && (watch.activity == :calendar || watch.showWeather))) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
 			if(app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
@@ -90,13 +90,13 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {	
-		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+(data.hasKey("weather")? "weather ":"")+(data.hasKey("subscription_id")?"subscription ":"")+(data.hasKey("events")?"events ":"")+(data.hasKey("refresh_token")?"token ":""));
+		//Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+(data.hasKey("weather")? "weather ":"")+(data.hasKey("subscription_id")?"subscription ":"")+(data.hasKey("events")?"events ":"")+(data.hasKey("refresh_token")?"token ":""));
 		/////Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary){
 				if(data.hasKey("subscription_id")){	
 					app.setProperty("subs", data["subscription_id"]);
-					if(watch.activity != :calendar){ // clearing the potential message
+/*TODO*/			if(watch!=null && watch.activity != :calendar){ // clearing the potential message
 						watch.message = false;
 					}
 				}
@@ -104,74 +104,103 @@ class lateApp extends App.AppBase {
 					//System.println(["weather array ", data["weather"].size(), data["weather"]]);
 					if(data["weather"].size()>2){
 						//System.println(data);
-						var c;
 						data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
+						/*var c;
 						for(var i=2; i<data["weather"].size();i++){
-							c = data["weather"][i];
-							/*if(c<8){c=0;}
-							else if(c<12){c=1;}
-							else if(c<36){c=2;}
-							else if(c<73){c=3;}
-							else if(c<79){c=4;}
-							else if(c<98){c=5;}
-							else {c=-1;}*/
-
-							/*// climacell
-							if(c<3){c=0;}
-							else if(c<4){c=1;}
-							else if(c<8){c=2;}
-							else if(c<13){c=3;}
-							else if(c<15){c=4;}
-							else if(c<19){c=5;}
-							else {c=-1;}
-							*/
-							/*// old climacell
-							if(c<=9){c = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light]
-							else if(c==10){c=-1;}	// clouds: [flurries]
-							else if(c<=13){c=3;}	// rain: [tstorm, rain_heavy, rain]
-							else if(c<=15){c=2;}	// light rain: [rain_light, drizzle]
-							else if(c<=19){c=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy]
-							else if(c==20){c=1;}	// partly cloudy: [partly, cloudy]
-							else if(c>=21){c=0;}	// sun: [clear, mostly_clear] */
-							// yr.no
-							/* old yrno if(c>=24&&c<28){c=1;}	// partly
-							else if((c>=48&&c<52) || (c>=33&&c<37)){c=0;}	// clear
-							else if(c==23 || c==45){c=-1;} // cloudy
-							else if(c==28 || c==32 || c==38 || (c>=41&&c<46) || c==52 || (c<=58&&c>62) || c==83 || (c>=91&&c<99)){c=4;} // snow
-							else if(c<19 || c==31 || c==37 || c==40 || c==47 || (c>=62&&c<66) || c==70 || (c>=79&&c<83) || c==99){c=3;} // rain
-							else {c=2;} // light rain*/
-							/////Sys.println([data["weather"][i], c]);
-							data["weather"][i] = c;
-						}
+						c = data["weather"][i];
+						// new yr.no if(c<8){c=0;}else if(c<12){c=1;}else if(c<36){c=2;}else if(c<73){c=3;}else if(c<79){c=4;}else if(c<98){c=5;}else {c=-1;}
+						// climacell if(c<3){c=0;}else if(c<4){c=1;}else if(c<8){c=2;}else if(c<13){c=3;}else if(c<15){c=4;}else if(c<19){c=5;}else {c=-1;}
+						// old climacell if(c<=9){c = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light] else if(c==10){c=-1;}	// clouds: [flurries] else if(c<=13){c=3;}	// rain: [tstorm, rain_heavy, rain] else if(c<=15){c=2;}	// light rain: [rain_light, drizzle] else if(c<=19){c=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy] else if(c==20){c=1;}	// partly cloudy: [partly, cloudy] else if(c>=21){c=0;}	// sun: [clear, mostly_clear] */
+						/* old yrno if(c>=24&&c<28){c=1;}	// partly else if((c>=48&&c<52) || (c>=33&&c<37)){c=0;}	// clear else if(c==23 || c==45){c=-1;} // cloudy else if(c==28 || c==32 || c==38 || (c>=41&&c<46) || c==52 || (c<=58&&c>62) || c==83 || (c>=91&&c<99)){c=4;} // snow else if(c<19 || c==31 || c==37 || c==40 || c==47 || (c>=62&&c<66) || c==70 || (c>=79&&c<83) || c==99){c=3;} // rain else {c=2;} // light rain data["weather"][i] = c;*/
 						//System.println(data["weather"]	);
 						app.setProperty("weatherHourly", data["weather"]);
-						
-						/* // Garmin Weather API 12h
-							var c;
-							data = Weather.getCurrentConditions();
-							///Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
-							data = Weather.getHourlyForecast();
-							for(var j=0; j<data.size(); j++){
-								c = data[j].condition;
-								
-								// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
-								if(c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR){c=1;} // Partly Cloudy 
-								
-								else if( c==Weather.CONDITION_LIGHT_RAIN || c==Weather.CONDITION_DRIZZLE || c==Weather.CONDITION_SHOWERS || c==Weather.CONDITION_HEAVY_SHOWERS ){c=4;} // Light rain 
-								else if(c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_TORNADO || 
-								c==Weather.CONDITION_SANDSTORM || c==Weather.CONDITION_HURRICANE || c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_FREEZING_RAIN || 
-								c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_SLEET){c=5;} // rain
-
-								else if(c==Weather.CONDITION_SNOW || c>=Weather.CONDITION_LIGHT_SNOW && c<=Weather.CONDITION_HEAVY_RAIN_SNOW || c==Weather.CONDITION_ICE_SNOW || c==Weather.CONDITION_HAIL)
-								{c=6;} // snow
-
-								if(c>6){c=6;} // ignoring everything else
-								data[j]=c;
-							}
-						data = {"weather"=>[13, 0].addAll(data)};*/
 						changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
 						app.setProperty("lastLoad", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
 					}
+					// Garmin Weather API 12h
+					// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
+						// 54 values possible | 22 ifs
+						/*
+
+						0 CLEAR				2x	CLEAR | FAIR | MOSTLY_CLEAR
+						1 PARTLY_CLOUDY		3x	PARTLY_CLOUDY | PARTLY_CLEAR 
+						  MOSTLY_CLOUDY		10x
+						3 RAIN				12x	RAIN | THUNDERSTORMS | HAIL | HEAVY_RAIN | HEAVY_RAIN_SNOW | RAIN_SNOW | HEAVY_SHOWERS | CHANCE_OF_THUNDERSTORMS | TORNADO | HURRICANE | TROPICAL_STORM | SLEET
+						5 SNOW				2x	SNOW | HEAVY_SNOW
+						  WINDY		
+						3 THUNDERSTORMS		
+						  WINTRY_MIX		
+						  FOG		
+						  HAZY		
+						3 HAIL		
+						2 SCATTERED_SHOWERS	7x SCATTERED_SHOWERS > LIGHT_RAIN_SNOW | LIGHT_SHOWERS < CHANCE_OF_SHOWERS | DRIZZLE | CHANCE_OF_RAIN_SNOW > FREEZING_RAIN
+						2 SCATTERED_THUNDERSTORMS		
+						2 UNKNOWN_PRECIPITATION		
+						2 LIGHT_RAIN		
+						3 HEAVY_RAIN		
+						4 LIGHT_SNOW		2x	LIGHT_SNOW | CHANCE_OF_SNOW | CLOUDY_CHANCE_OF_SNOW | ICE_SNOW
+						5 HEAVY_SNOW		
+						2 LIGHT_RAIN_SNOW		
+						3 HEAVY_RAIN_SNOW		
+						  CLOUDY		
+						3 RAIN_SNOW		
+						1 PARTLY_CLEAR		
+						0 MOSTLY_CLEAR		
+						2 LIGHT_SHOWERS		
+						2 SHOWERS		
+						3 HEAVY_SHOWERS		
+						2 CHANCE_OF_SHOWERS		
+						3 CHANCE_OF_THUNDERSTORMS		
+						  MIST		
+						  DUST		
+						2 DRIZZLE		
+						3 TORNADO		
+						  SMOKE		
+						  ICE		
+						  SAND		
+						  SQUALL		
+						  SANDSTORM		
+						  VOLCANIC_ASH		
+						  HAZE		
+						0 FAIR		
+						3 HURRICANE		
+						3 TROPICAL_STORM		
+						4 CHANCE_OF_SNOW		
+						2 CHANCE_OF_RAIN_SNOW		
+						2 CLOUDY_CHANCE_OF_RAIN		
+						4 CLOUDY_CHANCE_OF_SNOW		
+						2 CLOUDY_CHANCE_OF_RAIN_SNOW		
+						2 FLURRIES		
+						2 FREEZING_RAIN		
+						3 SLEET		
+						4 ICE_SNOW		
+						  THIN_CLOUDS		
+						  UNKNOWN		
+						*/
+					/*var c;
+					data = Weather.getHourlyForecast();
+					///Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
+					// +800 kB with array
+					var weather_map = [0,1,-1,3,5,-1,3,-1,-1,-1,3,2,2,2,2,3,4,5,2,3,-1,3,1,0,2,2,3,2,3,-1,-1,2,3,-1,-1,-1,-1,-1,-1,-1,0,3,3,4,2,2,4,2,2,2,3,4,-1,-1];
+					for(var j=0; j<data.size(); j++){
+						//c = weather_map[data[j].condition];
+						c = data[j].condition;
+						// +600 kb with ifs
+						if( c==CONDITION_CLEAR || c==CONDITION_FAIR || c==CONDITION_MOSTLY_CLEAR) {c=0;}
+						else if( c==CONDITION_PARTLY_CLOUDY || c==CONDITION_PARTLY_CLEAR ) {c=1;}
+						else if( c==CONDITION_SNOW || c==CONDITION_HEAVY_SNOW) {c=5;}
+						else if( c==CONDITION_LIGHT_SNOW || c==CONDITION_CHANCE_OF_SNOW || c==CONDITION_CLOUDY_CHANCE_OF_SNOW || c==CONDITION_ICE_SNOW) {c=4;}
+						else if( c==CONDITION_RAIN || c==CONDITION_THUNDERSTORMS || c==CONDITION_HAIL || c==CONDITION_HEAVY_RAIN || c==CONDITION_HEAVY_RAIN_SNOW || 
+							c==CONDITION_RAIN_SNOW || c==CONDITION_HEAVY_SHOWERS || c==CONDITION_CHANCE_OF_THUNDERSTORMS || c==CONDITION_TORNADO || c==CONDITION_HURRICANE || 
+							c==CONDITION_TROPICAL_STORM || c==CONDITION_SLEET) {c=3;}
+						else if( (c>=CONDITION_SCATTERED_SHOWERS && c<=CONDITION_LIGHT_RAIN_SNOW) || (c>=CONDITION_LIGHT_SHOWERS && c<=CONDITION_CHANCE_OF_SHOWERS) || c==CONDITION_DRIZZLE || 
+							(c>=CONDITION_CHANCE_OF_RAIN_SNOW  && c<=CONDITION_FREEZING_RAIN)) {c=2;}
+						else {c= -1;}
+						data[j]=c;
+					}
+					//Weather.getCurrentConditions();
+					//data = {"weather"=>[6, -0].addAll(data)}; // for prod code real temperature and hour */
+					
 				} else {
 					if(data.hasKey("refresh_token")){
 						app.setProperty("refresh_token", data.get("refresh_token"));
@@ -196,12 +225,12 @@ class lateApp extends App.AppBase {
 					} else if(data.hasKey("error_code")){
 						var error = data["error_code"];
 						data["wait"] = durationToNextEvent();
-						System.println(error);
+						System.println(data);
 						var connected = Sys.getDeviceSettings().phoneConnected;
 						if(error==-300 || error==404 || error==-2 || error==-104){ // no internet or bluetooth
 							//System.println([watch.activity == :calendar , app.getProperty("lastLoad")!="c", watch.showWeather==false, app.getProperty("refresh_token")==null]);
 							//System.println([watch.activity == :calendar ,app.getProperty("refresh_token") , watch.showWeather ,app.getProperty("subs")]);
-							if((watch.activity == :calendar && app.getProperty("refresh_token")==null) || (watch.showWeather && app.getProperty("subs")==null) ){
+							if(watch!=null && ((watch.activity == :calendar && app.getProperty("refresh_token")==null) || (watch.showWeather && app.getProperty("subs")==null)) ){
 							//if(watch.activity == :calendar && (app.getProperty("lastLoad")!="c" || showWeather==false) && app.getProperty("refresh_token")==null){	// no internet or not connected when logging in
 								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
 							} else {	
@@ -209,7 +238,7 @@ class lateApp extends App.AppBase {
 							}
 						} else if(error==429){
 							if(data.hasKey("msBeforeNext")){
-								System.println([data["wait"], data["msBeforeNext"]]);
+								//System.println([data["wait"], data["msBeforeNext"]]);
 								if(data["wait"]*1000 < data["msBeforeNext"]){
 									data["wait"]=data["msBeforeNext"]/1000;
 								}							
@@ -250,7 +279,7 @@ class lateApp extends App.AppBase {
 				}
 				Ui.requestUpdate();
 			}
-		} catch(ex){	//////Sys.println("ex: " + ex.getErrorMessage());///Sys.println( ex.printStackTrace());
+		} catch(ex){	Sys.println("ex: " + ex.getErrorMessage());///Sys.println( ex.printStackTrace());
 			if(watch){
 				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
 			}

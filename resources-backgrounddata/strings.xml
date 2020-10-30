@@ -12,7 +12,7 @@
 	<string id="CalendarByColor">Watch color / Other color / Gray or cold</string>
 	<string id="Calendar">Experimental: Google Calendar [here be dragons:]</string>
 	<string id="AddCalendars">Calendars to show</string>
-	<string id="CalendarPrompt">For Calendar: Watch your watch to get code and link to log-in. Then wait at least 5 mins.</string>
+	<string id="CalendarPrompt">Calendar: Watch will show code to log-in. Then 5 mins to load events.</string>
 	<string id="CalendarsPrompt">Calendar IDs (typically your mail) separated by space or comma</string>
 	<string id="refreshFrequency">Minutes to refresh calendar</string>
 	
@@ -33,6 +33,7 @@
 	<string id="NoGPS">Get GPS location</string>
 
 	<string id="Weather">Experimental: Premium: Only on invitation: Show Weather Forecast</string>
+	<string id="WeatherPrompt">Unsubscribing here: </string>
 	<string id="Units">Temperature units</string>
 	<string id="Celsius">Celsius</string>
 	<string id="Fahrenheit">Fahrenheit</string>

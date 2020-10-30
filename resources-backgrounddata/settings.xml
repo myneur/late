@@ -41,7 +41,7 @@
 		<settingConfig type="alphaNumeric" />
 	</setting>
 
-	<setting propertyKey="@Properties.weather" title="@Strings.Weather">
+	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/unsubscribe">
 		<settingConfig type="boolean" />
 	</setting>
 	<setting propertyKey="@Properties.units" title="@Strings.Units">

@@ -26,7 +26,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function onTemporalEvent() {
-		System.println(Sys.getSystemStats().freeMemory + " onTemporalEvent ");
+		//System.println(Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad")=='c' );
 		app = App.getApp();
 		//getTokensAndData();return;
 		///*/Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
@@ -249,7 +249,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				code_events.put("error_code", responseCode);
 			}
 			refresh_token=null; access_token=null; calendar_ids=null; events_list=null;// cleaning memory before exiting
-			Sys.println(Sys.getSystemStats().freeMemory +" exiting");
+			//Sys.println(Sys.getSystemStats().freeMemory +" exiting");
 			Background.exit(code_events);
 		} catch(ex) { ///Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
 				code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
@@ -313,13 +313,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Background.exit(data);
 	}
 
-	function getSubscriptionId(){	System.println("getWeatherId");
+	function getSubscriptionId(){	//System.println("getWeatherId");
 		Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
 			{"client_id"=>app.getProperty("weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
 			method(:onSubscriptionId));
 	}
 	
-	function buySubscription(responseCode){	System.println("buySubscription "+responseCode);
+	function buySubscription(responseCode){	//System.println("buySubscription "+responseCode);
 		var data = {"device_code"=>subscription_id, "client_id"=>app.getProperty("weather_id")};
 		if(responseCode!=200){
 			data.put("expired", "1");

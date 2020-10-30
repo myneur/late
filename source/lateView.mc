@@ -50,14 +50,14 @@ class lateView extends Ui.WatchFace {
 				events_list = events;
 			}
 		}
-		//////Sys.println("init: "+ weatherHourly);
+		//Sys.println("init: "+ weatherHourly);
 		if(weatherHourly.size()==0){
 			var weather = App.getApp().getProperty("weatherHourly");
 			if(weather instanceof Toybox.Lang.Array){
 				weatherHourly = weather;
 			}
 		}
-		//////Sys.println("init: "+ weatherHourly);
+		//Sys.println("init: "+ weatherHourly);
 	}
 
 	function onLayout (dc) {
@@ -93,10 +93,10 @@ dialSize=0;
 circleWidth=7;
 percentage = true;
 mainColor = 3;
-tone=4;
-weatherHourly = [21, 9, 0, 1, 2, 3, 4, 5];
+tone=0;
+//weatherHourly = [21, 9, 0, 1, 2, 3, 4, 5];
 app.setProperty("units", 1);
-//app.setProperty("location", [50.11, 14.49]);
+app.setProperty("location", [50.11, 14.49]);
 //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
@@ -424,7 +424,6 @@ app.setProperty("units", 1);
 			var activityChar = activity.toString().toCharArray()[0];	// replace with something less silly everywhere, like swithing everything to invoke and keeping just 1 char as the identifier
 			if(percentage){
 				info = method(activity).invoke(info);
-info = 1.8;
 				var r = Gfx.getFontHeight(icons)-3;
 				dc.setPenWidth(2);
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);	
@@ -500,7 +499,7 @@ info = 1.8;
 
 	(:data)
 	function onBackgroundData(data) {
-		Sys.println("onBackgroundData view");
+		//Sys.println("onBackgroundData view");
 		//Sys.println(data);
 		//dataCount++;
 		if(data instanceof Array){	
@@ -815,7 +814,7 @@ info = 1.8;
 
 	(:data)
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
-		//////Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
+		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		var h = Sys.getClockTime().hour; // first hour of the forecast
 		if (weatherHourly instanceof Array && weatherHourly.size()>2){
 			if(weatherHourly[0]<h){	// delayed response or time passed

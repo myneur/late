@@ -96,7 +96,7 @@ class lateApp extends App.AppBase {
 			if(data instanceof Toybox.Lang.Dictionary){
 				if(data.hasKey("subscription_id")){	
 					app.setProperty("subs", data["subscription_id"]);
-/*TODO*/			if(watch!=null && watch.activity != :calendar){ // clearing the potential message
+					if(watch!=null && watch.activity != :calendar){ // clearing the potential message
 						watch.message = false;
 					}
 				}
@@ -121,7 +121,6 @@ class lateApp extends App.AppBase {
 					// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
 						// 54 values possible | 22 ifs
 						/*
-
 						0 CLEAR				2x	CLEAR | FAIR | MOSTLY_CLEAR
 						1 PARTLY_CLOUDY		3x	PARTLY_CLOUDY | PARTLY_CLEAR 
 						  MOSTLY_CLOUDY		10x
@@ -177,29 +176,28 @@ class lateApp extends App.AppBase {
 						  THIN_CLOUDS		
 						  UNKNOWN		
 						*/
-					/*var c;
+					var c;
 					data = Weather.getHourlyForecast();
-					///Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
 					// +800 kB with array
-					var weather_map = [0,1,-1,3,5,-1,3,-1,-1,-1,3,2,2,2,2,3,4,5,2,3,-1,3,1,0,2,2,3,2,3,-1,-1,2,3,-1,-1,-1,-1,-1,-1,-1,0,3,3,4,2,2,4,2,2,2,3,4,-1,-1];
+					//var weather_map = [0,1,-1,3,5,-1,3,-1,-1,-1,3,2,2,2,2,3,4,5,2,3,-1,3,1,0,2,2,3,2,3,-1,-1,2,3,-1,-1,-1,-1,-1,-1,-1,0,3,3,4,2,2,4,2,2,2,3,4,-1,-1];
 					for(var j=0; j<data.size(); j++){
 						//c = weather_map[data[j].condition];
 						c = data[j].condition;
 						// +600 kb with ifs
-						if( c==CONDITION_CLEAR || c==CONDITION_FAIR || c==CONDITION_MOSTLY_CLEAR) {c=0;}
-						else if( c==CONDITION_PARTLY_CLOUDY || c==CONDITION_PARTLY_CLEAR ) {c=1;}
-						else if( c==CONDITION_SNOW || c==CONDITION_HEAVY_SNOW) {c=5;}
-						else if( c==CONDITION_LIGHT_SNOW || c==CONDITION_CHANCE_OF_SNOW || c==CONDITION_CLOUDY_CHANCE_OF_SNOW || c==CONDITION_ICE_SNOW) {c=4;}
-						else if( c==CONDITION_RAIN || c==CONDITION_THUNDERSTORMS || c==CONDITION_HAIL || c==CONDITION_HEAVY_RAIN || c==CONDITION_HEAVY_RAIN_SNOW || 
-							c==CONDITION_RAIN_SNOW || c==CONDITION_HEAVY_SHOWERS || c==CONDITION_CHANCE_OF_THUNDERSTORMS || c==CONDITION_TORNADO || c==CONDITION_HURRICANE || 
-							c==CONDITION_TROPICAL_STORM || c==CONDITION_SLEET) {c=3;}
-						else if( (c>=CONDITION_SCATTERED_SHOWERS && c<=CONDITION_LIGHT_RAIN_SNOW) || (c>=CONDITION_LIGHT_SHOWERS && c<=CONDITION_CHANCE_OF_SHOWERS) || c==CONDITION_DRIZZLE || 
-							(c>=CONDITION_CHANCE_OF_RAIN_SNOW  && c<=CONDITION_FREEZING_RAIN)) {c=2;}
+						if( c==Weather.CONDITION_CLEAR || c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR) {c=0;}
+						else if( c==Weather.CONDITION_PARTLY_CLOUDY || c==Weather.CONDITION_PARTLY_CLEAR ) {c=1;}
+						else if( c==Weather.CONDITION_SNOW || c==Weather.CONDITION_HEAVY_SNOW) {c=5;}
+						else if( c==Weather.CONDITION_LIGHT_SNOW || c==Weather.CONDITION_CHANCE_OF_SNOW || c==Weather.CONDITION_CLOUDY_CHANCE_OF_SNOW || c==Weather.CONDITION_ICE_SNOW) {c=4;}
+						else if( c==Weather.CONDITION_RAIN || c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HAIL || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_HEAVY_RAIN_SNOW || 
+							c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_CHANCE_OF_THUNDERSTORMS || c==Weather.CONDITION_TORNADO || c==Weather.CONDITION_HURRICANE || 
+							c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_SLEET) {c=3;}
+						else if( (c>=Weather.CONDITION_SCATTERED_SHOWERS && c<=Weather.CONDITION_LIGHT_RAIN_SNOW) || (c>=Weather.CONDITION_LIGHT_SHOWERS && c<=Weather.CONDITION_CHANCE_OF_SHOWERS) || c==Weather.CONDITION_DRIZZLE || 
+							(c>=Weather.CONDITION_CHANCE_OF_RAIN_SNOW  && c<=Weather.CONDITION_FREEZING_RAIN)) {c=2;}
 						else {c= -1;}
 						data[j]=c;
 					}
-					//Weather.getCurrentConditions();
-					//data = {"weather"=>[6, -0].addAll(data)}; // for prod code real temperature and hour */
+					//Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
+					data = {"weather"=>[Sys.getClockTime().hour, Weather.getCurrentConditions().feelsLikeTemperature].addAll(data)}; // for prod code real temperature and hour */
 					
 				} else {
 					if(data.hasKey("refresh_token")){

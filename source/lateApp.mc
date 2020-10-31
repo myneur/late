@@ -37,7 +37,7 @@ class lateApp extends App.AppBase {
 		//System.println("scheduling");
 		loadSettings();
 
-		if(watch!=null && (watch.dataLoading && (watch.activity == :calendar || watch.showWeather))) {
+		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
 			if(app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
@@ -90,7 +90,7 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {	
-		//Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+(data.hasKey("weather")? "weather ":"")+(data.hasKey("subscription_id")?"subscription ":"")+(data.hasKey("events")?"events ":"")+(data.hasKey("refresh_token")?"token ":""));
+		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
 		/////Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary){
@@ -176,7 +176,7 @@ class lateApp extends App.AppBase {
 						  THIN_CLOUDS		
 						  UNKNOWN		
 						*/
-					var c;
+					/*var c;
 					data = Weather.getHourlyForecast();
 					// +800 kB with array
 					//var weather_map = [0,1,-1,3,5,-1,3,-1,-1,-1,3,2,2,2,2,3,4,5,2,3,-1,3,1,0,2,2,3,2,3,-1,-1,2,3,-1,-1,-1,-1,-1,-1,-1,0,3,3,4,2,2,4,2,2,2,3,4,-1,-1];
@@ -196,8 +196,8 @@ class lateApp extends App.AppBase {
 						else {c= -1;}
 						data[j]=c;
 					}
-					//Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
 					data = {"weather"=>[Sys.getClockTime().hour, Weather.getCurrentConditions().feelsLikeTemperature].addAll(data)}; // for prod code real temperature and hour */
+					//Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
 					
 				} else {
 					if(data.hasKey("refresh_token")){

@@ -83,10 +83,10 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-activity = :calendar;
-app.setProperty("activity", 6);
+activity = :activeMinutesWeek;
+app.setProperty("activity", 4);
 activityL = :steps;
-activityR = :activeMinutesWeek;
+activityR = null;
 showWeather = true; app.setProperty("weather", showWeather);
 showSunrise = true;
 dialSize=0;
@@ -96,7 +96,7 @@ mainColor = 3;
 tone=0;
 //weatherHourly = [21, 9, 0, 1, 2, 3, 4, 5];
 app.setProperty("units", 1);
-app.setProperty("location", [50.11, 14.49]);
+//app.setProperty("location", [50.11, 14.49]);
 //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 

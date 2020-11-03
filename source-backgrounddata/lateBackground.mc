@@ -81,7 +81,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function onTokenRefresh2GetData(responseCode, data){
-		///Sys.println(Sys.getSystemStats().freeMemory + " onTokenRefresh2GetData: "+responseCode); //Sys.println(data);
+		//Sys.println(Sys.getSystemStats().freeMemory + " onTokenRefresh2GetData: "+responseCode); Sys.println(data);
 		if (responseCode == 200) {
 			access_token = data.get("access_token");
 			if(data.get("refresh_token")){
@@ -184,7 +184,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function onEvents(responseCode, data) {
-		///*/ln(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
+		Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
 			var event;
@@ -279,7 +279,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-	function onWeatherForecast(responseCode, data){	///*/ln(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 3)+"..." : data);
+	function onWeatherForecast(responseCode, data){	Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
 		if (responseCode==200) {
 			try { 
 				data = {"weather"=>data};	// returning array with the wheather forecast

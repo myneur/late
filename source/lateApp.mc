@@ -91,7 +91,7 @@ class lateApp extends App.AppBase {
 	(:data)
 	function onBackgroundData(data) {	
 		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
-		/////Sys.println(data);
+		//Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary){
 				if(data.hasKey("subscription_id")){	
@@ -196,7 +196,9 @@ class lateApp extends App.AppBase {
 						else {c= -1;}
 						data[j]=c;
 					}
-					data = {"weather"=>[Sys.getClockTime().hour, Weather.getCurrentConditions().feelsLikeTemperature].addAll(data)}; // for prod code real temperature and hour */
+					var t = Weather.getCurrentConditions().feelsLikeTemperature; 
+					if (t==null) {t="";}	// yes, they ocassionally realy can return null. No kidding. 
+					data = {"weather"=>[Sys.getClockTime().hour, t].addAll(data)}; // for prod code real temperature and hour */
 					//Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
 					
 				} else {
@@ -211,7 +213,7 @@ class lateApp extends App.AppBase {
 						data = parseEvents(data.get("events"));
 						app.setProperty("events", data);
 						app.setProperty("lastLoad", 'c'); // for background process to know the next time what was loaded to alternate between weather and calendar loading
-						changeScheduleToMinutes(app.getProperty("weather")==true ? app.getProperty("refresh_freq") : 5);	// when weather not loaded yet, load ASAP					
+						changeScheduleToMinutes(app.getProperty("weather")==true ? 5 : app.getProperty("refresh_freq"));	// when weather not loaded yet, load ASAP					
 					} else if(data.hasKey("user_code")){ // prompt login
 						app.setProperty("refresh_token", null); 
 						app.setProperty("user_code", data.get("user_code")); 
@@ -222,14 +224,15 @@ class lateApp extends App.AppBase {
 						//app.setProperty("code_valid_till", new Time.now().value() + add(data.get("expires_in").toNumber()));
 					} else if(data.hasKey("error_code")){
 						var error = data["error_code"];
-						data["wait"] = durationToNextEvent();
 						System.println(data);
+						data["wait"] = durationToNextEvent();
 						var connected = Sys.getDeviceSettings().phoneConnected;
 						if(error==-300 || error==404 || error==-2 || error==-104){ // no internet or bluetooth
 							//System.println([watch.activity == :calendar , app.getProperty("lastLoad")!="c", watch.showWeather==false, app.getProperty("refresh_token")==null]);
 							//System.println([watch.activity == :calendar ,app.getProperty("refresh_token") , watch.showWeather ,app.getProperty("subs")]);
 							if(watch!=null && ((watch.activity == :calendar && app.getProperty("refresh_token")==null) || (watch.showWeather && app.getProperty("subs")==null)) ){
 							//if(watch.activity == :calendar && (app.getProperty("lastLoad")!="c" || showWeather==false) && app.getProperty("refresh_token")==null){	// no internet or not connected when logging in
+								// TODO: 404 with msg no data might actually mean also problem with Google: https://developers.google.com/calendar/v3/errors
 								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
 							} else {	
 								return;

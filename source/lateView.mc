@@ -15,7 +15,7 @@ var meteoColors;
 class lateView extends Ui.WatchFace {
 	hidden var dateForm; hidden var batThreshold = 33;
 	hidden var centerX; hidden var centerY; hidden var height;
-	hidden var color; hidden var timeColor = Gfx.COLOR_WHITE; hidden var dateColor = Gfx.COLOR_LT_GRAY; hidden var activityColor = Gfx.COLOR_DK_GRAY; hidden var backgroundColor = Gfx.COLOR_BLACK;
+	hidden var color; hidden var timeColor; hidden var dateColor; hidden var activityColor; hidden var backgroundColor;
 	hidden var calendarColors;
 	var activity=null; var activityL=null; var activityR=null; var showSunrise = false; var dataLoading = false; var showWeather = false; var percentage = false;
 	//hidden var icon=null; hidden var iconL=null; hidden var iconR=null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
@@ -83,8 +83,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-activity = :floorsClimbed;
-app.setProperty("activity", 5);
+activity = :calendar;
+app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
@@ -116,6 +116,11 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			[0xAA0000, 0xFF5500, 0x00AA00, 0x0000FF, 0xAA00FF, 0x555555], 
 			[0xAA0055, 0xFFFF00, 0x55FFAA, 0x00AAAA, 0x5500FF, 0xAAFFFF]
 		][tone<=2 ? tone : 0][mainColor];
+
+		timeColor = Gfx.COLOR_WHITE; 
+		dateColor = Gfx.COLOR_LT_GRAY; 
+		activityColor = Gfx.COLOR_DK_GRAY; 
+		backgroundColor = Gfx.COLOR_BLACK;
 
 		if(tone == 3){ 			// white background
 			backgroundColor = 0xFFFFFF;
@@ -491,32 +496,29 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			var context = msg.hasKey("userContext") ? " "+ msg["userContext"] : "";
 			var calendar = msg.hasKey("permanent") ? -1 : 0;
 
-			var degreeStart = ((nowError-Time.today().value())/(Calendar.SECONDS_PER_DAY.toFloat()/360)).toFloat(); // TODO bug: for some reason it won't show it at all althought the degrees are correct. 
+			var fromAngle = ((nowError-Time.today().value())/240.0).toFloat(); // seconds_in_day/360 // TODO bug: for some reason it won't show it at all althought the degrees are correct. 
 
-			events_list = [[nowError, nowError+Calendar.SECONDS_PER_DAY, msg["userPrompt"].toString(), context, calendar, degreeStart, degreeStart+2]]; 
+			events_list = [[nowError, nowError+86400, msg["userPrompt"].toString(), context, calendar, fromAngle, fromAngle+2]]; // seconds_in_day
 		}
 	}
 
 	(:data)
-	function onBackgroundData(data) {
-		//Sys.println("onBackgroundData view");
-		//Sys.println(data);
-		//dataCount++;
+	function onBackgroundData(data) { //Sys.println("onBackgroundData view"); //Sys.println(data);
 		if(data instanceof Array){	
 			events_list = data;
 		} 
 		else if(data instanceof Toybox.Lang.Dictionary){
 			if(data.hasKey("weather")){
 				weatherHourly = data["weather"];
-				var h = trimOldData();
-				if(h>=0 && showSunrise && sunrise[SUNRISET_NOW] != null){	// dimming clear-night colors
-					var sunAngle = angleSunMoon(sunrise[SUNRISET_NOW])*15;
-					var moonAngle = angleSunMoon(sunset[SUNRISET_NOW])*15;
+				var hourAngle = (trimPastHoursInWeatherHourly())%24;
+				if(hourAngle>=0 && showSunrise && sunrise[SUNRISET_NOW] != null){	// dimming clear-night colors
+					var sunAngle = toAngle(sunrise[SUNRISET_NOW]);
+					var moonAngle = toAngle(sunset[SUNRISET_NOW]);
 					for(var i =2; i<weatherHourly.size();i++){
-						if(weatherHourly[i] <= 1 && ((h+1)*15 < sunAngle || h*15>moonAngle) ){	// night
-							weatherHourly[i] = weatherHourly[i]==0 ? 6 : -1; // TODO moon color to array
+						if(weatherHourly[i] <= 1 && (hourAngle+1 < sunAngle || hourAngle>moonAngle) ){	// partly cloudy not shown at night
+							weatherHourly[i] = weatherHourly[i]==0 ? 6 : -1; 
 						}
-						h++;
+						hourAngle=(hourAngle+1)%24;
 					}
 				}
 			}
@@ -528,9 +530,8 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	}
 
 	(:data)
-	function updateCurrentEvent(dc){
+	function updateCurrentEvent(dc){	/////Sys.println("updateCurrentEvent: "+events_list);
 		for(var i=0; i<events_list.size(); i++){
-			/////Sys.println("updateCurrentEvent: "+events_list);
 			eventStart = new Time.Moment(events_list[i][0]);
 			var timeNow = Time.now();
 			var tillStart = eventStart.compare(timeNow);
@@ -547,34 +548,24 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			if(tillStart < -300){
 			  continue;  
 			}
-			//eventEnd = (new Time.Moment(events_list[i][1])).value(); 
 			eventName = height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21); 
-
-			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
-			if( tillStart <=0){
+			if(tillStart <= 0){
 				eventStart = "now!";
 				eventMarker = null;
-			}
-			else {
-				if(tillStart >= Calendar.SECONDS_PER_HOUR-Calendar.SECONDS_PER_MINUTE*2 ) {
-					eventMarker = null;				 
-				} else {
-					eventMarker = getMarkerCoords(events_list[i][0], tillStart);
-				}
-				if (tillStart < Calendar.SECONDS_PER_HOUR) {
-					eventStart = tillStart/Calendar.SECONDS_PER_MINUTE + "m";
-				} else if (tillStart < Calendar.SECONDS_PER_HOUR*8) {
-					eventStart = tillStart/Calendar.SECONDS_PER_HOUR + "h" + tillStart%Calendar.SECONDS_PER_HOUR/Calendar.SECONDS_PER_MINUTE ;
+			} else {
+				eventMarker = tillStart < 3480 ? getMarkerCoords(events_list[i][0], tillStart) : null;	// 58 mins
+				if (tillStart < 3600) {	// hour
+					eventStart = tillStart/60 + "m";
+				} else if (tillStart < 28800) {	// 8 hours
+					eventStart = tillStart/3600 + "h" + tillStart%3600 / 60 ;
 				} else {
 					var time = Calendar.info(eventStart, Calendar.FORMAT_SHORT);
-					if(Sys.getDeviceSettings().is24Hour){
-						eventStart = time.hour + ":"+ time.min.format("%02d");
-					} else {
-						var h = time.hour;
+					var h = time.hour;
+					if(Sys.getDeviceSettings().is24Hour == false){
 						if(h>11){ h-=12;}
-						if(0==h){ h=12;}
-						eventStart = (h.toString() + ":"+ time.min.format("%02d"));
+						else if(0==h){ h=12;}	
 					}
+					eventStart = h.toString() + ":"+ time.min.format("%02d");
 				}
 			}
 			eventLocation = height>=280 ? events_list[i][3] : events_list[i][3].substring(0,8);
@@ -588,6 +579,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 					-(dc.getTextWidthInPixels(eventStart, fontCondensed))
 				);
 			}
+			//event["name"] += "w"+wakeCount+"d"+dataCount;	// debugging how often the watch wakes for updates every seconds
 			return;
 		}
 		eventStart = null;
@@ -664,9 +656,9 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			width = 6;	
 		}
 		
-		var nowBoundary = ((clockTime.min+clockTime.hour*60.0)/1440)*360;
+		var nowBoundary = (clockTime.min+clockTime.hour*60.0)/4; // 360/1440;
 		var tomorrow = Time.now().value()+Calendar.SECONDS_PER_DAY;
-		var degreeStart; var degreeEnd;
+		var fromAngle; var toAngle;
 
 		/*var h; var idx=2;	// offset 
 		var weatherStart; var weatherEnd;*/
@@ -674,23 +666,23 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		for(var i=0; i <events_list.size(); i++){
 			//////Sys.println(events_list[i]);
 			if(events_list[i][1]>=tomorrow && (events_list[i][6].toNumber() > nowBoundary )){ // crop tomorrow event overlapping now on 360° dial
-				degreeStart=events_list[i][5].toNumber()%360;
-				degreeEnd=nowBoundary-1;
-				if(degreeEnd > events_list[0][5].toNumber()%360){	// not to overlapp the start of the current event
-					degreeEnd = events_list[0][5].toNumber()%360-1;
+				fromAngle=events_list[i][5].toNumber()%360;
+				toAngle=nowBoundary-1;
+				if(toAngle > events_list[0][5].toNumber()%360){	// not to overlapp the start of the current event
+					toAngle = events_list[0][5].toNumber()%360-1;
 				}
-				if(degreeEnd-1 >= degreeStart){	// ensuring the 1° gap between the events did not switch the order of the start/end
+				if(toAngle-1 >= fromAngle){	// ensuring the 1° gap between the events did not switch the order of the start/end
 					dc.setColor(backgroundColor, backgroundColor);
 				}
 			} else {
-				degreeStart = events_list[i][5];
-				degreeEnd = events_list[i][6]-1;
+				fromAngle = events_list[i][5];
+				toAngle = events_list[i][6]-1;
 			}
-			if(degreeEnd-1 >= degreeStart){ // ensuring the 1° gap between the events did not switch the order of the start/end
+			if(toAngle-1 >= fromAngle){ // ensuring the 1° gap between the events did not switch the order of the start/end
 				/*if(showWeather && weatherHourly.size()>2){
-					// counting overlap // first attempt was: // weatherStart = ((weatherHourly[0]+idx-2)*360/24)%360;weatherEnd = ((weatherHourly[0]+idx-2+1)*360/24)%360;degreeStart = degreeStart.toNumber()%360;degreeEnd = degreeEnd.toNumber()%360;while(idx<weatherHourly.size() && (degreeStart>weatherEnd || degreeEnd<weatherStart)){idx++;}radius = centerY - (idx<weatherHourly.size()? 2:7);
-					weatherStart = (degreeStart*24.0/360).toNumber()%24;
-					weatherEnd = Math.ceil(degreeEnd*24.0/360).toNumber()%24;
+					// counting overlap // first attempt was: // weatherStart = ((weatherHourly[0]+idx-2)*360/24)%360;weatherEnd = ((weatherHourly[0]+idx-2+1)*360/24)%360;fromAngle = fromAngle.toNumber()%360;toAngle = toAngle.toNumber()%360;while(idx<weatherHourly.size() && (fromAngle>weatherEnd || toAngle<weatherStart)){idx++;}radius = centerY - (idx<weatherHourly.size()? 2:7);
+					weatherStart = (fromAngle*24.0/360).toNumber()%24;
+					weatherEnd = Math.ceil(toAngle*24.0/360).toNumber()%24;
 					h = weatherStart;
 					idx = h-weatherHourly[0]+2; /////Sys.println([weatherHourly[0], idx, weatherStart, weatherEnd]);
 					if(idx<2){
@@ -708,12 +700,12 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				// drawing
 				dc.setColor(backgroundColor, backgroundColor);
 				dc.setPenWidth(width);
-				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-degreeStart+1, 90-degreeStart);
+				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle+1, 90-fromAngle);
 				if(events_list[i][4]>=0){
 					dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
 				}
 				dc.setPenWidth(width);
-				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-degreeStart, 90-degreeEnd);	// draw event on dial
+				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle, 90-toAngle);	// draw event on dial
 			}
 		}
 	}
@@ -793,7 +785,6 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	function drawBatteryLevel (dc){
 		var bat = Sys.getSystemStats().battery;
 		if(bat<=batThreshold){
-
 			var xPos = centerX-10;
 			var yPos = batteryY;
 
@@ -802,15 +793,9 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.setPenWidth(1);
 			dc.fillRectangle(xPos,yPos,20, 10);
+			dc.setColor(bat<=15 ? Gfx.COLOR_RED : activityColor, backgroundColor);
 
-			if(bat<=15){
-				dc.setColor(Gfx.COLOR_RED, backgroundColor);
-			} else {
-				dc.setColor(activityColor, backgroundColor);
-			}
-				
 			// draw the battery
-
 			dc.drawRectangle(xPos, yPos, 19, 10);
 			dc.fillRectangle(xPos + 19, yPos + 3, 1, 4);
 
@@ -824,31 +809,28 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	}
 
 	(:data)
-	function trimOldData(){
+	function trimPastHoursInWeatherHourly(){
 		var h = Sys.getClockTime().hour; // first hour of the forecast
 		if (weatherHourly instanceof Array && weatherHourly.size()>2){
-			if(weatherHourly[0]<h){	// delayed response or time passed
-				weatherHourly = weatherHourly.slice(0, 2).addAll(weatherHourly.slice(2+h-weatherHourly[0], null));
-				weatherHourly[0]=h;
-				App.getApp().setProperty("weatherHourly", weatherHourly);
-				///Sys.println("trunc: "+ [h, weatherHourly]);
-			} else if (weatherHourly[0]>h){
-				weatherHourly = weatherHourly.slice(0, 2).addAll(weatherHourly.slice(2+h+24-weatherHourly[0], null));
-				weatherHourly[0]=h;
-				App.getApp().setProperty("weatherHourly", weatherHourly);
-				///Sys.println("trunc: "+ [h, weatherHourly]);
+			if(weatherHourly[0]!=h){ // delayed response or time passed
+				var gap = 2+h-weatherHourly[0];
+				if(weatherHourly[0]>h){	// the delay is over midnight 
+					gap = gap + 24;
+				}
+				weatherHourly = [h, weatherHourly[1]].addAll(weatherHourly.slice(gap, null));
 			}
 		} else {
-			App.getApp().setProperty("weatherHourly", []);
+			weatherHourly = [];
 			h = -1;
 		}	
+		App.getApp().setProperty("weatherHourly", weatherHourly);
 		return h;
 	}
 
 	(:data)
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
 		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
-		var h = trimOldData();
+		var h = trimPastHoursInWeatherHourly();
 		/////Sys.println("weather from hour: "+h + " offset: "+offset);
 		if(h>=0){
 			dc.setPenWidth(height>=390 ? 5 : 3);
@@ -857,10 +839,6 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
 			for(var i=2; i<weatherHourly.size() &&i<26; i++, h++){
 				color = weatherHourly[i];
-				/*if(i==10){color=3;}	// testing colors
-				if(i==12){color=0;}
-				if(i==13){color=1;}*/
-				/////Sys.println([i, offset, color]);
 				if(color>=0 && color < meteoColors.size()){
 					color = meteoColors[color];
 					h = h%24;
@@ -884,20 +862,20 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		}
 	}
 
-	function angleSunMoon(t){
+	function toAngle(t){
 		return (t + t.toNumber()%24-t.toNumber());
 	}
 
-	function drawSunmoonAt(dc, t, icon){
-		 var a = angleSunMoon(t) * Math.PI/12.0  ; // radians (*= 60 * 2*PI/(24*60)) 
+	function drawIconAtTime(dc, t, icon){
+		 var a = toAngle(t) * Math.PI/12.0  ; // radians (*= 60 * 2*PI/(24*60)) 
 		 drawIcon(dc, centerX + sunR*Math.sin(a), centerY - sunR*Math.cos(a), icon);
 	}
 
 	function drawSunBitmaps (dc) {
 		if(sunrise[SUNRISET_NOW] != null) {
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-			drawSunmoonAt(dc, sunrise[SUNRISET_NOW], "*");	// sun
-			drawSunmoonAt(dc, sunset[SUNRISET_NOW], "(");	// moon
+			drawIconAtTime(dc, sunrise[SUNRISET_NOW], "*");	// sun
+			drawIconAtTime(dc, sunset[SUNRISET_NOW], "(");	// moon
 			//System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d")); /*dc.setColor(0x555555, 0); dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*//*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360; System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a)))); dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
 		}
 	}

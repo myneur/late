@@ -214,6 +214,7 @@ class lateApp extends App.AppBase {
 						app.setProperty("events", data);
 						app.setProperty("lastLoad", 'c'); // for background process to know the next time what was loaded to alternate between weather and calendar loading
 						changeScheduleToMinutes(app.getProperty("weather")==true ? 5 : app.getProperty("refresh_freq"));	// when weather not loaded yet, load ASAP					
+						// TODO message to wait to load weather
 					} else if(data.hasKey("user_code")){ // prompt login
 						app.setProperty("refresh_token", null); 
 						app.setProperty("user_code", data.get("user_code")); 

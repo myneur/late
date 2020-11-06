@@ -83,8 +83,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-activity = :calendar;
-app.setProperty("activity", 6);
+activity = :floorsClimbed;
+app.setProperty("activity", 5);
 activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
@@ -837,6 +837,8 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		dc.setPenWidth(height>=390 ? 5 : 3);
 		
 		var color; var center;
+		var sunAngle = angleSunMoon(sunrise[SUNRISET_NOW])*15;
+		var moonAngle = angleSunMoon(sunset[SUNRISET_NOW])*15;
 		//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
 		for(var i=2; i<weatherHourly.size() &&i<26; i++, h++){
 			color = weatherHourly[i];
@@ -845,11 +847,18 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			if(i==13){color=1;}*/
 			/////Sys.println([i, offset, color]);
 			if(color>=0 && color < meteoColors.size()){
-				color = meteoColors[color];
+				if(showSunrise && sunrise[SUNRISET_NOW] != null && color <= 1 && ((h+1)*15 < sunAngle || h*15>moonAngle) ){	// night
+					color = 0x555555; // TODO moon color to array
+				} else {
+					color = meteoColors[color];
+				}
 				h = h%24;
 				center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
 				/////Sys.println([i, h, weatherHourly[i], color]);
+				
+
 				dc.setColor(color, Gfx.COLOR_TRANSPARENT);
+
 				dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*15, 90-(h+1)*15);
 			}
 		}
@@ -865,20 +874,20 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			dc.drawText(x, y, fontCondensed, weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
 		}
 	}
+	function angleSunMoon(t){
+		return (t + t.toNumber()%24-t.toNumber());
+	}
+
+	function drawSunmoonAt(dc, t, icon){
+		 var a = angleSunMoon(t) * Math.PI/12.0  ; // radians (*= 60 * 2*PI/(24*60)) 
+		 drawIcon(dc, centerX + sunR*Math.sin(a), centerY - sunR*Math.cos(a), icon);
+	}
 
 	function drawSunBitmaps (dc) {
 		if(sunrise[SUNRISET_NOW] != null) {
-			// SUNRISE (sun)
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-			var a = ((sunrise[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunrise[SUNRISET_NOW] - sunrise[SUNRISET_NOW].toNumber()) * 60);
-			a *= Math.PI/(12 * 60.0);
-			var r = sunR;
-			drawIcon(dc, centerX + r*Math.sin(a), centerY - r*Math.cos(a), "*");
-			
-			// SUNSET (moon)
-			a = ((sunset[SUNRISET_NOW].toNumber() % 24) * 60) + ((sunset[SUNRISET_NOW] - sunset[SUNRISET_NOW].toNumber()) * 60); 
-			a *= Math.PI/(12 * 60.0);
-			drawIcon(dc, centerX + r*Math.sin(a), centerY - r*Math.cos(a), "(");
+			drawSunmoonAt(dc, sunrise[SUNRISET_NOW], "*");	// sun
+			drawSunmoonAt(dc, sunset[SUNRISET_NOW], "(");	// moon
 			//System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d")); /*dc.setColor(0x555555, 0); dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*//*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360; System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a)))); dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
 		}
 	}

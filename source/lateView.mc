@@ -143,8 +143,8 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			activityColor = 0x555555;
 		}
 
-		meteoColors = [0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF];
-			//enum {	clear, 		partly, 	lghtrain, rain,	 	mild snow, snow} // clean moon can be 555555 instead of sun and mostly cloudy can be skipped
+		meteoColors = [0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF, 0x555555];
+			//enum {	clear, 		partly, 	lghtrain, rain,	 	mild snow, snow, clear neight} // clean moon can be 555555 instead of sun and mostly cloudy can be skipped
 		if(tone>2){
 			meteoColors[2]=0x0055FF;
 			meteoColors[3]=0x00AAFF;
@@ -508,6 +508,17 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		else if(data instanceof Toybox.Lang.Dictionary){
 			if(data.hasKey("weather")){
 				weatherHourly = data["weather"];
+				var h = trimOldData();
+				if(h>=0 && showSunrise && sunrise[SUNRISET_NOW] != null){	// dimming clear-night colors
+					var sunAngle = angleSunMoon(sunrise[SUNRISET_NOW])*15;
+					var moonAngle = angleSunMoon(sunset[SUNRISET_NOW])*15;
+					for(var i =2; i<weatherHourly.size();i++){
+						if(weatherHourly[i] <= 1 && ((h+1)*15 < sunAngle || h*15>moonAngle) ){	// night
+							weatherHourly[i] = weatherHourly[i]==0 ? 6 : -1; // TODO moon color to array
+						}
+						h++;
+					}
+				}
 			}
 			else if(data.hasKey("userPrompt")){
 				showMessage(data);
@@ -813,8 +824,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	}
 
 	(:data)
-	function drawWeather(dc){ // hardcoded testing how to render the forecast
-		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
+	function trimOldData(){
 		var h = Sys.getClockTime().hour; // first hour of the forecast
 		if (weatherHourly instanceof Array && weatherHourly.size()>2){
 			if(weatherHourly[0]<h){	// delayed response or time passed
@@ -830,50 +840,50 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			}
 		} else {
 			App.getApp().setProperty("weatherHourly", []);
-			return; 
+			h = -1;
 		}	
+		return h;
+	}
+
+	(:data)
+	function drawWeather(dc){ // hardcoded testing how to render the forecast
+		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
+		var h = trimOldData();
 		/////Sys.println("weather from hour: "+h + " offset: "+offset);
-		
-		dc.setPenWidth(height>=390 ? 5 : 3);
-		
-		var color; var center;
-		var sunAngle = angleSunMoon(sunrise[SUNRISET_NOW])*15;
-		var moonAngle = angleSunMoon(sunset[SUNRISET_NOW])*15;
-		//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
-		for(var i=2; i<weatherHourly.size() &&i<26; i++, h++){
-			color = weatherHourly[i];
-			/*if(i==10){color=3;}	// testing colors
-			if(i==12){color=0;}
-			if(i==13){color=1;}*/
-			/////Sys.println([i, offset, color]);
-			if(color>=0 && color < meteoColors.size()){
-				if(showSunrise && sunrise[SUNRISET_NOW] != null && color <= 1 && ((h+1)*15 < sunAngle || h*15>moonAngle) ){	// night
-					color = 0x555555; // TODO moon color to array
-				} else {
+		if(h>=0){
+			dc.setPenWidth(height>=390 ? 5 : 3);
+			
+			var color; var center;
+			//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
+			for(var i=2; i<weatherHourly.size() &&i<26; i++, h++){
+				color = weatherHourly[i];
+				/*if(i==10){color=3;}	// testing colors
+				if(i==12){color=0;}
+				if(i==13){color=1;}*/
+				/////Sys.println([i, offset, color]);
+				if(color>=0 && color < meteoColors.size()){
 					color = meteoColors[color];
+					h = h%24;
+					center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
+					/////Sys.println([i, h, weatherHourly[i], color]);
+					dc.setColor(color, Gfx.COLOR_TRANSPARENT);
+					dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*15, 90-(h+1)*15);
 				}
-				h = h%24;
-				center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
-				/////Sys.println([i, h, weatherHourly[i], color]);
-				
-
-				dc.setColor(color, Gfx.COLOR_TRANSPARENT);
-
-				dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*15, 90-(h+1)*15);
 			}
-		}
-		if(weatherHourly.size()>1){
-			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-			var x=centerX+centerX>>1;
-			var y = centerY-(dc.getFontHeight(fontCondensed)>>1);
-			if(dialSize==0){
-				y -= centerY>>1;
-			} else {
-				x += dc.getFontHeight(icons)>>2;
+			if(weatherHourly.size()>1){
+				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+				var x=centerX+centerX>>1;
+				var y = centerY-(dc.getFontHeight(fontCondensed)>>1);
+				if(dialSize==0){
+					y -= centerY>>1;
+				} else {
+					x += dc.getFontHeight(icons)>>2;
+				}
+				dc.drawText(x, y, fontCondensed, weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
 			}
-			dc.drawText(x, y, fontCondensed, weatherHourly[1].toString()+'°', Gfx.TEXT_JUSTIFY_CENTER);	
 		}
 	}
+
 	function angleSunMoon(t){
 		return (t + t.toNumber()%24-t.toNumber());
 	}

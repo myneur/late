@@ -411,789 +411,780 @@
 <entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/sunrisetCompute.mc" id="40" lineNum="113" pc="268446525" symbol="floor"/>
 <entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/sunrisetCompute.mc" id="40" lineNum="114" pc="268446551" symbol="floor"/>
 <entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/sunrisetCompute.mc" id="40" lineNum="116" pc="268446566" symbol="floor"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/sunrisetCompute.mc" id="41" lineNum="119" pc="268446573" symbol="ceil"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/sunrisetCompute.mc" id="41" lineNum="120" pc="268446585" symbol="ceil"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/sunrisetCompute.mc" id="41" lineNum="121" pc="268446595" symbol="ceil"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/sunrisetCompute.mc" id="41" lineNum="122" pc="268446621" symbol="ceil"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/sunrisetCompute.mc" id="41" lineNum="124" pc="268446636" symbol="ceil"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="37" pc="268446643" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="38" pc="268446647" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="39" pc="268446700" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="41" pc="268446723" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="42" pc="268446741" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="43" pc="268446758" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="44" pc="268446774" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="45" pc="268446797" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="46" pc="268446820" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="47" pc="268446843" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="48" pc="268446869" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="49" pc="268446900" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="50" pc="268446926" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="54" pc="268446942" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="55" pc="268446968" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="56" pc="268446999" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="57" pc="268447025" symbol="initialize"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="63" pc="268447042" symbol="onLayout"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="64" pc="268447046" symbol="onLayout"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="67" pc="268447059" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="69" pc="268447063" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="70" pc="268447080" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="72" pc="268447104" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="73" pc="268447199" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="74" pc="268447226" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="75" pc="268447253" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="77" pc="268447280" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="78" pc="268447304" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="79" pc="268447328" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="80" pc="268447352" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="81" pc="268447376" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="82" pc="268447400" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="83" pc="268447424" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="84" pc="268447457" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="86" pc="268447490" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="87" pc="268447503" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="88" pc="268447525" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="89" pc="268447538" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="90" pc="268447551" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="90" pc="268447561" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="91" pc="268447586" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="92" pc="268447596" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="93" pc="268447609" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="94" pc="268447622" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="95" pc="268447632" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="96" pc="268447639" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="98" pc="268447646" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="100" pc="268447668" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="103" pc="268447717" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="104" pc="268447734" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="105" pc="268447743" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="108" pc="268447755" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="109" pc="268447766" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="110" pc="268447789" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="111" pc="268447811" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="114" pc="268447826" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="120" pc="268448141" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="121" pc="268448161" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="122" pc="268448181" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="123" pc="268448201" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="125" pc="268448221" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="126" pc="268448232" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="127" pc="268448245" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="128" pc="268448258" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="129" pc="268448271" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="130" pc="268448284" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="131" pc="268448301" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="133" pc="268448320" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="134" pc="268448331" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="135" pc="268448348" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="136" pc="268448364" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="137" pc="268448381" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="139" pc="268448397" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="140" pc="268448413" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="141" pc="268448426" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="142" pc="268448439" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="143" pc="268448452" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="145" pc="268448468" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="146" pc="268448481" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="147" pc="268448494" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="148" pc="268448507" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="151" pc="268448520" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="153" pc="268448625" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="154" pc="268448636" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="155" pc="268448655" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="156" pc="268448674" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="157" pc="268448685" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="158" pc="268448704" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="159" pc="268448723" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="160" pc="268448748" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="161" pc="268448767" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="178" pc="268448795" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="179" pc="268448812" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="180" pc="268448832" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="183" pc="268448855" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="184" pc="268448872" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="185" pc="268448891" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="186" pc="268448937" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="187" pc="268448967" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="189" pc="268449016" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="190" pc="268449027" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="191" pc="268449046" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="193" pc="268449068" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="195" pc="268449096" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="196" pc="268449117" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="198" pc="268449144" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="203" pc="268449172" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="204" pc="268449184" symbol="loadSettings"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="207" pc="268449197" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="209" pc="268449201" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="210" pc="268449244" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="211" pc="268449266" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="213" pc="268449277" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="213" pc="268449294" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="214" pc="268449341" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="214" pc="268449352" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="218" pc="268449402" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="219" pc="268449419" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="220" pc="268449462" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="221" pc="268449505" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="222" pc="268449551" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="223" pc="268449593" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="224" pc="268449631" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="226" pc="268449653" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="227" pc="268449717" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="228" pc="268449739" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="229" pc="268449761" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="230" pc="268449778" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="231" pc="268449797" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="234" pc="268449822" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="235" pc="268449865" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="236" pc="268449908" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="237" pc="268449948" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="238" pc="268450012" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="240" pc="268450043" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="241" pc="268450056" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="242" pc="268450099" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="243" pc="268450116" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="244" pc="268450227" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="245" pc="268450272" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="246" pc="268450309" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="247" pc="268450383" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="248" pc="268450400" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="251" pc="268450415" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="252" pc="268450468" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="253" pc="268450485" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="255" pc="268450507" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="256" pc="268450538" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="269" pc="268450591" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="270" pc="268450602" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="271" pc="268450633" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="272" pc="268450669" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="273" pc="268450686" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="276" pc="268450708" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="280" pc="268450736" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="281" pc="268450801" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="282" pc="268450821" symbol="setLayoutVars"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="47" lineNum="288" pc="268450845" symbol="onShow"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="47" lineNum="291" pc="268450849" symbol="onShow"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="47" lineNum="292" pc="268450866" symbol="onShow"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="47" lineNum="294" pc="268450882" symbol="onShow"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="48" lineNum="299" pc="268450896" symbol="onHide"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="48" lineNum="301" pc="268450900" symbol="onHide"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="49" lineNum="305" pc="268450914" symbol="onExitSleep"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="49" lineNum="308" pc="268450918" symbol="onExitSleep"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="312" pc="268450931" symbol="onEnterSleep"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="314" pc="268450935" symbol="onEnterSleep"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="315" pc="268450952" symbol="onEnterSleep"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="316" pc="268450965" symbol="onEnterSleep"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="318" pc="268450984" symbol="onEnterSleep"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="328" pc="268450998" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="330" pc="268451002" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="331" pc="268451025" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="331" pc="268451071" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="333" pc="268451087" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="335" pc="268451104" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="336" pc="268451115" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="338" pc="268451132" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="339" pc="268451160" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="340" pc="268451172" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="341" pc="268451194" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="342" pc="268451238" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="344" pc="268451254" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="345" pc="268451271" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="346" pc="268451285" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="346" pc="268451296" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="347" pc="268451309" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="347" pc="268451320" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="350" pc="268451333" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="351" pc="268451365" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="352" pc="268451456" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="353" pc="268451470" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="355" pc="268451484" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="357" pc="268451501" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="358" pc="268451533" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="359" pc="268451540" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="360" pc="268451553" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="362" pc="268451642" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="363" pc="268451669" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="365" pc="268451719" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="366" pc="268451743" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="367" pc="268451771" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="371" pc="268451875" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="372" pc="268451907" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="373" pc="268451991" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="374" pc="268452025" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="375" pc="268452075" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="376" pc="268452102" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="377" pc="268452133" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="379" pc="268452150" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="382" pc="268452193" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="383" pc="268452204" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="385" pc="268452221" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="386" pc="268452238" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="388" pc="268452255" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="389" pc="268452266" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="390" pc="268452315" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="392" pc="268452330" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="395" pc="268452347" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="400" pc="268452381" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="400" pc="268452398" symbol="onUpdate"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="52" lineNum="404" pc="268452421" symbol="steps"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="52" lineNum="405" pc="268452425" symbol="steps"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="53" lineNum="407" pc="268452453" symbol="calories"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="53" lineNum="408" pc="268452457" symbol="calories"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="53" lineNum="409" pc="268452476" symbol="calories"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="53" lineNum="410" pc="268452496" symbol="calories"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="53" lineNum="412" pc="268452547" symbol="calories"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="54" lineNum="416" pc="268452554" symbol="activeMinutesDay"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="54" lineNum="417" pc="268452558" symbol="activeMinutesDay"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="55" lineNum="419" pc="268452607" symbol="activeMinutesWeek"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="55" lineNum="420" pc="268452611" symbol="activeMinutesWeek"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="422" pc="268452645" symbol="floorsClimbed"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="423" pc="268452649" symbol="floorsClimbed"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="426" pc="268452677" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="427" pc="268452681" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="428" pc="268452688" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="429" pc="268452707" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="430" pc="268452735" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="431" pc="268452746" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="432" pc="268452772" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="433" pc="268452803" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="434" pc="268452820" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="435" pc="268452852" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="436" pc="268452872" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="437" pc="268452883" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="438" pc="268452937" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="439" pc="268452948" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="440" pc="268452959" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="441" pc="268453014" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="443" pc="268453071" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="444" pc="268453103" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="447" pc="268453124" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="450" pc="268453179" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="451" pc="268453186" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="452" pc="268453237" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="453" pc="268453276" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="454" pc="268453308" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="455" pc="268453313" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="456" pc="268453373" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="458" pc="268453431" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="459" pc="268453487" symbol="drawActivity"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="58" lineNum="465" pc="268453535" symbol="drawIcon"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="58" lineNum="467" pc="268453539" symbol="drawIcon"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="470" pc="268453591" symbol="drawActivityIcon"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="472" pc="268453595" symbol="drawActivityIcon"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="488" pc="268453671" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="490" pc="268453675" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="491" pc="268453723" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="492" pc="268453749" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="493" pc="268453759" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="494" pc="268453778" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="496" pc="268453803" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="497" pc="268453846" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="499" pc="268453880" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="501" pc="268453924" symbol="showMessage"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="506" pc="268454053" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="507" pc="268454057" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="508" pc="268454071" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="510" pc="268454084" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="511" pc="268454110" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="512" pc="268454129" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="513" pc="268454145" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="514" pc="268454164" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="515" pc="268454214" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="516" pc="268454244" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="517" pc="268454274" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="518" pc="268454304" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="519" pc="268454352" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="521" pc="268454399" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="525" pc="268454434" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="526" pc="268454453" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="529" pc="268454473" symbol="onBackgroundData"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="533" pc="268454486" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="534" pc="268454490" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="535" pc="268454520" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="536" pc="268454571" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="537" pc="268454588" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="538" pc="268454609" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="540" pc="268454654" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="541" pc="268454676" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="542" pc="268454705" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="543" pc="268454731" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="545" pc="268454744" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="546" pc="268454754" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="548" pc="268454760" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="549" pc="268454771" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="551" pc="268454777" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="552" pc="268454858" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="553" pc="268454869" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="554" pc="268454882" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="556" pc="268454894" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="557" pc="268454947" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="558" pc="268454958" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="559" pc="268454983" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="560" pc="268454994" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="562" pc="268455034" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="563" pc="268455071" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="564" pc="268455081" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="565" pc="268455108" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="565" pc="268455119" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="566" pc="268455132" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="566" pc="268455143" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="568" pc="268455156" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="571" pc="268455204" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="573" pc="268455285" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="574" pc="268455311" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="575" pc="268455320" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="577" pc="268455348" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="583" pc="268455427" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="585" pc="268455441" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="586" pc="268455450" symbol="updateCurrentEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="590" pc="268455460" symbol="humanizeNumber"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="591" pc="268455464" symbol="humanizeNumber"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="592" pc="268455475" symbol="humanizeNumber"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="594" pc="268455516" symbol="humanizeNumber"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="598" pc="268455529" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="600" pc="268455533" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="601" pc="268455615" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="602" pc="268455666" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="603" pc="268455703" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="604" pc="268455740" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="605" pc="268455768" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="606" pc="268455789" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="607" pc="268455820" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="608" pc="268455848" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="610" pc="268455872" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="611" pc="268455900" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="612" pc="268455917" symbol="drawNowCircle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="619" pc="268455942" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="620" pc="268455946" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="621" pc="268455960" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="622" pc="268455971" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="623" pc="268456027" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="624" pc="268456083" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="627" pc="268456115" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="628" pc="268456125" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="629" pc="268456139" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="630" pc="268456152" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="631" pc="268456165" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="632" pc="268456224" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="633" pc="268456256" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="636" pc="268456273" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="638" pc="268456325" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="639" pc="268456336" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="640" pc="268456346" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="641" pc="268456374" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="642" pc="268456407" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="643" pc="268456435" symbol="drawEvent"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="648" pc="268456472" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="649" pc="268456476" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="650" pc="268456486" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="651" pc="268456486" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="652" pc="268456503" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="653" pc="268456532" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="655" pc="268456542" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="656" pc="268456571" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="659" pc="268456578" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="660" pc="268456621" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="661" pc="268456660" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="661" pc="268456660" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="666" pc="268456660" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="668" pc="268456690" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="669" pc="268456748" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="670" pc="268456782" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="671" pc="268456792" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="672" pc="268456833" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="674" pc="268456879" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="675" pc="268456893" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="678" pc="268456927" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="679" pc="268456946" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="681" pc="268456971" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="701" pc="268456985" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="702" pc="268457013" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="703" pc="268457027" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="704" pc="268457091" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="705" pc="268457117" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="707" pc="268457184" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="708" pc="268457198" symbol="drawEvents"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="721" pc="268457273" symbol="getMarkerCoords"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="722" pc="268457277" symbol="getMarkerCoords"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="723" pc="268457342" symbol="getMarkerCoords"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="724" pc="268457387" symbol="getMarkerCoords"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="725" pc="268457482" symbol="getMarkerCoords"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="728" pc="268457564" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="729" pc="268457568" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="732" pc="268457584" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="733" pc="268457613" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="734" pc="268457632" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="735" pc="268457651" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="736" pc="268457658" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="738" pc="268457665" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="739" pc="268457697" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="742" pc="268457784" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="743" pc="268457795" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="744" pc="268457823" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="757" pc="268457843" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="758" pc="268457854" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="759" pc="268457865" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="760" pc="268457872" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="761" pc="268457883" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="764" pc="268457896" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="765" pc="268457921" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="767" pc="268457931" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="771" pc="268457941" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="772" pc="268457952" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="774" pc="268457962" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="775" pc="268457973" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="777" pc="268457983" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="781" pc="268457990" symbol="drawMinuteArc"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="785" pc="268458067" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="786" pc="268458071" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="787" pc="268458094" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="788" pc="268458108" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="789" pc="268458124" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="793" pc="268458134" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="794" pc="268458162" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="795" pc="268458179" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="796" pc="268458205" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="799" pc="268458259" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="800" pc="268458285" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="802" pc="268458323" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="803" pc="268458350" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="803" pc="268458361" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="805" pc="268458399" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="806" pc="268458431" symbol="drawBatteryLevel"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="812" pc="268458473" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="813" pc="268458477" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="814" pc="268458500" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="815" pc="268458549" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="816" pc="268458569" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="817" pc="268458594" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="818" pc="268458614" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="820" pc="268458627" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="823" pc="268458708" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="824" pc="268458722" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="826" pc="268458729" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="827" pc="268458767" symbol="trimPastHoursInWeatherHourly"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="831" pc="268458771" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="833" pc="268458775" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="835" pc="268458788" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="836" pc="268458799" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="838" pc="268458841" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="838" pc="268458841" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="840" pc="268458841" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="841" pc="268458885" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="842" pc="268458898" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="843" pc="268458935" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="844" pc="268458948" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="845" pc="268458958" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="847" pc="268459010" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="848" pc="268459036" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="851" pc="268459138" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="852" pc="268459164" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="853" pc="268459196" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="854" pc="268459222" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="855" pc="268459259" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="856" pc="268459276" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="858" pc="268459299" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="860" pc="268459330" symbol="drawWeather"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="72" lineNum="865" pc="268459402" symbol="toAngle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="72" lineNum="866" pc="268459406" symbol="toAngle"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="73" lineNum="869" pc="268459440" symbol="drawIconAtTime"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="73" lineNum="870" pc="268459444" symbol="drawIconAtTime"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="73" lineNum="871" pc="268459478" symbol="drawIconAtTime"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="874" pc="268459565" symbol="drawSunBitmaps"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="875" pc="268459569" symbol="drawSunBitmaps"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="876" pc="268459591" symbol="drawSunBitmaps"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="877" pc="268459623" symbol="drawSunBitmaps"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="878" pc="268459659" symbol="drawSunBitmaps"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="883" pc="268459699" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="884" pc="268459703" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="886" pc="268459726" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="887" pc="268459733" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="888" pc="268459764" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="889" pc="268459771" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="890" pc="268459789" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="893" pc="268459796" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="894" pc="268459809" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="899" pc="268459841" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="900" pc="268459866" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="904" pc="268459891" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="905" pc="268459913" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="907" pc="268460000" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="908" pc="268460016" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="910" pc="268460053" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="911" pc="268460101" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="914" pc="268460149" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="915" pc="268460149" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="916" pc="268460166" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="919" pc="268460200" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="922" pc="268460231" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="923" pc="268460279" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="926" pc="268460327" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="927" pc="268460378" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="928" pc="268460399" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="929" pc="268460418" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="933" pc="268460450" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="934" pc="268460497" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="935" pc="268460529" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="937" pc="268460560" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="938" pc="268460592" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="943" pc="268460636" symbol="computeSun"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="23" pc="268460703" symbol="&lt;init&gt;"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="23" pc="268460720" symbol="&lt;init&gt;"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="29" pc="268460734" symbol="&lt;init&gt;"/>
-<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="75" lineNum="31" pc="268460748" symbol="&lt;init&gt;"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="37" pc="268446573" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="38" pc="268446577" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="39" pc="268446630" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="41" pc="268446653" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="42" pc="268446671" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="43" pc="268446688" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="44" pc="268446704" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="45" pc="268446727" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="46" pc="268446750" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="47" pc="268446773" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="48" pc="268446799" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="49" pc="268446830" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="50" pc="268446856" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="54" pc="268446872" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="55" pc="268446898" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="56" pc="268446929" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="42" lineNum="57" pc="268446955" symbol="initialize"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="63" pc="268446972" symbol="onLayout"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="43" lineNum="64" pc="268446976" symbol="onLayout"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="67" pc="268446989" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="69" pc="268446993" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="70" pc="268447010" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="72" pc="268447034" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="73" pc="268447129" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="74" pc="268447156" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="75" pc="268447183" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="77" pc="268447210" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="78" pc="268447234" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="79" pc="268447258" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="80" pc="268447282" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="81" pc="268447306" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="82" pc="268447330" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="83" pc="268447354" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="84" pc="268447387" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="86" pc="268447420" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="87" pc="268447433" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="88" pc="268447455" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="89" pc="268447468" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="90" pc="268447481" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="90" pc="268447491" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="91" pc="268447516" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="92" pc="268447526" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="93" pc="268447539" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="94" pc="268447552" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="95" pc="268447562" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="96" pc="268447569" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="98" pc="268447576" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="100" pc="268447598" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="103" pc="268447647" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="104" pc="268447664" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="105" pc="268447673" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="108" pc="268447685" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="109" pc="268447696" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="110" pc="268447719" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="111" pc="268447741" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="114" pc="268447756" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="120" pc="268448071" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="121" pc="268448082" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="122" pc="268448095" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="123" pc="268448108" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="124" pc="268448121" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="125" pc="268448134" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="126" pc="268448151" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="128" pc="268448170" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="129" pc="268448181" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="130" pc="268448198" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="131" pc="268448214" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="132" pc="268448231" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="134" pc="268448247" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="135" pc="268448263" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="136" pc="268448276" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="137" pc="268448289" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="138" pc="268448302" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="140" pc="268448318" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="141" pc="268448331" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="142" pc="268448344" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="143" pc="268448357" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="145" pc="268448370" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="146" pc="268448387" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="147" pc="268448407" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="148" pc="268448432" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="154" pc="268448458" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="157" pc="268448501" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="158" pc="268448512" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="159" pc="268448531" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="160" pc="268448550" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="161" pc="268448561" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="162" pc="268448580" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="163" pc="268448599" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="164" pc="268448624" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="165" pc="268448643" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="182" pc="268448671" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="183" pc="268448688" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="184" pc="268448707" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="196" pc="268448753" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="197" pc="268448764" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="198" pc="268448783" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="200" pc="268448805" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="202" pc="268448833" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="203" pc="268448854" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="205" pc="268448881" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="210" pc="268448909" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="44" lineNum="211" pc="268448921" symbol="loadSettings"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="214" pc="268448934" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="216" pc="268448938" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="217" pc="268448981" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="218" pc="268449003" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="220" pc="268449014" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="220" pc="268449031" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="221" pc="268449078" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="221" pc="268449089" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="225" pc="268449139" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="226" pc="268449156" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="227" pc="268449199" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="228" pc="268449242" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="229" pc="268449288" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="230" pc="268449330" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="231" pc="268449368" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="233" pc="268449390" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="234" pc="268449454" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="235" pc="268449476" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="236" pc="268449498" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="237" pc="268449515" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="238" pc="268449534" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="241" pc="268449559" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="242" pc="268449602" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="243" pc="268449645" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="244" pc="268449685" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="245" pc="268449749" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="247" pc="268449780" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="248" pc="268449793" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="249" pc="268449836" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="250" pc="268449853" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="251" pc="268449964" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="252" pc="268450009" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="253" pc="268450046" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="254" pc="268450120" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="255" pc="268450137" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="258" pc="268450152" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="259" pc="268450205" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="260" pc="268450222" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="262" pc="268450244" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="263" pc="268450275" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="276" pc="268450328" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="277" pc="268450339" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="278" pc="268450370" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="279" pc="268450406" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="280" pc="268450423" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="283" pc="268450445" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="287" pc="268450473" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="288" pc="268450538" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="45" lineNum="289" pc="268450558" symbol="setLayoutVars"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="295" pc="268450582" symbol="onShow"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="298" pc="268450586" symbol="onShow"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="299" pc="268450603" symbol="onShow"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="46" lineNum="301" pc="268450619" symbol="onShow"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="47" lineNum="306" pc="268450633" symbol="onHide"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="47" lineNum="308" pc="268450637" symbol="onHide"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="48" lineNum="312" pc="268450651" symbol="onExitSleep"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="48" lineNum="315" pc="268450655" symbol="onExitSleep"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="49" lineNum="319" pc="268450668" symbol="onEnterSleep"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="49" lineNum="321" pc="268450672" symbol="onEnterSleep"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="49" lineNum="322" pc="268450689" symbol="onEnterSleep"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="49" lineNum="323" pc="268450702" symbol="onEnterSleep"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="49" lineNum="325" pc="268450721" symbol="onEnterSleep"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="335" pc="268450735" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="337" pc="268450739" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="338" pc="268450762" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="338" pc="268450808" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="340" pc="268450824" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="342" pc="268450841" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="343" pc="268450852" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="345" pc="268450869" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="346" pc="268450897" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="347" pc="268450909" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="348" pc="268450931" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="349" pc="268450975" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="351" pc="268450991" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="352" pc="268451008" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="353" pc="268451022" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="353" pc="268451033" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="354" pc="268451046" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="354" pc="268451057" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="357" pc="268451070" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="358" pc="268451102" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="359" pc="268451193" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="360" pc="268451207" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="362" pc="268451221" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="364" pc="268451238" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="365" pc="268451270" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="366" pc="268451277" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="367" pc="268451290" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="369" pc="268451379" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="370" pc="268451406" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="372" pc="268451456" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="373" pc="268451480" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="374" pc="268451508" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="378" pc="268451612" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="379" pc="268451644" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="380" pc="268451728" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="381" pc="268451762" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="382" pc="268451812" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="383" pc="268451839" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="384" pc="268451870" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="386" pc="268451887" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="389" pc="268451930" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="390" pc="268451941" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="392" pc="268451958" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="393" pc="268451975" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="395" pc="268451992" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="396" pc="268452003" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="397" pc="268452052" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="399" pc="268452067" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="402" pc="268452084" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="407" pc="268452118" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="50" lineNum="407" pc="268452135" symbol="onUpdate"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="411" pc="268452158" symbol="steps"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="51" lineNum="412" pc="268452162" symbol="steps"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="52" lineNum="414" pc="268452190" symbol="calories"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="52" lineNum="415" pc="268452194" symbol="calories"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="52" lineNum="416" pc="268452213" symbol="calories"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="52" lineNum="417" pc="268452233" symbol="calories"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="52" lineNum="419" pc="268452284" symbol="calories"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="53" lineNum="423" pc="268452291" symbol="activeMinutesDay"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="53" lineNum="424" pc="268452295" symbol="activeMinutesDay"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="54" lineNum="426" pc="268452344" symbol="activeMinutesWeek"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="54" lineNum="427" pc="268452348" symbol="activeMinutesWeek"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="55" lineNum="429" pc="268452382" symbol="floorsClimbed"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="55" lineNum="430" pc="268452386" symbol="floorsClimbed"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="433" pc="268452414" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="434" pc="268452418" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="435" pc="268452425" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="436" pc="268452444" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="437" pc="268452472" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="438" pc="268452483" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="439" pc="268452509" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="440" pc="268452540" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="441" pc="268452557" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="442" pc="268452589" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="443" pc="268452609" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="444" pc="268452620" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="445" pc="268452674" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="446" pc="268452685" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="447" pc="268452696" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="448" pc="268452751" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="450" pc="268452808" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="451" pc="268452840" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="454" pc="268452861" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="457" pc="268452916" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="458" pc="268452923" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="459" pc="268452974" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="460" pc="268453013" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="461" pc="268453045" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="462" pc="268453050" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="463" pc="268453110" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="465" pc="268453168" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="56" lineNum="466" pc="268453224" symbol="drawActivity"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="472" pc="268453272" symbol="drawIcon"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="57" lineNum="474" pc="268453276" symbol="drawIcon"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="58" lineNum="477" pc="268453328" symbol="drawActivityIcon"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="58" lineNum="479" pc="268453332" symbol="drawActivityIcon"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="495" pc="268453408" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="497" pc="268453412" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="498" pc="268453460" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="499" pc="268453486" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="500" pc="268453496" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="501" pc="268453515" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="503" pc="268453540" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="504" pc="268453583" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="506" pc="268453617" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="59" lineNum="508" pc="268453661" symbol="showMessage"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="513" pc="268453790" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="514" pc="268453794" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="515" pc="268453808" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="517" pc="268453821" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="518" pc="268453847" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="519" pc="268453866" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="520" pc="268453882" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="521" pc="268453901" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="522" pc="268453951" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="523" pc="268453981" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="524" pc="268454011" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="525" pc="268454041" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="526" pc="268454089" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="528" pc="268454136" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="532" pc="268454171" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="533" pc="268454190" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="60" lineNum="536" pc="268454210" symbol="onBackgroundData"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="540" pc="268454223" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="541" pc="268454227" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="542" pc="268454257" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="543" pc="268454308" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="544" pc="268454325" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="545" pc="268454346" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="547" pc="268454391" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="548" pc="268454413" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="549" pc="268454442" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="550" pc="268454468" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="552" pc="268454481" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="553" pc="268454491" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="555" pc="268454497" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="556" pc="268454508" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="558" pc="268454514" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="559" pc="268454595" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="560" pc="268454606" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="561" pc="268454619" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="563" pc="268454631" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="564" pc="268454684" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="565" pc="268454695" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="566" pc="268454720" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="567" pc="268454731" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="569" pc="268454771" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="570" pc="268454808" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="571" pc="268454818" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="572" pc="268454845" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="572" pc="268454856" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="573" pc="268454869" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="573" pc="268454880" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="575" pc="268454893" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="578" pc="268454941" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="580" pc="268455022" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="581" pc="268455048" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="582" pc="268455057" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="584" pc="268455085" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="590" pc="268455164" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="592" pc="268455178" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="61" lineNum="593" pc="268455187" symbol="updateCurrentEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="597" pc="268455197" symbol="humanizeNumber"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="598" pc="268455201" symbol="humanizeNumber"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="599" pc="268455212" symbol="humanizeNumber"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="62" lineNum="601" pc="268455253" symbol="humanizeNumber"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="605" pc="268455266" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="607" pc="268455270" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="608" pc="268455352" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="609" pc="268455403" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="610" pc="268455440" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="611" pc="268455477" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="612" pc="268455505" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="613" pc="268455526" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="614" pc="268455557" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="615" pc="268455585" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="617" pc="268455609" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="618" pc="268455637" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="63" lineNum="619" pc="268455654" symbol="drawNowCircle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="626" pc="268455679" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="627" pc="268455683" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="628" pc="268455697" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="629" pc="268455708" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="630" pc="268455764" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="631" pc="268455820" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="634" pc="268455852" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="635" pc="268455862" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="636" pc="268455876" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="637" pc="268455889" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="638" pc="268455902" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="639" pc="268455961" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="640" pc="268455993" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="643" pc="268456010" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="645" pc="268456062" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="646" pc="268456073" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="647" pc="268456083" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="648" pc="268456111" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="649" pc="268456144" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="64" lineNum="650" pc="268456172" symbol="drawEvent"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="655" pc="268456209" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="656" pc="268456213" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="657" pc="268456223" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="658" pc="268456223" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="659" pc="268456240" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="660" pc="268456269" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="662" pc="268456279" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="663" pc="268456308" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="666" pc="268456315" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="667" pc="268456358" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="668" pc="268456397" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="668" pc="268456397" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="673" pc="268456397" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="675" pc="268456427" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="676" pc="268456485" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="677" pc="268456519" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="678" pc="268456529" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="679" pc="268456570" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="681" pc="268456616" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="682" pc="268456630" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="685" pc="268456664" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="686" pc="268456683" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="688" pc="268456708" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="708" pc="268456722" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="709" pc="268456750" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="710" pc="268456764" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="711" pc="268456828" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="712" pc="268456854" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="714" pc="268456921" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="65" lineNum="715" pc="268456935" symbol="drawEvents"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="728" pc="268457010" symbol="getMarkerCoords"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="729" pc="268457014" symbol="getMarkerCoords"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="730" pc="268457079" symbol="getMarkerCoords"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="731" pc="268457124" symbol="getMarkerCoords"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="66" lineNum="732" pc="268457219" symbol="getMarkerCoords"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="735" pc="268457301" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="736" pc="268457305" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="739" pc="268457321" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="740" pc="268457350" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="741" pc="268457369" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="742" pc="268457388" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="743" pc="268457395" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="745" pc="268457402" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="746" pc="268457434" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="749" pc="268457521" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="750" pc="268457532" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="751" pc="268457560" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="764" pc="268457580" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="765" pc="268457591" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="766" pc="268457602" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="767" pc="268457609" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="768" pc="268457620" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="771" pc="268457633" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="772" pc="268457658" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="774" pc="268457668" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="778" pc="268457678" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="779" pc="268457689" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="781" pc="268457699" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="782" pc="268457710" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="784" pc="268457720" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="67" lineNum="788" pc="268457727" symbol="drawMinuteArc"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="792" pc="268457804" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="793" pc="268457808" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="794" pc="268457831" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="795" pc="268457845" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="796" pc="268457861" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="800" pc="268457871" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="801" pc="268457899" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="802" pc="268457916" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="803" pc="268457942" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="806" pc="268457996" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="807" pc="268458022" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="809" pc="268458060" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="810" pc="268458087" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="810" pc="268458098" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="812" pc="268458136" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="68" lineNum="813" pc="268458168" symbol="drawBatteryLevel"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="819" pc="268458210" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="820" pc="268458214" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="821" pc="268458237" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="822" pc="268458286" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="823" pc="268458306" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="824" pc="268458331" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="825" pc="268458351" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="827" pc="268458364" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="830" pc="268458445" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="831" pc="268458459" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="833" pc="268458466" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="69" lineNum="834" pc="268458504" symbol="trimPastHoursInWeatherHourly"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="838" pc="268458508" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="840" pc="268458512" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="842" pc="268458525" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="843" pc="268458536" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="845" pc="268458578" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="845" pc="268458578" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="847" pc="268458578" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="848" pc="268458622" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="849" pc="268458635" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="850" pc="268458672" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="851" pc="268458685" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="852" pc="268458695" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="854" pc="268458747" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="855" pc="268458773" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="858" pc="268458875" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="859" pc="268458901" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="860" pc="268458933" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="861" pc="268458959" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="862" pc="268458996" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="863" pc="268459013" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="865" pc="268459036" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="70" lineNum="867" pc="268459067" symbol="drawWeather"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="872" pc="268459139" symbol="toAngle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="71" lineNum="873" pc="268459143" symbol="toAngle"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="72" lineNum="876" pc="268459177" symbol="drawIconAtTime"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="72" lineNum="877" pc="268459181" symbol="drawIconAtTime"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="72" lineNum="878" pc="268459215" symbol="drawIconAtTime"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="73" lineNum="881" pc="268459302" symbol="drawSunBitmaps"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="73" lineNum="882" pc="268459306" symbol="drawSunBitmaps"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="73" lineNum="883" pc="268459328" symbol="drawSunBitmaps"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="73" lineNum="884" pc="268459360" symbol="drawSunBitmaps"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="73" lineNum="885" pc="268459396" symbol="drawSunBitmaps"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="890" pc="268459436" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="891" pc="268459440" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="893" pc="268459463" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="894" pc="268459470" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="895" pc="268459501" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="896" pc="268459508" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="897" pc="268459526" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="900" pc="268459533" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="901" pc="268459546" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="906" pc="268459578" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="907" pc="268459603" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="911" pc="268459628" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="912" pc="268459650" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="914" pc="268459737" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="915" pc="268459753" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="917" pc="268459790" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="918" pc="268459838" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="921" pc="268459886" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="922" pc="268459886" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="923" pc="268459903" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="926" pc="268459937" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="929" pc="268459968" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="930" pc="268460016" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="933" pc="268460064" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="934" pc="268460115" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="935" pc="268460136" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="936" pc="268460155" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="940" pc="268460187" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="941" pc="268460234" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="942" pc="268460266" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="944" pc="268460297" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="945" pc="268460329" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="950" pc="268460373" symbol="computeSun"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="23" pc="268460440" symbol="&lt;init&gt;"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="23" pc="268460457" symbol="&lt;init&gt;"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="29" pc="268460471" symbol="&lt;init&gt;"/>
+<entry filename="/Users/myneur/Documents/garmin-connect-iq/late/source/lateView.mc" id="74" lineNum="31" pc="268460485" symbol="&lt;init&gt;"/>
 </pcToLineNum>
 <symbolTable>
-<entry field="true" id="129" symbol="refreshFrequency"/>
-<entry field="true" id="146" symbol="activityColor"/>
+<entry field="true" id="130" symbol="refreshFrequency"/>
+<entry field="true" id="147" symbol="activityColor"/>
 <entry field="true" id="16" symbol="SUNRISET_NBR"/>
-<entry field="true" id="117" symbol="showPercents"/>
-<entry id="181" method="true" symbol="setLayoutVars"/>
+<entry field="true" id="118" symbol="showPercents"/>
+<entry id="183" method="true" symbol="setLayoutVars"/>
+<entry field="true" id="67" symbol="calCol"/>
 <entry id="8388632" method="true" symbol="&lt;init&gt;"/>
 <entry field="true" id="66" symbol="Ico"/>
-<entry id="195" method="true" symbol="drawWeather"/>
-<entry field="true" id="105" symbol="ColorPurple"/>
+<entry id="197" method="true" symbol="drawWeather"/>
+<entry field="true" id="106" symbol="ColorPurple"/>
 <entry id="4" module="true" symbol="globals/Rez/Menus"/>
 <entry field="true" id="35" symbol="events_list"/>
-<entry field="true" id="94" symbol="NotSupportedData"/>
-<entry field="true" id="166" symbol="batteryY"/>
-<entry field="true" id="108" symbol="Steps"/>
+<entry field="true" id="95" symbol="NotSupportedData"/>
+<entry field="true" id="168" symbol="batteryY"/>
+<entry field="true" id="109" symbol="Steps"/>
 <entry id="29" method="true" symbol="parseEvents"/>
-<entry field="true" id="153" symbol="percentage"/>
-<entry field="true" id="112" symbol="NastyError"/>
+<entry field="true" id="155" symbol="percentage"/>
+<entry field="true" id="113" symbol="NastyError"/>
 <entry id="26" method="true" symbol="unScheduleDataLoading"/>
-<entry field="true" id="81" symbol="LinkPrefix"/>
-<entry field="true" id="121" symbol="ColorGreen"/>
+<entry field="true" id="82" symbol="LinkPrefix"/>
+<entry field="true" id="122" symbol="ColorGreen"/>
 <entry id="8389683" method="true" symbol="onSettingsChanged"/>
-<entry field="true" id="120" symbol="Celsius"/>
+<entry field="true" id="121" symbol="Celsius"/>
 <entry id="18" object="true" symbol="lateView"/>
 <entry field="true" id="8389759" symbol="radius"/>
 <entry field="true" id="8388737" method="true" symbol="calories"/>
 <entry id="23" method="true" symbol="durationToNextEvent"/>
-<entry field="true" id="73" symbol="ColorRed"/>
-<entry id="186" method="true" symbol="updateCurrentEvent"/>
+<entry field="true" id="74" symbol="ColorRed"/>
+<entry id="188" method="true" symbol="updateCurrentEvent"/>
 <entry id="40" method="true" symbol="onOAuthUserCode"/>
-<entry field="true" id="175" symbol="eventHeight"/>
-<entry field="true" id="171" symbol="eventStart"/>
-<entry field="true" id="92" symbol="CIQ"/>
-<entry id="196" method="true" symbol="toAngle"/>
+<entry field="true" id="177" symbol="eventHeight"/>
+<entry field="true" id="173" symbol="eventStart"/>
+<entry field="true" id="93" symbol="CIQ"/>
+<entry id="198" method="true" symbol="toAngle"/>
 <entry field="true" id="8388938" symbol="month"/>
-<entry id="193" method="true" symbol="drawBatteryLevel"/>
-<entry field="true" id="78" symbol="ActiveMinutesDay"/>
-<entry field="true" id="100" symbol="ColorGray"/>
+<entry id="195" method="true" symbol="drawBatteryLevel"/>
+<entry field="true" id="79" symbol="ActiveMinutesDay"/>
+<entry field="true" id="101" symbol="ColorGray"/>
 <entry field="true" id="59" symbol="Bat"/>
 <entry id="42" method="true" symbol="onTokenRefresh2GetData"/>
 <entry id="28" method="true" symbol="swap"/>
-<entry field="true" id="83" symbol="CalendarPrompt"/>
+<entry field="true" id="84" symbol="CalendarPrompt"/>
 <entry field="true" id="62" symbol="HoursStrong"/>
-<entry field="true" id="126" symbol="AddCalendars"/>
+<entry field="true" id="127" symbol="AddCalendars"/>
 <entry field="true" id="15" symbol="SUNRISET_MAX"/>
 <entry id="8388924" module="true" symbol="Gregorian"/>
 <entry field="true" id="33" symbol="current_index"/>
-<entry field="true" id="132" symbol="WeatherPrompt"/>
-<entry field="true" id="88" symbol="ActiveMinutesWeek"/>
-<entry field="true" id="163" symbol="dateY"/>
-<entry field="true" id="155" symbol="utcOffset"/>
+<entry field="true" id="133" symbol="WeatherPrompt"/>
+<entry field="true" id="89" symbol="ActiveMinutesWeek"/>
+<entry field="true" id="165" symbol="dateY"/>
+<entry field="true" id="157" symbol="utcOffset"/>
 <entry field="true" id="8388611" module="true" symbol="Toybox"/>
 <entry id="30" method="true" symbol="parseISODate"/>
-<entry field="true" id="178" symbol="weatherHourly"/>
-<entry field="true" id="109" symbol="ColorBlue"/>
+<entry field="true" id="180" symbol="weatherHourly"/>
+<entry field="true" id="110" symbol="ColorBlue"/>
 <entry field="true" id="20" symbol="app"/>
-<entry field="true" id="115" symbol="AppName"/>
+<entry field="true" id="116" symbol="AppName"/>
 <entry id="8389339" symbol="second"/>
 <entry id="41" method="true" symbol="getTokensAndData"/>
 <entry field="true" id="38" symbol="subscription_id"/>
-<entry field="true" id="114" symbol="CalendarColors"/>
+<entry field="true" id="115" symbol="CalendarColors"/>
 <entry id="8" module="true" symbol="globals/Rez/Strings"/>
-<entry field="true" id="179" symbol="redrawAll"/>
-<entry field="true" id="128" symbol="ActivityTitleR"/>
+<entry field="true" id="181" symbol="redrawAll"/>
+<entry field="true" id="129" symbol="ActivityTitleR"/>
 <entry id="8389594" symbol="headers"/>
-<entry field="true" id="123" symbol="ActivityTitleL"/>
-<entry field="true" id="164" symbol="circleWidth"/>
+<entry field="true" id="124" symbol="ActivityTitleL"/>
+<entry field="true" id="166" symbol="circleWidth"/>
 <entry id="8388772" module="true" object="true" symbol="Fonts"/>
-<entry field="true" id="150" symbol="showSunrise"/>
-<entry field="true" id="101" symbol="CalendarByColor"/>
+<entry field="true" id="152" symbol="showSunrise"/>
+<entry field="true" id="102" symbol="CalendarByColor"/>
 <entry field="true" id="8388912" method="true" symbol="steps"/>
 <entry id="54" method="true" symbol="onSubscriptionId"/>
 <entry id="8388631" module="true" symbol="Activity"/>
 <entry id="8390147" object="true" symbol="ServiceDelegate"/>
 <entry id="8389338" symbol="minute"/>
-<entry field="true" id="136" symbol="CalendarNoChange"/>
-<entry field="true" id="95" symbol="ColorOrange"/>
-<entry field="true" id="156" symbol="lonW"/>
-<entry field="true" id="172" symbol="eventName"/>
+<entry field="true" id="137" symbol="CalendarNoChange"/>
+<entry field="true" id="96" symbol="ColorOrange"/>
+<entry field="true" id="158" symbol="lonW"/>
+<entry field="true" id="174" symbol="eventName"/>
 <entry id="11" method="true" symbol="computeDayNumber"/>
 <entry id="2" module="true" symbol="globals/Rez"/>
 <entry id="8390148" method="true" symbol="onTemporalEvent"/>
-<entry field="true" id="122" symbol="BellowThird"/>
-<entry field="true" id="113" symbol="ToneTitle"/>
-<entry field="true" id="107" symbol="Always"/>
+<entry field="true" id="123" symbol="BellowThird"/>
+<entry field="true" id="114" symbol="ToneTitle"/>
+<entry field="true" id="108" symbol="Always"/>
 <entry id="8389124" method="true" symbol="onUpdate"/>
 <entry field="true" id="57" symbol="Sunset"/>
-<entry field="true" id="180" symbol="lastRedrawMin"/>
-<entry id="190" method="true" symbol="drawEvents"/>
+<entry field="true" id="182" symbol="lastRedrawMin"/>
+<entry id="192" method="true" symbol="drawEvents"/>
 <entry field="true" id="8391489" module="true" symbol="Weather"/>
-<entry field="true" id="104" symbol="BellowFive"/>
+<entry field="true" id="105" symbol="BellowFive"/>
 <entry field="true" id="32" symbol="refresh_token"/>
 <entry id="12" method="true" symbol="dayOfYear"/>
 <entry id="8388771" module="true" object="true" symbol="Drawables"/>
+<entry field="true" id="68" symbol="metCol"/>
 <entry field="true" id="8389067" symbol="height"/>
 <entry id="46" method="true" symbol="getNextCalendarEvents"/>
-<entry field="true" id="86" symbol="s1"/>
-<entry field="true" id="85" symbol="s0"/>
+<entry field="true" id="87" symbol="s1"/>
+<entry field="true" id="86" symbol="s0"/>
 <entry id="8390169" method="true" symbol="getServiceDelegate"/>
 <entry id="56" module="true" symbol="Menus"/>
 <entry id="6" module="true" symbol="globals/Rez/Layouts"/>
 <entry field="true" id="8389869" method="true" symbol="activeMinutesWeek"/>
-<entry id="189" method="true" symbol="drawEvent"/>
-<entry field="true" id="169" symbol="sunR"/>
+<entry id="191" method="true" symbol="drawEvent"/>
+<entry field="true" id="171" symbol="sunR"/>
 <entry id="47" method="true" symbol="getEvents"/>
 <entry id="8389122" method="true" symbol="onLayout"/>
-<entry field="true" id="69" symbol="BellowTwenty"/>
+<entry field="true" id="70" symbol="BellowTwenty"/>
 <entry id="8389376" method="true" symbol="onEnterSleep"/>
 <entry field="true" id="65" symbol="Condensed"/>
 <entry field="true" id="17" symbol="meteoColors"/>
-<entry field="true" id="70" symbol="EnterCode"/>
-<entry field="true" id="131" symbol="DialSize"/>
-<entry field="true" id="99" symbol="Dark"/>
+<entry field="true" id="71" symbol="EnterCode"/>
+<entry field="true" id="132" symbol="DialSize"/>
+<entry field="true" id="100" symbol="Dark"/>
 <entry field="true" id="37" symbol="maxResults"/>
-<entry field="true" id="72" symbol="BatteryTitle"/>
-<entry id="192" method="true" symbol="drawMinuteArc"/>
-<entry field="true" id="157" symbol="latN"/>
-<entry field="true" id="125" symbol="Calendar"/>
-<entry id="185" method="true" symbol="showMessage"/>
-<entry field="true" id="80" symbol="b9"/>
-<entry field="true" id="77" symbol="b7"/>
-<entry field="true" id="158" symbol="sunrise"/>
-<entry field="true" id="76" symbol="b5"/>
-<entry field="true" id="75" symbol="b4"/>
-<entry field="true" id="74" symbol="b3"/>
-<entry field="true" id="151" symbol="dataLoading"/>
+<entry field="true" id="73" symbol="BatteryTitle"/>
+<entry id="194" method="true" symbol="drawMinuteArc"/>
+<entry field="true" id="159" symbol="latN"/>
+<entry field="true" id="126" symbol="Calendar"/>
+<entry id="187" method="true" symbol="showMessage"/>
+<entry field="true" id="81" symbol="b9"/>
+<entry field="true" id="78" symbol="b7"/>
+<entry field="true" id="160" symbol="sunrise"/>
+<entry field="true" id="77" symbol="b5"/>
+<entry field="true" id="76" symbol="b4"/>
+<entry field="true" id="75" symbol="b3"/>
+<entry field="true" id="153" symbol="dataLoading"/>
 <entry id="43" method="true" symbol="keyContains"/>
-<entry field="true" id="79" symbol="Light"/>
+<entry field="true" id="80" symbol="Light"/>
 <entry id="7" module="true" symbol="globals/Rez/JsonData"/>
-<entry field="true" id="147" symbol="activity"/>
-<entry id="183" method="true" symbol="drawIcon"/>
+<entry field="true" id="149" symbol="activity"/>
+<entry id="185" method="true" symbol="drawIcon"/>
 <entry field="true" id="61" symbol="Hours"/>
 <entry id="8388637" module="true" symbol="Communications"/>
-<entry id="8389717" method="true" symbol="ceil"/>
 <entry id="3" module="true" symbol="globals/Rez/Drawables"/>
 <entry id="8390170" method="true" symbol="onBackgroundData"/>
-<entry field="true" id="90" symbol="DataLoading"/>
-<entry field="true" id="170" symbol="icons"/>
+<entry field="true" id="91" symbol="DataLoading"/>
+<entry field="true" id="172" symbol="icons"/>
 <entry field="true" id="8389870" method="true" symbol="activeMinutesDay"/>
-<entry field="true" id="162" symbol="fontCondensed"/>
-<entry field="true" id="111" symbol="showSunriseSunsetTitle"/>
-<entry field="true" id="139" symbol="NotFound"/>
-<entry field="true" id="167" symbol="activityY"/>
-<entry field="true" id="149" symbol="activityR"/>
-<entry field="true" id="148" symbol="activityL"/>
+<entry field="true" id="164" symbol="fontCondensed"/>
+<entry field="true" id="112" symbol="showSunriseSunsetTitle"/>
+<entry field="true" id="140" symbol="NotFound"/>
+<entry field="true" id="169" symbol="activityY"/>
+<entry field="true" id="151" symbol="activityR"/>
+<entry field="true" id="150" symbol="activityL"/>
 <entry id="8388786" method="true" symbol="method"/>
 <entry id="8389377" method="true" symbol="onExitSleep"/>
-<entry field="true" id="137" symbol="Wait4login"/>
-<entry field="true" id="93" symbol="Expired"/>
-<entry field="true" id="168" symbol="messageY"/>
+<entry field="true" id="138" symbol="Wait4login"/>
+<entry field="true" id="94" symbol="Expired"/>
+<entry field="true" id="170" symbol="messageY"/>
 <entry id="27" method="true" symbol="split"/>
-<entry field="true" id="161" symbol="fontHours"/>
+<entry field="true" id="163" symbol="fontHours"/>
 <entry id="8388645" module="true" symbol="Time"/>
 <entry id="8388769" module="true" object="true" symbol="Rez"/>
-<entry field="true" id="116" symbol="ActivityTitle"/>
+<entry field="true" id="117" symbol="ActivityTitle"/>
 <entry id="24" method="true" symbol="promptLogin"/>
-<entry field="true" id="118" symbol="Unauthorized"/>
-<entry id="199" method="true" symbol="computeSun"/>
-<entry field="true" id="96" symbol="DateFormTitle"/>
-<entry field="true" id="141" symbol="batThreshold"/>
-<entry field="true" id="84" symbol="Boldness"/>
+<entry field="true" id="119" symbol="Unauthorized"/>
+<entry id="201" method="true" symbol="computeSun"/>
+<entry field="true" id="97" symbol="DateFormTitle"/>
+<entry field="true" id="142" symbol="batThreshold"/>
+<entry field="true" id="85" symbol="Boldness"/>
 <entry field="true" id="36" symbol="primary_calendar"/>
 <entry field="true" id="8388720" symbol="hour"/>
-<entry field="true" id="165" symbol="dialSize"/>
+<entry field="true" id="167" symbol="dialSize"/>
 <entry id="48" method="true" symbol="onEvents"/>
 <entry field="true" id="63" symbol="Small"/>
 <entry field="true" id="34" symbol="calendar_ids"/>
-<entry id="184" method="true" symbol="drawActivityIcon"/>
+<entry id="186" method="true" symbol="drawActivityIcon"/>
 <entry id="8388640" module="true" symbol="Lang"/>
-<entry field="true" id="174" symbol="eventTab"/>
-<entry id="200" symbol="calendar"/>
+<entry field="true" id="176" symbol="eventTab"/>
+<entry id="202" symbol="calendar"/>
 <entry id="8390088" module="true" object="true" symbol="JsonData"/>
-<entry field="true" id="177" symbol="message"/>
+<entry field="true" id="179" symbol="message"/>
 <entry field="true" id="60" symbol="LauncherIcon"/>
-<entry field="true" id="152" symbol="showWeather"/>
-<entry field="true" id="154" symbol="clockTime"/>
+<entry field="true" id="154" symbol="showWeather"/>
+<entry field="true" id="156" symbol="clockTime"/>
 <entry id="8388610" symbol="statics"/>
 <entry id="8389123" method="true" symbol="onShow"/>
-<entry id="191" method="true" symbol="getMarkerCoords"/>
+<entry id="193" method="true" symbol="getMarkerCoords"/>
 <entry id="52" method="true" symbol="getSubscriptionId"/>
-<entry field="true" id="133" symbol="Fahrenheit"/>
+<entry field="true" id="134" symbol="Fahrenheit"/>
 <entry field="true" id="58" symbol="Sunrise"/>
-<entry id="187" method="true" symbol="humanizeNumber"/>
+<entry id="189" method="true" symbol="humanizeNumber"/>
 <entry id="8389350" module="true" symbol="globals"/>
 <entry id="22" method="true" symbol="scheduleDataLoading"/>
-<entry field="true" id="91" symbol="NoInternet"/>
-<entry field="true" id="87" symbol="Floors"/>
+<entry field="true" id="92" symbol="NoInternet"/>
+<entry field="true" id="88" symbol="Floors"/>
 <entry id="8388770" module="true" object="true" symbol="Strings"/>
 <entry id="8390146" module="true" symbol="Background"/>
 <entry id="25" method="true" symbol="changeScheduleToMinutes"/>
-<entry field="true" id="143" symbol="centerY"/>
-<entry field="true" id="142" symbol="centerX"/>
+<entry field="true" id="144" symbol="centerY"/>
+<entry field="true" id="143" symbol="centerX"/>
 <entry id="10" object="true" symbol="lateBackground"/>
 <entry field="true" id="8389872" method="true" symbol="floorsClimbed"/>
 <entry id="9" object="true" symbol="lateApp"/>
 <entry id="8388702" method="true" symbol="initialize"/>
 <entry id="39" method="true" symbol="getOAuthUserCode"/>
-<entry field="true" id="140" symbol="dateForm"/>
-<entry field="true" id="160" symbol="fontSmall"/>
-<entry field="true" id="173" symbol="eventLocation"/>
-<entry field="true" id="98" symbol="Vivid"/>
-<entry field="true" id="119" symbol="DnD"/>
-<entry field="true" id="68" symbol="OutOfMemory"/>
+<entry field="true" id="141" symbol="dateForm"/>
+<entry field="true" id="162" symbol="fontSmall"/>
+<entry field="true" id="175" symbol="eventLocation"/>
+<entry field="true" id="99" symbol="Vivid"/>
+<entry field="true" id="120" symbol="DnD"/>
+<entry field="true" id="69" symbol="OutOfMemory"/>
 <entry id="49" method="true" symbol="exitWithDataAndToken"/>
 <entry id="53" method="true" symbol="buySubscription"/>
 <entry id="8388641" module="true" symbol="Math"/>
 <entry field="true" id="19" symbol="watch"/>
-<entry field="true" id="124" symbol="DateFormMonth"/>
-<entry id="188" method="true" symbol="drawNowCircle"/>
+<entry field="true" id="125" symbol="DateFormMonth"/>
+<entry id="190" method="true" symbol="drawNowCircle"/>
 <entry id="8391701" method="true" symbol="setAntiAlias"/>
-<entry id="194" method="true" symbol="trimPastHoursInWeatherHourly"/>
+<entry id="196" method="true" symbol="trimPastHoursInWeatherHourly"/>
 <entry id="8389280" method="true" symbol="getInitialView"/>
 <entry field="true" id="31" symbol="access_token"/>
 <entry field="true" id="8389347" symbol="color"/>
-<entry field="true" id="102" symbol="ColorBg"/>
+<entry field="true" id="103" symbol="ColorBg"/>
 <entry field="true" id="8388939" symbol="day"/>
-<entry field="true" id="97" symbol="Units"/>
-<entry field="true" id="144" symbol="timeColor"/>
+<entry field="true" id="98" symbol="Units"/>
+<entry field="true" id="145" symbol="timeColor"/>
 <entry field="true" id="64" symbol="SmallStrong"/>
-<entry field="true" id="145" symbol="dateColor"/>
-<entry id="197" method="true" symbol="drawIconAtTime"/>
-<entry field="true" id="135" symbol="NoGPS"/>
+<entry field="true" id="146" symbol="dateColor"/>
+<entry id="199" method="true" symbol="drawIconAtTime"/>
+<entry field="true" id="136" symbol="NoGPS"/>
 <entry id="13" method="true" symbol="computeSunriset"/>
 <entry field="true" id="8388940" symbol="year"/>
-<entry field="true" id="89" symbol="AppVersionTitle"/>
+<entry field="true" id="90" symbol="AppVersionTitle"/>
 <entry id="55" module="true" symbol="Layouts"/>
-<entry field="true" id="67" symbol="calendarColors"/>
-<entry field="true" id="134" symbol="Calories"/>
+<entry field="true" id="148" symbol="calendarColors"/>
+<entry field="true" id="135" symbol="Calories"/>
 <entry id="21" method="true" symbol="loadSettings"/>
 <entry id="8389718" method="true" symbol="floor"/>
 <entry id="44" method="true" symbol="getPrimaryCalendar"/>
 <entry id="45" method="true" symbol="onPrimaryCalendarCandidates"/>
 <entry id="50" method="true" symbol="getWeatherForecast"/>
-<entry field="true" id="130" symbol="NotConnected"/>
-<entry field="true" id="159" symbol="sunset"/>
+<entry field="true" id="131" symbol="NotConnected"/>
+<entry field="true" id="161" symbol="sunset"/>
 <entry id="5" module="true" symbol="globals/Rez/Fonts"/>
 <entry field="true" id="8389743" symbol="backgroundColor"/>
-<entry field="true" id="71" symbol="Subscribe"/>
+<entry field="true" id="72" symbol="Subscribe"/>
 <entry id="8389125" method="true" symbol="onHide"/>
-<entry id="198" method="true" symbol="drawSunBitmaps"/>
+<entry id="200" method="true" symbol="drawSunBitmaps"/>
 <entry field="true" id="14" symbol="SUNRISET_NOW"/>
-<entry id="182" method="true" symbol="drawActivity"/>
-<entry field="true" id="176" symbol="eventMarker"/>
+<entry id="184" method="true" symbol="drawActivity"/>
+<entry field="true" id="178" symbol="eventMarker"/>
 <entry id="51" method="true" symbol="onWeatherForecast"/>
-<entry field="true" id="82" symbol="WhiteBg"/>
-<entry field="true" id="138" symbol="CalendarsPrompt"/>
-<entry field="true" id="127" symbol="BellowTen"/>
-<entry field="true" id="106" symbol="DateFormDayOfWeek"/>
-<entry field="true" id="110" symbol="ColorTitle"/>
-<entry field="true" id="103" symbol="BellowHalf"/>
+<entry field="true" id="83" symbol="WhiteBg"/>
+<entry field="true" id="139" symbol="CalendarsPrompt"/>
+<entry field="true" id="128" symbol="BellowTen"/>
+<entry field="true" id="107" symbol="DateFormDayOfWeek"/>
+<entry field="true" id="111" symbol="ColorTitle"/>
+<entry field="true" id="104" symbol="BellowHalf"/>
 </symbolTable>
 <localVars>
 <entry endPc="268436016" name="prompt" stackId="2" startPc="268435892"/>
@@ -1294,121 +1285,118 @@
 <entry arg="true" endPc="268446513" name="longitude" stackId="2" startPc="268445841"/>
 <entry arg="true" endPc="268446513" name="latitude" stackId="3" startPc="268445841"/>
 <entry arg="true" endPc="268446573" name="f" stackId="1" startPc="268446513"/>
-<entry endPc="268446642" name="f2" stackId="2" startPc="268446585"/>
-<entry arg="true" endPc="268446643" name="f" stackId="1" startPc="268446573"/>
-<entry endPc="268446939" name="events" stackId="2" startPc="268446869"/>
-<entry endPc="268447038" name="weather" stackId="3" startPc="268446968"/>
-<entry endPc="268447041" name="s" stackId="1" startPc="268446647"/>
-<entry arg="true" endPc="268447059" name="dc" stackId="1" startPc="268447042"/>
-<entry endPc="268449016" name="i" stackId="5" startPc="268448967"/>
-<entry endPc="268449196" name="mainColor" stackId="4" startPc="268447063"/>
-<entry endPc="268449196" name="tone" stackId="3" startPc="268447063"/>
-<entry endPc="268449196" name="activities" stackId="2" startPc="268447063"/>
-<entry endPc="268449196" name="app" stackId="1" startPc="268447063"/>
-<entry endPc="268450844" name="langTest" stackId="1" startPc="268449201"/>
-<entry endPc="268452375" name="x" stackId="6" startPc="268451501"/>
-<entry endPc="268452375" name="text" stackId="5" startPc="268451501"/>
-<entry endPc="268452378" name="h" stackId="3" startPc="268451104"/>
-<entry endPc="268452378" name="info" stackId="2" startPc="268451104"/>
-<entry endPc="268452378" name="set" stackId="4" startPc="268451104"/>
-<entry arg="true" endPc="268452421" name="dc" stackId="1" startPc="268450998"/>
-<entry arg="true" endPc="268452453" name="info" stackId="1" startPc="268452421"/>
-<entry endPc="268452553" name="h" stackId="2" startPc="268452457"/>
-<entry arg="true" endPc="268452554" name="info" stackId="1" startPc="268452453"/>
-<entry arg="true" endPc="268452607" name="info" stackId="1" startPc="268452554"/>
-<entry arg="true" endPc="268452645" name="info" stackId="1" startPc="268452607"/>
-<entry arg="true" endPc="268452677" name="info" stackId="1" startPc="268452645"/>
-<entry endPc="268453176" name="r" stackId="8" startPc="268452746"/>
-<entry endPc="268453531" name="icoHalf" stackId="9" startPc="268453179"/>
-<entry endPc="268453531" name="activityChar" stackId="7" startPc="268452688"/>
-<entry endPc="268453531" name="info" stackId="6" startPc="268452688"/>
-<entry arg="true" endPc="268453535" name="x" stackId="3" startPc="268452677"/>
-<entry arg="true" endPc="268453535" name="horizontal" stackId="5" startPc="268452677"/>
-<entry arg="true" endPc="268453535" name="dc" stackId="1" startPc="268452677"/>
-<entry arg="true" endPc="268453535" name="activity" stackId="2" startPc="268452677"/>
-<entry arg="true" endPc="268453535" name="y" stackId="4" startPc="268452677"/>
-<entry arg="true" endPc="268453591" name="x" stackId="2" startPc="268453535"/>
-<entry arg="true" endPc="268453591" name="dc" stackId="1" startPc="268453535"/>
-<entry arg="true" endPc="268453591" name="char" stackId="4" startPc="268453535"/>
-<entry arg="true" endPc="268453591" name="y" stackId="3" startPc="268453535"/>
-<entry arg="true" endPc="268453671" name="x" stackId="2" startPc="268453591"/>
-<entry arg="true" endPc="268453671" name="dc" stackId="1" startPc="268453591"/>
-<entry arg="true" endPc="268453671" name="activity" stackId="4" startPc="268453591"/>
-<entry arg="true" endPc="268453671" name="y" stackId="3" startPc="268453591"/>
-<entry endPc="268454049" name="fromAngle" stackId="5" startPc="268453723"/>
-<entry endPc="268454049" name="context" stackId="3" startPc="268453723"/>
-<entry endPc="268454049" name="calendar" stackId="4" startPc="268453723"/>
-<entry endPc="268454049" name="nowError" stackId="2" startPc="268453723"/>
-<entry arg="true" endPc="268454053" name="msg" stackId="1" startPc="268453671"/>
-<entry endPc="268454428" name="i" stackId="5" startPc="268454304"/>
-<entry endPc="268454428" name="moonAngle" stackId="4" startPc="268454214"/>
-<entry endPc="268454428" name="sunAngle" stackId="3" startPc="268454214"/>
-<entry endPc="268454431" name="hourAngle" stackId="2" startPc="268454129"/>
-<entry arg="true" endPc="268454486" name="data" stackId="1" startPc="268454053"/>
-<entry endPc="268455204" name="h" stackId="7" startPc="268455034"/>
-<entry endPc="268455204" name="time" stackId="6" startPc="268455034"/>
-<entry endPc="268455428" name="eventEnd" stackId="5" startPc="268454520"/>
-<entry endPc="268455428" name="timeNow" stackId="3" startPc="268454520"/>
-<entry endPc="268455428" name="tillStart" stackId="4" startPc="268454520"/>
-<entry endPc="268455441" name="i" stackId="2" startPc="268454520"/>
-<entry arg="true" endPc="268455460" name="dc" stackId="1" startPc="268454486"/>
-<entry arg="true" endPc="268455529" name="number" stackId="1" startPc="268455460"/>
-<entry endPc="268455938" name="x" stackId="4" startPc="268455615"/>
-<entry endPc="268455938" name="a" stackId="3" startPc="268455615"/>
-<entry endPc="268455938" name="y" stackId="5" startPc="268455615"/>
-<entry arg="true" endPc="268455942" name="hour" stackId="2" startPc="268455529"/>
-<entry arg="true" endPc="268455942" name="dc" stackId="1" startPc="268455529"/>
-<entry endPc="268456322" name="x" stackId="2" startPc="268455971"/>
-<entry endPc="268456322" name="justify" stackId="3" startPc="268455971"/>
-<entry endPc="268456468" name="coord" stackId="4" startPc="268456336"/>
-<entry arg="true" endPc="268456472" name="dc" stackId="1" startPc="268455942"/>
-<entry endPc="268457272" name="i" stackId="8" startPc="268456690"/>
-<entry endPc="268457272" name="fromAngle" stackId="6" startPc="268456476"/>
-<entry endPc="268457272" name="nowBoundary" stackId="4" startPc="268456476"/>
-<entry endPc="268457272" name="radius" stackId="2" startPc="268456476"/>
-<entry endPc="268457272" name="tomorrow" stackId="5" startPc="268456476"/>
-<entry endPc="268457272" name="toAngle" stackId="7" startPc="268456476"/>
-<entry endPc="268457272" name="width" stackId="3" startPc="268456476"/>
-<entry arg="true" endPc="268457273" name="dc" stackId="1" startPc="268456472"/>
-<entry endPc="268457563" name="secondsFromLastHour" stackId="3" startPc="268457277"/>
-<entry endPc="268457563" name="a" stackId="4" startPc="268457277"/>
-<entry endPc="268457563" name="r" stackId="5" startPc="268457277"/>
-<entry arg="true" endPc="268457564" name="event" stackId="1" startPc="268457273"/>
-<entry arg="true" endPc="268457564" name="tillStart" stackId="2" startPc="268457273"/>
-<entry endPc="268458066" name="sin" stackId="5" startPc="268457568"/>
-<entry endPc="268458066" name="minutes" stackId="2" startPc="268457568"/>
-<entry endPc="268458066" name="cos" stackId="4" startPc="268457568"/>
-<entry endPc="268458066" name="offset" stackId="6" startPc="268457568"/>
-<entry endPc="268458066" name="angle" stackId="3" startPc="268457568"/>
-<entry endPc="268458066" name="gap" stackId="7" startPc="268457568"/>
-<entry arg="true" endPc="268458067" name="dc" stackId="1" startPc="268457564"/>
-<entry endPc="268458469" name="lvl" stackId="5" startPc="268458108"/>
-<entry endPc="268458469" name="yPos" stackId="4" startPc="268458108"/>
-<entry endPc="268458469" name="xPos" stackId="3" startPc="268458108"/>
-<entry endPc="268458472" name="bat" stackId="2" startPc="268458071"/>
-<entry arg="true" endPc="268458473" name="dc" stackId="1" startPc="268458067"/>
-<entry endPc="268458702" name="gap" stackId="2" startPc="268458569"/>
-<entry endPc="268458770" name="h" stackId="1" startPc="268458477"/>
-<entry endPc="268459138" name="i" stackId="5" startPc="268458885"/>
-<entry endPc="268459395" name="x" stackId="6" startPc="268459164"/>
-<entry endPc="268459395" name="y" stackId="7" startPc="268459164"/>
-<entry endPc="268459398" name="center" stackId="4" startPc="268458799"/>
-<entry endPc="268459398" name="color" stackId="3" startPc="268458799"/>
-<entry endPc="268459401" name="h" stackId="2" startPc="268458775"/>
-<entry arg="true" endPc="268459402" name="dc" stackId="1" startPc="268458771"/>
-<entry arg="true" endPc="268459440" name="t" stackId="1" startPc="268459402"/>
-<entry endPc="268459564" name="a" stackId="4" startPc="268459444"/>
-<entry arg="true" endPc="268459565" name="dc" stackId="1" startPc="268459440"/>
-<entry arg="true" endPc="268459565" name="t" stackId="2" startPc="268459440"/>
-<entry arg="true" endPc="268459565" name="icon" stackId="3" startPc="268459440"/>
-<entry arg="true" endPc="268459699" name="dc" stackId="1" startPc="268459565"/>
-<entry endPc="268460450" name="i" stackId="6" startPc="268460399"/>
-<entry endPc="268460636" name="i" stackId="7" startPc="268460497"/>
-<entry endPc="268460637" name="max" stackId="4" startPc="268459703"/>
-<entry endPc="268460637" name="now" stackId="3" startPc="268459703"/>
-<entry endPc="268460637" name="offset" stackId="5" startPc="268459703"/>
-<entry endPc="268460637" name="timeInfo" stackId="2" startPc="268459703"/>
-<entry endPc="268460637" name="pos" stackId="1" startPc="268459703"/>
+<entry endPc="268446869" name="events" stackId="2" startPc="268446799"/>
+<entry endPc="268446968" name="weather" stackId="3" startPc="268446898"/>
+<entry endPc="268446971" name="s" stackId="1" startPc="268446577"/>
+<entry arg="true" endPc="268446989" name="dc" stackId="1" startPc="268446972"/>
+<entry endPc="268448933" name="mainColor" stackId="4" startPc="268446993"/>
+<entry endPc="268448933" name="tone" stackId="3" startPc="268446993"/>
+<entry endPc="268448933" name="activities" stackId="2" startPc="268446993"/>
+<entry endPc="268448933" name="app" stackId="1" startPc="268446993"/>
+<entry endPc="268450581" name="langTest" stackId="1" startPc="268448938"/>
+<entry endPc="268452112" name="x" stackId="6" startPc="268451238"/>
+<entry endPc="268452112" name="text" stackId="5" startPc="268451238"/>
+<entry endPc="268452115" name="h" stackId="3" startPc="268450841"/>
+<entry endPc="268452115" name="info" stackId="2" startPc="268450841"/>
+<entry endPc="268452115" name="set" stackId="4" startPc="268450841"/>
+<entry arg="true" endPc="268452158" name="dc" stackId="1" startPc="268450735"/>
+<entry arg="true" endPc="268452190" name="info" stackId="1" startPc="268452158"/>
+<entry endPc="268452290" name="h" stackId="2" startPc="268452194"/>
+<entry arg="true" endPc="268452291" name="info" stackId="1" startPc="268452190"/>
+<entry arg="true" endPc="268452344" name="info" stackId="1" startPc="268452291"/>
+<entry arg="true" endPc="268452382" name="info" stackId="1" startPc="268452344"/>
+<entry arg="true" endPc="268452414" name="info" stackId="1" startPc="268452382"/>
+<entry endPc="268452913" name="r" stackId="8" startPc="268452483"/>
+<entry endPc="268453268" name="icoHalf" stackId="9" startPc="268452916"/>
+<entry endPc="268453268" name="activityChar" stackId="7" startPc="268452425"/>
+<entry endPc="268453268" name="info" stackId="6" startPc="268452425"/>
+<entry arg="true" endPc="268453272" name="x" stackId="3" startPc="268452414"/>
+<entry arg="true" endPc="268453272" name="horizontal" stackId="5" startPc="268452414"/>
+<entry arg="true" endPc="268453272" name="dc" stackId="1" startPc="268452414"/>
+<entry arg="true" endPc="268453272" name="activity" stackId="2" startPc="268452414"/>
+<entry arg="true" endPc="268453272" name="y" stackId="4" startPc="268452414"/>
+<entry arg="true" endPc="268453328" name="x" stackId="2" startPc="268453272"/>
+<entry arg="true" endPc="268453328" name="dc" stackId="1" startPc="268453272"/>
+<entry arg="true" endPc="268453328" name="char" stackId="4" startPc="268453272"/>
+<entry arg="true" endPc="268453328" name="y" stackId="3" startPc="268453272"/>
+<entry arg="true" endPc="268453408" name="x" stackId="2" startPc="268453328"/>
+<entry arg="true" endPc="268453408" name="dc" stackId="1" startPc="268453328"/>
+<entry arg="true" endPc="268453408" name="activity" stackId="4" startPc="268453328"/>
+<entry arg="true" endPc="268453408" name="y" stackId="3" startPc="268453328"/>
+<entry endPc="268453786" name="fromAngle" stackId="5" startPc="268453460"/>
+<entry endPc="268453786" name="context" stackId="3" startPc="268453460"/>
+<entry endPc="268453786" name="calendar" stackId="4" startPc="268453460"/>
+<entry endPc="268453786" name="nowError" stackId="2" startPc="268453460"/>
+<entry arg="true" endPc="268453790" name="msg" stackId="1" startPc="268453408"/>
+<entry endPc="268454165" name="i" stackId="5" startPc="268454041"/>
+<entry endPc="268454165" name="moonAngle" stackId="4" startPc="268453951"/>
+<entry endPc="268454165" name="sunAngle" stackId="3" startPc="268453951"/>
+<entry endPc="268454168" name="hourAngle" stackId="2" startPc="268453866"/>
+<entry arg="true" endPc="268454223" name="data" stackId="1" startPc="268453790"/>
+<entry endPc="268454941" name="h" stackId="7" startPc="268454771"/>
+<entry endPc="268454941" name="time" stackId="6" startPc="268454771"/>
+<entry endPc="268455165" name="eventEnd" stackId="5" startPc="268454257"/>
+<entry endPc="268455165" name="timeNow" stackId="3" startPc="268454257"/>
+<entry endPc="268455165" name="tillStart" stackId="4" startPc="268454257"/>
+<entry endPc="268455178" name="i" stackId="2" startPc="268454257"/>
+<entry arg="true" endPc="268455197" name="dc" stackId="1" startPc="268454223"/>
+<entry arg="true" endPc="268455266" name="number" stackId="1" startPc="268455197"/>
+<entry endPc="268455675" name="x" stackId="4" startPc="268455352"/>
+<entry endPc="268455675" name="a" stackId="3" startPc="268455352"/>
+<entry endPc="268455675" name="y" stackId="5" startPc="268455352"/>
+<entry arg="true" endPc="268455679" name="hour" stackId="2" startPc="268455266"/>
+<entry arg="true" endPc="268455679" name="dc" stackId="1" startPc="268455266"/>
+<entry endPc="268456059" name="x" stackId="2" startPc="268455708"/>
+<entry endPc="268456059" name="justify" stackId="3" startPc="268455708"/>
+<entry endPc="268456205" name="coord" stackId="4" startPc="268456073"/>
+<entry arg="true" endPc="268456209" name="dc" stackId="1" startPc="268455679"/>
+<entry endPc="268457009" name="i" stackId="8" startPc="268456427"/>
+<entry endPc="268457009" name="fromAngle" stackId="6" startPc="268456213"/>
+<entry endPc="268457009" name="nowBoundary" stackId="4" startPc="268456213"/>
+<entry endPc="268457009" name="radius" stackId="2" startPc="268456213"/>
+<entry endPc="268457009" name="tomorrow" stackId="5" startPc="268456213"/>
+<entry endPc="268457009" name="toAngle" stackId="7" startPc="268456213"/>
+<entry endPc="268457009" name="width" stackId="3" startPc="268456213"/>
+<entry arg="true" endPc="268457010" name="dc" stackId="1" startPc="268456209"/>
+<entry endPc="268457300" name="secondsFromLastHour" stackId="3" startPc="268457014"/>
+<entry endPc="268457300" name="a" stackId="4" startPc="268457014"/>
+<entry endPc="268457300" name="r" stackId="5" startPc="268457014"/>
+<entry arg="true" endPc="268457301" name="event" stackId="1" startPc="268457010"/>
+<entry arg="true" endPc="268457301" name="tillStart" stackId="2" startPc="268457010"/>
+<entry endPc="268457803" name="sin" stackId="5" startPc="268457305"/>
+<entry endPc="268457803" name="minutes" stackId="2" startPc="268457305"/>
+<entry endPc="268457803" name="cos" stackId="4" startPc="268457305"/>
+<entry endPc="268457803" name="offset" stackId="6" startPc="268457305"/>
+<entry endPc="268457803" name="angle" stackId="3" startPc="268457305"/>
+<entry endPc="268457803" name="gap" stackId="7" startPc="268457305"/>
+<entry arg="true" endPc="268457804" name="dc" stackId="1" startPc="268457301"/>
+<entry endPc="268458206" name="lvl" stackId="5" startPc="268457845"/>
+<entry endPc="268458206" name="yPos" stackId="4" startPc="268457845"/>
+<entry endPc="268458206" name="xPos" stackId="3" startPc="268457845"/>
+<entry endPc="268458209" name="bat" stackId="2" startPc="268457808"/>
+<entry arg="true" endPc="268458210" name="dc" stackId="1" startPc="268457804"/>
+<entry endPc="268458439" name="gap" stackId="2" startPc="268458306"/>
+<entry endPc="268458507" name="h" stackId="1" startPc="268458214"/>
+<entry endPc="268458875" name="i" stackId="5" startPc="268458622"/>
+<entry endPc="268459132" name="x" stackId="6" startPc="268458901"/>
+<entry endPc="268459132" name="y" stackId="7" startPc="268458901"/>
+<entry endPc="268459135" name="center" stackId="4" startPc="268458536"/>
+<entry endPc="268459135" name="color" stackId="3" startPc="268458536"/>
+<entry endPc="268459138" name="h" stackId="2" startPc="268458512"/>
+<entry arg="true" endPc="268459139" name="dc" stackId="1" startPc="268458508"/>
+<entry arg="true" endPc="268459177" name="t" stackId="1" startPc="268459139"/>
+<entry endPc="268459301" name="a" stackId="4" startPc="268459181"/>
+<entry arg="true" endPc="268459302" name="dc" stackId="1" startPc="268459177"/>
+<entry arg="true" endPc="268459302" name="t" stackId="2" startPc="268459177"/>
+<entry arg="true" endPc="268459302" name="icon" stackId="3" startPc="268459177"/>
+<entry arg="true" endPc="268459436" name="dc" stackId="1" startPc="268459302"/>
+<entry endPc="268460187" name="i" stackId="6" startPc="268460136"/>
+<entry endPc="268460373" name="i" stackId="7" startPc="268460234"/>
+<entry endPc="268460374" name="max" stackId="4" startPc="268459440"/>
+<entry endPc="268460374" name="now" stackId="3" startPc="268459440"/>
+<entry endPc="268460374" name="offset" stackId="5" startPc="268459440"/>
+<entry endPc="268460374" name="timeInfo" stackId="2" startPc="268459440"/>
+<entry endPc="268460374" name="pos" stackId="1" startPc="268459440"/>
 </localVars>
 <annotations>
 <annotationEntry annotation="data" class="lateApp" module="globals" symbol="scheduleDataLoading"/>
@@ -1432,14 +1420,14 @@
 </annotations>
 <dataEntryOffsetMappings>
 <dataEntry offset="87" parentId="" symbolId="globals" type="module"/>
-<dataEntry offset="230" parentId="globals" symbolId="lateApp" type="class"/>
-<dataEntry offset="405" parentId="globals" symbolId="lateBackground" type="class"/>
-<dataEntry offset="2955" parentId="globals" symbolId="Rez" type="module"/>
-<dataEntry offset="3034" parentId="Rez" symbolId="Drawables" type="module"/>
-<dataEntry offset="3129" parentId="Rez" symbolId="Menus" type="module"/>
-<dataEntry offset="3160" parentId="Rez" symbolId="Fonts" type="module"/>
-<dataEntry offset="3239" parentId="Rez" symbolId="Layouts" type="module"/>
-<dataEntry offset="3270" parentId="Rez" symbolId="JsonData" type="module"/>
+<dataEntry offset="222" parentId="globals" symbolId="lateApp" type="class"/>
+<dataEntry offset="397" parentId="globals" symbolId="lateBackground" type="class"/>
+<dataEntry offset="2947" parentId="globals" symbolId="Rez" type="module"/>
+<dataEntry offset="3026" parentId="Rez" symbolId="Drawables" type="module"/>
+<dataEntry offset="3121" parentId="Rez" symbolId="Menus" type="module"/>
+<dataEntry offset="3152" parentId="Rez" symbolId="Fonts" type="module"/>
+<dataEntry offset="3231" parentId="Rez" symbolId="Layouts" type="module"/>
+<dataEntry offset="3262" parentId="Rez" symbolId="JsonData" type="module"/>
 <dataEntry offset="3309" parentId="Rez" symbolId="Strings" type="module"/>
 <dataEntry offset="3924" parentId="globals" symbolId="lateView" type="class"/>
 </dataEntryOffsetMappings>
@@ -1591,10 +1579,6 @@
 <documentation/>
 </functionEntry>
 <functionEntry accessMode="public" name="floor">
-<param id="f"/>
-<documentation/>
-</functionEntry>
-<functionEntry accessMode="public" name="ceil">
 <param id="f"/>
 <documentation/>
 </functionEntry>

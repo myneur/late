@@ -117,11 +117,6 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			[0xAA0055, 0xFFFF00, 0x55FFAA, 0x00AAAA, 0x5500FF, 0xAAFFFF]
 		][tone<=2 ? tone : 0][mainColor];
 
-		timeColor = Gfx.COLOR_WHITE; 
-		dateColor = Gfx.COLOR_LT_GRAY; 
-		activityColor = Gfx.COLOR_DK_GRAY; 
-		backgroundColor = Gfx.COLOR_BLACK;
-
 		if(tone == 3){ 			// white background
 			backgroundColor = 0xFFFFFF;
 			timeColor = 0x0;
@@ -144,11 +139,20 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		} else { 						// black background 
 			backgroundColor = 0x0;
 			timeColor = 0xFFFFFF;
-			dateColor = 0xAAAAAA;
 			activityColor = 0x555555;
+			dateColor = 0xAAAAAA;
+		}
+		if(height==208 ){	// FR45 with 8 colors do not support gray. Contrary the simluator, the real watch do not support even LT_GRAY. 
+			activityColor = Gfx.COLOR_WHITE; 
+			if(tone != 3 && tone != 4){
+				dateColor = Gfx.COLOR_WHITE;
+			}
 		}
 
-		meteoColors = [0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF, 0x555555];
+
+		//Ui.loadResource(Rez.JsonData.metCol);
+		meteoColors = Ui.loadResource(Rez.JsonData.metCol);
+		//Sys.println([0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF, 0x555555];);
 			//enum {	clear, 		partly, 	lghtrain, rain,	 	mild snow, snow, clear neight} // clean moon can be 555555 instead of sun and mostly cloudy can be skipped
 		if(tone>2){
 			meteoColors[2]=0x0055FF;
@@ -175,17 +179,20 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 			}
 		}*/
 
-		if(height==208){	// FR45 with 8 colors do not support gray. Contrary the simluator, the real watch do not support even LT_GRAY. 
-			activityColor = Gfx.COLOR_WHITE;
-			dateColor = Gfx.COLOR_WHITE;
-		}
-
 		if(activity == :calendar){
 			if(app.getProperty("calendar_colors")){	// match calendar colors to watch
-				calendarColors = Ui.loadResource(Rez.JsonData.calendarColors)[mainColor];
-				for(var i=0; i<calendarColors.size(); i++){
+				calendarColors = Ui.loadResource(Rez.JsonData.calCol)[mainColor];
+				/*Sys.println( [
+					[0xAA0055, 0xFFFF00, 0xAAAAAA], 
+					[0xFFFF00, 0xAA55FF, 0xAAAAAA], 
+					[0x55FFAA, 0x00AAFF, 0xAAAAAA], 
+					[0x00AAAA, 0xFFFF00, 0xAAAAAA], 
+					[0xAA00FF, 0xAAFFFF, 0xAAAAAA], 
+					[0xAAAAAA, 0xAA00FF, 0xAAFFFF] 
+					]);*/
+				/*for(var i=0; i<calendarColors.size(); i++){
 					calendarColors[i] = calendarColors[i].toNumberWithBase(0x10);
-				}
+				}*/
 				if(tone == 4) {	// clear current color
 					calendarColors[0] = 0xFFFFFF;
 					calendarColors[2] = 0x0;

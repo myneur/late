@@ -116,10 +116,10 @@ function floor (f){
     return -1;
 } 
  
-function ceil (f){
+/*function ceil (f){
     var f2=-f;
     if (f2 instanceof Toybox.Lang.Float){
         return f2.toNumber();   
     }
     return -1;
-}
+}*/

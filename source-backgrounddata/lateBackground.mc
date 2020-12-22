@@ -26,7 +26,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function onTemporalEvent() {
-		//System.println(Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad")=='c' );
+		var t = Gregorian.info(Time.now(), Gregorian.FORMAT_SHORT);
+		Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad") );
 		app = App.getApp();
 		//getTokensAndData();return;
 		///*/Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
@@ -262,16 +263,17 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if(subscription_id==null){
 			subscription_id = app.getProperty("subs");	// must be read at first call (which is this one) so we don't lose it
 		}
-		///*/ln(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
+		System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
 		if(subscription_id instanceof String && subscription_id.length()>0){
 			var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
+			Sys.println("getWeatherForecast: "+pos);
 			if(pos == null){
 				Background.exit({"error_code"=>-204});
 				return;
 			}
-			///*/ln("location: "+pos);
+			
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
-				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"yrno"}, 
+				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"climacell"}, 
 				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id }},
 				method(:onWeatherForecast));
 		} else {
@@ -287,7 +289,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 					data.put("subscription_id", subscription_id);
 				} 
 			} catch(ex){
-				Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
+				//Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
 				data = (subscription_id instanceof String && subscription_id.length()>0) ? {"subscription_id"=>subscription_id} : {"weather"=>data};	// priority is to keep the subscription_id
 			}
 		} else {
@@ -298,11 +300,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			// 429 throttling with msBeforeNext to wait
 			// 500 server error
 			// 403 expired / 402 not paid yet with data like {msg=>Invalid subscriptionId!, code=>INV_SUBS_ID}  
-			if(responseCode == 401){
-				subscription_id = false;	// indicating to callBack that reason was expired subscription
-	  		}
 			if(responseCode>=401 && responseCode<=403 ){ 
-				buySubscription(responseCode);
+				buySubscription(responseCode);	// response code will indicate to show expiration page instead of subsription
 				return; // there will be a second call to exit
 			}
 			if(!(data instanceof Toybox.Lang.Dictionary)){
@@ -313,18 +312,20 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Background.exit(data);
 	}
 
-	function getSubscriptionId(){	//System.println("getWeatherId");
+	function getSubscriptionId(){	System.println("getSubscriptionId");
 		Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
 			{"client_id"=>app.getProperty("weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
 			method(:onSubscriptionId));
 	}
 	
-	function buySubscription(responseCode){	//System.println("buySubscription "+responseCode);
+	function buySubscription(responseCode){	System.println("buySubscription "+responseCode);
 		var data = {"device_code"=>subscription_id, "client_id"=>app.getProperty("weather_id")};
-		if(responseCode!=200){
+		if(responseCode!=200){ // especially 401: handle as expiration?
 			data.put("expired", "1");
 		}
-		Communications.openWebPage("https://almost-late-middleware.herokuapp.com/checkout/" + (responseCode==407 ? "wait" : "pay"), 
+		data.put("r", Math.rand().toString());
+		//Sys.println(data);
+		Communications.openWebPage("https://almost-late-middleware.herokuapp.com/" + (responseCode==407 ? "waitlist" : "checkout/pay"), 
 			data, {:method=>Communications.HTTP_REQUEST_METHOD_GET}); 
 		data = {"subscription_id"=>subscription_id};
 		if(responseCode!=200){
@@ -347,10 +348,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			} 
 		} else {
 			// 404: no internet
+			// 405: device code expired
 			// 407: No Quota
 			// 429 throttling with msBeforeNext to wait
 			// 500: Internal server error
-			if(responseCode == 407){
+			if(responseCode == 407 || responseCode == 405){
 				buySubscription(responseCode); 
 				return;
 			}

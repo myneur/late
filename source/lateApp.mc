@@ -34,7 +34,7 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		//System.println("scheduling");
+		System.println("scheduling");
 		loadSettings();
 
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
@@ -225,7 +225,7 @@ class lateApp extends App.AppBase {
 						//app.setProperty("code_valid_till", new Time.now().value() + add(data.get("expires_in").toNumber()));
 					} else if(data.hasKey("error_code")){
 						var error = data["error_code"];
-						System.println(data);
+						//System.println(data);
 						data["wait"] = durationToNextEvent();
 						var connected = Sys.getDeviceSettings().phoneConnected;
 						if(error==-300 || error==404 || error==-2 || error==-104){ // no internet or bluetooth
@@ -281,7 +281,7 @@ class lateApp extends App.AppBase {
 				}
 				Ui.requestUpdate();
 			}
-		} catch(ex){	Sys.println("ex: " + ex.getErrorMessage());///Sys.println( ex.printStackTrace());
+		} catch(ex){	//Sys.println("ex: " + ex.getErrorMessage());///Sys.println( ex.printStackTrace());
 			if(watch){
 				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
 			}

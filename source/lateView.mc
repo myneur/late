@@ -94,9 +94,10 @@ circleWidth=7;
 percentage = true;
 mainColor = 3;
 tone=0;
-//weatherHourly = [21, 9, 0, 1, 2, 3, 4, 5];
+//weatherHourly = [21, 9, 0, 1, 6, 4, 5, 2, 3];
 app.setProperty("units", 1);
 //app.setProperty("location", [50.11, 14.49]);
+//app.setProperty("calendar_ids", null);
 app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
@@ -152,7 +153,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 
 		//Ui.loadResource(Rez.JsonData.metCol);
 		meteoColors = Ui.loadResource(Rez.JsonData.metCol);
-		//Sys.println([0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF, 0x555555];);
+		//Sys.println([0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF, 0x555500];);
 			//enum {	clear, 		partly, 	lghtrain, rain,	 	mild snow, snow, clear neight} // clean moon can be 555555 instead of sun and mostly cloudy can be skipped
 		if(tone>2){
 			meteoColors[2]=0x0055FF;
@@ -523,7 +524,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 					var moonAngle = toAngle(sunset[SUNRISET_NOW]);
 					for(var i =2; i<weatherHourly.size();i++){
 						if(weatherHourly[i] <= 1 && (hourAngle+1 < sunAngle || hourAngle>moonAngle) ){	// partly cloudy not shown at night
-							weatherHourly[i] = weatherHourly[i]==0 ? 6 : -1; 
+							weatherHourly[i] = weatherHourly[i]==0 ? 6 : -1; // clear night for clear sky and dim partly cloudy
 						}
 						hourAngle=(hourAngle+1)%24;
 					}
@@ -889,17 +890,25 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 
 	function computeSun() {
 		var pos = Activity.getActivityInfo().currentLocation;
-		//pos = [50.11, 14.49];
+		var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);
+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().currentLocationAccuracy);
+		if(pos != null){
+			pos = pos.toDegrees();
+Sys.println(pos);
+			if(pos[0]==0 && pos[1]==0){	// bloody bug that the currentLocation sometimes returns [0.000000, 0.000000]
+				pos = null;
+			} else {
+				App.getApp().setProperty("location", pos); // save the location to fix a Fenix 5 bug that is loosing the location often
+			}
+		}
 		if (pos == null){
 			pos = App.getApp().getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 			if(pos == null){
 				sunrise[SUNRISET_NOW] = null;
 				return;
 			}			
-		} else {
-			pos = pos.toDegrees();
-			App.getApp().setProperty("location", pos); // save the location to fix a Fenix 5 bug that is loosing the location often
 		}
+Sys.println(pos);
 		//pos = [50.11, 14.49];
 		/////Sys.println("computeSun: "+pos);
 		// use absolute to get west as positive

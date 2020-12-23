@@ -84,9 +84,8 @@ class lateView extends Ui.WatchFace {
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
 
-activity = :steps;
-app.setProperty("activity", 1);
-showWeather = false; app.setProperty("weather", showWeather);
+//activity = :steps; app.setProperty("activity", 1);
+//showWeather = false; app.setProperty("weather", showWeather);
 /*activity = :calendar;
 app.setProperty("activity", 6);
 activityL = :steps;
@@ -154,9 +153,9 @@ tone=0;*/
 				dateColor = Gfx.COLOR_WHITE;
 			}
 		}
-		/*if(showWeather || activity == :calendar){
+		if(showWeather || activity == :calendar){
 			loadDataColors(mainColor, tone, app);
-		}*/
+		}
 		setLayoutVars();
 		onShow();
 	}

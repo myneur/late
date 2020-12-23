@@ -23,8 +23,6 @@ vivoactive.excludeAnnotations = data
 vivoactive.resourcePath = $(base.resourcePath)
 semiround.excludeAnnotations = data
 semiround.resourcePath = $(base.resourcePath)
-fr45.excludeAnnotations = data
-fr45.resourcePath = $(base.resourcePath)
 
 # CIQ2 Biker Monkeys:
 vivoactive_hr.resourcePath = $(base.resourcePath);resources-CIQ2
@@ -35,6 +33,9 @@ vivoactive_hr.excludeAnnotations = data
 # 218 px, but no data and less activities
 fenix3.excludeAnnotations = data
 fenix3.resourcePath = $(base.resourcePath)
+fr45.excludeAnnotations = data
+fr45.resourcePath = $(base.resourcePath)
+
 fenix3_hr.excludeAnnotations = data
 fenix3_hr.resourcePath = $(base.resourcePath)
 d2bravo.excludeAnnotations = data

@@ -300,7 +300,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			// 429 throttling with msBeforeNext to wait
 			// 500 server error
 			// 403 expired / 402 not paid yet with data like {msg=>Invalid subscriptionId!, code=>INV_SUBS_ID}  
-			if(responseCode>=401 && responseCode<=403 ){ 
+			if(responseCode>=401){
+				getSubscriptionId();
+				return;
+			} 
+			if(responseCode<=403 ){ 
 				buySubscription(responseCode);	// response code will indicate to show expiration page instead of subsription
 				return; // there will be a second call to exit
 			}
@@ -324,7 +328,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			data.put("expired", "1");
 		}
 		data.put("r", Math.rand().toString());
-		//Sys.println(data);
+		//Sys.println(["https://almost-late-middleware.herokuapp.com/" + (responseCode==407 ? "waitlist" : "checkout/pay"), data]);
 		Communications.openWebPage("https://almost-late-middleware.herokuapp.com/" + (responseCode==407 ? "waitlist" : "checkout/pay"), 
 			data, {:method=>Communications.HTTP_REQUEST_METHOD_GET}); 
 		data = {"subscription_id"=>subscription_id};

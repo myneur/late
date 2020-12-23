@@ -1,43 +1,48 @@
 project.manifest = manifest.xml
+base.sourcePath = source
 
 # bigger display or background data
 round-390x390.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280;resources-390
 round-280x280.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280
 round-260x260.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
 round-240x240.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
-round-218x218.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata # devices without background data will be overriden
+round-218x218.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata
+venusq.resourcePath  = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
+venusqm.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
+
+round-390x390.sourcePath = source;source-backgrounddata
+round-280x280.sourcePath = source;source-backgrounddata
+round-260x260.sourcePath = source;source-backgrounddata
+round-240x240.sourcePath = source;source-backgrounddata
+round-218x218.sourcePath = source;source-backgrounddata
+venusq.sourcePath = source;source-backgrounddata
+venusqm.sourcePath = source;source-backgrounddata
 
 # no background data communication
-rectangle.excludeAnnotations = data
-rectangle.sourcePath = source
-rectangle.resourcePath = $(base.resourcePath)
+vivoactive.excludeAnnotations = data
+vivoactive.resourcePath = $(base.resourcePath)
 semiround.excludeAnnotations = data
-semiround.sourcePath = source
 semiround.resourcePath = $(base.resourcePath)
 fr45.excludeAnnotations = data
-fr45.sourcePath = source
 fr45.resourcePath = $(base.resourcePath)
 
 # CIQ2 Biker Monkeys:
 vivoactive_hr.resourcePath = $(base.resourcePath);resources-CIQ2
+vivoactive_hr.excludeAnnotations = data
 # fr735xt.resourcePath = $(base.resourcePath);resources-CIQ2 # it does not support floors 
 
 # CIQ1 Aikido Monkeys:
 # 218 px, but no data and less activities
 fenix3.excludeAnnotations = data
-fenix3.sourcePath = source
 fenix3.resourcePath = $(base.resourcePath)
 fenix3_hr.excludeAnnotations = data
-fenix3_hr.sourcePath = source
 fenix3_hr.resourcePath = $(base.resourcePath)
 d2bravo.excludeAnnotations = data
-d2bravo.sourcePath = source
 d2bravo.resourcePath = $(base.resourcePath)
 d2bravo_titanium.excludeAnnotations = data
-d2bravo_titanium.sourcePath = source
 d2bravo_titanium.resourcePath = $(base.resourcePath)
 
 ## don't support floors climbed
 approachs60.excludeAnnotations = data
-approachs60.sourcePath = source
 approachs60.resourcePath = $(base.resourcePath)
+

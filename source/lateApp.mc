@@ -34,7 +34,7 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		System.println("scheduling");
+		//+System.println("scheduling");
 		loadSettings();
 
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
@@ -90,7 +90,7 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {	
-		Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
+		//+Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
 		//Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary){

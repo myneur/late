@@ -83,7 +83,11 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-activity = :calendar;
+
+activity = :steps;
+app.setProperty("activity", 1);
+showWeather = false; app.setProperty("weather", showWeather);
+/*activity = :calendar;
 app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :activeMinutesWeek;
@@ -93,12 +97,13 @@ dialSize=0;
 circleWidth=7;
 percentage = true;
 mainColor = 3;
-tone=0;
+tone=0;*/
 //weatherHourly = [21, 9, 0, 1, 6, 4, 5, 2, 3];
-app.setProperty("units", 1);
+//app.setProperty("units", 1);
 //app.setProperty("location", [50.11, 14.49]);
 //app.setProperty("calendar_ids", null);
-app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
 		if(dialSize>0){
@@ -149,22 +154,35 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				dateColor = Gfx.COLOR_WHITE;
 			}
 		}
+		/*if(showWeather || activity == :calendar){
+			loadDataColors(mainColor, tone, app);
+		}*/
+		setLayoutVars();
+		onShow();
+	}
 
-
-		//Ui.loadResource(Rez.JsonData.metCol);
-		meteoColors = Ui.loadResource(Rez.JsonData.metCol);
-		//Sys.println([0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF, 0x555500];);
-			//enum {	clear, 		partly, 	lghtrain, rain,	 	mild snow, snow, clear neight} // clean moon can be 555555 instead of sun and mostly cloudy can be skipped
-		if(tone>2){
-			meteoColors[2]=0x0055FF;
-			meteoColors[3]=0x00AAFF;
-			if(tone==4){		// color bg
-				meteoColors[0]=0xFFFF55;
-				meteoColors[1]=0xFFAA00;
-				if(mainColor==2 || mainColor==3){	// green || blue
-					meteoColors[2]=0;
-					meteoColors[3]=0x0055FF;
+	(:data)
+	function loadDataColors(mainColor, tone, app){
+		if(showWeather){
+			meteoColors = Ui.loadResource(Rez.JsonData.metCol);
+			//Sys.println([0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF, 0x555500];);
+				//enum {	clear, 		partly, 	lghtrain, rain,	 	mild snow, snow, clear neight} // clean moon can be 555555 instead of sun and mostly cloudy can be skipped
+			if(tone>2){
+				meteoColors[2]=0x0055FF;
+				meteoColors[3]=0x00AAFF;
+				if(tone==4){		// color bg
+					meteoColors[0]=0xFFFF55;
+					meteoColors[1]=0xFFAA00;
+					if(mainColor==2 || mainColor==3){	// green || blue
+						meteoColors[2]=0;
+						meteoColors[3]=0x0055FF;
+					}
 				}
+			}
+			if(tone==3){	// white background
+				meteoColors[4]=0x555555;
+				meteoColors[5]=0x0;
+
 			}
 		}
 
@@ -179,7 +197,6 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				if(colorsToOverride.size()>4) {backgroundColor = colorsToOverride[4].toNumberWithBase(0x10);}
 			}
 		}*/
-
 		if(activity == :calendar){
 			if(app.getProperty("calendar_colors")){	// match calendar colors to watch
 				calendarColors = Ui.loadResource(Rez.JsonData.calCol)[mainColor];
@@ -207,10 +224,8 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				}
 			}
 		}
-
-		setLayoutVars();
-		onShow();
 	}
+
 
 	function setLayoutVars(){
 		/////Sys.println("Layout free memory: "+Sys.getSystemStats().freeMemory);
@@ -319,12 +334,13 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	//! Terminate any active timers and prepare for slow updates.
 	function onEnterSleep(){
 		//////Sys.println("onEnterSleep");
-		if(centerX <=104){ // FR 45 needs to redraw the display every second
+		/*if(centerX <=104){ // FR 45 needs to redraw the display every second
 			redrawAll=100;
 			Ui.requestUpdate();
 		} else {
 			redrawAll=0; // 2: 2 clearDC() because of lag of refresh of the screen ?
-		}
+		}*/
+		redrawAll=0; // 2: 2 clearDC() because of lag of refresh of the screen ?
 	}
 
 	/*function openTheMenu(){
@@ -336,9 +352,9 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	function onUpdate (dc) {
 		/////Sys.println("onUpdate "+redrawAll);
 		clockTime = Sys.getClockTime();
-		if (lastRedrawMin != clockTime.min && redrawAll==0) { redrawAll = 1; }
+		//if (lastRedrawMin != clockTime.min && redrawAll==0) { redrawAll = 1; }
 		//var ms = [Sys.getTimer()];
-		if (redrawAll>0){
+		//if (redrawAll>0){
 			//////Sys.println([clockTime.min, redrawAll, Sys.getSystemStats().freeMemory]);
 			if(dc has :setAntiAlias) {
 				dc.setAntiAlias(true);
@@ -402,10 +418,10 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 				drawNowCircle(dc, clockTime.hour);
 			}
-		}
+		//}
 		//ms.add(Sys.getTimer()-ms[0]);
 		/////Sys.println("ms: " + ms + " sec: " + clockTime.sec + " redrawAll: " + redrawAll);
-		if (redrawAll>0) { redrawAll--; }
+		//if (redrawAll>0) { redrawAll--; }
 	}
 
 	
@@ -440,7 +456,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 				var r = Gfx.getFontHeight(icons)-3;
 				dc.setPenWidth(2);
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);	
-				drawIcon(dc, x, y, activityChar); // dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);
+				drawIcon(dc, x, y, activityChar); // dc.drawBitmap(x-icon.getWidth()>>1, y-icon.getHeight()>>1, icon);	
 				if(info>0.0001){
 					dc.setColor(info<2 ? activityColor : dateColor, Gfx.COLOR_TRANSPARENT);	
 					if(info>1){	
@@ -464,7 +480,7 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 					drawActivityIcon(dc, x - dc.getTextWidthInPixels(info, fontCondensed)>>1 -2, y, activity);
 				} else {
 					drawActivityIcon(dc, x  -3, y-Gfx.getFontHeight(icons)-1, activity);
-					dc.drawText(x, y+1, fontCondensed, info, Gfx.TEXT_JUSTIFY_VCENTER); 
+					dc.drawText(x, y+1, fontCondensed, info, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER); 
 				}
 			}
 		}
@@ -891,10 +907,10 @@ app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 	function computeSun() {
 		var pos = Activity.getActivityInfo().currentLocation;
 		var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);
-Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().currentLocationAccuracy);
+		//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().currentLocationAccuracy);
 		if(pos != null){
 			pos = pos.toDegrees();
-Sys.println(pos);
+			//+Sys.println(pos);
 			if(pos[0]==0 && pos[1]==0){	// bloody bug that the currentLocation sometimes returns [0.000000, 0.000000]
 				pos = null;
 			} else {
@@ -908,7 +924,7 @@ Sys.println(pos);
 				return;
 			}			
 		}
-Sys.println(pos);
+		//+Sys.println(pos);
 		//pos = [50.11, 14.49];
 		/////Sys.println("computeSun: "+pos);
 		// use absolute to get west as positive

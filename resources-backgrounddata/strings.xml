@@ -5,7 +5,7 @@
 	<!-- new menu color scheme to chose from except for Dark/Light -->
 	<string id="Vivid">Vivid</string><!-- Vivid should emphasize these colors are more colourful or unusual than the other options Dark/Light -->
 	<!-- renaming id="ActivityTitle" from /resources to emphasize that now an activity to choose from can be also a next calendar event, not just an activity info -->
-	<string id="ActivityTitle">Activity or Events Info</string>
+	<string id="ActivityTitle">Activity or Calendar Events Info</string>
 	<!-- calendar events set up -->
 	<string id="CalendarColors">Calendar Colors</string><!-- menu item where user can switch what colors will calendars have -->
 	<string id="CalendarNoChange">Keep current</string><!-- this means that colors of the current calendars will be shown regardles what colors will the user switch to later -->

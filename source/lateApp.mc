@@ -36,11 +36,10 @@ class lateApp extends App.AppBase {
 	function scheduleDataLoading(){
 		//+System.println("scheduling");
 		loadSettings();
-
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
-			if(app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
+			if(watch.activity == :calendar && app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {
@@ -48,6 +47,10 @@ class lateApp extends App.AppBase {
 					return ({"userPrompt"=>prompt, "error_code"=>511, "wait"=>nextEvent});
 				}
 			}  
+			if(watch.showWeather && app.getProperty("subs") == null){
+				var prompt = Ui.loadResource( Sys.getDeviceSettings().phoneConnected ? Rez.Strings.Subscribe : Rez.Strings.NotConnected );
+				return ({"userPrompt"=>prompt, "error_code"=>511, "wait"=>nextEvent});
+			}
 		} else { // not supported by the watch
 			return ({"userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData), "error_code"=>501}); 
 		}

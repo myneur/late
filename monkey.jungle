@@ -19,8 +19,8 @@ venusq.sourcePath = source;source-backgrounddata
 venusqm.sourcePath = source;source-backgrounddata
 
 # no background data communication
-vivoactive.excludeAnnotations = data
-vivoactive.resourcePath = $(base.resourcePath)
+vivoactive_hr.excludeAnnotations = data
+vivoactive_hr.resourcePath = $(base.resourcePath)
 semiround.excludeAnnotations = data
 semiround.resourcePath = $(base.resourcePath)
 

@@ -64,6 +64,12 @@
 			<iq:product id="venusq"/>
 			<iq:product id="venusqm"/>
 
+			<!-- 218x218 with data 65k memory-->
+			<iq:product id="fenix5s"/>
+			<iq:product id="vivoactive4s"/>
+			<iq:product id="legacyherocaptainmarvel"/>
+			<iq:product id="legacysagarey"/>	
+			<iq:product id="fenixchronos"/>		
 
 			<!-- semi-round 215x180 with data 16c olors 65k memory CIQ2 no support floors climbed no strong -->
 			<iq:product id="fr735xt"/>
@@ -77,12 +83,7 @@
 			<iq:product id="fenix3_hr"/>
 			<iq:product id="d2bravo"/>
 			<iq:product id="d2bravo_titanium"/>
-			<iq:product id="fenixchronos"/>
-			<iq:product id="fenix5s"/>
-			<iq:product id="vivoactive4s"/>
-			<iq:product id="legacyherocaptainmarvel"/>
-			<iq:product id="legacysagarey"/>
-
+			
 			<!-- semi-round 215x180 no data 16 colors 65k memory CIQ2 no strong-->
 			<iq:product id="fr230"/>
 			<iq:product id="fr235"/>

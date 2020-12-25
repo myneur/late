@@ -9,8 +9,7 @@
 		</settingConfig>
 	</setting>
 
-
-	<setting propertyKey="@Properties.activity" title="@Strings.ActivityTitle" prompt="@Strings.CalendarPrompt">
+	<setting propertyKey="@Properties.activity" title="@Strings.ActivityTitle" prompt="@Strings.CalendarPrompt" helpUrl="https://sl8.ch/calendar">
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.DnD</listEntry>
 			<listEntry value="1">@Strings.Steps</listEntry>
@@ -22,26 +21,24 @@
 		</settingConfig>
 	</setting>
 
-	<setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
-		<settingConfig type="boolean" />
-	</setting>
-
-	<setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
-		<settingConfig type="numeric" min="60" max="1440" />
-	</setting>
-
-	<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors">
+	<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar">
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.CalendarNoChange</listEntry>						
 			<listEntry value="1">@Strings.CalendarByColor</listEntry>
 		</settingConfig>
 	</setting>
 
+	<setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
+		<settingConfig type="numeric" min="60" max="1440" />
+	</setting>
+
+
+
 	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars" prompt="@Strings.CalendarsPrompt" helpUrl="https://calendar.google.com/calendar/r/settings">
 		<settingConfig type="alphaNumeric" />
 	</setting>
 
-	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/unsubscribe">
+	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast">
 		<settingConfig type="boolean" />
 	</setting>
 	<setting propertyKey="@Properties.units" title="@Strings.Units">

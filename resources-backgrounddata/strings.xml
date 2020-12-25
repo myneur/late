@@ -29,7 +29,8 @@
 	<string id="NoInternet">No internet</string><!-- there's no internet connection -->
 	<string id="OutOfMemory">Out Of Memory</string><!-- the watch run out of memory before finishing the action (data loading) -->
 	<string id="NastyError">Login Error</string><!-- all other errors that can happen while logging ing and we can not describe them them more -->
-	<string id="NoGPS">Get GPS location</string><!-- he needs to acquite a GPS coordinates by the watch in order to finish the given action -->
+	<string id="NoGPS">Get GPS location by</string><!-- he needs to acquite a GPS coordinates by the watch in order to finish the given action. By indicates the following line tells how -->
+	<string id="howGPS">activity outdoors</string><!-- following id="NoGPS" with hint how he get the GPS location -->
 
 	<string id="Weather">Premium: Show Weather Forecast</string><!-- Toggle a premium feature that Shows a Weather Forecast -->
 	<string id="WeatherPrompt">How to subscribe and unsubscribe: </string><!-- Single help line telling what will be on the following link explaining how to setup it up -->

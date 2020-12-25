@@ -81,8 +81,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-/*activity = :calendar;app.setProperty("activity", 6);activityL = :calories; 
-showWeather = true; app.setProperty("weather", showWeather);percentage = true;*/
+activity = :calendar;app.setProperty("activity", 6);activityL = :calories; 
+showWeather = true; app.setProperty("weather", showWeather);percentage = true;
 /*activity = :calendar;app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :activeMinutesWeek;
@@ -622,7 +622,7 @@ tone=0;*/
 
 	function drawNowCircle(dc, hour){
 		// show now in a day
-		if(showSunrise || showWeather || (activity == :calendar && App.getApp().getProperty("refresh_token") != null)){
+		if( (activity != :calendar && (showSunrise || showWeather)) || (activity == :calendar && /* permanent message*/ events_list.size()>0 && events_list[0][4]==-1)){
 			var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
 			var x = centerX+(sunR*Math.sin(a));
 			var y = centerY-(sunR*Math.cos(a));

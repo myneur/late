@@ -1,40 +1,39 @@
 <strings>
-	<string id="AppName">simply late! calendar</string>
-	<string id="CIQ">2</string>
-	<string id="DataLoading">1</string>
-
-	<string id="Vivid">Vivid</string>
-
-	<string id="ActivityTitle">Activity or Events</string>
-	
-	<string id="CalendarColors">Calendar Colors</string>
-	<string id="CalendarNoChange">Do not change</string>
-	<string id="CalendarByColor">Watch color / Other color / Gray or cold</string>
-	<string id="Calendar">Experimental: Google Calendar [here be dragons:]</string>
-	<string id="AddCalendars">Calendars to show</string>
-	<string id="CalendarPrompt">Calendar: Watch will show code to log-in. Then 5 mins to load events.</string>
-	<string id="CalendarsPrompt">Calendar IDs (typically mail) separated by space or comma</string>
-	<string id="refreshFrequency">Minutes to refresh calendar</string>
-	
-	<string id="Wait4login">Wait to login</string>
-	<string id="EnterCode">Enter </string>
-	<string id="LinkPrefix"></string>
-	<string id="Unauthorized">Wrong password</string>
-	<string id="Expired">Wait for new code</string>
-	<string id="Subscribe">Subscribe in phone</string>
+	<string id="AppName">simply late! calendar</string><!-- do not translate -->
+	<string id="CIQ">2</string><!-- do not translate -->
+	<string id="DataLoading">1</string><!-- do not translate -->
+	<!-- new menu color scheme to chose from except for Dark/Light -->
+	<string id="Vivid">Vivid</string><!-- Vivid should emphasize these colors are more colourful or unusual than the other options Dark/Light -->
+	<!-- renaming id="ActivityTitle" from /resources to emphasize that now an activity to choose from can be also a next calendar event, not just an activity info -->
+	<string id="ActivityTitle">Activity or Events Info</string>
+	<!-- calendar events set up -->
+	<string id="CalendarColors">Calendar Colors</string><!-- menu item where user can switch what colors will calendars have -->
+	<string id="CalendarNoChange">Keep current</string><!-- this means that colors of the current calendars will be shown regardles what colors will the user switch to later -->
+	<string id="CalendarByColor">Watch's color / Other color / Gray or cold</string><!-- Emphasizes that the first calendar color is same as the main watch's color, second one is chosen to be different and the third one is just gray or cold (blueish). Must be short though to fit on screen. -->
+	<string id="Calendar">Google Calendar [here be dragons:]</string><!-- New option what activity/event to show on thw watch face. [here be dragons:] means that there are still some devices where it does not work (bug is reported to garmin), but it hard how to tell it in couple of words it's a variation from a latin warning HIC SUN LEONES that was written on unmaped areas of ancient maps when there was an expectation of danger -->
+	<string id="CalendarPrompt">Calendar: Watch will show log-in code. Then 5 mins to load events.</string><!-- Single help line: under settings what to expect when user will turn on the calendar -->
+	<string id="CalendarsSetting">How to set up calendar:</string><!-- Single help line under calendar color setup followed by a link to documentation -->
+	<string id="AddCalendars">Optional: Calendars to show</string><!-- Optional setting to add more calendars to show. If left blank, just the primary calendar will be shown. -->
+	<string id="CalendarsPrompt">Calendar IDs (typically mail) separated by space or comma</string><!-- Single help line under the setting above explaining what is expected in that option -->
+	<string id="refreshFrequency">Minutes to refresh calendar</string><!-- An input box where user can type how many minutes he wants to refresh the calendar (for battery saving purposes) -->
+	<!-- Error codes displayd as a response to loading calendar or weather forecast. -->
+	<!-- max 25 characters (some watches less), the more will be trimmed by the watch. The shorter the better! -->
+	<string id="Wait4login">Wait to login</string><!-- user needs to wait before the watch can prompt him with login info -->
+	<string id="Unauthorized">Wrong password</string><!-- the password user used to enter is wrong -->
+	<string id="Expired">Wait for new code</string><!-- the old code expired and user needs to wait a given time in order to get a new one -->
+	<string id="Subscribe">Wait phone notification</string><!-- user is expected to wait before a notification shows up in Garmin Mobile Connect app that will allow him to subscribe -->
 	<!--<string id="LogIn">Login by phone</string>
 	<string id="AuthContext">Garmin app</string>-->
-	<string id="NotSupportedData">Data not supported</string>
-	<string id="NotConnected">Connect to phone</string>
-	<string id="NoInternet">No internet</string>
-	<string id="NotFound">Page not found</string>
-	<string id="OutOfMemory">Out Of Memory</string>
-	<string id="NastyError">Login Error</string>
-	<string id="NoGPS">Get GPS location</string>
+	<string id="NotSupportedData">Data not supported</string><!-- explaining a user turned on a data loading feature that is not supported by the watch -->
+	<string id="NotConnected">Connect to phone</string><!-- the watch is now disconnected and user is expected to connect the phone to finish the action he did set up -->
+	<string id="NoInternet">No internet</string><!-- there's no internet connection -->
+	<string id="OutOfMemory">Out Of Memory</string><!-- the watch run out of memory before finishing the action (data loading) -->
+	<string id="NastyError">Login Error</string><!-- all other errors that can happen while logging ing and we can not describe them them more -->
+	<string id="NoGPS">Get GPS location</string><!-- he needs to acquite a GPS coordinates by the watch in order to finish the given action -->
 
-	<string id="Weather">Premium: Show Weather Forecast</string>
-	<string id="WeatherPrompt">Unsubscribing here: </string>
-	<string id="Units">Temperature units</string>
+	<string id="Weather">Premium: Show Weather Forecast</string><!-- Toggle a premium feature that Shows a Weather Forecast -->
+	<string id="WeatherPrompt">How to subscribe and unsubscribe: </string><!-- Single help line telling what will be on the following link explaining how to setup it up -->
+	<string id="Units">Temperature units</string><!-- And option that will allow user to choose What temperature units he is using (Celsius/Fahrenheit) -->
 	<string id="Celsius">Celsius</string>
 	<string id="Fahrenheit">Fahrenheit</string>
 </strings>

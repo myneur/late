@@ -51,18 +51,7 @@
 		<settingConfig type="boolean" />
 	</setting>
 
-	<setting propertyKey="@Properties.bat" title="@Strings.BatteryTitle">
-		<settingConfig type="list">
-			<listEntry value="5">@Strings.BellowFive</listEntry>
-			<listEntry value="10">@Strings.BellowTen</listEntry>
-			<listEntry value="20">@Strings.BellowTwenty</listEntry>
-			<listEntry value="33">@Strings.BellowThird</listEntry>
-			<listEntry value="50">@Strings.BellowHalf</listEntry>
-			<listEntry value="100">@Strings.Always</listEntry>
-		</settingConfig>
-	</setting>
-
-	<setting propertyKey="@Properties.dialSize" title="@Strings.DialSize">
+		<setting propertyKey="@Properties.dialSize" title="@Strings.DialSize">
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.s0</listEntry>
 			<listEntry value="1">@Strings.s1</listEntry>
@@ -76,6 +65,17 @@
 			<listEntry value="5">@Strings.b5</listEntry>
 			<listEntry value="7">@Strings.b7</listEntry>
 			<listEntry value="9">@Strings.b9</listEntry>
+		</settingConfig>
+	</setting>
+
+	<setting propertyKey="@Properties.bat" title="@Strings.BatteryTitle">
+		<settingConfig type="list">
+			<listEntry value="5">@Strings.BellowFive</listEntry>
+			<listEntry value="10">@Strings.BellowTen</listEntry>
+			<listEntry value="20">@Strings.BellowTwenty</listEntry>
+			<listEntry value="33">@Strings.BellowThird</listEntry>
+			<listEntry value="50">@Strings.BellowHalf</listEntry>
+			<listEntry value="100">@Strings.Always</listEntry>
 		</settingConfig>
 	</setting>
 

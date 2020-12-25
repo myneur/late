@@ -254,7 +254,7 @@ class lateApp extends App.AppBase {
 							// if(error==511 ){ // ///Sys.println("login request");// login prompt on OAuth data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);} else 
 							if (error == -204){
 								data["userPrompt"] = Ui.loadResource(Rez.Strings.NoGPS);
-								data["userContext"] = ;
+								data["userContext"] = Ui.loadResource(Rez.Strings.HowGPS);;
 								data.put("permanent", true);
 							} else if(data.hasKey("error")){	// when reason is passed from background
 								//////Sys.println(data["error"]);

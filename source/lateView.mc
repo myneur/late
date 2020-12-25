@@ -622,7 +622,7 @@ tone=0;*/
 
 	function drawNowCircle(dc, hour){
 		// show now in a day
-		if( (activity != :calendar && (showSunrise || showWeather)) || (activity == :calendar && /* permanent message*/ events_list.size()>0 && events_list[0][4]==-1)){
+		if( (activity != :calendar && (showSunrise || showWeather)) || (activity == :calendar && events_list.size()>0 && events_list[0][4]==-1) /* permanent message =-1 in 4th event_list item */ ){
 			var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
 			var x = centerX+(sunR*Math.sin(a));
 			var y = centerY-(sunR*Math.cos(a));

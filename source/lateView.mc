@@ -30,8 +30,8 @@ class lateView extends Ui.WatchFace {
 	var message = false;
 	var weatherHourly = [];
 	// redraw full watchface
-	hidden var redrawAll=2; 
-	hidden var lastRedrawMin=-1;
+	//hidden var redrawAll=2; 
+	//hidden var lastRedrawMin=-1;
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
 	function initialize (){
@@ -81,8 +81,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-//activity = :calendar;app.setProperty("activity", 6);activityL = :calories; 
-//showWeather = true; app.setProperty("weather", showWeather);percentage = true;
+//activity = :calendar; app.setProperty("activity", 6);
+//showWeather = true; app.setProperty("weather", showWeather);
 /*activity = :calendar;app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :activeMinutesWeek;
@@ -306,17 +306,17 @@ tone=0;*/
 	function onShow() {
 		//////Sys.println("onShow");
 		
-		if(centerX <=104){ // FR 45 needs to redraw the display every second
+		/*if(centerX <=104){ // FR45 and VA4 needs to redraw the display every second. Better to 
 			redrawAll=100;
 		} else {
 			redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
-		}
+		}*/
 	}
 	
 	//! Called when this View is removed from the screen. Save the state of this View here. This includes freeing resources from memory.
 	function onHide(){
 		/////Sys.println("onHide");
-		redrawAll=0;
+		//redrawAll=0;
 	}
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
@@ -335,7 +335,7 @@ tone=0;*/
 		} else {
 			redrawAll=0; // 2: 2 clearDC() because of lag of refresh of the screen ?
 		}*/
-		redrawAll=0; // 2: 2 clearDC() because of lag of refresh of the screen ?
+		//redrawAll=0; // 2: 2 clearDC() because of lag of refresh of the screen ?
 	}
 
 	/*function openTheMenu(){
@@ -356,7 +356,7 @@ tone=0;*/
 			}
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.clear();
-			lastRedrawMin=clockTime.min;
+			//lastRedrawMin=clockTime.min;
 			var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
 			var h=clockTime.hour;
 			// draw hour

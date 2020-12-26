@@ -4,6 +4,9 @@ base.sourcePath = source
 # bigger display or background data
 round-390x390.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280;resources-390
 round-280x280.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280
+
+#round-280x280.lang.deu = $(round-280x280.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu;resources-240;resources-280
+
 round-260x260.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
 round-240x240.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
 round-218x218.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata

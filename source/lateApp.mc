@@ -24,7 +24,7 @@ class lateApp extends App.AppBase {
 	}
 
 	function loadSettings(){
-		app.setProperty("calendar_ids", split(app.getProperty("calendar_ids")));	//?? how will it show in the properties?
+		app.setProperty("calendar_ids", split(app.getProperty("calendar_ids")));	
 	}
 
 	function getInitialView() {
@@ -34,7 +34,7 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		//+System.println("scheduling");
+		//System.println("scheduling");
 		loadSettings();
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
@@ -225,7 +225,15 @@ class lateApp extends App.AppBase {
 						data = parseEvents(data.get("events"));
 						app.setProperty("events", data);
 						app.setProperty("lastLoad", 'c'); // for background process to know the next time what was loaded to alternate between weather and calendar loading
-						changeScheduleToMinutes(app.getProperty("weather")==true ? 5 : app.getProperty("refresh_freq"));	// when weather not loaded yet, load ASAP					
+						if(app.getProperty("weather")==true){
+							changeScheduleToMinutes(5);	// when weather not loaded yet, load ASAP						
+							if(app.getProperty("subs") == null){	// first time loading forecast => instruct to check the phone
+								data = scheduleDataLoading();
+							}
+						} else {
+							changeScheduleToMinutes(app.getProperty("refresh_freq"));	// when weather not loaded yet, load ASAP		
+						}
+						
 						// TODO message to wait to load weather
 					} else if(data.hasKey("user_code")){ // prompt login
 						app.setProperty("refresh_token", null); 

@@ -81,8 +81,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-activity = :calendar;app.setProperty("activity", 6);activityL = :calories; 
-showWeather = true; app.setProperty("weather", showWeather);percentage = true;
+//activity = :calendar;app.setProperty("activity", 6);activityL = :calories; 
+//showWeather = true; app.setProperty("weather", showWeather);percentage = true;
 /*activity = :calendar;app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :activeMinutesWeek;
@@ -622,8 +622,8 @@ tone=0;*/
 
 	function drawNowCircle(dc, hour){
 		// show now in a day
-		if( (activity != :calendar && (showSunrise || showWeather)) || (activity == :calendar && events_list.size()>0 && events_list[0][4]==-1) /* permanent message =-1 in 4th event_list item */ ){
-			var a = Math.PI/(12*60.0) * (hour*Calendar.SECONDS_PER_MINUTE+clockTime.min);
+		if( !(events_list.size()>0 && events_list[0][4]==-1) /* permanent message =-1 in 4th event_list item */ && (activity == :calendar || showSunrise || showWeather) ){
+			var a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
 			var x = centerX+(sunR*Math.sin(a));
 			var y = centerY-(sunR*Math.cos(a));
 			dc.setColor(backgroundColor, backgroundColor);
@@ -682,7 +682,7 @@ tone=0;*/
 		}
 		
 		var nowBoundary = (clockTime.min+clockTime.hour*60.0)/4; // 360/1440;
-		var tomorrow = Time.now().value()+Calendar.SECONDS_PER_DAY;
+		var tomorrow = Time.now().value()+86400; // 86400= Calendar.SECONDS_PER_DAY
 		var fromAngle; var toAngle;
 
 		/*var h; var idx=2;	// offset 
@@ -745,7 +745,7 @@ tone=0;*/
 	(:data)
 	function getMarkerCoords(event, tillStart){
 		var secondsFromLastHour = event - (Time.now().value()-(clockTime.min*60+clockTime.sec));
-		var a = (secondsFromLastHour).toFloat()/Calendar.SECONDS_PER_HOUR * 2*Math.PI;
+		var a = (secondsFromLastHour).toFloat()/1800*Math.PI; // 2Pi/hour
 		var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1;
 		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}

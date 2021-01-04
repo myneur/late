@@ -536,7 +536,27 @@ tone=0;*/
 		else if(data instanceof Toybox.Lang.Dictionary){
 			if(data.hasKey("weather")){
 				weatherHourly = data["weather"];
+				var h = Sys.getClockTime().hour; // first hour of the forecast
+				if (weatherHourly instanceof Array && weatherHourly.size()>2){	
+					if(weatherHourly[0]!=h){ // delayed response or time passed
+						if((h+1)%24 == weatherHourly[0]){	// forecast from future
+							var gap = weatherHourly[0]-h;
+							if(gap<0){
+								gap += 24;
+							}
+							var balast = new [gap];
+							while(gap>0){
+								gap--;
+								balast[gap]= -1;
+							}
+							weatherHourly = [h, weatherHourly[1]].addAll(balast).addAll(weatherHourly.slice(2,null));
+						} else if(!(h==(weatherHourly[0]+1)%24)){ // all except forecast in past
+							weatherHourly[0]=h;	// ignoring difference because of the bug 
+						}
+					}
+				} 
 				var hourAngle = (trimPastHoursInWeatherHourly())%24;
+				//Sys.println(weatherHourly);
 				if(hourAngle>=0 && showSunrise && sunrise[SUNRISET_NOW] != null){	// dimming clear-night colors
 					var sunAngle = toAngle(sunrise[SUNRISET_NOW]);
 					var moonAngle = toAngle(sunset[SUNRISET_NOW]);
@@ -840,13 +860,11 @@ tone=0;*/
 		var h = Sys.getClockTime().hour; // first hour of the forecast
 		if (weatherHourly instanceof Array && weatherHourly.size()>2){
 			if(weatherHourly[0]!=h){ // delayed response or time passed
-				if(h-weatherHourly[0]<=24 && h-weatherHourly[0]>=-24) { // fixing BE bug that ocassionaly made the hour totally random
-					var gap = 2+h-weatherHourly[0];
-					if(weatherHourly[0]>h){	// the delay is over midnight 
-						gap = gap + 24;
-					}
-					weatherHourly = [h, weatherHourly[1]].addAll(weatherHourly.slice(gap, null));
+				var gap = 2+h-weatherHourly[0];
+				if(weatherHourly[0]>h){	// the delay is over midnight 
+					gap = gap + 24;
 				}
+				weatherHourly = [h, weatherHourly[1]].addAll(weatherHourly.slice(gap, null));
 			}
 		} else {
 			weatherHourly = [];

@@ -82,22 +82,26 @@ class lateView extends Ui.WatchFace {
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
 //activity = :calendar; app.setProperty("activity", 6);
+//activity = null; app.setProperty("activity", 0);
+//dialSize=1;
+//percentage = true;
+
 //showWeather = true; app.setProperty("weather", showWeather);
+//app.setProperty("location", [50.11, 14.49]);	
+//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 /*activity = :calendar;app.setProperty("activity", 6);
 activityL = :steps;
 activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
 showSunrise = true;
-dialSize=0;
 circleWidth=7;
-percentage = true;
 mainColor = 3;
 tone=0;*/
-//app.setProperty("location", [50.11, 14.49]);
+
 //weatherHourly = [21, 9, 0, 1, 6, 4, 5, 2, 3];
 //app.setProperty("units", 1);
 //app.setProperty("calendar_ids", null);
-//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+
 
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 
@@ -256,7 +260,7 @@ tone=0;*/
 			batteryY = centerY+0.6*radius;			
 		}
 		fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
-		if(activity != null){
+		if(activity != null || showWeather){
 			if(dialSize==0){
 				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
 				if(dataLoading && (activity == :calendar || showWeather)){
@@ -266,12 +270,12 @@ tone=0;*/
 					activity = null;
 				}
 			} else {
-				activityY= centerY+Gfx.getFontHeight(fontHours)>>1+5;
+				activityY= centerY+Gfx.getFontHeight(fontHours)>>1+15;
 				if(height<208){
 					activityY -= 7;
 				}
 				if(activity==:calendar || showWeather){
-					messageY =activityY - Gfx.getFontHeight(fontSmall)>>1; 
+					messageY =activityY - Gfx.getFontHeight(fontSmall)>>1 -10; 
 				}
 			}
 		}
@@ -304,7 +308,7 @@ tone=0;*/
 
 	//! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
 	function onShow() {
-		//////Sys.println("onShow");
+		//Sys.println("onShow");
 		
 		/*if(centerX <=104){ // FR45 and VA4 needs to redraw the display every second. Better to 
 			redrawAll=100;
@@ -344,8 +348,7 @@ tone=0;*/
 	}*/
 
 	//! Update the view
-	function onUpdate (dc) {
-		/////Sys.println("onUpdate "+redrawAll);
+	function onUpdate (dc) {	//Sys.println("onUpdate ");
 		clockTime = Sys.getClockTime();
 		//if (lastRedrawMin != clockTime.min && redrawAll==0) { redrawAll = 1; }
 		//var ms = [Sys.getTimer()];
@@ -384,7 +387,6 @@ tone=0;*/
 					dc.setColor(activityColor, backgroundColor);
 					dc.fillCircle(centerX-dc.getTextWidthInPixels(text, fontSmall)>>1-14, dateY+dc.getFontHeight(fontSmall)>>1+1, 5);
 				}
-
 				/*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);dc.setPenWidth(2);dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);*/
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 				var x = centerX-radius - (sunR-radius)>>1-(dc.getTextWidthInPixels("1", fontSmall)/3).toNumber();	// scale 4 with resolution
@@ -510,8 +512,7 @@ tone=0;*/
 		}
 	}*/
 
-	function showMessage(msg){
-		/////Sys.println("message "+message);
+	function showMessage(msg){	//Sys.println("message "+message);
 		if(msg instanceof Toybox.Lang.Dictionary && msg.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			message = true;
@@ -528,7 +529,7 @@ tone=0;*/
 	}
 
 	(:data)
-	function onBackgroundData(data) { //Sys.println("onBackgroundData view"); //Sys.println(data);
+	function onBackgroundData(data) { //Sys.println("onBackgroundData view"); Sys.println(data);
 		if(data instanceof Array){	
 			events_list = data;
 		} 
@@ -539,10 +540,12 @@ tone=0;*/
 				if(hourAngle>=0 && showSunrise && sunrise[SUNRISET_NOW] != null){	// dimming clear-night colors
 					var sunAngle = toAngle(sunrise[SUNRISET_NOW]);
 					var moonAngle = toAngle(sunset[SUNRISET_NOW]);
+					Sys.println([sunAngle,moonAngle]);
 					for(var i =2; i<weatherHourly.size();i++){
 						if(weatherHourly[i] <= 1 && (hourAngle+1 < sunAngle || hourAngle>moonAngle) ){	// partly cloudy not shown at night
 							weatherHourly[i] = weatherHourly[i]==0 ? 6 : -1; // clear night for clear sky and dim partly cloudy
 						}
+						//Sys.println(hourAngle);
 						hourAngle=(hourAngle+1)%24;
 					}
 				}
@@ -648,7 +651,6 @@ tone=0;*/
 			dc.drawText(centerX, messageY, fontCondensed, eventName, Gfx.TEXT_JUSTIFY_CENTER);
 			dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 			// TODO remove prefix for simplicity and size limitations
-
 			var x = centerX;
 			var justify = Gfx.TEXT_JUSTIFY_CENTER;
 			if(eventTab!=null){
@@ -656,7 +658,7 @@ tone=0;*/
 				dc.drawText(x, messageY+eventHeight, fontCondensed, eventStart, Gfx.TEXT_JUSTIFY_RIGHT);
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 				justify = Gfx.TEXT_JUSTIFY_LEFT;
-			} 
+			}
 			//else {dc.drawText(x,  height-batteryY, fontCondensed, eventStart, Gfx.TEXT_JUSTIFY_VCENTER);}
 			dc.drawText(x, messageY+eventHeight, fontCondensed, eventLocation, justify);
 		}
@@ -838,11 +840,13 @@ tone=0;*/
 		var h = Sys.getClockTime().hour; // first hour of the forecast
 		if (weatherHourly instanceof Array && weatherHourly.size()>2){
 			if(weatherHourly[0]!=h){ // delayed response or time passed
-				var gap = 2+h-weatherHourly[0];
-				if(weatherHourly[0]>h){	// the delay is over midnight 
-					gap = gap + 24;
+				if(h-weatherHourly[0]<=24 && h-weatherHourly[0]>=-24) { // fixing BE bug that ocassionaly made the hour totally random
+					var gap = 2+h-weatherHourly[0];
+					if(weatherHourly[0]>h){	// the delay is over midnight 
+						gap = gap + 24;
+					}
+					weatherHourly = [h, weatherHourly[1]].addAll(weatherHourly.slice(gap, null));
 				}
-				weatherHourly = [h, weatherHourly[1]].addAll(weatherHourly.slice(gap, null));
 			}
 		} else {
 			weatherHourly = [];
@@ -908,10 +912,10 @@ tone=0;*/
 	function computeSun() {
 		var pos = Activity.getActivityInfo().currentLocation;
 		var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);
-		//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().currentLocationAccuracy);
+		/*+*/Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().currentLocationAccuracy);
 		if(pos != null){
 			pos = pos.toDegrees();
-			//+Sys.println(pos);
+			/*+*/Sys.println(pos);
 			if(pos[0]==0 && pos[1]==0){	// bloody bug that the currentLocation sometimes returns [0.000000, 0.000000]
 				pos = null;
 			} else {
@@ -925,7 +929,7 @@ tone=0;*/
 				return;
 			}			
 		}
-		//+Sys.println(pos);
+		/*+*/Sys.println(pos);
 		//pos = [50.11, 14.49];
 		/////Sys.println("computeSun: "+pos);
 		// use absolute to get west as positive

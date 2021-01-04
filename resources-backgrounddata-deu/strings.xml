@@ -14,23 +14,23 @@
 	<string id="CalendarPrompt">Kalender: Uhr zeigt den Anmeldecode an. Nach 5 Minuten werden die Termine geladen.</string><!-- Single help line: under settings what to expect when user will turn on the calendar -->
 	<string id="CalendarsSetting">Wie Sie den Kalender einrichten:</string><!-- Single help line under calendar color setup followed by a link to documentation -->
 	<string id="AddCalendars">Optional: Kalender, welche angezeigt werden können</string><!-- Optional setting to add more calendars to show. If left blank, just the primary calendar will be shown. -->
-	<string id="CalendarsPrompt">Kalender-IDs (normalerweise E-Mail) durch Leerzeichen oder Komma getrennt</string><!-- Single help line under the setting above explaining what is expected in that option -->
+<!-- should be similar length as eng, even eng is now cropped --><string id="CalendarsPrompt">Kalender-IDs (normalerweise E-Mail) durch Leerzeichen oder Komma getrennt</string><!-- Single help line under the setting above explaining what is expected in that option -->
 	<string id="refreshFrequency">Minuten zum Aktualisieren des Kalenders</string><!-- An input box where user can type how many minutes he wants to refresh the calendar (for battery saving purposes) -->
 	<!-- Error codes displayd as a response to loading calendar or weather forecast. -->
 	<!-- max 25 characters (some watches less), the more will be trimmed by the watch. The shorter the better! -->
-	<string id="Wait4login">Warten Sie, bis Sie sich angemeldet haben</string><!-- user needs to wait before the watch can prompt him with login info -->
+<!-- <=25 --><string id="Wait4login">Warten Sie, bis Sie sich angemeldet haben</string><!-- user needs to wait before the watch can prompt him with login info -->
 	<string id="Unauthorized">Passwort falsch</string><!-- the password user used to enter is wrong -->
 	<string id="Expired">Warten Sie auf neuen Code</string><!-- the old code expired and user needs to wait a given time in order to get a new one -->
-	<string id="Subscribe">Warte auf Benachrichtigung</string><!-- user is expected to wait before a notification shows up in Garmin Mobile Connect app that will allow him to subscribe -->
+<!-- here is important to tell it is in the phone --><string id="Subscribe">Warte auf Benachrichtigung</string><!-- user is expected to wait before a notification shows up in Garmin Mobile Connect app that will allow him to subscribe -->
 	<!--<string id="LogIn">Login by phone</string>
 	<string id="AuthContext">Garmin app</string>-->
-	<string id="NotSupportedData">Daten werden nicht unterstützt</string><!-- explaining a user turned on a data loading feature that is not supported by the watch -->
-	<string id="NotConnected">Verbindung zum Mobiltelefon herstellen</string><!-- the watch is now disconnected and user is expected to connect the phone to finish the action he did set up -->
+<!-- <=25 --><string id="NotSupportedData">Daten werden nicht unterstützt</string><!-- explaining a user turned on a data loading feature that is not supported by the watch -->
+<!-- <=25 --><string id="NotConnected">Verbindung zum Mobiltelefon herstellen</string><!-- the watch is now disconnected and user is expected to connect the phone to finish the action he did set up -->
 	<string id="NoInternet">Kein Internet</string><!-- there's no internet connection -->
 	<string id="OutOfMemory">Nicht genügend Speicher</string><!-- the watch run out of memory before finishing the action (data loading) -->
 	<string id="NastyError">Login Fehler</string><!-- all other errors that can happen while logging ing and we can not describe them them more -->
 	<string id="NoGPS">GPS-Standort holen, von</string><!-- he needs to acquite a GPS coordinates by the watch in order to finish the given action. By indicates the following line tells how -->
-	<string id="HowGPS">Aktivität im Freien starten</string><!-- following id="NoGPS" with hint how he get the GPS location -->
+<!-- must be <= 17 characters, the rest is cropped. This shows as a second line that is shorter. --><string id="HowGPS">Aktivität im Freien starten</string><!-- following id="NoGPS" with hint how he get the GPS location -->
 
 	<string id="Weather">Premium: Wettervorhersage anzeigen</string><!-- Toggle a premium feature that Shows a Weather Forecast -->
 	<string id="WeatherPrompt">Wie abonnieren und abbestellen: </string><!-- Single help line telling what will be on the following link explaining how to setup it up -->

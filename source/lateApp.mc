@@ -102,7 +102,7 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {	
-		//+Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
+		/*+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
 		//Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary){
@@ -233,7 +233,6 @@ class lateApp extends App.AppBase {
 						} else {
 							changeScheduleToMinutes(app.getProperty("refresh_freq"));	// when weather not loaded yet, load ASAP		
 						}
-						
 						// TODO message to wait to load weather
 					} else if(data.hasKey("user_code")){ // prompt login
 						app.setProperty("refresh_token", null); 
@@ -248,7 +247,7 @@ class lateApp extends App.AppBase {
 						//System.println(data);
 						data["wait"] = durationToNextEvent();
 						var connected = Sys.getDeviceSettings().phoneConnected;
-						if(error==-300 || error==404 || error==-2 || error==-104){ // no internet or bluetooth
+						if(error==-300 || error==404 || error==-2 || error==-104 || error==-400){ // no internet or bluetooth or no-json
 							//System.println([watch.activity == :calendar , app.getProperty("lastLoad")!="c", watch.showWeather==false, app.getProperty("refresh_token")==null]);
 							//System.println([watch.activity == :calendar ,app.getProperty("refresh_token") , watch.showWeather ,app.getProperty("subs")]);
 							if(watch!=null && ((watch.activity == :calendar && app.getProperty("refresh_token")==null) || (watch.showWeather && app.getProperty("subs")==null)) ){

@@ -172,8 +172,10 @@ tone=0;*/
 					meteoColors[0]=0xFFFF55;
 					meteoColors[1]=0xFFAA00;
 					if(mainColor==2 || mainColor==3){	// green || blue
-						meteoColors[2]=0;
-						meteoColors[3]=0x0055FF;
+						meteoColors[2]= mainColor==2 ? 0x0055FF /* try 0AF */ : 0x005555;
+						meteoColors[3]=0x0000AA;
+					} else if(mainColor==5 ){	// gray
+						meteoColors[2]=0x0055FF;
 					}
 				}
 			}
@@ -447,15 +449,15 @@ tone=0;*/
 		return info.floorsClimbed.toFloat()/info.floorsClimbedGoal;
 	}
 
-	function debug(){
+	/*function debug(){
 		if(App.getApp().getProperty("calendar_ids").size()>0){
 			if(App.getApp().getProperty("calendar_ids")[0].find("myneur")!=null){
 				//showMessage({"userPrompt"=> message});
-				weatherHourly = [12, 9, 0, 1, 6, 4, 5, 2, 3];
+				weatherHourly = [13, 9, 0, 1, 6, 4, 5, 2, 3];
 				App.getApp().setProperty("weatherHourly", weatherHourly);
 			}
 		}
-	}
+	}*/
 
 	function drawActivity(dc, activity, x, y, horizontal){
 		if(activity != null){
@@ -580,7 +582,7 @@ tone=0;*/
 			else if(data.hasKey("userPrompt")){
 				showMessage(data);
 			}
-			debug();
+			//debug();
 		}
 		onShow();
 		Ui.requestUpdate();

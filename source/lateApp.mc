@@ -18,8 +18,10 @@ class lateApp extends App.AppBase {
 	}
 
 	function onSettingsChanged() {
-		watch.loadSettings();
-		Ui.requestUpdate();
+		if(watch!=null){
+			watch.loadSettings();
+			Ui.requestUpdate();
+		}
 		loadSettings();
 	}
 
@@ -297,13 +299,13 @@ class lateApp extends App.AppBase {
 						}
 					}
 				}
-				if(watch){
+				if(watch!=null){
 					watch.onBackgroundData(data);
 				}
 				Ui.requestUpdate();
 			}
 		} catch(ex){	//Sys.println("ex: " + ex.getErrorMessage());///Sys.println( ex.printStackTrace());
-			if(watch){
+			if(watch!=null){
 				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
 			}
 		}

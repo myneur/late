@@ -27,17 +27,12 @@
 			<listEntry value="1">@Strings.CalendarByColor</listEntry>
 		</settingConfig>
 	</setting>
-
 	<setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
 		<settingConfig type="numeric" min="60" max="1440" />
 	</setting>
-
-
-
 	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars" prompt="@Strings.CalendarsPrompt" helpUrl="https://calendar.google.com/calendar/r/settings">
 		<settingConfig type="alphaNumeric" />
 	</setting>
-
 	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast">
 		<settingConfig type="boolean" />
 	</setting>

@@ -30,7 +30,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		/*+*/Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad") );
 		app = App.getApp();
 		//getTokensAndData();return;
-		/*+*/Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
+		//+Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
 		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
@@ -185,7 +185,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function onEvents(responseCode, data) {
-		/*+*/Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
+		//+Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
 			var event;
@@ -261,7 +261,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function getWeatherForecast() {
 		app = App.getApp();
 		var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
-		/*+*/Sys.println("getWeatherForecast: "+pos);
+		//+Sys.println("getWeatherForecast: "+pos);
 		if(pos == null){
 			Background.exit({"error_code"=>-204});
 			return;
@@ -269,7 +269,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if(subscription_id==null){
 			subscription_id = app.getProperty("subs");	// must be read at first call (which is this one) so we don't lose it
 		}
-		/*+*/System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
+		//+System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
 		if(subscription_id instanceof String && subscription_id.length()>0){
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"yrno"}, /* "service"=>"climacell"||"yrno" */
@@ -280,7 +280,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-	function onWeatherForecast(responseCode, data){		/*+*/Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
+	function onWeatherForecast(responseCode, data){		//+Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
 		if (responseCode==200) {
 			try { 
 				data = {"weather"=>data};	// returning array with the wheather forecast
@@ -316,13 +316,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Background.exit(data);
 	}
 
-	function getSubscriptionId(){	/*+*/System.println("getSubscriptionId");
+	function getSubscriptionId(){	//+System.println("getSubscriptionId");
 		Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
 			{"client_id"=>app.getProperty("weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
 			method(:onSubscriptionId));
 	}
 	
-	function buySubscription(responseCode){	/*+*/System.println("buySubscription "+responseCode);
+	function buySubscription(responseCode){	//+System.println("buySubscription "+responseCode);
 		var data = {"device_code"=>subscription_id};
 		if(responseCode==403){ // especially 401: handle as expiration?
 			data.put("expired", "1");

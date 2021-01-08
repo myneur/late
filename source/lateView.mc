@@ -76,7 +76,7 @@ class lateView extends Ui.WatchFace {
 		batThreshold = app.getProperty("bat");
 		circleWidth = app.getProperty("boldness");
 		dialSize = app.getProperty("dialSize");
-		showWeather = app.getProperty("weather"); 
+		showWeather = app.getProperty("weather"); if(showWeather==null) {showWeather=false;} // because it is not in settings of non-data devices
 		percentage = app.getProperty("percents");
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
@@ -85,7 +85,6 @@ class lateView extends Ui.WatchFace {
 //activity = null; app.setProperty("activity", 0);
 //dialSize=1;
 //percentage = true;
-
 //showWeather = true; app.setProperty("weather", showWeather);
 //app.setProperty("location", [50.11, 14.49]);	
 //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
@@ -95,7 +94,7 @@ activityR = :activeMinutesWeek;
 showWeather = true; app.setProperty("weather", showWeather);
 showSunrise = true;
 circleWidth=7;
-mainColor = 3;
+
 tone=0;*/
 
 //weatherHourly = [21, 9, 0, 1, 6, 4, 5, 2, 3];
@@ -121,7 +120,6 @@ tone=0;*/
 			[0xAA0000, 0xFF5500, 0x00AA00, 0x0000FF, 0xAA00FF, 0x555555], 
 			[0xAA0055, 0xFFFF00, 0x55FFAA, 0x00AAAA, 0x5500FF, 0xAAFFFF]
 		][tone<=2 ? tone : 0][mainColor];
-
 		if(tone == 3){ 			// white background
 			backgroundColor = 0xFFFFFF;
 			timeColor = 0x0;
@@ -162,6 +160,7 @@ tone=0;*/
 
 	(:data)
 	function loadDataColors(mainColor, tone, app){
+		var mainColor = app.getProperty("mainColor").toNumber()%6;
 		if(showWeather){
 			meteoColors = Ui.loadResource(Rez.JsonData.metCol);
 			//Sys.println([0xFFAA00,	0xAA5500,	0x005555, 0x0055FF,	0xAAAAAA, 0xFFFFFF, 0x555500];);
@@ -200,19 +199,25 @@ tone=0;*/
 			if(app.getProperty("calendar_colors")){	// match calendar colors to watch
 				calendarColors = Ui.loadResource(Rez.JsonData.calCol)[mainColor];
 				/*Sys.println( [
-					[0xAA0055, 0xFFFF00, 0xAAAAAA], 
-					[0xFFFF00, 0xAA55FF, 0xAAAAAA], 
-					[0x55FFAA, 0x00AAFF, 0xAAAAAA], 
-					[0x00AAAA, 0xFFFF00, 0xAAAAAA], 
-					[0xAA00FF, 0xAAFFFF, 0xAAAAAA], 
-					[0xAAAAAA, 0xAA00FF, 0xAAFFFF] 
+					[0xAA0055, 0xFFFF00, 0x555555], 
+					[0xFFFF00, 0xAA00FF, 0x555555], 
+					[0x55FFAA, 0x00AAFF, 0x555555], 
+					[0x00AAAA, 0xFFFF00, 0x555555], 
+					[0xAA00FF, 0xFFFF00, 0x555555], 
+					[0x555555, 0xAA00FF, 0x00AAFF] 
 					]);*/
 				/*for(var i=0; i<calendarColors.size(); i++){
 					calendarColors[i] = calendarColors[i].toNumberWithBase(0x10);
 				}*/
-				if(tone == 4) {	// clear current color
+				if(tone == 4) {	// color background 
 					calendarColors[0] = 0xFFFFFF;
 					calendarColors[2] = 0x0;
+					if(mainColor==1 || mainColor==2){calendarColors[1]=0xFFFF55;}
+					else if(mainColor==5){calendarColors[1]=0xAAFFFF;}
+				} else if(tone == 3) { // white background
+					if(mainColor==0 || mainColor==3){calendarColors[1]=0xAA00FF;}
+					else if(mainColor==2){calendarColors[0]=0x00AA00;}
+					else if(mainColor==2){calendarColors[0]=0xFF5500;}
 				}
 				app.setProperty("calendarColors", calendarColors);
 			} else {	// keep last calendar colors
@@ -227,7 +232,6 @@ tone=0;*/
 
 
 	function setLayoutVars(){
-		/////Sys.println("Layout free memory: "+Sys.getSystemStats().freeMemory);
 		icons = Ui.loadResource(Rez.Fonts.Ico);
 		sunR = centerX-5;// - (height>=390 ? (showWeather ? 23:16) : (showWeather ? 15:11)); // base: -9-11, weather: 15
 		if(showSunrise){
@@ -443,12 +447,15 @@ tone=0;*/
 		return info.floorsClimbed.toFloat()/info.floorsClimbedGoal;
 	}
 
-	/*function debug(message){
+	function debug(){
 		if(App.getApp().getProperty("calendar_ids").size()>0){
-			if(App.getApp().getProperty("calendar_ids")[0].find("petr.meissner")!=null){
-				showMessage({"userPrompt"=> message});
+			if(App.getApp().getProperty("calendar_ids")[0].find("myneur")!=null){
+				//showMessage({"userPrompt"=> message});
+				weatherHourly = [12, 9, 0, 1, 6, 4, 5, 2, 3];
+				App.getApp().setProperty("weatherHourly", weatherHourly);
+			}
 		}
-	}*/
+	}
 
 	function drawActivity(dc, activity, x, y, horizontal){
 		if(activity != null){
@@ -573,8 +580,10 @@ tone=0;*/
 			else if(data.hasKey("userPrompt")){
 				showMessage(data);
 			}
+			debug();
 		}
 		onShow();
+		Ui.requestUpdate();
 	}
 
 	(:data)

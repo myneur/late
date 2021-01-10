@@ -104,7 +104,7 @@ class lateApp extends App.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {	
-		/*+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
+		//+Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
 		//Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary){

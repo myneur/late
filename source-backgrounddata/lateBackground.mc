@@ -27,7 +27,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	
 	function onTemporalEvent() {
 		var t = Gregorian.info(Time.now(), Gregorian.FORMAT_SHORT);
-		/*+*/Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad") );
+		//+Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad") );
 		app = App.getApp();
 		//getTokensAndData();return;
 		//+Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));

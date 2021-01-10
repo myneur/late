@@ -75,27 +75,29 @@ class lateView extends Ui.WatchFace {
 		showSunrise = app.getProperty("sunriset");
 		batThreshold = app.getProperty("bat");
 		circleWidth = app.getProperty("boldness");
+		if(height>280){
+			circleWidth=circleWidth<<1;
+		}
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather"); if(showWeather==null) {showWeather=false;} // because it is not in settings of non-data devices
 		percentage = app.getProperty("percents");
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-//activity = :calendar; app.setProperty("activity", 6);
-//activity = null; app.setProperty("activity", 0);
-//dialSize=1;
+//app.setProperty("activity", 6); activity = activities[app.getProperty("activity")];
+//dialSize=0;
 //percentage = true;
 //showWeather = true; app.setProperty("weather", showWeather);
 //app.setProperty("location", [50.11, 14.49]);	
 //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-/*activity = :calendar;app.setProperty("activity", 6);
-activityL = :steps;
-activityR = :activeMinutesWeek;
-showWeather = true; app.setProperty("weather", showWeather);
-showSunrise = true;
-circleWidth=7;
-
-tone=0;*/
+//app.setProperty("calendar_ids", ["petr.meissner@gmail.com"]);
+//activity = :calendar;app.setProperty("activity", 6);
+//activityL = :steps;
+//activityR = :activeMinutesWeek;
+//showSunrise = true;
+//circleWidth=7;
+//mainColor=4;
+//tone=2;
 
 //weatherHourly = [21, 9, 0, 1, 6, 4, 5, 2, 3];
 //app.setProperty("units", 1);
@@ -367,18 +369,8 @@ tone=0;*/
 			dc.clear();
 			//lastRedrawMin=clockTime.min;
 			var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
-			var h=clockTime.hour;
-			// draw hour
-			var set = Sys.getDeviceSettings();
-			if(set.is24Hour == false){
-				if(h>11){ h-=12;}
-				if(0==h){ h=12;}
-			}
-			// TODO if(set.notificationCount){dc.drawBitmap(centerX, notifY, iconNotification);}
-			dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
 			drawBatteryLevel(dc);
-			drawMinuteArc(dc);
+			drawTime(dc);
 			//ms.add(Sys.getTimer()-ms[0]);
 			if(centerY>89){
 				// function drawDate(x, y){}
@@ -569,7 +561,7 @@ tone=0;*/
 				if(hourAngle>=0 && showSunrise && sunrise[SUNRISET_NOW] != null){	// dimming clear-night colors
 					var sunAngle = toAngle(sunrise[SUNRISET_NOW]);
 					var moonAngle = toAngle(sunset[SUNRISET_NOW]);
-					Sys.println([sunAngle,moonAngle]);
+					//Sys.println([sunAngle,moonAngle]);
 					for(var i =2; i<weatherHourly.size();i++){
 						if(weatherHourly[i] <= 1 && (hourAngle+1 < sunAngle || hourAngle>moonAngle) ){	// partly cloudy not shown at night
 							weatherHourly[i] = weatherHourly[i]==0 ? 6 : -1; // clear night for clear sky and dim partly cloudy
@@ -783,7 +775,71 @@ tone=0;*/
 		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}
 	//var m = 0; testing rendering
-	function drawMinuteArc (dc){
+	
+	function drawTime (dc){
+		// draw hour
+		var r; var v;
+		var h=clockTime.hour;
+		var set = Sys.getDeviceSettings();
+		if(set.is24Hour == false){
+			if(h>11){ h-=12;}
+			if(0==h){ h=12;}
+		}
+		// TODO if(set.notificationCount){dc.drawBitmap(centerX, notifY, iconNotification);}
+		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
+		var minutes = clockTime.min; 
+		// minutes=m; m++; // testing rendering
+		//////Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
+		var angle =  minutes/60.0*2*Math.PI;
+		v = circleWidth>>1;
+		dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
+		dc.setPenWidth(1);
+		r = (1.2*radius).toNumber();
+		var beta = angle + Math.PI/2;
+		var offX = v*Math.sin(beta);
+		var offY = v*Math.cos(beta);
+		var rX = r*Math.sin(angle);
+		var rY = r*Math.cos(angle);
+
+		var gap = (0.1*r).toNumber();
+		var gapX = gap*Math.sin(angle);
+		var gapY = gap*Math.cos(angle);
+		
+		dc.drawLine(Math.round(centerX+gapX+offX), Math.round(centerY-gapY-offY), Math.round(centerX+rX+offX), Math.round(centerY-rY-offY));
+		beta = angle - Math.PI/2;
+		offX = v*Math.sin(beta);
+		offY = v*Math.cos(beta);
+		dc.drawLine(Math.round(centerX+gapX+offX), Math.round(centerY-gapY-offY), Math.round(centerX+rX+offX), Math.round(centerY-rY-offY));
+		angle = 360*angle/(2*Math.PI)-90;
+		dc.drawArc(Math.round(centerX+rX), Math.round(centerY-rY), v, Gfx.ARC_CLOCKWISE, -angle+90, -angle-90);
+
+		angle =  h/(set.is24Hour==false ? 12.0 : 24.0)*2*Math.PI;
+		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
+		dc.drawText(Math.round(centerX + radius * Math.sin(angle)), Math.round(centerY - radius * Math.cos(angle)), fontSmall, h, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
+		if(h==12){h=0;}
+		h = h.toFloat() + minutes.toFloat()/60;
+		angle =  h/(set.is24Hour==false ? 12.0 : 24.0)*2*Math.PI;
+		dc.setColor(color, Gfx.COLOR_TRANSPARENT);
+		dc.setPenWidth(circleWidth);
+		r = (0.7*radius).toNumber();
+		dc.drawLine(centerX, centerY, Math.round(centerX+r*Math.sin(angle)), Math.round(centerY-r*Math.cos(angle)));
+
+	}
+
+/*
+	function drawTime (dc){
+		// draw hour
+		var h=clockTime.hour;
+		var set = Sys.getDeviceSettings();
+		if(set.is24Hour == false){
+			if(h>11){ h-=12;}
+			if(0==h){ h=12;}
+		}
+		// TODO if(set.notificationCount){dc.drawBitmap(centerX, notifY, iconNotification);}
+		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
+		dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
+
+
 		var minutes = clockTime.min; 
 		// minutes=m; m++; // testing rendering
 		//////Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
@@ -794,24 +850,23 @@ tone=0;*/
 		var gap=0;
 
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontSmall, minutes /*clockTime.min.format("%0.1d")*/, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
+		dc.drawText(centerX + (radius * sin), centerY - (radius * cos) , fontSmall, minutes, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 		
 		
 		if(minutes>0){
 			dc.setColor(color, backgroundColor);
 			dc.setPenWidth(circleWidth);
 			
-			/* correct kerning not to have wild gaps between arc and minutes number
-				padding values in px:
-				1: 		4 
-				2-6: 	6 
-				7-9: 	8 
-				10-11: 	11 
-				12-22: 	9 
-				23-51: 	11 
-				52-59: 	12
-				59: start offsetted by 4
-			*/
+			// correct kerning not to have wild gaps between arc and minutes number
+			//	padding values in px:
+			//	1: 		4 
+			//	2-6: 	6 
+			//	7-9: 	8 
+			//	10-11: 	11 
+			//	12-22: 	9 
+			//	23-51: 	11 
+			//	52-59: 	12
+			//	59: start offsetted by 4
 			if(minutes>=10){
 				if(minutes>=52){
 					offset=12;	// 52-59
@@ -839,6 +894,7 @@ tone=0;*/
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
 	}
+*/
 
 	function drawBatteryLevel (dc){
 		var bat = Sys.getSystemStats().battery;
@@ -941,10 +997,10 @@ tone=0;*/
 	function computeSun() {
 		var pos = Activity.getActivityInfo().currentLocation;
 		var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);
-		/*+*/Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().currentLocationAccuracy);
+		//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().currentLocationAccuracy);
 		if(pos != null){
 			pos = pos.toDegrees();
-			/*+*/Sys.println(pos);
+			//+Sys.println(pos);
 			if(pos[0]==0 && pos[1]==0){	// bloody bug that the currentLocation sometimes returns [0.000000, 0.000000]
 				pos = null;
 			} else {
@@ -958,7 +1014,7 @@ tone=0;*/
 				return;
 			}			
 		}
-		/*+*/Sys.println(pos);
+		//+Sys.println(pos);
 		//pos = [50.11, 14.49];
 		/////Sys.println("computeSun: "+pos);
 		// use absolute to get west as positive

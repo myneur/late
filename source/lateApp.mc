@@ -36,7 +36,7 @@ class lateApp extends App.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		//System.println("scheduling");
+		//+System.println("scheduling: " + [watch.dataLoading , watch.activity == :calendar , watch.showWeather]);
 		loadSettings();
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
@@ -115,7 +115,7 @@ class lateApp extends App.AppBase {
 					}
 				}
 				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
-					//System.println(["weather array ", data["weather"].size(), data["weather"]]);
+					//System.println(data["weather"]);
 					if(data["weather"].size()>2){
 						//System.println(data);
 						data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature

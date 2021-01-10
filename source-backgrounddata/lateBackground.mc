@@ -270,6 +270,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			subscription_id = app.getProperty("subs");	// must be read at first call (which is this one) so we don't lose it
 		}
 		//+System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
+		//Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat());
 		if(subscription_id instanceof String && subscription_id.length()>0){
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"yrno"}, /* "service"=>"climacell"||"yrno" */

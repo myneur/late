@@ -1,4 +1,8 @@
-////////// before publishing: set d24 prop, drawNowCircle remove return 
+//// diff from analog marked //12//
+//// set d24 prop, 
+//// drawNowCircle remove return
+//// links in properties to help
+//// getMarkerCoords moving dot
 
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
@@ -86,24 +90,19 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-		app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
+		app.setProperty("d24", Sys.getDeviceSettings().is24Hour); //12//
 
-//app.setProperty("activity", 6); activity = activities[app.getProperty("activity")];
+//app.setProperty("activity", 6); activity = activities[app.getProperty("activity")];app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+//app.setProperty("calendar_ids", null);
+//Sys.println(Ui.loadResource(Rez.Strings.Vivid));
+//showWeather = true; app.setProperty("weather", showWeather); app.setProperty("location", [50.11, 14.49]);	
 //dialSize=0;
 //percentage = true;
-//showWeather = true; app.setProperty("weather", showWeather);
-//app.setProperty("location", [50.11, 14.49]);	
-//app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-//activityL = :steps;
-//activityR = :activeMinutesWeek;
+//activityL = :steps;activityR = :activeMinutesWeek;
 //showSunrise = true;
-//circleWidth=7;
-//mainColor=4;
-//tone=1;
-
+//circleWidth=7;mainColor=4;
 //weatherHourly = [21, 9, 0, 1, 6, 4, 5, 2, 3];
 //app.setProperty("units", 1);
-//app.setProperty("calendar_ids", null);
 
 
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
@@ -653,7 +652,7 @@ class lateView extends Ui.WatchFace {
 		if( !(events_list.size()>0 && events_list[0][4]==-1) /* permanent message =-1 in 4th event_list item */ && (activity == :calendar || showSunrise || showWeather) ){
 			var a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
 			
-return;
+return;	//12//
 			if(!App.getApp().getProperty("d24")){
 				return; // so far
 				if(hour>11){ hour-=12;}
@@ -781,7 +780,8 @@ return;
 	function getMarkerCoords(event, tillStart){
 		var secondsFromLastHour = event - (Time.now().value()-(clockTime.min*60+clockTime.sec));
 		var a = (secondsFromLastHour).toFloat()/1800*Math.PI; // 2Pi/hour
-		var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1;
+		//12//var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1;
+		var r = radius;
 		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}
 	//var m = 0; testing rendering
@@ -1008,7 +1008,7 @@ return;
 			if(!App.getApp().getProperty("d24")){
 				var time = Sys.getClockTime();
 				time = time.hour + time.min/60.0;
-				if(time>sunrise[SUNRISET_NOW]){
+				if(time>sunrise[SUNRISET_NOW] && time<=sunset[SUNRISET_NOW] ){
 					drawIconAtTime(dc, sunset[SUNRISET_NOW], "(");	// moon						
 				} else {
 

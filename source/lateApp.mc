@@ -363,7 +363,10 @@ class lateApp extends App.AppBase {
 		var events_list = [];
 		var dayDegrees = Calendar.SECONDS_PER_DAY.toFloat()/360;
 		var midnight = Time.today();
-		
+
+	if(!App.getApp().getProperty("d24")){
+		dayDegrees = dayDegrees/2;
+	}
 		
 		if(data instanceof Toybox.Lang.Array) {
 			for(var i=0; i<data.size()-1; i++){

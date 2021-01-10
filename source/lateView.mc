@@ -1,3 +1,5 @@
+////////// before publishing: set d24 prop, drawNowCircle remove return 
+
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 using Toybox.System as Sys;
@@ -16,7 +18,7 @@ class lateView extends Ui.WatchFace {
 	hidden var dateForm; hidden var batThreshold = 33;
 	hidden var centerX; hidden var centerY; hidden var height;
 	hidden var color; hidden var timeColor; hidden var dateColor; hidden var activityColor; hidden var backgroundColor;
-	hidden var calendarColors;
+	hidden var calendarColors; 
 	var activity=null; var activityL=null; var activityR=null; var showSunrise = false; var dataLoading = false; var showWeather = false; var percentage = false;
 	//hidden var icon=null; hidden var iconL=null; hidden var iconR=null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
@@ -84,20 +86,20 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
+		app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
+
 //app.setProperty("activity", 6); activity = activities[app.getProperty("activity")];
 //dialSize=0;
 //percentage = true;
 //showWeather = true; app.setProperty("weather", showWeather);
 //app.setProperty("location", [50.11, 14.49]);	
 //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-//app.setProperty("calendar_ids", ["petr.meissner@gmail.com"]);
-//activity = :calendar;app.setProperty("activity", 6);
 //activityL = :steps;
 //activityR = :activeMinutesWeek;
 //showSunrise = true;
 //circleWidth=7;
 //mainColor=4;
-//tone=2;
+//tone=1;
 
 //weatherHourly = [21, 9, 0, 1, 6, 4, 5, 2, 3];
 //app.setProperty("units", 1);
@@ -650,6 +652,14 @@ class lateView extends Ui.WatchFace {
 		// show now in a day
 		if( !(events_list.size()>0 && events_list[0][4]==-1) /* permanent message =-1 in 4th event_list item */ && (activity == :calendar || showSunrise || showWeather) ){
 			var a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
+			
+return;
+			if(!App.getApp().getProperty("d24")){
+				return; // so far
+				if(hour>11){ hour-=12;}
+				if(0==hour){ hour=12;}
+				a = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
+			}
 			var x = centerX+(sunR*Math.sin(a));
 			var y = centerY-(sunR*Math.cos(a));
 			dc.setColor(backgroundColor, backgroundColor);
@@ -785,11 +795,9 @@ class lateView extends Ui.WatchFace {
 			if(h>11){ h-=12;}
 			if(0==h){ h=12;}
 		}
-		// TODO if(set.notificationCount){dc.drawBitmap(centerX, notifY, iconNotification);}
-		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
+
+		// minutes
 		var minutes = clockTime.min; 
-		// minutes=m; m++; // testing rendering
-		//////Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
 		var angle =  minutes/60.0*2*Math.PI;
 		v = circleWidth>>1;
 		dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
@@ -800,11 +808,9 @@ class lateView extends Ui.WatchFace {
 		var offY = v*Math.cos(beta);
 		var rX = r*Math.sin(angle);
 		var rY = r*Math.cos(angle);
-
 		var gap = (0.1*r).toNumber();
 		var gapX = gap*Math.sin(angle);
-		var gapY = gap*Math.cos(angle);
-		
+		var gapY = gap*Math.cos(angle);		
 		dc.drawLine(Math.round(centerX+gapX+offX), Math.round(centerY-gapY-offY), Math.round(centerX+rX+offX), Math.round(centerY-rY-offY));
 		beta = angle - Math.PI/2;
 		offX = v*Math.sin(beta);
@@ -813,17 +819,19 @@ class lateView extends Ui.WatchFace {
 		angle = 360*angle/(2*Math.PI)-90;
 		dc.drawArc(Math.round(centerX+rX), Math.round(centerY-rY), v, Gfx.ARC_CLOCKWISE, -angle+90, -angle-90);
 
+		// Hours
 		angle =  h/(set.is24Hour==false ? 12.0 : 24.0)*2*Math.PI;
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(Math.round(centerX + radius * Math.sin(angle)), Math.round(centerY - radius * Math.cos(angle)), fontSmall, h, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
-		if(h==12){h=0;}
+		if(set.is24Hour==false && h==12){h=0;}
 		h = h.toFloat() + minutes.toFloat()/60;
 		angle =  h/(set.is24Hour==false ? 12.0 : 24.0)*2*Math.PI;
 		dc.setColor(color, Gfx.COLOR_TRANSPARENT);
 		dc.setPenWidth(circleWidth);
 		r = (0.7*radius).toNumber();
 		dc.drawLine(centerX, centerY, Math.round(centerX+r*Math.sin(angle)), Math.round(centerY-r*Math.cos(angle)));
-
+		dc.fillCircle(centerX, centerY, v);
+		dc.fillCircle(Math.round(centerX+r*Math.sin(angle)), Math.round(centerY-r*Math.cos(angle)), v);
 	}
 
 /*
@@ -946,12 +954,18 @@ class lateView extends Ui.WatchFace {
 		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		var h = trimPastHoursInWeatherHourly();
 		/////Sys.println("weather from hour: "+h + " offset: "+offset);
+		var limit = 26;
+		var step = 15;
+		if(!App.getApp().getProperty("d24")){
+			limit = 14;
+			step = 30;
+		}
 		if(h>=0){
 			dc.setPenWidth(height>=390 ? 5 : 3);
 			
 			var color; var center;
 			//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
-			for(var i=2; i<weatherHourly.size() &&i<26; i++, h++){
+			for(var i=2; i<weatherHourly.size() &&i<limit; i++, h++){
 				color = weatherHourly[i];
 				if(color>=0 && color < meteoColors.size()){
 					color = meteoColors[color];
@@ -959,7 +973,7 @@ class lateView extends Ui.WatchFace {
 					center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
 					/////Sys.println([i, h, weatherHourly[i], color]);
 					dc.setColor(color, Gfx.COLOR_TRANSPARENT);
-					dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*15, 90-(h+1)*15);
+					dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*step, 90-(h+1)*step);
 				}
 			}
 			if(weatherHourly.size()>1){
@@ -982,14 +996,29 @@ class lateView extends Ui.WatchFace {
 
 	function drawIconAtTime(dc, t, icon){
 		 var a = toAngle(t) * Math.PI/12.0  ; // radians (*= 60 * 2*PI/(24*60)) 
+		 if(!App.getApp().getProperty("d24")){
+		 	a = toAngle(t) * Math.PI/6.0  ; // radians (*= 60 * 2*PI/(12*60)) 
+		 }
 		 drawIcon(dc, centerX + sunR*Math.sin(a), centerY - sunR*Math.cos(a), icon);
 	}
 
 	function drawSunBitmaps (dc) {
 		if(sunrise[SUNRISET_NOW] != null) {
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-			drawIconAtTime(dc, sunrise[SUNRISET_NOW], "*");	// sun
-			drawIconAtTime(dc, sunset[SUNRISET_NOW], "(");	// moon
+			if(!App.getApp().getProperty("d24")){
+				var time = Sys.getClockTime();
+				time = time.hour + time.min/60.0;
+				if(time>sunrise[SUNRISET_NOW]){
+					drawIconAtTime(dc, sunset[SUNRISET_NOW], "(");	// moon						
+				} else {
+
+					drawIconAtTime(dc, sunrise[SUNRISET_NOW], "*");	// sun
+				}
+
+			} else {
+				drawIconAtTime(dc, sunrise[SUNRISET_NOW], "*");	// sun
+				drawIconAtTime(dc, sunset[SUNRISET_NOW], "(");	// moon
+			}
 			//System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d")); /*dc.setColor(0x555555, 0); dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*//*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360; System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a)))); dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
 		}
 	}

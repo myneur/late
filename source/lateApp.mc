@@ -364,9 +364,9 @@ class lateApp extends App.AppBase {
 		var dayDegrees = Calendar.SECONDS_PER_DAY.toFloat()/360;
 		var midnight = Time.today();
 
-	if(!App.getApp().getProperty("d24")){
-		dayDegrees = dayDegrees/2;
-	}
+		if(!App.getApp().getProperty("d24")){
+			dayDegrees = dayDegrees/2;
+		}
 		
 		if(data instanceof Toybox.Lang.Array) {
 			for(var i=0; i<data.size()-1; i++){
@@ -379,10 +379,17 @@ class lateApp extends App.AppBase {
 				}
 			}
 		}
-		
+		var date;
+		var fromAngle;
+		var toAngle;
+
 		if(data instanceof Toybox.Lang.Array) { 
 			for(var i=0; i<data.size() ;i++){
-				var date = parseISODate(data[i][0]);
+				date = parseISODate(data[i][0]);
+				fromAngle = (date.compare(midnight)/dayDegrees);
+				if(fromAngle>360){fromAngle-=360;}
+				toAngle = (parseISODate(data[i][1]).compare(midnight)/dayDegrees);
+				if(toAngle>360){toAngle-=360;}
 				if(date!=null){
 					events_list.add([
 						date.value(),                                               // start
@@ -390,8 +397,8 @@ class lateApp extends App.AppBase {
 						data[i][2],                                                 // name
 						data[i][3] ? ": " + data[i][3] : "",                        // location
 						data[i][4],                                                 // calendar
-						(date.compare(midnight)/dayDegrees).toFloat(),                          // degree start
-						(parseISODate(data[i][1]).compare(midnight)/dayDegrees).toFloat()       // degree end
+						fromAngle,         // degree start
+						toAngle       // degree end
 					]);
 				}
 			}

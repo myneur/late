@@ -37,4 +37,12 @@
 	<string id="Units">Temperature units</string><!-- And option that will allow user to choose What temperature units he is using (Celsius/Fahrenheit) -->
 	<string id="Celsius">Celsius</string>
 	<string id="Fahrenheit">Fahrenheit</string>
+
+
+<!-- new to translate -->
+	<string id="D1224h">12 or 24h Calendar/Weather outlook?</string>
+	<string id="D12h">12h dial</string>
+	<string id="D24h">24h dial</string>
+	<string id="TakesTime">Takes minutes to update</string>
+
 </strings>

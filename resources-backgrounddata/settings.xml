@@ -36,10 +36,17 @@
 	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast-analog">
 		<settingConfig type="boolean" />
 	</setting>
-	<setting propertyKey="@Properties.units" title="@Strings.Units">
+	<setting propertyKey="@Properties.units" title="@Strings.Units" prompt="@Strings.TakesTime">
 		<settingConfig type="list">
 			<listEntry value="1">@Strings.Celsius</listEntry>						
 			<listEntry value="0">@Strings.Fahrenheit</listEntry>
+		</settingConfig>
+	</setting>
+
+	<setting propertyKey="@Properties.d24" title="@Strings.D1224h" prompt="@Strings.TakesTime">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.D12h</listEntry>						
+			<listEntry value="1">@Strings.D24h</listEntry>
 		</settingConfig>
 	</setting>
 	<!--<setting propertyKey="@Properties.key" title="@Strings.Key">

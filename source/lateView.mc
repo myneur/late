@@ -10,7 +10,8 @@ using Toybox.System as Sys;
 using Toybox.Lang as Lang;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Calendar;
-using Toybox.Activity as Activity;
+using Toybox.Position as Position;
+//using Toybox.Weather as Weather;
 using Toybox.Math as Math;
 //using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Application as App;
@@ -30,6 +31,7 @@ class lateView extends Ui.WatchFace {
 	hidden var fontSmall = null; hidden var fontHours = null; hidden var fontCondensed = null;
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; hidden var messageY; hidden var sunR; //hidden var temp; //hidden var notifY;
 	hidden var icons;
+	hidden var d24;
 	
 	hidden var eventStart=null; hidden var eventName=""; hidden var eventLocation=""; hidden var eventTab=0; hidden var eventHeight=23; hidden var eventMarker=null; //eventEnd=0;
 	hidden var events_list = [];
@@ -63,6 +65,7 @@ class lateView extends Ui.WatchFace {
 				weatherHourly = weather;
 			}
 		}
+		d24 = App.getApp().getProperty("d24") == 1 ? true : false; // making sure it loads for the first time
 		//Sys.println("init: "+ weatherHourly);
 	}
 
@@ -87,20 +90,28 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather"); if(showWeather==null) {showWeather=false;} // because it is not in settings of non-data devices
 		percentage = app.getProperty("percents");
+		var d24new = App.getApp().getProperty("d24") == 1 ? true : false;
+		if(d24!= null && d24new != d24){	// changing 24 / 12h
+			events_list=[];
+			showMessage(App.getApp().scheduleDataLoading());
+			app.setProperty("lastLoad", 'w');
+		}
+		d24 = d24new;
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
-		app.setProperty("d24", Sys.getDeviceSettings().is24Hour); //12//
-
+		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); //12//
 //app.setProperty("activity", 6); activity = activities[app.getProperty("activity")];app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 //app.setProperty("calendar_ids", null);
 //Sys.println(Ui.loadResource(Rez.Strings.Vivid));
-//showWeather = true; app.setProperty("weather", showWeather); app.setProperty("location", [50.11, 14.49]);	
+//showWeather = false; app.setProperty("weather", showWeather); app.setProperty("location", [50.11, 14.49]);	
 //dialSize=0;
 //percentage = true;
 //activityL = :steps;activityR = :activeMinutesWeek;
 //showSunrise = true;
 //circleWidth=7;mainColor=4;
+
+
 //weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
 //app.setProperty("units", 1);
 
@@ -591,8 +602,7 @@ dateColor = 0xFFFFFF;
 			eventStart = new Time.Moment(events_list[i][0]);
 			var timeNow = Time.now();
 			var tillStart = eventStart.compare(timeNow);
-
-			if(tillStart >= (App.getApp().getProperty("d24") ? 86400 : 43200)){
+			if(tillStart >= (d24 ? 86400 : 43200)){
 				continue;
 			}
 			var eventEnd = new Time.Moment(events_list[i][1]);
@@ -659,9 +669,7 @@ dateColor = 0xFFFFFF;
 		// show now in a day
 		if( !(events_list.size()>0 && events_list[0][4]==-1) /* permanent message =-1 in 4th event_list item */ && (activity == :calendar || showSunrise || showWeather) ){
 			var a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
-			
-return;	//12//
-			if(!App.getApp().getProperty("d24")){
+			if(d24 == false){
 				return; // so far
 				if(hour>11){ hour-=12;}
 				if(0==hour){ hour=12;}
@@ -717,17 +725,14 @@ return;	//12//
 		var width;
 		if(height >= 390){
 			radius -= showWeather ? 13:7;
-			width = 13;
+			width = 12;
 		} else {
 			radius -= showWeather ? 8:4;
-			width = 9;	
+			width = 8;	
 		}
 		
 		var nowBoundary = (clockTime.min+clockTime.hour*60.0)/4; // 360/1440;
-		var tomorrow = Time.now().value()+86400; // 86400= Calendar.SECONDS_PER_DAY
-		if(!App.getApp().getProperty("d24")){
-			tomorrow-=43200;
-		}
+		var tomorrow = Time.now().value() + (d24 ? 86400 : 43200); // 86400= Calendar.SECONDS_PER_DAY
 		var fromAngle; var toAngle;
 		var center; 
 
@@ -834,12 +839,13 @@ return;	//12//
 		dc.drawArc(Math.round(centerX+rX), Math.round(centerY-rY), v, Gfx.ARC_CLOCKWISE, -angle+90, -angle-90);
 
 		// Hours
-		angle =  h/(set.is24Hour==false ? 12.0 : 24.0)*2*Math.PI;
+		var mode24 = false;
+		angle =  h/(mode24==false ? 12.0 : 24.0)*2*Math.PI;
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(Math.round(centerX + radius * Math.sin(angle)), Math.round(centerY - radius * Math.cos(angle)), fontSmall, h, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
-		if(set.is24Hour==false && h==12){h=0;}
+		if(mode24==false && h==12){h=0;}
 		h = h.toFloat() + minutes.toFloat()/60;
-		angle =  h/(set.is24Hour==false ? 12.0 : 24.0)*2*Math.PI;
+		angle =  h/(mode24==false ? 12.0 : 24.0)*2*Math.PI;
 		dc.setColor(color, Gfx.COLOR_TRANSPARENT);
 		dc.setPenWidth(circleWidth);
 		r = (0.7*radius).toNumber();
@@ -968,16 +974,20 @@ return;	//12//
 		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		var h = trimPastHoursInWeatherHourly();
 		/////Sys.println("weather from hour: "+h + " offset: "+offset);
-		var limit = 26;
-		var step = 15;
-		var hours = 24;
-		if(!App.getApp().getProperty("d24")){
+		var limit;
+		var step;
+		var hours;
+		if(d24){
+			limit = 26;
+			step = 15;
+			hours = 24;
+		} else {
 			limit = 14;
 			step = 30;
 			hours = 12;
 		}
 		if(h>=0){
-			dc.setPenWidth(height>=390 ? 10 : 6);
+			dc.setPenWidth(height>=390 ? 8 : 5);
 			
 			var color; var center;
 			//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
@@ -1005,8 +1015,10 @@ return;	//12//
 				} else {
 					x += dc.getFontHeight(icons)>>2;
 				}		
-var min = -35;
-var max = -20;
+/*var min = -35;
+var max = weatherHourly[1]+20;
+max = weatherHourly[1];
+min = max;
 				var line = (Gfx.getFontHeight(fontCondensed)*1).toNumber();
 				if(max>min+1){
 					dc.setPenWidth(1);
@@ -1027,25 +1039,28 @@ var max = -20;
 				} else {
 					min = weatherHourly[1].toString()+"°";
 					max = "";
-				}
+				}*/
 
-/*				dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);
+/*				// emphasize on top end
+				dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);
 				dc.drawText(x, y, fontCondensed, min, Gfx.TEXT_JUSTIFY_RIGHT);	
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 				dc.drawText(x, y, fontCondensed, max, Gfx.TEXT_JUSTIFY_LEFT);	
 */
 
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				dc.drawText(x, y, fontCondensed, min+max, Gfx.TEXT_JUSTIFY_CENTER);	
+				//dc.drawText(x, y, fontCondensed, min+max, Gfx.TEXT_JUSTIFY_CENTER);	
+				dc.drawText(x, y, fontCondensed, Math.round(weatherHourly[1]).toString()+"°", Gfx.TEXT_JUSTIFY_CENTER);	
 
-
+				/*
+				// precipitation
 				x = centerX-centerX>>1;
 				y -= (Gfx.getFontHeight(fontCondensed)*.2).toNumber();
 				line = (Gfx.getFontHeight(fontCondensed)*.7).toNumber();
 				dc.setColor(0x555555, backgroundColor);
 				dc.drawText(x, y+line, fontCondensed, "mm", Gfx.TEXT_JUSTIFY_CENTER);	
 				dc.setColor(activityColor, backgroundColor);
-				dc.drawText(x, y, fontCondensed, "3.8", Gfx.TEXT_JUSTIFY_CENTER);	
+				dc.drawText(x, y, fontCondensed, "3.8", Gfx.TEXT_JUSTIFY_CENTER);	*/
 				
 			}
 		}
@@ -1059,17 +1074,17 @@ var max = -20;
 	}
 
 	function drawIconAtTime(dc, t, icon){
-		 var a = toAngle(t) * Math.PI/12.0  ; // radians (*= 60 * 2*PI/(24*60)) 
-		 if(!App.getApp().getProperty("d24")){
-		 	a = toAngle(t) * Math.PI/6.0  ; // radians (*= 60 * 2*PI/(12*60)) 
-		 }
+		 var a = toAngle(t) * Math.PI/ (d24 ? 12.0 : 6.0 ) ; // radians (*= 60 * 2*PI/(24*60)) 
 		 drawIcon(dc, centerX + sunR*Math.sin(a), centerY - sunR*Math.cos(a), icon);
 	}
 
 	function drawSunBitmaps (dc) {
 		if(sunrise[SUNRISET_NOW] != null) {
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-			if(!App.getApp().getProperty("d24")){
+			if(d24){
+				drawIconAtTime(dc, sunrise[SUNRISET_NOW], "*");	// sun
+				drawIconAtTime(dc, sunset[SUNRISET_NOW], "(");	// moon
+			} else {
 				var time = Sys.getClockTime();
 				time = time.hour + time.min/60.0;
 				if(time>sunrise[SUNRISET_NOW] && time<=sunset[SUNRISET_NOW] ){
@@ -1078,41 +1093,44 @@ var max = -20;
 
 					drawIconAtTime(dc, sunrise[SUNRISET_NOW], "*");	// sun
 				}
-
-			} else {
-				drawIconAtTime(dc, sunrise[SUNRISET_NOW], "*");	// sun
-				drawIconAtTime(dc, sunset[SUNRISET_NOW], "(");	// moon
 			}
 			//System.println(sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d")); /*dc.setColor(0x555555, 0); dc.drawText(centerX + (r * Math.sin(a))+moon.getWidth()+2, centerY - (r * Math.cos(a))-moon.getWidth()>>1, fontCondensed, sunset[SUNRISET_NOW].toNumber()+":"+(sunset[SUNRISET_NOW].toFloat()*60-sunset[SUNRISET_NOW].toNumber()*60).format("%1.0d"), Gfx.TEXT_JUSTIFY_VCENTER|Gfx.TEXT_JUSTIFY_LEFT);*//*a = (clockTime.hour*60+clockTime.min).toFloat()/1440*360; System.println(a + " " + (centerX + (r*Math.sin(a))) + " " +(centerY - (r*Math.cos(a)))); dc.drawArc(centerX, centerY, 100, Gfx.ARC_CLOCKWISE, 90-a+2, 90-a);*/
 		}
 	}
 
 	function computeSun() {
-		var pos = Activity.getActivityInfo().currentLocation;
+		var position = Position.getInfo();
+		var loc = null;
 		var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);
 		//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().currentLocationAccuracy);
-		if(pos != null){
-			pos = pos.toDegrees();
-			//+Sys.println(pos);
-			if(pos[0]==0 && pos[1]==0){	// bloody bug that the currentLocation sometimes returns [0.000000, 0.000000]
-				pos = null;
+		if(position.position != null){
+			loc = position.position.toDegrees();
+			//+Sys.println(loc);
+			if(loc[0]==0 && loc[1]==0){	// bloody bug that the currentLocation sometimes returns [0.000000, 0.000000]
+				loc = null;
 			} else {
-				App.getApp().setProperty("location", pos); // save the location to fix a Fenix 5 bug that is loosing the location often
+				App.getApp().setProperty("location", loc); // save the location to fix a Fenix 5 bug that is loosing the location often
 			}
 		}
-		if (pos == null){
-			pos = App.getApp().getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
-			if(pos == null){
+		/*if(loc != null && (position.accuracy == null || position.accuracy == 0 ) && Toybox has :Weather){
+			var weather = Weather.getCurrentConditions();
+			if(weather != null){
+				loc = weather.observationLocationPosition;
+			}
+		}*/
+		if (loc == null){
+			loc = App.getApp().getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
+			if(loc == null){
 				sunrise[SUNRISET_NOW] = null;
 				return;
 			}			
 		}
-		//+Sys.println(pos);
-		//pos = [50.11, 14.49];
-		/////Sys.println("computeSun: "+pos);
+		//+Sys.println(loc);
+		//loc = [50.11, 14.49];
+		/////Sys.println("computeSun: "+loc);
 		// use absolute to get west as positive
-		lonW = pos[1].toFloat();
-		latN = pos[0].toFloat();
+		lonW = loc[1].toFloat();
+		latN = loc[0].toFloat();
 
 
 		// compute current date as day number from beg of year

@@ -361,13 +361,8 @@ class lateApp extends App.AppBase {
 	(:data)
 	function parseEvents(data){
 		var events_list = [];
-		var dayDegrees = Calendar.SECONDS_PER_DAY.toFloat()/360;
-		var midnight = Time.today();
-
-		if(!App.getApp().getProperty("d24")){
-			dayDegrees = dayDegrees/2;
-		}
-		
+		var dayDegrees = Calendar.SECONDS_PER_DAY.toFloat()/ (App.getApp().getProperty("d24") == 1 ? 360 : 720);
+		var midnight = Time.today();		
 		if(data instanceof Toybox.Lang.Array) {
 			for(var i=0; i<data.size()-1; i++){
 				for (var j=0; j<data.size()-i-1; j++) {
@@ -387,8 +382,8 @@ class lateApp extends App.AppBase {
 			for(var i=0; i<data.size() ;i++){
 				date = parseISODate(data[i][0]);
 				fromAngle = (date.compare(midnight)/dayDegrees);
-				if(fromAngle>360){fromAngle-=360;}
 				toAngle = (parseISODate(data[i][1]).compare(midnight)/dayDegrees);
+				if(fromAngle>360){fromAngle-=360;}
 				if(toAngle>360){toAngle-=360;}
 				if(date!=null){
 					events_list.add([

@@ -76,7 +76,7 @@ class lateApp extends App.AppBase {
 			return 0;
 		}
 		else {
-			var nextEvent = 6*Calendar.SECONDS_PER_MINUTE - Time.now().compare(lastEvent); 
+			var nextEvent = 360 - Time.now().compare(lastEvent); // 6*SECONDS_PER_MINUTE
 			if(nextEvent<0){
 				nextEvent = 0;
 			}
@@ -94,7 +94,7 @@ class lateApp extends App.AppBase {
 	(:data)
 	function changeScheduleToMinutes(minutes){
 		///Sys.println("changeScheduleToMinutes: "+minutes);
-		return Background.registerForTemporalEvent(new Time.Duration( minutes * Calendar.SECONDS_PER_MINUTE));
+		return Background.registerForTemporalEvent(new Time.Duration( minutes * 60)); // * SECONDS_PER_MINUTE
 	}
 
 	(:data)
@@ -361,7 +361,7 @@ class lateApp extends App.AppBase {
 	(:data)
 	function parseEvents(data){
 		var events_list = [];
-		var dayDegrees = Calendar.SECONDS_PER_DAY.toFloat()/ (App.getApp().getProperty("d24") == 1 ? 360 : 720);
+		var dayDegrees = 86400.0 / (App.getApp().getProperty("d24") == 1 ? 360 : 720);	//12// // SECONDS_PER_DAY /
 		var midnight = Time.today();		
 		if(data instanceof Toybox.Lang.Array) {
 			for(var i=0; i<data.size()-1; i++){
@@ -381,10 +381,12 @@ class lateApp extends App.AppBase {
 		if(data instanceof Toybox.Lang.Array) { 
 			for(var i=0; i<data.size() ;i++){
 				date = parseISODate(data[i][0]);
-				fromAngle = (date.compare(midnight)/dayDegrees);
-				toAngle = (parseISODate(data[i][1]).compare(midnight)/dayDegrees);
-				if(fromAngle>360){fromAngle-=360;}
-				if(toAngle>360){toAngle-=360;}
+				fromAngle = Math.round(date.compare(midnight)/dayDegrees).toNumber();
+				toAngle = Math.round(parseISODate(data[i][1]).compare(midnight)/dayDegrees).toNumber();
+				if(fromAngle == toAngle){
+					toAngle = fromAngle+1;
+				}
+				//if(fromAngle>360){fromAngle-=360;}if(toAngle>360){toAngle-=360;}
 				if(date!=null){
 					events_list.add([
 						date.value(),                                               // start
@@ -446,8 +448,8 @@ class lateApp extends App.AppBase {
 			if (suffix.length() - tz < 6) {
 				return null;
 			}
-			tzOffset = suffix.substring(tz + 1, tz + 3).toNumber() * Calendar.SECONDS_PER_HOUR;
-			tzOffset += suffix.substring(tz + 4, tz + 6).toNumber() * Calendar.SECONDS_PER_MINUTE;
+			tzOffset = suffix.substring(tz + 1, tz + 3).toNumber() * 3600; // SECONDS_PER_HOUR
+			tzOffset += suffix.substring(tz + 4, tz + 6).toNumber() * 60; // * SECONDS_PER_MINUTE
 
 			var sign = suffix.substring(tz, tz + 1);
 			if (sign.equals("+")) {

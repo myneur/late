@@ -1,8 +1,9 @@
 //// diff from analog marked //12//
 //// set d24 prop, 
 //// drawNowCircle remove return
-//// links in properties to help
-//// getMarkerCoords moving dot
+//// links in properties to help !!!
+//// default 24 or 12h calendar
+//// getMarkerCoords moving dot: change diameter and cirlce
 
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
@@ -65,7 +66,7 @@ class lateView extends Ui.WatchFace {
 				weatherHourly = weather;
 			}
 		}
-		d24 = App.getApp().getProperty("d24") == 1 ? true : false; // making sure it loads for the first time
+		d24 = App.getApp().getProperty("d24") == 1 ? true : false; // making sure it loads for the first time //12//
 		//Sys.println("init: "+ weatherHourly);
 	}
 
@@ -90,8 +91,9 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather"); if(showWeather==null) {showWeather=false;} // because it is not in settings of non-data devices
 		percentage = app.getProperty("percents");
-		var d24new = App.getApp().getProperty("d24") == 1 ? true : false;
-		if(d24!= null && d24new != d24){	// changing 24 / 12h
+		var d24new = App.getApp().getProperty("d24") == 1 ? true : false; //12//
+
+		if(d24!= null && d24new != d24){	// changing 24 / 12h 
 			events_list=[];
 			showMessage(App.getApp().scheduleDataLoading());
 			app.setProperty("lastLoad", 'w');
@@ -104,7 +106,7 @@ class lateView extends Ui.WatchFace {
 //app.setProperty("activity", 6); activity = activities[app.getProperty("activity")];app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 //app.setProperty("calendar_ids", null);
 //Sys.println(Ui.loadResource(Rez.Strings.Vivid));
-//showWeather = false; app.setProperty("weather", showWeather); app.setProperty("location", [50.11, 14.49]);	
+showWeather = false; app.setProperty("weather", showWeather); app.setProperty("location", [50.11, 14.49]);	
 //dialSize=0;
 //percentage = true;
 //activityL = :steps;activityR = :activeMinutesWeek;
@@ -602,7 +604,7 @@ dateColor = 0xFFFFFF;
 			eventStart = new Time.Moment(events_list[i][0]);
 			var timeNow = Time.now();
 			var tillStart = eventStart.compare(timeNow);
-			if(tillStart >= (d24 ? 86400 : 43200)){
+			if(tillStart >= (d24 ? 86400 : 43200)){ //12//
 				continue;
 			}
 			var eventEnd = new Time.Moment(events_list[i][1]);
@@ -668,9 +670,11 @@ dateColor = 0xFFFFFF;
 	function drawNowCircle(dc, hour){
 		// show now in a day
 		if( !(events_list.size()>0 && events_list[0][4]==-1) /* permanent message =-1 in 4th event_list item */ && (activity == :calendar || showSunrise || showWeather) ){
-			var a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
-			if(d24 == false){
-				return; // so far
+			var a;
+			if(d24){
+			 a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
+			} else { //12//
+				//return; // so far for 12h //12//
 				if(hour>11){ hour-=12;}
 				if(0==hour){ hour=12;}
 				a = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
@@ -710,13 +714,6 @@ dateColor = 0xFFFFFF;
 			//else {dc.drawText(x,  height-batteryY, fontCondensed, eventStart, Gfx.TEXT_JUSTIFY_VCENTER);}
 			dc.drawText(x, messageY+eventHeight, fontCondensed, eventLocation, justify);
 		}
-		if(eventMarker){
-			var coord = eventMarker;
-			dc.setColor(backgroundColor, backgroundColor);
-			dc.fillCircle(coord[0], coord[1], 4);
-			dc.setColor(dateColor, backgroundColor);
-			dc.fillCircle(coord[0], coord[1], 2);
-		}
 	}
 
 	(:data)
@@ -732,7 +729,7 @@ dateColor = 0xFFFFFF;
 		}
 		
 		var nowBoundary = (clockTime.min+clockTime.hour*60.0)/4; // 360/1440;
-		var tomorrow = Time.now().value() + (d24 ? 86400 : 43200); // 86400= Calendar.SECONDS_PER_DAY
+		var tomorrow = Time.now().value() + (d24 ? 86400 : 43200); // 86400= Calendar.SECONDS_PER_DAY //12//
 		var fromAngle; var toAngle;
 		var center; 
 
@@ -740,51 +737,50 @@ dateColor = 0xFFFFFF;
 		var weatherStart; var weatherEnd;*/
 		
 		for(var i=0; i <events_list.size() && events_list[i][0]<tomorrow; i++){
-			//Sys.println([events_list[i][1] , tomorrow, events_list[i][6].toNumber() , nowBoundary ] );
-			if(events_list[i][1]>=tomorrow && (events_list[i][6].toNumber() > nowBoundary ) ) { // crop tomorrow event overlapping now on 360° dial
+			fromAngle = events_list[i][5];
+			toAngle = events_list[i][6];	
+			if(toAngle >= events_list[0][5]+360){	// not to overlapp the start of the current event
+				toAngle = events_list[0][5]-1;
+				if(toAngle-1 >= fromAngle){
+					continue;
+				}
+			} else if(events_list[i][1]>=tomorrow && events_list[i][6]>nowBoundary ) { // crop tomorrow event overlapping now on 360° dial
 				fromAngle=events_list[i][5];
 				toAngle=nowBoundary-1;
-				if(toAngle > events_list[0][5]){	// not to overlapp the start of the current event
-					toAngle = events_list[0][5]-1;
+				if(toAngle-1 >= fromAngle){
+					continue;
 				}
-				if(toAngle-1 >= fromAngle){	// ensuring the 1° gap between the events did not switch the order of the start/end
-					dc.setColor(backgroundColor, backgroundColor);
+			} 
+			/*if(showWeather && weatherHourly.size()>2){
+				// counting overlap // first attempt was: // weatherStart = ((weatherHourly[0]+idx-2)*360/24)%360;weatherEnd = ((weatherHourly[0]+idx-2+1)*360/24)%360;fromAngle = fromAngle.toNumber()%360;toAngle = toAngle.toNumber()%360;while(idx<weatherHourly.size() && (fromAngle>weatherEnd || toAngle<weatherStart)){idx++;}radius = centerY - (idx<weatherHourly.size()? 2:7);
+				weatherStart = (fromAngle*24.0/360).toNumber()%24;
+				weatherEnd = Math.ceil(toAngle*24.0/360).toNumber()%24;
+				h = weatherStart;
+				idx = h-weatherHourly[0]+2; /////Sys.println([weatherHourly[0], idx, weatherStart, weatherEnd]);
+				if(idx<2){
+					idx = 24-weatherHourly[0]+weatherStart+2;
 				}
-			} else {
-				fromAngle = events_list[i][5];
-				toAngle = events_list[i][6]-1;
-			}
-			if(toAngle-1 >= fromAngle){ // ensuring the 1° gap between the events did not switch the order of the start/end
-				/*if(showWeather && weatherHourly.size()>2){
-					// counting overlap // first attempt was: // weatherStart = ((weatherHourly[0]+idx-2)*360/24)%360;weatherEnd = ((weatherHourly[0]+idx-2+1)*360/24)%360;fromAngle = fromAngle.toNumber()%360;toAngle = toAngle.toNumber()%360;while(idx<weatherHourly.size() && (fromAngle>weatherEnd || toAngle<weatherStart)){idx++;}radius = centerY - (idx<weatherHourly.size()? 2:7);
-					weatherStart = (fromAngle*24.0/360).toNumber()%24;
-					weatherEnd = Math.ceil(toAngle*24.0/360).toNumber()%24;
-					h = weatherStart;
-					idx = h-weatherHourly[0]+2; /////Sys.println([weatherHourly[0], idx, weatherStart, weatherEnd]);
-					if(idx<2){
-						idx = 24-weatherHourly[0]+weatherStart+2;
+				while(h<weatherEnd && idx<weatherHourly.size()){
+					if(weatherHourly[idx]!=-1){	
+						break; // no weather to add padding 
 					}
-					while(h<weatherEnd && idx<weatherHourly.size()){
-						if(weatherHourly[idx]!=-1){	
-							break; // no weather to add padding 
-						}
-						idx++;
-						h++;
-					}
-					radius = centerY - (h<weatherEnd? 8:2); //System.println([h,weatherEnd,radius]);
-				}*/
-				// drawing
-				//Sys.println([fromAngle, toAngle]);
-				dc.setColor(backgroundColor, backgroundColor);
-				dc.setPenWidth(width);
-				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle+1, 90-fromAngle);
-				if(events_list[i][4]>=0){
-					dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
+					idx++;
+					h++;
 				}
-				dc.setPenWidth(width);
-				center = fromAngle>=60 && fromAngle<240 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
-				dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle, 90-toAngle);	// draw event on dial
+				radius = centerY - (h<weatherEnd? 8:2); //System.println([h,weatherEnd,radius]);
+			}*/
+			// drawing
+			//Sys.println([fromAngle, toAngle]);
+			dc.setColor(backgroundColor, backgroundColor);
+			dc.setPenWidth(width);
+			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle+1, 90-fromAngle);
+			if(events_list[i][4]>=0){
+				dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
 			}
+			dc.setPenWidth(width);
+			center = fromAngle>=60 && fromAngle<240 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
+			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle, 90-toAngle);	// draw event on dial
+
 		}
 	}
 
@@ -799,13 +795,19 @@ dateColor = 0xFFFFFF;
 	function getMarkerCoords(event, tillStart){
 		var secondsFromLastHour = event - (Time.now().value()-(clockTime.min*60+clockTime.sec));
 		var a = (secondsFromLastHour).toFloat()/1800*Math.PI; // 2Pi/hour
-		//12//var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1;
-		var r = radius;
+		var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1;
+		//var r = radius; //12//
 		return [centerX+(r*Math.sin(a)), centerY-(r*Math.cos(a))];
 	}
 	//var m = 0; testing rendering
 	
-	function drawTime (dc){
+/*	function drawTime (dc){
+		if(eventMarker){
+			dc.setColor(backgroundColor, backgroundColor);
+			dc.fillCircle(eventMarker[0], eventMarker[1], 4);
+			dc.setColor(dateColor, backgroundColor);
+			dc.fillCircle(eventMarker[0], eventMarker[1], 2);
+		}
 		// draw hour
 		var r; var v;
 		var h=clockTime.hour;
@@ -853,8 +855,8 @@ dateColor = 0xFFFFFF;
 		dc.fillCircle(centerX, centerY, v);
 		dc.fillCircle(Math.round(centerX+r*Math.sin(angle)), Math.round(centerY-r*Math.cos(angle)), v);
 	}
+*/
 
-/*
 	function drawTime (dc){
 		// draw hour
 		var h=clockTime.hour;
@@ -921,8 +923,13 @@ dateColor = 0xFFFFFF;
 			}
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
+		if(eventMarker){
+			dc.setColor(backgroundColor, backgroundColor);
+			dc.fillCircle(eventMarker[0], eventMarker[1], 4);
+			dc.setColor(dateColor, backgroundColor);
+			dc.fillCircle(eventMarker[0], eventMarker[1], 2);
+		}
 	}
-*/
 
 	function drawBatteryLevel (dc){
 		var bat = Sys.getSystemStats().battery;
@@ -977,7 +984,7 @@ dateColor = 0xFFFFFF;
 		var limit;
 		var step;
 		var hours;
-		if(d24){
+		if(d24){ //12//
 			limit = 26;
 			step = 15;
 			hours = 24;
@@ -1015,10 +1022,10 @@ dateColor = 0xFFFFFF;
 				} else {
 					x += dc.getFontHeight(icons)>>2;
 				}		
-/*var min = -35;
-var max = weatherHourly[1]+20;
-max = weatherHourly[1];
-min = max;
+
+h = h%24;
+var min = weatherHourly[1] + (h<=12 ? -h : h-24);
+var max = weatherHourly[1] + (h<=12 ? h-12 : h-12);
 				var line = (Gfx.getFontHeight(fontCondensed)*1).toNumber();
 				if(max>min+1){
 					dc.setPenWidth(1);
@@ -1039,8 +1046,7 @@ min = max;
 				} else {
 					min = weatherHourly[1].toString()+"°";
 					max = "";
-				}*/
-
+				}
 /*				// emphasize on top end
 				dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);
 				dc.drawText(x, y, fontCondensed, min, Gfx.TEXT_JUSTIFY_RIGHT);	
@@ -1049,18 +1055,19 @@ min = max;
 */
 
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				//dc.drawText(x, y, fontCondensed, min+max, Gfx.TEXT_JUSTIFY_CENTER);	
-				dc.drawText(x, y, fontCondensed, Math.round(weatherHourly[1]).toString()+"°", Gfx.TEXT_JUSTIFY_CENTER);	
+				dc.drawText(x, y, fontCondensed, min+max, Gfx.TEXT_JUSTIFY_CENTER);	
+				//dc.drawText(x, y, fontCondensed, Math.round(weatherHourly[1]).toString()+"°", Gfx.TEXT_JUSTIFY_CENTER);	
 
-				/*
+				
 				// precipitation
 				x = centerX-centerX>>1;
+var mm = 3.0;
 				y -= (Gfx.getFontHeight(fontCondensed)*.2).toNumber();
 				line = (Gfx.getFontHeight(fontCondensed)*.7).toNumber();
 				dc.setColor(0x555555, backgroundColor);
 				dc.drawText(x, y+line, fontCondensed, "mm", Gfx.TEXT_JUSTIFY_CENTER);	
 				dc.setColor(activityColor, backgroundColor);
-				dc.drawText(x, y, fontCondensed, "3.8", Gfx.TEXT_JUSTIFY_CENTER);	*/
+				dc.drawText(x, y, fontCondensed, mm.format("%1.1f"), Gfx.TEXT_JUSTIFY_CENTER);	
 				
 			}
 		}
@@ -1074,14 +1081,14 @@ min = max;
 	}
 
 	function drawIconAtTime(dc, t, icon){
-		 var a = toAngle(t) * Math.PI/ (d24 ? 12.0 : 6.0 ) ; // radians (*= 60 * 2*PI/(24*60)) 
+		 var a = toAngle(t) * Math.PI/ (d24 ? 12.0 : 6.0 ) ; // radians (*= 60 * 2*PI/(24*60))  //12//
 		 drawIcon(dc, centerX + sunR*Math.sin(a), centerY - sunR*Math.cos(a), icon);
 	}
 
 	function drawSunBitmaps (dc) {
 		if(sunrise[SUNRISET_NOW] != null) {
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-			if(d24){
+			if(d24){ //12//
 				drawIconAtTime(dc, sunrise[SUNRISET_NOW], "*");	// sun
 				drawIconAtTime(dc, sunset[SUNRISET_NOW], "(");	// moon
 			} else {
@@ -1106,7 +1113,7 @@ min = max;
 		if(position.position != null){
 			loc = position.position.toDegrees();
 			//+Sys.println(loc);
-			if(loc[0]==0 && loc[1]==0){	// bloody bug that the currentLocation sometimes returns [0.000000, 0.000000]
+			if(loc[0]==loc[1]){	// bloody bug that the currentLocation sometimes returns [0.000000, 0.000000] or [180.0, 180.0] / [lat, lon]. Garmin guys, I hate you so much! 
 				loc = null;
 			} else {
 				App.getApp().setProperty("location", loc); // save the location to fix a Fenix 5 bug that is loosing the location often

@@ -54,4 +54,15 @@
 	<!--<setting propertyKey="@Properties.key" title="@Strings.Key">
 		<settingConfig type="alphaNumeric" />
 	</setting>-->
+
+
+
+
+
+
+
+
+
+<!--<setting propertyKey="@Properties.l" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>
+<setting propertyKey="@Properties.w" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>-->
 </settings>

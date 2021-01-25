@@ -199,12 +199,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 						var eventTrim = [
 							(event.get("start").get("dateTime")),
 							(event.get("end").get("dateTime")), 
-							i<= 3 ? (event.get("summary") ? event.get("summary").substring(0,25) : "") : "",
+							i<= 3 ? (event.get("summary") ? event.get("summary").substring(0,23) : "") : "",
 							i<= 3 ? event.get("location") : null,
 							current_index
 						];
 						if(eventTrim[3]){  // trimming and event to fit the screen nicely
-							eventTrim[3] = eventTrim[3].substring(0,12);
+							eventTrim[3] = eventTrim[3].substring(0,10);
 							var split = eventTrim[3].find(",");
 							if(split && split>0){
 								eventTrim[3] = eventTrim[3].substring(0,split);
@@ -274,14 +274,14 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if(subscription_id instanceof String && subscription_id.length()>0){
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"yrno"}, /* "service"=>"climacell"||"yrno" */
-				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id, "Accept-Version" => "v2" }},
+				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id/*, "Accept-Version" => "v2"*/ }},
 				method(:onWeatherForecast));
 		} else {
 			getSubscriptionId();
 		}
 	}
 
-	function onWeatherForecast(responseCode, data){		/*/+/*/Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
+	function onWeatherForecast(responseCode, data){		//+//Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
 		if (responseCode==200) {
 			try { 
 				data = {"weather"=>data};	// returning array with the wheather forecast

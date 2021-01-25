@@ -249,7 +249,7 @@ class lateApp extends App.AppBase {
 						//System.println(data);
 						data["wait"] = durationToNextEvent();
 						var connected = Sys.getDeviceSettings().phoneConnected;
-						if(error==-300 || error==404 || error==-2 || error==-104 || error==-400){ // no internet or bluetooth or no-json
+						if(error==-300 || error==404 || error==-2 || error==-5 || error==-104 || error==-400){ // no internet or bluetooth or no-json
 							//System.println([watch.activity == :calendar , app.getProperty("lastLoad")!="c", watch.showWeather==false, app.getProperty("refresh_token")==null]);
 							//System.println([watch.activity == :calendar ,app.getProperty("refresh_token") , watch.showWeather ,app.getProperty("subs")]);
 							if(watch!=null && ((watch.activity == :calendar && app.getProperty("refresh_token")==null) || (watch.showWeather && app.getProperty("subs")==null)) ){
@@ -361,7 +361,7 @@ class lateApp extends App.AppBase {
 	(:data)
 	function parseEvents(data){
 		var events_list = [];
-		var dayDegrees = 86400.0 / (App.getApp().getProperty("d24") == 1 ? 360 : 720);	//12// // SECONDS_PER_DAY /
+		var dayDegrees = 86400.0 / (App.getApp().getProperty("d24") == 1 ? 360 : 720);	// SECONDS_PER_DAY /
 		var midnight = Time.today();		
 		if(data instanceof Toybox.Lang.Array) {
 			for(var i=0; i<data.size()-1; i++){

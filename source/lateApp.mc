@@ -351,34 +351,16 @@ class lateApp extends App.AppBase {
 	}
 	
 	(:data)
-	function swap(data, x, y) {
-		var tmp = data[x];
-		data[x] = data[y];
-		data[y] = tmp;
-		return data;
-	}
-	
-	(:data)
 	function parseEvents(data){
 		var events_list = [];
 		var dayDegrees = 86400.0 / (App.getApp().getProperty("d24") == 1 ? 360 : 720);	// SECONDS_PER_DAY /
 		var midnight = Time.today();		
-		if(data instanceof Toybox.Lang.Array) {
-			for(var i=0; i<data.size()-1; i++){
-				for (var j=0; j<data.size()-i-1; j++) {
-					var x = parseISODate(data[j][0]);
-					var y = parseISODate(data[j+1][0]);
-					if (x.greaterThan(y)) {
-						data = swap(data, j, j+1);
-					}
-				}
-			}
-		}
 		var date;
 		var fromAngle;
 		var toAngle;
 
 		if(data instanceof Toybox.Lang.Array) { 
+			// parse dates
 			for(var i=0; i<data.size() ;i++){
 				date = parseISODate(data[i][0]);
 				fromAngle = Math.round(date.compare(midnight)/dayDegrees).toNumber();
@@ -397,6 +379,17 @@ class lateApp extends App.AppBase {
 						fromAngle,         // degree start
 						toAngle       // degree end
 					]);
+				}
+			}
+			// sort
+			var i; var j;
+			for(i=0; i<events_list.size()-1; i++){
+				for (j=0; j<events_list.size()-i-1; j++) {
+					if (events_list[j][0]>(events_list[j+1][0])){
+						data=events_list[j];
+						events_list[j]=events_list[j+1];
+						events_list[j+1]=data;
+					}
 				}
 			}
 		}

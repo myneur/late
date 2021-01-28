@@ -21,8 +21,8 @@
 		</settingConfig>
 	</setting>
 
-	<!--<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar-analog">-->
-	<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar">
+	<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar-analog">
+	<!--<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar">-->
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.CalendarNoChange</listEntry>						
 			<listEntry value="1">@Strings.CalendarByColor</listEntry>
@@ -34,8 +34,9 @@
 	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars" prompt="@Strings.CalendarsPrompt" helpUrl="https://calendar.google.com/calendar/r/settings">
 		<settingConfig type="alphaNumeric" />
 	</setting>
-	<!--<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast-analog">-->
-	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast">
+
+	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast-analog">
+	<!--<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast">-->
 		<settingConfig type="boolean" />
 	</setting>
 	<setting propertyKey="@Properties.units" title="@Strings.Units" prompt="@Strings.TakesTime">
@@ -58,6 +59,6 @@
 
 
 
-<setting propertyKey="@Properties.l" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>
-<setting propertyKey="@Properties.w" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>
+<!--<setting propertyKey="@Properties.l" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>
+<setting propertyKey="@Properties.w" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>-->
 </settings>

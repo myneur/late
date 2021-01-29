@@ -14,10 +14,8 @@ using Toybox.System as Sys;
 using Toybox.Lang as Lang;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Calendar;
-using Toybox.Position as Position;
 using Toybox as Toy;
 using Toybox.Math as Math;
-using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Application as App;
 
 //enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
@@ -434,7 +432,7 @@ class lateView extends Ui.WatchFace {
 					dc.drawText(centerX-dc.getTextWidthInPixels(text+"  ", fontSmall)>>1, dateY+dc.getFontHeight(fontSmall)>>1+1, icons, "!" /*"!xb"*/, Gfx.TEXT_JUSTIFY_RIGHT | Gfx.TEXT_JUSTIFY_VCENTER);
 					//dc.fillCircle(centerX-dc.getTextWidthInPixels(text, fontSmall)>>1-14, dateY+dc.getFontHeight(fontSmall)>>1+1, 5);
 				}
-				/*dc.drawText(centerX, height-20, fontSmall, ActivityMonitor.getInfo().moveBarLevel, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);dc.setPenWidth(2);dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);*/
+				/*dc.drawText(centerX, height-20, fontSmall, Toy.ActivityMonitor.getInfo().moveBarLevel, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);dc.setPenWidth(2);dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(Toy.ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);*/
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 				var x = centerX-radius - (sunR-radius)>>1-(dc.getTextWidthInPixels("1", fontSmall)/3).toNumber();	// scale 4 with resolution
 				drawActivity(dc, activityL, x, centerY, false);
@@ -495,7 +493,7 @@ class lateView extends Ui.WatchFace {
 	function drawActivity(dc, activity, x, y, horizontal){
 		if(activity != null){
 			//Sys.println("ActivityMonitor");
-			var info = ActivityMonitor.getInfo();
+			var info = Toy.ActivityMonitor.getInfo();
 			var activityChar = {:steps=>'s', :calories=>'c', :activeMinutesDay=>'a', :activeMinutesWeek=>'a', :floorsClimbed=>'f'}[activity];	// todo optimize
 			if(percentage){
 				info = method(activity).invoke(info);
@@ -1219,7 +1217,12 @@ if(max == null || min == null){
 
 	function computeSun() {	//var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().accuracy);
 		//Sys.println("Position");
-		var position = Position.getInfo();
+		var position;
+		if(Toy.Position has :getInfo){
+			position = Toy.Position.getInfo();
+		} else {
+			position = Toy.ActivityMonitor.getInfo();
+		}
 		var loc = sanitizeLoc(position.position);	
 		//Sys.println(loc);
 //App.getApp().setProperty("l", (position.accuracy==null ? "null" : position.accuracy.toString() )+ loc);

@@ -17,7 +17,7 @@ using Toybox.Time.Gregorian as Calendar;
 using Toybox.Position as Position;
 using Toybox as Toy;
 using Toybox.Math as Math;
-//using Toybox.ActivityMonitor as ActivityMonitor;
+using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Application as App;
 
 //enum {SUNRISET_NOW=0,SUNRISET_MAX,SUNRISET_NBR}
@@ -494,6 +494,7 @@ class lateView extends Ui.WatchFace {
 
 	function drawActivity(dc, activity, x, y, horizontal){
 		if(activity != null){
+			//Sys.println("ActivityMonitor");
 			var info = ActivityMonitor.getInfo();
 			var activityChar = {:steps=>'s', :calories=>'c', :activeMinutesDay=>'a', :activeMinutesWeek=>'a', :floorsClimbed=>'f'}[activity];	// todo optimize
 			if(percentage){
@@ -792,7 +793,6 @@ class lateView extends Ui.WatchFace {
 			radius -= showWeather ? 8:4;
 			width = 8;	
 		}
-		
 		var nowAngle = ((clockTime.min+clockTime.hour*60.0)/ (d24? 4 : 2 )).toNumber(); // 360/1440;
 		var tomorrow = Time.now().value() + (d24 ? 86400 : 43200); // 86400= Calendar.SECONDS_PER_DAY 
 		var fromAngle; var toAngle;
@@ -800,13 +800,20 @@ class lateView extends Ui.WatchFace {
 		/*var h; var idx=2;	// offset 
 		var weatherStart; var weatherEnd;*/
 
-		for(var i=0; i <events_list.size() && events_list[i][0]<tomorrow; i++){
-			//if(i!=7){continue;}
+		for(var i=0; i <events_list.size() && events_list[i][0]<tomorrow; i++){			
 			fromAngle = events_list[i][5];
 			toAngle = events_list[i][6];	
+			/*var midnight = Time.today().value();	
+			var dayDegrees = 86400.0 / (App.getApp().getProperty("d24") == 1 ? 360 : 720);	// SECONDS_PER_DAY /
+			fromAngle = Math.round((events_list[i][0]-(midnight))/dayDegrees).toNumber();
+			toAngle = Math.round((events_list[i][1]-(midnight))/dayDegrees).toNumber();
+			if(fromAngle == toAngle){
+				toAngle = fromAngle+1;
+			}*/
 			//Sys.println([i, events_list[i][0], nowAngle,tomorrow, fromAngle, toAngle]);		
 			if(events_list[i][1] >= events_list[0][0] + (d24 ? 86400 : 43200)){	// not to overlapp the start of the current event
 				toAngle = events_list[0][5].toNumber()%360;
+				//toAngle = Math.round((events_list[0][0]-(midnight))/dayDegrees).toNumber()%360;
 				if((fromAngle.toNumber()+1)%360>=toAngle){
 					//Sys.println([i, nowAngle,tomorrow, fromAngle, toAngle]);		
 					continue;
@@ -814,6 +821,7 @@ class lateView extends Ui.WatchFace {
 				toAngle-=1;
 			} 
 			if(events_list[i][1]>=tomorrow && events_list[i][6]>nowAngle ) { // crop tomorrow event overlapping now on 360° dial
+			//if(events_list[i][1]>=tomorrow && Math.round((events_list[i][1]-(midnight))/dayDegrees).toNumber()>nowAngle ) { // crop tomorrow event overlapping now on 360° dial
 				toAngle=nowAngle.toNumber()%360;
 				if((fromAngle.toNumber()+1)%360>=toAngle){
 					//Sys.println([i, nowAngle,tomorrow, fromAngle, toAngle]);		
@@ -1210,6 +1218,7 @@ if(max == null || min == null){
 	}
 
 	function computeSun() {	//var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().accuracy);
+		//Sys.println("Position");
 		var position = Position.getInfo();
 		var loc = sanitizeLoc(position.position);	
 		//Sys.println(loc);

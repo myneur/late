@@ -355,7 +355,7 @@ class lateApp extends App.AppBase {
 		var events_list = [];
 		var dayDegrees = 86400.0 / (App.getApp().getProperty("d24") == 1 ? 360 : 720);	// SECONDS_PER_DAY /
 		var midnight = Time.today();		
-		var date;
+		var date; var dateTo;
 		var fromAngle;
 		var toAngle;
 
@@ -363,8 +363,9 @@ class lateApp extends App.AppBase {
 			// parse dates
 			for(var i=0; i<data.size() ;i++){
 				date = parseISODate(data[i][0]);
+				dateTo = parseISODate(data[i][1]);
 				fromAngle = Math.round(date.compare(midnight)/dayDegrees).toNumber();
-				toAngle = Math.round(parseISODate(data[i][1]).compare(midnight)/dayDegrees).toNumber();
+				toAngle = Math.round(dateTo.compare(midnight)/dayDegrees).toNumber();
 				if(fromAngle == toAngle){
 					toAngle = fromAngle+1;
 				}
@@ -372,7 +373,7 @@ class lateApp extends App.AppBase {
 				if(date!=null){
 					events_list.add([
 						date.value(),                                               // start
-						parseISODate(data[i][1]).value(),                           // end
+						dateTo.value(),                           // end
 						data[i][2],                                                 // name
 						data[i][3] ? ": " + data[i][3] : "",                        // location
 						data[i][4],                                                 // calendar

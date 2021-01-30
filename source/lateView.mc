@@ -22,13 +22,15 @@ using Toybox.Application as App;
 var meteoColors;
 
 class lateView extends Ui.WatchFace {
+	var app;
 	hidden var dateForm; hidden var batThreshold = 33;
 	hidden var centerX; hidden var centerY; hidden var height;
 	hidden var color; hidden var timeColor; hidden var dateColor; hidden var activityColor; hidden var backgroundColor; hidden var dimmedColor;
 	hidden var calendarColors; 
 	var activity=null; var activityL=null; var activityR=null; var showSunrise = false; var dataLoading = false; var showWeather = false; var percentage = false;
 	//hidden var icon=null; hidden var iconL=null; hidden var iconR=null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
-	hidden var clockTime; hidden var utcOffset; hidden var day = -1;
+	hidden var clockTime; 
+	hidden var utcOffset; hidden var day = -1;
 	hidden var lonW; hidden var latN; 
 	//hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var sunrise; hidden var sunset;
@@ -40,14 +42,14 @@ class lateView extends Ui.WatchFace {
 	hidden var events_list = [];
 	var message = false;
 	var weatherHourly = [];
+
 	// redraw full watchface
 	//hidden var redrawAll=2; 
 	//hidden var lastRedrawMin=-1;
 	//hidden var dataCount=0;hidden var wakeCount=0;
 
-//var min; var max; var mm;
-
 	function initialize (){
+		app = App.getApp();
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
@@ -58,28 +60,32 @@ class lateView extends Ui.WatchFace {
 		centerY = height >> 1;
 		clockTime = Sys.getClockTime();
 		if(events_list.size()==0){
-			var events = App.getApp().getProperty("events");
-			if(events instanceof Toybox.Lang.Array){
+			var events = app.getProperty("events");
+			if(events instanceof Lang.Array){
 				events_list = events;
 			}
 		}
 		//Sys.println("init: "+ weatherHourly);
 		if(weatherHourly.size()==0){
-			var weather = App.getApp().getProperty("weatherHourly");
-			if(weather instanceof Toybox.Lang.Array){
+			var weather = app.getProperty("weatherHourly");
+			if(weather instanceof Lang.Array){
 				weatherHourly = weather;
 			}
 		}
-		d24 = App.getApp().getProperty("d24") == 1 ? true : false; // making sure it loads for the first time 
+		d24 = app.getProperty("d24") == 1 ? true : false; // making sure it loads for the first time 
 		//Sys.println("init: "+ weatherHourly);
 	}
 
 	function onLayout (dc) {
+		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l");
+		//Sys.println(clockTime.min+"load");
 		loadSettings();
 	}
 
+var rain;
 	function loadSettings(){
-		var app = App.getApp();
+rain = app.getProperty("rain");
+
 		dateForm = app.getProperty("dateForm");
 		
 		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
@@ -95,11 +101,11 @@ class lateView extends Ui.WatchFace {
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather"); if(showWeather==null) {showWeather=false;} // because it is not in settings of non-data devices
 		percentage = app.getProperty("percents");
-		var d24new = App.getApp().getProperty("d24") == 1 ? true : false; 
+		var d24new = app.getProperty("d24") == 1 ? true : false; 
 //d24new=true; app.setProperty("d24", d24new); 
 		if(( activity == :calendar) && (d24!= null && d24new != d24)){	// changing 24 / 12h 
 			events_list=[];
-			showMessage(App.getApp().scheduleDataLoading());
+			showMessage(app.scheduleDataLoading());
 			app.setProperty("lastLoad", 'w');
 			/*	TODO: changing angle immediately
 						var hour = clockTime.hour;
@@ -134,7 +140,7 @@ class lateView extends Ui.WatchFace {
 //app.setProperty("calendar_ids", null);
 //Sys.println(Ui.loadResource(Rez.Strings.Vivid));
 
-//dialSize=0;
+//dialSize=1;
 //percentage = true;
 //activityL = :steps;activityR = :activeMinutesWeek;
 
@@ -344,12 +350,12 @@ class lateView extends Ui.WatchFace {
 		}*/
 		if(dataLoading){
 			if(activity == :calendar || showWeather){
-				showMessage(App.getApp().scheduleDataLoading());
+				showMessage(app.scheduleDataLoading());
 				if(activity == :calendar){
 					activityY = messageY;
 				}
 			} else {
-				App.getApp().unScheduleDataLoading();
+				app.unScheduleDataLoading();
 			}
 		}
 
@@ -362,6 +368,8 @@ class lateView extends Ui.WatchFace {
 
 	//! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
 	function onShow() {
+		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"w");
+		//Sys.println(clockTime.min+"w");
 		//Sys.println("onShow");
 		
 		/*if(centerX <=104){ // FR45 and VA4 needs to redraw the display every second. Better to 
@@ -373,19 +381,29 @@ class lateView extends Ui.WatchFace {
 	
 	//! Called when this View is removed from the screen. Save the state of this View here. This includes freeing resources from memory.
 	function onHide(){
+		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"h");
+		//Sys.println(clockTime.min+"h");
 		/////Sys.println("onHide");
 		//redrawAll=0;
 	}
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
 	function onExitSleep(){
+		//onShow();
+		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"x");
+		//Sys.println(clockTime.min+"x");
 		//////Sys.println("onExitSleep");
 		//wakeCount++;
-		onShow();
+		
+		/*if(showWeather){
+			locateAt = new Toy.Timer.Timer().start(method(:loadSettings), getTemporalEventRegisteredTime(), true);
+		}*/
 	}
 
 	//! Terminate any active timers and prepare for slow updates.
 	function onEnterSleep(){
+		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"e");
+		//Sys.println(clockTime.min+"e");
 		//////Sys.println("onEnterSleep");
 		/*if(centerX <=104){ // FR 45 needs to redraw the display every second
 			redrawAll=100;
@@ -414,7 +432,7 @@ class lateView extends Ui.WatchFace {
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.clear();
 			//lastRedrawMin=clockTime.min;
-			var info = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
+			var cal = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
 			drawBatteryLevel(dc);
 			
 			//ms.add(Sys.getTimer()-ms[0]);
@@ -423,9 +441,9 @@ class lateView extends Ui.WatchFace {
 				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 				var text = "";
 				if(dateForm != null){
-					text = Lang.format("$1$ ", ((dateForm == 0) ? [info.month] : [info.day_of_week]) );
+					text = Lang.format("$1$ ", ((dateForm == 0) ? [cal.month] : [cal.day_of_week]) );
 				}
-				text += info.day.format("%0.1d");
+				text += cal.day.format("%0.1d");
 				dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
 				if(Sys.getDeviceSettings().notificationCount){
 					dc.setColor(activityColor, backgroundColor);
@@ -452,10 +470,7 @@ class lateView extends Ui.WatchFace {
 					drawEvents(dc);
 				}
 				if(showSunrise){
-					if(day != info.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
-						computeSun();
-					}
-					drawSunBitmaps(dc);
+					drawSunBitmaps(dc, cal);
 				}
 				// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 				drawNowCircle(dc, clockTime.hour);
@@ -554,7 +569,7 @@ class lateView extends Ui.WatchFace {
 	}*/
 
 	function showMessage(msg){	//Sys.println("message "+message);
-		if(msg instanceof Toybox.Lang.Dictionary && msg.hasKey("userPrompt")){
+		if(msg instanceof Lang.Dictionary && msg.hasKey("userPrompt")){
 			var nowError = Time.now().value();
 			message = true;
 			if(msg.hasKey("wait")){
@@ -574,10 +589,10 @@ class lateView extends Ui.WatchFace {
 		if(data instanceof Array){	
 			events_list = data;
 		} 
-		else if(data instanceof Toybox.Lang.Dictionary){
+		else if(data instanceof Lang.Dictionary){
 			if(data.hasKey("weather")){
 				weatherHourly = data["weather"];
-//Sys.println(weatherHourly);
+				//Sys.println(weatherHourly);
 				var h = Sys.getClockTime().hour; // first hour of the forecast
 				if (weatherHourly instanceof Array && weatherHourly.size()>2){	
 					if(weatherHourly[0]!=h){ // delayed response or time passed
@@ -613,37 +628,37 @@ class lateView extends Ui.WatchFace {
 						hourAngle=(hourAngle+1)%24;
 					}
 				}
+				app.setProperty("weatherHourly", weatherHourly);
 			}
 			else if(data.hasKey("userPrompt")){
 				showMessage(data);
 			}
-//debug();
+debug();
 		}
 		onShow();
 		Ui.requestUpdate();
 	}
 
 
-/*function debug(){
+function debug(){
 	if(Toy has :Weather){
 		var weather = Toy.Weather.getDailyForecast();
 		if(weather != null){
 			weather = weather[0];
-			min = weather.lowTemperature;
-			max = weather.highTemperature;
-			mm = weather.precipitationChance;
+			rain = [weather.lowTemperature, weather.highTemperature, weather.precipitationChance];
 			if(weatherHourly.size()>1){
 				var t = weatherHourly[1];
-				if(t<min){min = t;}
-				if(t>max){max = t;}
+				if(t<rain[0]){rain[0] = t;}
+				if(t>rain[1]){rain[1] = t;}
 			}
+			app.setProperty("rain", rain);
 		}
 	}
 
 	//if(App.getApp().getProperty("calendar_ids").size()>0){
 		//if(App.getApp().getProperty("calendar_ids")[0].find("myneur")!=null){//showMessage({"userPrompt"=> message});
 		//weatherHourly = [13, 9, 0, 1, 6, 4, 5, 2, 3];App.getApp().setProperty("weatherHourly", weatherHourly);}}
-}*/
+}
 
 	function humanizeNumber(number){
 		if(number>1000) {
@@ -660,7 +675,7 @@ class lateView extends Ui.WatchFace {
 			if(d24){
 				a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
 			} else { 
-				return; // so far for 12h //12//
+				//return; // so far for 12h //12//
 				if(hour>11){ hour-=12;}
 				if(0==hour){ hour=12;}
 				a = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
@@ -715,22 +730,22 @@ class lateView extends Ui.WatchFace {
 				if(tillStart < 3480){	// 58 mins
 					var secondsFromLastHour = events_list[i][0] - (Time.now().value()-(clockTime.min*60+clockTime.sec));
 					var a = (secondsFromLastHour).toFloat()/1800*Math.PI; // 2Pi/hour
-					//var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
-					var r = dialSize ? radius : 1.12*radius; //12//
+					var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
+					//var r = dialSize ? radius : 1.12*radius; //12//
 					var x= Math.round(centerX+(r*Math.sin(a)));
 					var y = Math.round(centerY-(r*Math.cos(a)));
 
 					//12// marker 
-					/*
+					
 					dc.setColor(backgroundColor, backgroundColor);
 					dc.fillCircle(x, y, 4);
 					dc.setColor(dateColor, backgroundColor);
 					dc.fillCircle(x, y, 2);
-					*/
+					
 
-					dc.setPenWidth(1);
+					/*dc.setPenWidth(1);
 					dc.setColor(dateColor, backgroundColor);
-					dc.drawCircle(x, y, circleWidth>>1);
+					dc.drawCircle(x, y, circleWidth>>1);*/
 				}
 				if (tillStart < 3600) {	// hour
 					eventStart = tillStart/60 + "m";
@@ -869,7 +884,7 @@ class lateView extends Ui.WatchFace {
 		return a;
 	}*/
 	
-
+/*
 	function drawTime (dc){
 
 		// draw hour
@@ -937,8 +952,8 @@ class lateView extends Ui.WatchFace {
 		dc.fillCircle(Math.round(centerX+rX), Math.round(centerY-rY), v);
 		dc.fillCircle(centerX, centerY, v);
 	}
+*/
 
-/*
 	function drawTime (dc){
 		// draw hour
 		var h=clockTime.hour;
@@ -1006,7 +1021,7 @@ class lateView extends Ui.WatchFace {
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
 	}
-*/
+
 	function drawBatteryLevel (dc){
 		var bat = Sys.getSystemStats().battery;
 		if(bat<=batThreshold){
@@ -1043,12 +1058,14 @@ class lateView extends Ui.WatchFace {
 					gap = gap + 24;
 				}
 				weatherHourly = [h, weatherHourly[1]].addAll(weatherHourly.slice(gap, null));
+			} else {
+				return h;
 			}
 		} else {
 			weatherHourly = [];
 			h = -1;
 		}	
-		App.getApp().setProperty("weatherHourly", weatherHourly);
+		app.setProperty("weatherHourly", weatherHourly);
 		return h;
 	}
 
@@ -1056,6 +1073,12 @@ class lateView extends Ui.WatchFace {
 	(:data)
 	function drawWeather(dc){ // hardcoded testing how to render the forecast
 		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
+		/*var locateAt = App.getApp().locateAt;
+		if(if locateAt != null && Time.now().compare(locateAt)>0){
+			locate();	// to loate watch before getting next weather forecast 
+			locateAt = null; 
+		}*/
+
 		var h = trimPastHoursInWeatherHourly();
 		/////Sys.println("weather from hour: "+h + " offset: "+offset);
 		var limit;
@@ -1105,15 +1128,22 @@ class lateView extends Ui.WatchFace {
 				}		
 
 
-/*
-if(max == null || min == null){
+				var min;
+				var max;
+				var mm;
+if(rain == null){
 	min = weatherHourly[1];
 	max = weatherHourly[1];
-}*/
+	mm = 0;
+} else {
+	min = rain[0];
+	max = rain[1];
+	mm = rain[2];
+}
 
 //var min = weatherHourly[1] + (h<=12 ? -h : h-24); var max = weatherHourly[1] + (h<=12 ? h-12 : h-12);
-				/*var line = (Gfx.getFontHeight(fontCondensed)*1).toNumber();
-				var smax; var smin;
+				var line = (Gfx.getFontHeight(fontCondensed)*1).toNumber();
+				var maxStr; var minStr;
 				if(max>min+1){
 					dc.setPenWidth(1);
 					dc.setColor(dimmedColor, backgroundColor);
@@ -1124,35 +1154,33 @@ if(max == null || min == null){
 					var pct = (weatherHourly[1]-min).toFloat()/(max-min);
 					dc.drawLine(x-wd>>1 + pct*wd -1, y+line+2, x-wd>>1 + pct*wd+1, y+line+2);
 					if(min<0){
-						smin = min.toString();
-						smax = max<0 ? max.toString()+"°" : "+"+max.toString()+"°";
+						minStr = min.toString();
+						maxStr = max<0 ? max.toString()+"°" : "+"+max.toString()+"°";
 					} else {
-						smin = min.toString()+"-";
-						smax = max.toString()+"°";
+						minStr = min.toString()+"-";
+						maxStr = max.toString()+"°";
 					}
 				} else {
-					smin = weatherHourly[1].toString()+"°";
-					smax = "";
+					minStr = weatherHourly[1].toString()+"°";
+					maxStr = "";
 				}
 
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				dc.drawText(x, y, fontCondensed, smin+smax, Gfx.TEXT_JUSTIFY_CENTER);*/
+				dc.drawText(x, y, fontCondensed, minStr+maxStr, Gfx.TEXT_JUSTIFY_CENTER);
 
 /*				// emphasize on top end
-				dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);
-				dc.drawText(x, y, fontCondensed, min, Gfx.TEXT_JUSTIFY_RIGHT);	
-				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				dc.drawText(x, y, fontCondensed, max, Gfx.TEXT_JUSTIFY_LEFT);	
+				dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);dc.drawText(x, y, fontCondensed, min, Gfx.TEXT_JUSTIFY_RIGHT);	
+				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);dc.drawText(x, y, fontCondensed, max, Gfx.TEXT_JUSTIFY_LEFT);	
 */
 
 					
 				
-				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				dc.drawText(x, y, fontCondensed, Math.round(weatherHourly[1]).toString()+"°", Gfx.TEXT_JUSTIFY_CENTER);	
+				//dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+				//dc.drawText(x, y, fontCondensed, Math.round(weatherHourly[1]).toString()+"°", Gfx.TEXT_JUSTIFY_CENTER);	
 
 				
 				// precipitation
-				/*if(mm != null && mm>0){
+				if(mm != null && mm>0){
 					x = centerX-centerX>>1-6;
 					y -= (Gfx.getFontHeight(fontCondensed)*.2).toNumber();
 					line = (Gfx.getFontHeight(fontCondensed)*.7).toNumber();
@@ -1161,7 +1189,7 @@ if(max == null || min == null){
 					dc.drawText(x, y+line, fontCondensed, "%", Gfx.TEXT_JUSTIFY_CENTER);	
 					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 					dc.drawText(x, y, fontCondensed, mm.format("%1.0f"), Gfx.TEXT_JUSTIFY_CENTER);	
-				}*/
+				}
 				//dc.setPenWidth(circleWidth);dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90, 90-350);
 				
 			}
@@ -1181,7 +1209,10 @@ if(max == null || min == null){
 		 drawIcon(dc, centerX + sunR*Math.sin(a), centerY - sunR*Math.cos(a), icon);
 	}
 
-	function drawSunBitmaps (dc) {
+	function drawSunBitmaps (dc, cal) {
+		if(day != cal.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
+			computeSun();
+		}
 		if(sunrise!= null) {
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 			if(d24){ 
@@ -1202,50 +1233,12 @@ if(max == null || min == null){
 		}
 	}
 
-	function sanitizeLoc(loc){
-		if(loc!=null){
-			loc = loc.toDegrees();
-			if(loc!=null){
-				if((loc[0]==0 && loc[1]==0) || loc[0]>=90 || loc[1]>=90 || loc[1]>=180 || loc[1]>=180){	// bloody bug that the currentLocation sometimes returns [0.000000, 0.000000] or [180.0, 180.0] / [lat, lon]. Garmin guys, I hate you so much! 
-					return null;
-				} 
-				return loc;
-			}
-		}
-		return null;
-	}
-
 	function computeSun() {	//var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().accuracy);
-		//Sys.println("Position");
-		var position;
-		if(Toy.Position has :getInfo){
-			position = Toy.Position.getInfo();
-		} else {
-			position = Toy.ActivityMonitor.getInfo();
-		}
-		var loc = sanitizeLoc(position.position);	
-		//Sys.println(loc);
-//App.getApp().setProperty("l", (position.accuracy==null ? "null" : position.accuracy.toString() )+ loc);
-		if(Toy has :Weather){
-			if(position.accuracy == null || position.accuracy <=1 ){	// 0 N/A, 1 LAST, 2 POOR, 3 USABLE, 4 GOOD
-				var weather = Toy.Weather.getCurrentConditions();
-				if(weather != null){
-					loc = sanitizeLoc(weather.observationLocationPosition);
-//App.getApp().setProperty("w", loc);
-				}
-			}
-		}
-		if (loc == null){
-			loc = App.getApp().getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
-//App.getApp().setProperty("l", "saved: "  + loc);
-			if(loc == null){
-				sunrise = null;
-				return;
-			}			
-		} else {
-			App.getApp().setProperty("location", loc); // save the location to fix a Fenix 5 bug that is loosing the location often
-		}
-		/////Sys.println("computeSun: "+loc);
+		var loc = app.locate();
+		if(loc == null){
+			sunrise = null;
+			return;
+		}	
 		// use absolute to get west as positive
 		lonW = loc[1].toFloat();
 		latN = loc[0].toFloat();

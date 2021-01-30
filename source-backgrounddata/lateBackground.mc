@@ -259,9 +259,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function getWeatherForecast() {
-		app = App.getApp();
-		var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
-		//+//Sys.println("getWeatherForecast: "+pos);
+		var pos = app.locate();
+		if(pos == null){
+			app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
+		}
+		Sys.println("getWeatherForecast: "+pos);
 		if(pos == null){
 			Background.exit({"error_code"=>-204});
 			return;

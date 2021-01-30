@@ -1,20 +1,20 @@
-using Toybox.Application as App;
+using Toybox as Toy;
 using Toybox.WatchUi as Ui;
 using Toybox.Background;
 using Toybox.System as Sys;
 using Toybox.Time as Time;
-using Toybox.Time.Gregorian as Calendar;
 using Toybox.StringUtil as Str;
-using Toybox.Weather as Weather;
+//using Toybox.Weather as Weather;
 
-class lateApp extends App.AppBase {
+class lateApp extends Toy.Application.AppBase {
 
 	var watch;
 	var app;
+	//var locateAtTimer;
 
 	function initialize() {
 		AppBase.initialize();
-		app = App.getApp();
+		app = Toy.Application.getApp();
 	}
 
 	function onSettingsChanged() {
@@ -94,7 +94,13 @@ class lateApp extends App.AppBase {
 	(:data)
 	function changeScheduleToMinutes(minutes){
 		///Sys.println("changeScheduleToMinutes: "+minutes);
-		return Background.registerForTemporalEvent(new Time.Duration( minutes * 60)); // * SECONDS_PER_MINUTE
+		var duration = new Time.Duration( minutes * 60);
+		/*if(locateAtTimer != null){
+			locateAtTimer.stop();
+		}
+		locateAtTimer = new Toy.Timer.Timer().start(method(:decoy), duration.subtract(new Time.Duration(60)), true); // locate a minute before */
+		//locateAt = Time.now().add(duration).subtract(new Time.Duration(180));
+		return Background.registerForTemporalEvent(duration); // * SECONDS_PER_MINUTE
 	}
 
 	(:data)
@@ -322,7 +328,7 @@ class lateApp extends App.AppBase {
 					id_list[i] = ' ';
 				}
 			}
-			id_list = Str.charArrayToString(id_list);
+			id_list = Toy.StringUtil.charArrayToString(id_list);
 			
 			
 			var list = [];
@@ -353,7 +359,7 @@ class lateApp extends App.AppBase {
 	(:data)
 	function parseEvents(data){
 		var events_list = [];
-		var dayDegrees = 86400.0 / (App.getApp().getProperty("d24") == 1 ? 360 : 720);	// SECONDS_PER_DAY /
+		var dayDegrees = 86400.0 / (app.getProperty("d24") == 1 ? 360 : 720);	// SECONDS_PER_DAY /
 		var midnight = Time.today();		
 		var date; var dateTo;
 		var fromAngle;
@@ -397,62 +403,44 @@ class lateApp extends App.AppBase {
 		return(events_list);
 	}
 
-	// converts rfc3339 formatted timestamp to Time::Moment (null on error)
-	(:data)
-	function parseISODate(date) {
-		// assert(date instanceOf String)
+	function locate(){
+	    //App.getApp().setProperty("l", App.getApp().getProperty("l")+" "+Sys.getClockTime().min);
+	    var position;
+	    if(Toy.Position has :getInfo){
+	        position = Toy.Position.getInfo();
+	    } else {
+	        position = Toy.ActivityMonitor.getInfo();
+	    }
+	    var loc = sanitizeLoc(position.position);   
+		Sys.println("locate: "+loc);
+	    if(Toy has :Weather){
+	        if(position.accuracy == null || position.accuracy <=1 ){    // 0 N/A, 1 LAST, 2 POOR, 3 USABLE, 4 GOOD
+	            var weather = Toy.Weather.getCurrentConditions();
+	            if(weather != null){
+	                loc = sanitizeLoc(weather.observationLocationPosition);
+	                //App.getApp().setProperty("w", loc);
+	            }
+	        }
+	    }
+	    if (loc == null){
+	        loc = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often       
+	    } else {
+	        app.setProperty("location", loc); // save the location to fix a Fenix 5 bug that is loosing the location often
+	    }
+	    /////Sys.println("computeSun: "+loc);
+	    return loc;
+	}
 
-		// 0123456789012345678901234
-		// 2011-10-17T13:00:00-07:00
-		// 2011-10-17T16:30:55.000Z
-		// 2011-10-17T16:30:55Z
-		if (date.length() < 20) {
-			return null;
-		}
-
-		var moment = Calendar.moment({
-			:year => date.substring( 0, 4).toNumber(),
-			:month => date.substring( 5, 7).toNumber(),
-			:day => date.substring( 8, 10).toNumber(),
-			:hour => date.substring(11, 13).toNumber(),
-			:minute => date.substring(14, 16).toNumber(),
-			:second => date.substring(17, 19).toNumber()
-		});
-		var suffix = date.substring(19, date.length());
-
-		// skip over to time zone
-		var tz = 0;
-		if (suffix.substring(tz, tz + 1).equals(".")) {
-			while (tz < suffix.length()) {
-				var first = suffix.substring(tz, tz + 1);
-				if ("-+Z".find(first) != null) {
-					break;
-				}
-				tz++;
-			}
-		}
-
-		if (tz >= suffix.length()) {
-			// no timezone given
-			return null;
-		}
-		var tzOffset = 0;
-		if (!suffix.substring(tz, tz + 1).equals("Z")) {
-			// +HH:MM
-			if (suffix.length() - tz < 6) {
-				return null;
-			}
-			tzOffset = suffix.substring(tz + 1, tz + 3).toNumber() * 3600; // SECONDS_PER_HOUR
-			tzOffset += suffix.substring(tz + 4, tz + 6).toNumber() * 60; // * SECONDS_PER_MINUTE
-
-			var sign = suffix.substring(tz, tz + 1);
-			if (sign.equals("+")) {
-				tzOffset = -tzOffset;
-			} else if (sign.equals("-") && tzOffset == 0) {
-				// -00:00 denotes unknown timezone
-				return null;
-			}
-		}
-		return moment.add(new Time.Duration(tzOffset));
+	function sanitizeLoc(loc){
+	    if(loc!=null){
+	        loc = loc.toDegrees();
+	        if(loc!=null){
+	            if((loc[0]==0 && loc[1]==0) || loc[0]>=90 || loc[1]>=90 || loc[1]>=180 || loc[1]>=180){ // bloody bug that the currentLocation sometimes returns [0.000000, 0.000000] or [180.0, 180.0] / [lat, lon]. Garmin guys, I hate you so much! 
+	                return null;
+	            } 
+	            return loc;
+	        }
+	    }
+	    return null;
 	}
 }

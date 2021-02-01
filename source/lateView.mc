@@ -135,8 +135,8 @@ rain = app.getProperty("rain");
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
-//app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; //app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-//showWeather = true; app.setProperty("weather", showWeather); showSunrise = true; app.setProperty("location", [49.6026804,14.1375617]);
+app.setProperty("activity", 1); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+showWeather = true; app.setProperty("weather", showWeather); showSunrise = true; app.setProperty("location", [50.1137639,14.4714428]);
 //app.setProperty("calendar_ids", null);
 //Sys.println(Ui.loadResource(Rez.Strings.Vivid));
 
@@ -162,6 +162,7 @@ rain = app.getProperty("rain");
 			clockTime = Sys.getClockTime();
 			utcOffset = clockTime.timeZoneOffset;
 			computeSun();
+			//Sys.println([sunrise, sunset]);
 		}
 		//	red, 	, yellow, 	green, 		blue, 	violet, 	grey
 		color = [
@@ -588,12 +589,14 @@ rain = app.getProperty("rain");
 	function onBackgroundData(data) { //Sys.println("onBackgroundData view"); Sys.println(data);
 		if(data instanceof Array){	
 			events_list = data;
+Sys.println(events_list);
 		} 
 		else if(data instanceof Lang.Dictionary){
 			if(data.hasKey("weather")){
 				weatherHourly = data["weather"];
 				//Sys.println(weatherHourly);
 				var h = Sys.getClockTime().hour; // first hour of the forecast
+Sys.println([weatherHourly]);
 				if (weatherHourly instanceof Array && weatherHourly.size()>2){	
 					if(weatherHourly[0]!=h){ // delayed response or time passed
 						if((h+1)%24 == weatherHourly[0]){	// forecast from future
@@ -633,6 +636,7 @@ rain = app.getProperty("rain");
 			else if(data.hasKey("userPrompt")){
 				showMessage(data);
 			}
+Sys.println([weatherHourly, sunrise, sunset]);
 debug();
 		}
 		onShow();
@@ -652,6 +656,7 @@ function debug(){
 				if(t>rain[1]){rain[1] = t;}
 			}
 			app.setProperty("rain", rain);
+			//Sys.println(rain);
 		}
 	}
 
@@ -1071,33 +1076,21 @@ function debug(){
 
 
 	(:data)
-	function drawWeather(dc){ // hardcoded testing how to render the forecast
-		//Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
-		/*var locateAt = App.getApp().locateAt;
-		if(if locateAt != null && Time.now().compare(locateAt)>0){
-			locate();	// to loate watch before getting next weather forecast 
-			locateAt = null; 
-		}*/
-
+	function drawWeather(dc){  //Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		var h = trimPastHoursInWeatherHourly();
 		/////Sys.println("weather from hour: "+h + " offset: "+offset);
-		var limit;
-		var step;
-		var hours;
+		var limit; var step; var hours;
 		if(d24){ 
-			limit = 26;
-			step = 15;
-			hours = 24;
+			limit = 26; step = 15; hours = 24;
 		} else {
-			limit = 14;
-			step = 30;
-			hours = 12;
+			limit = 14; step = 30; hours = 12;
 		}
 		if(h>=0){
 			dc.setPenWidth(height>=390 ? 8 : 5);
-			
 			var color; var center;
 			//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
+
+			// draw weather arcs
 			for(var i=2; i<weatherHourly.size() && i<limit; i++, h++){
 				color = weatherHourly[i];
 				if(color>=0 && color < meteoColors.size()){
@@ -1108,29 +1101,24 @@ function debug(){
 					} else {
 						center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
 					}
-
 					/////Sys.println([i, h, weatherHourly[i], color]);
 					dc.setColor(color, Gfx.COLOR_TRANSPARENT);
 					dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*step, 90-(h+1)*step);
 				}
 			}
-			if(weatherHourly.size()>1){
-				
-				// TODO: Tuning! 
-				var x=centerX+centerX>>1+6;
-				var y = centerY-(dc.getFontHeight(fontCondensed)>>1);
 
-
+			// write temperature
+			if(weatherHourly.size()>1){ 
+				var x = centerX+centerX>>1+2;
+				var y = centerY-(dc.getFontHeight(fontCondensed)*.2);
 				if(dialSize==0){
 					y -= centerY>>1;
 				} else {
 					x += dc.getFontHeight(icons)>>2;
+					y -= dc.getFontHeight(icons);
 				}		
 
-
-				var min;
-				var max;
-				var mm;
+				var min; var max; var mm;
 if(rain == null){
 	min = weatherHourly[1];
 	max = weatherHourly[1];
@@ -1140,58 +1128,42 @@ if(rain == null){
 	max = rain[1];
 	mm = rain[2];
 }
-
-//var min = weatherHourly[1] + (h<=12 ? -h : h-24); var max = weatherHourly[1] + (h<=12 ? h-12 : h-12);
-				var line = (Gfx.getFontHeight(fontCondensed)*1).toNumber();
-				var maxStr; var minStr;
-				if(max>min+1){
-					dc.setPenWidth(1);
-					dc.setColor(dimmedColor, backgroundColor);
-					var wd = dc.getTextWidthInPixels("0", fontCondensed)*3;
-					dc.drawLine(x-wd>>1, y+line, x+wd>>1, y+line);
-					dc.setPenWidth(3);
-					dc.setColor(activityColor, backgroundColor);
-					var pct = (weatherHourly[1]-min).toFloat()/(max-min);
-					dc.drawLine(x-wd>>1 + pct*wd -1, y+line+2, x-wd>>1 + pct*wd+1, y+line+2);
+				var line = Gfx.getFontHeight(fontCondensed).toNumber()-2;
+				var range;
+				var t = weatherHourly[1];
+				var gap = dc.getTextWidthInPixels("1", fontCondensed);
+				if(max-min>1){
+					// line indicator: /*dc.setPenWidth(1);dc.setColor(dimmedColor, backgroundColor);var wd = dc.getTextWidthInPixels("0", fontCondensed)*3;dc.drawLine(gap+x-wd>>1, y+line, gap+x+wd>>1, y+line);var bound = (t-min>max-t) ? gap+x-wd>>1 : gap+x+wd>>1;dc.drawLine(bound, y+line, gap+x-wd>>1, y+line);dc.setPenWidth(3);var pct = (t-min).toFloat()/(max-min);dc.drawLine(gap+x-wd>>1 + pct*wd , y+line-2, gap+x-wd>>1 + pct*wd, y+line+2);*/
+					range = min.toString();
 					if(min<0){
-						minStr = min.toString();
-						maxStr = max<0 ? max.toString()+"°" : "+"+max.toString()+"°";
+						if(max>0){
+							range += "+";
+						} else if(max == 0){
+							range += "-";
+						}
 					} else {
-						minStr = min.toString()+"-";
-						maxStr = max.toString()+"°";
+						range += "-";
 					}
-				} else {
-					minStr = weatherHourly[1].toString()+"°";
-					maxStr = "";
-				}
-
+					range += max.toString()+"°";
+					dc.setColor(dimmedColor, Gfx.COLOR_TRANSPARENT);
+					dc.drawText(x+ (dialSize==0 ? gap<<1 : 0), y+line-3, fontCondensed, range, Gfx.TEXT_JUSTIFY_CENTER);	
+				} 
 				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				dc.drawText(x, y, fontCondensed, minStr+maxStr, Gfx.TEXT_JUSTIFY_CENTER);
-
-/*				// emphasize on top end
-				dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);dc.drawText(x, y, fontCondensed, min, Gfx.TEXT_JUSTIFY_RIGHT);	
-				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);dc.drawText(x, y, fontCondensed, max, Gfx.TEXT_JUSTIFY_LEFT);	
-*/
-
-					
-				
-				//dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+				dc.drawText(x, y, fontCondensed, t+"°", Gfx.TEXT_JUSTIFY_CENTER);	
 				//dc.drawText(x, y, fontCondensed, Math.round(weatherHourly[1]).toString()+"°", Gfx.TEXT_JUSTIFY_CENTER);	
-
 				
 				// precipitation
 				if(mm != null && mm>0){
 					x = centerX-centerX>>1-6;
-					y -= (Gfx.getFontHeight(fontCondensed)*.2).toNumber();
+					//y -= (Gfx.getFontHeight(fontCondensed)*.2).toNumber();
 					line = (Gfx.getFontHeight(fontCondensed)*.7).toNumber();
 					dc.setColor(dimmedColor, Gfx.COLOR_TRANSPARENT);
 					//dc.drawText(x, y+line, fontCondensed, "mm", Gfx.TEXT_JUSTIFY_CENTER);	
-					dc.drawText(x, y+line, fontCondensed, "%", Gfx.TEXT_JUSTIFY_CENTER);	
+					dc.drawText(x-gap>>1, y+line, fontCondensed, "%", Gfx.TEXT_JUSTIFY_CENTER);	
 					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 					dc.drawText(x, y, fontCondensed, mm.format("%1.0f"), Gfx.TEXT_JUSTIFY_CENTER);	
 				}
-				//dc.setPenWidth(circleWidth);dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90, 90-350);
-				
+				//dc.setPenWidth(circleWidth);dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90, 90-350); // test overlapping
 			}
 		}
 	}
@@ -1234,7 +1206,7 @@ if(rain == null){
 	}
 
 	function computeSun() {	//var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().accuracy);
-		var loc = app.locate();
+		var loc = app.locate(true);
 		if(loc == null){
 			sunrise = null;
 			return;
@@ -1265,7 +1237,7 @@ if(rain == null){
 		}
 		sunrise[SUNRISET_MAX] = computeSunriset(max, lonW, latN, true);
 		sunset[SUNRISET_MAX] = computeSunriset(max, lonW, latN, false);
-*/
+		*/
 
 		//adjust to timezone + dst when active
 		var offset=new Time.Duration(utcOffset).value()/3600;

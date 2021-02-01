@@ -10,7 +10,6 @@ class lateApp extends Toy.Application.AppBase {
 
 	var watch;
 	var app;
-	//var locateAtTimer;
 
 	function initialize() {
 		AppBase.initialize();
@@ -36,7 +35,7 @@ class lateApp extends Toy.Application.AppBase {
 
 	(:data)
 	function scheduleDataLoading(){
-		//+System.println("scheduling: " + [watch.dataLoading , watch.activity == :calendar , watch.showWeather]);
+		//+*/System.println("scheduling: " + [watch.dataLoading , watch.activity == :calendar , watch.showWeather]);
 		loadSettings();
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
@@ -110,7 +109,7 @@ class lateApp extends Toy.Application.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {	
-		//+Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
+		//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
 		//Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary){
@@ -318,40 +317,6 @@ class lateApp extends Toy.Application.AppBase {
 	}   
 
 	(:data)
-	function split(id_list){	
-		if(id_list instanceof Toybox.Lang.String){
-			// this really has to be that ugly, because monkey c cannot replace or split strings like human
-			var i; 
-			id_list = id_list.toCharArray();
-			for(i=0;i<id_list.size();i++){
-				if(id_list[i]=='[' || id_list[i]==']' || id_list[i]==',' || id_list[i]=='\"'){
-					id_list[i] = ' ';
-				}
-			}
-			id_list = Toy.StringUtil.charArrayToString(id_list);
-			
-			
-			var list = [];
-			while(id_list.length()>1){
-				i = id_list.find(" ");
-				if(i != null){
-					if(i>4){ // id must be at least 5 chars (can rise to 7)
-						list.add(id_list.substring(0, i));
-					}
-					id_list = id_list.substring(i+1, id_list.length());
-				} else {
-					list.add(id_list);
-					break;
-				}
-			}
-			//////Sys.println(list);
-			return list;
-		} else {
-			return id_list;
-		}
-	}
-
-	(:data)
 	function getServiceDelegate() {
 		return [new lateBackground()];
 	}
@@ -403,7 +368,7 @@ class lateApp extends Toy.Application.AppBase {
 		return(events_list);
 	}
 
-	function locate(){
+	function locate(save){	// save = false in background because bakground processes can not save properites (WTF!)
 	    //App.getApp().setProperty("l", App.getApp().getProperty("l")+" "+Sys.getClockTime().min);
 	    var position;
 	    if(Toy.Position has :getInfo){
@@ -412,7 +377,6 @@ class lateApp extends Toy.Application.AppBase {
 	        position = Toy.ActivityMonitor.getInfo();
 	    }
 	    var loc = sanitizeLoc(position.position);   
-		Sys.println("locate: "+loc);
 	    if(Toy has :Weather){
 	        if(position.accuracy == null || position.accuracy <=1 ){    // 0 N/A, 1 LAST, 2 POOR, 3 USABLE, 4 GOOD
 	            var weather = Toy.Weather.getCurrentConditions();
@@ -425,9 +389,11 @@ class lateApp extends Toy.Application.AppBase {
 	    if (loc == null){
 	        loc = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often       
 	    } else {
-	        app.setProperty("location", loc); // save the location to fix a Fenix 5 bug that is loosing the location often
+	    	if(save){
+	        	app.setProperty("location", loc); // save the location to fix a Fenix 5 bug that is loosing the location often
+	        	Sys.println([save, loc]);
+	        }
 	    }
-	    /////Sys.println("computeSun: "+loc);
 	    return loc;
 	}
 

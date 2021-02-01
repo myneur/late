@@ -175,6 +175,40 @@ function parseISODate(date) {
     }
     return moment.add(new Time.Duration(tzOffset));
 }
+
+(:data)
+function split(id_list){    
+    if(id_list instanceof Toybox.Lang.String){
+        // this really has to be that ugly, because monkey c cannot replace or split strings like human
+        var i; 
+        id_list = id_list.toCharArray();
+        for(i=0;i<id_list.size();i++){
+            if(id_list[i]=='[' || id_list[i]==']' || id_list[i]==',' || id_list[i]=='\"'){
+                id_list[i] = ' ';
+            }
+        }
+        id_list = Toy.StringUtil.charArrayToString(id_list);
+        
+        
+        var list = [];
+        while(id_list.length()>1){
+            i = id_list.find(" ");
+            if(i != null){
+                if(i>4){ // id must be at least 5 chars (can rise to 7)
+                    list.add(id_list.substring(0, i));
+                }
+                id_list = id_list.substring(i+1, id_list.length());
+            } else {
+                list.add(id_list);
+                break;
+            }
+        }
+        //////Sys.println(list);
+        return list;
+    } else {
+        return id_list;
+    }
+}
  
 /*function ceil (f){
     var f2=-f;

@@ -27,7 +27,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	
 	function onTemporalEvent() {
 		var t = Gregorian.info(Time.now(), Gregorian.FORMAT_SHORT);
-		//+Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad") );
+		//+*/Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad") );
 		app = App.getApp();
 		//getTokensAndData();return;
 		//+Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
@@ -259,7 +259,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function getWeatherForecast() {
-		var pos = app.locate();
+		var pos = app.locate(false);
 		if(pos == null){
 			app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 		}
@@ -271,12 +271,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if(subscription_id==null){
 			subscription_id = app.getProperty("subs");	// must be read at first call (which is this one) so we don't lose it
 		}
-		//+System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
+		//+*/System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
 		//Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat());
 		if(subscription_id instanceof String && subscription_id.length()>0){
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
-				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"yrno"}, /* "service"=>"climacell"||"yrno" */
-				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id/*, "Accept-Version" => "v2"*/ }},
+				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"climacell"}, /* "service"=>"climacell"||"yrno" */
+				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id, "Accept-Version" => "v2" }},
 				method(:onWeatherForecast));
 		} else {
 			getSubscriptionId();

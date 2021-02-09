@@ -275,7 +275,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		//Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat());
 		if(subscription_id instanceof String && subscription_id.length()>0){
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
-				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"climacell"}, /* "service"=>"climacell"||"yrno" */
+				{"unit"=>(app.getProperty("units") ? "c":"f"), "service"=>"yrno", "period"=> ( app.getProperty("d24") == 1 ? 24 : 12)}, /* "service"=>"climacell"||"yrno" */
 				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id, "Accept-Version" => "v2" }},
 				method(:onWeatherForecast));
 		} else {
@@ -286,6 +286,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	function onWeatherForecast(responseCode, data){		//+//Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
 		if (responseCode==200) {
 			try { 
+				Sys.println(data);
 				data = {"weather"=>data};	// returning array with the wheather forecast
 				if(subscription_id instanceof String && subscription_id.length()>0){
 					data.put("subscription_id", subscription_id);

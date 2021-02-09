@@ -31,7 +31,7 @@ class lateView extends Ui.WatchFace {
 	//hidden var icon=null; hidden var iconL=null; hidden var iconR=null; hidden var sunrs = null; hidden var sunst = null; //hidden var iconNotification;
 	hidden var clockTime; 
 	hidden var utcOffset; hidden var day = -1;
-	hidden var lonW; hidden var latN; 
+	//hidden var lonW; hidden var latN; 
 	//hidden var sunrise = new [SUNRISET_NBR]; hidden var sunset = new [SUNRISET_NBR];
 	hidden var sunrise; hidden var sunset;
 	hidden var fontSmall = null; hidden var fontHours = null; hidden var fontCondensed = null;
@@ -72,6 +72,7 @@ class lateView extends Ui.WatchFace {
 				weatherHourly = weather;
 			}
 		}
+		//onBackgroundData({"weather"=>[17, -1, -1, 1, 5.960000, -1, -1, -1, -1, -1, -1, 4, 4, -1, -1, 4, 2, 4, -1, -1, -1, -1, -1, 4, 2, -1, -1, 4, 4]});
 		d24 = app.getProperty("d24") == 1 ? true : false; // making sure it loads for the first time 
 		//Sys.println("init: "+ weatherHourly);
 	}
@@ -82,9 +83,8 @@ class lateView extends Ui.WatchFace {
 		loadSettings();
 	}
 
-var rain;
 	function loadSettings(){
-rain = app.getProperty("rain");
+		//rain = app.getProperty("rain");
 
 		dateForm = app.getProperty("dateForm");
 		
@@ -133,16 +133,16 @@ rain = app.getProperty("rain");
 		d24 = d24new;
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
-
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
-app.setProperty("activity", 1); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
 showWeather = true; app.setProperty("weather", showWeather); showSunrise = true; app.setProperty("location", [50.1137639,14.4714428]);
+percentage = true;
+activityL = :steps;activityR = :activeMinutesWeek;
 //app.setProperty("calendar_ids", null);
 //Sys.println(Ui.loadResource(Rez.Strings.Vivid));
 
 //dialSize=1;
-//percentage = true;
-//activityL = :steps;activityR = :activeMinutesWeek;
+
 
 //mainColor=1;circleWidth=4;
 
@@ -511,6 +511,8 @@ showWeather = true; app.setProperty("weather", showWeather); showSunrise = true;
 			//Sys.println("ActivityMonitor");
 			var info = Toy.ActivityMonitor.getInfo();
 			var activityChar = {:steps=>'s', :calories=>'c', :activeMinutesDay=>'a', :activeMinutesWeek=>'a', :floorsClimbed=>'f'}[activity];	// todo optimize
+			//var activityChar = activity==:steps ? 's' : activity==:calories ? 'c' : activity==:floorsClimbed? 'a' : 'f';
+			//var activityChar;switch(activity){case :steps: activityChar='s';case :calories: activityChar='c';case :floorsClimbed: activityChar='f';default: activityChar='a';}
 			if(percentage){
 				info = method(activity).invoke(info);
 				var r = Gfx.getFontHeight(icons)-3;
@@ -589,15 +591,15 @@ showWeather = true; app.setProperty("weather", showWeather); showSunrise = true;
 	function onBackgroundData(data) { //Sys.println("onBackgroundData view"); Sys.println(data);
 		if(data instanceof Array){	
 			events_list = data;
-Sys.println(events_list);
+//Sys.println(events_list);
 		} 
 		else if(data instanceof Lang.Dictionary){
 			if(data.hasKey("weather")){
 				weatherHourly = data["weather"];
 				//Sys.println(weatherHourly);
 				var h = Sys.getClockTime().hour; // first hour of the forecast
-Sys.println([weatherHourly]);
-				if (weatherHourly instanceof Array && weatherHourly.size()>2){	
+//Sys.println([weatherHourly]);
+				if (weatherHourly instanceof Array && weatherHourly.size()>5){	
 					if(weatherHourly[0]!=h){ // delayed response or time passed
 						if((h+1)%24 == weatherHourly[0]){	// forecast from future
 							var gap = weatherHourly[0]-h;
@@ -609,7 +611,7 @@ Sys.println([weatherHourly]);
 								gap--;
 								balast[gap]= -1;
 							}
-							weatherHourly = [h, weatherHourly[1]].addAll(balast).addAll(weatherHourly.slice(2,null));
+							weatherHourly = [h].addAll(weatherHourly.slice(1,5)).addAll(balast).addAll(weatherHourly.slice(5,null));
 						} else if(!(h==(weatherHourly[0]+1)%24)){ // all except forecast in past
 							weatherHourly[0]=h;	// ignoring difference because of the bug 
 						}
@@ -621,7 +623,7 @@ Sys.println([weatherHourly]);
 					var sunAngle = toAngle(sunrise);
 					var moonAngle = toAngle(sunset);
 					//Sys.println([sunAngle,moonAngle]);
-					for(var i =2; i<weatherHourly.size();i++){
+					for(var i =5; i<weatherHourly.size();i++){
 						if(weatherHourly[i] <= 1 && (hourAngle+1 < sunAngle || hourAngle>moonAngle) ){	// partly cloudy not shown at night
 							weatherHourly[i] = weatherHourly[i]==0 ? 6 : -1; // clear night for clear sky and dim partly cloudy
 						} else {
@@ -636,21 +638,21 @@ Sys.println([weatherHourly]);
 			else if(data.hasKey("userPrompt")){
 				showMessage(data);
 			}
-Sys.println([weatherHourly, sunrise, sunset]);
-debug();
+//Sys.println([weatherHourly, sunrise, sunset]);
+			//debug();
 		}
 		onShow();
 		Ui.requestUpdate();
 	}
 
 
-function debug(){
+/*function debug(){
 	if(Toy has :Weather){
 		var weather = Toy.Weather.getDailyForecast();
 		if(weather != null){
 			weather = weather[0];
 			rain = [weather.lowTemperature, weather.highTemperature, weather.precipitationChance];
-			if(weatherHourly.size()>1){
+			if(weatherHourly.size()>4){
 				var t = weatherHourly[1];
 				if(t<rain[0]){rain[0] = t;}
 				if(t>rain[1]){rain[1] = t;}
@@ -663,7 +665,7 @@ function debug(){
 	//if(App.getApp().getProperty("calendar_ids").size()>0){
 		//if(App.getApp().getProperty("calendar_ids")[0].find("myneur")!=null){//showMessage({"userPrompt"=> message});
 		//weatherHourly = [13, 9, 0, 1, 6, 4, 5, 2, 3];App.getApp().setProperty("weatherHourly", weatherHourly);}}
-}
+}*/
 
 	function humanizeNumber(number){
 		if(number>1000) {
@@ -772,7 +774,7 @@ function debug(){
 		}
 
 		// draw first event if it is close enough
-		if(eventStart){
+		if(eventStart != null){
 			if(events_list[i][4]<0){ // no calendar event, but prompt
 				dc.setColor(dateColor , Gfx.COLOR_TRANSPARENT); // emphasized event without date
 			} else {
@@ -971,7 +973,6 @@ function debug(){
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
 
-
 		var minutes = clockTime.min; 
 		// minutes=m; m++; // testing rendering
 		//////Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
@@ -1056,13 +1057,13 @@ function debug(){
 	(:data)
 	function trimPastHoursInWeatherHourly(){
 		var h = Sys.getClockTime().hour; // first hour of the forecast
-		if (weatherHourly instanceof Array && weatherHourly.size()>2){
+		if (weatherHourly instanceof Array && weatherHourly.size()>5){
 			if(weatherHourly[0]!=h){ // delayed response or time passed
-				var gap = 2+h-weatherHourly[0];
+				var gap = 5+h-weatherHourly[0];
 				if(weatherHourly[0]>h){	// the delay is over midnight 
 					gap = gap + 24;
 				}
-				weatherHourly = [h, weatherHourly[1]].addAll(weatherHourly.slice(gap, null));
+				weatherHourly = [h].addAll(weatherHourly.slice(1,5)).addAll(weatherHourly.slice(gap,null));
 			} else {
 				return h;
 			}
@@ -1081,9 +1082,9 @@ function debug(){
 		/////Sys.println("weather from hour: "+h + " offset: "+offset);
 		var limit; var step; var hours;
 		if(d24){ 
-			limit = 26; step = 15; hours = 24;
+			limit = 29; step = 15; hours = 24;
 		} else {
-			limit = 14; step = 30; hours = 12;
+			limit = 17; step = 30; hours = 12;
 		}
 		if(h>=0){
 			dc.setPenWidth(height>=390 ? 8 : 5);
@@ -1091,7 +1092,7 @@ function debug(){
 			//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
 
 			// draw weather arcs
-			for(var i=2; i<weatherHourly.size() && i<limit; i++, h++){
+			for(var i=5; i<weatherHourly.size() && i<limit; i++, h++){
 				color = weatherHourly[i];
 				if(color>=0 && color < meteoColors.size()){
 					color = meteoColors[color];
@@ -1106,60 +1107,102 @@ function debug(){
 					dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*step, 90-(h+1)*step);
 				}
 			}
-
 			// write temperature
-			if(weatherHourly.size()>1){ 
+			if(weatherHourly.size()>=5){ 
 				var x = centerX+centerX>>1+2;
-				var y = centerY-(dc.getFontHeight(fontCondensed)*.2);
+				var y = centerY-0.5*(dc.getFontHeight(fontCondensed));
+				var gap = 0; //dc.getTextWidthInPixels("1", fontCondensed);
 				if(dialSize==0){
 					y -= centerY>>1;
+					//x += gap;
 				} else {
-					x += dc.getFontHeight(icons)>>2;
-					y -= dc.getFontHeight(icons);
+					//x += dc.getFontHeight(icons)>>1;
+					y -= dc.getFontHeight(icons)>>1;
 				}		
-
-				var min; var max; var mm;
-if(rain == null){
-	min = weatherHourly[1];
-	max = weatherHourly[1];
-	mm = 0;
-} else {
-	min = rain[0];
-	max = rain[1];
-	mm = rain[2];
-}
-				var line = Gfx.getFontHeight(fontCondensed).toNumber()-2;
-				var range;
+				var min = weatherHourly[2];
+				var max = weatherHourly[3];
 				var t = weatherHourly[1];
-				var gap = dc.getTextWidthInPixels("1", fontCondensed);
-				if(max-min>1){
-					// line indicator: /*dc.setPenWidth(1);dc.setColor(dimmedColor, backgroundColor);var wd = dc.getTextWidthInPixels("0", fontCondensed)*3;dc.drawLine(gap+x-wd>>1, y+line, gap+x+wd>>1, y+line);var bound = (t-min>max-t) ? gap+x-wd>>1 : gap+x+wd>>1;dc.drawLine(bound, y+line, gap+x-wd>>1, y+line);dc.setPenWidth(3);var pct = (t-min).toFloat()/(max-min);dc.drawLine(gap+x-wd>>1 + pct*wd , y+line-2, gap+x-wd>>1 + pct*wd, y+line+2);*/
-					range = min.toString();
-					if(min<0){
-						if(max>0){
-							range += "+";
-						} else if(max == 0){
+				
+				/*var range;
+					if(max-min>1){	// now, min-max
+						range = min.toString();
+						if(min<0){
+							if(max>0){
+								range += "+";
+							} else if(max == 0){
+								range += "-";
+							}
+						} else {
 							range += "-";
 						}
+						range += max.toString()+"°";
+						x -= dc.getTextWidthInPixels(range, fontCondensed)>>1;
+						dc.setColor(dimmedColor, Gfx.COLOR_TRANSPARENT);
+						dc.drawText(x, y+line, fontCondensed, range, Gfx.TEXT_JUSTIFY_LEFT);
+					} 
+					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+					dc.drawText(x, y, fontCondensed, t+"°", Gfx.TEXT_JUSTIFY_LEFT);	
+					*/
+				//var line = Gfx.getFontHeight(fontCondensed).toNumber()-6;
+				var line;
+				if(max-min>1){	// now-range	
+					var wd = dc.getTextWidthInPixels("0", fontCondensed)*3;
+					line = Gfx.getFontHeight(fontCondensed).toNumber();
+					dc.setPenWidth(1);
+					dc.setColor(dimmedColor, backgroundColor);
+					dc.drawLine(gap+x-wd>>1, y+line, gap+x+wd>>1, y+line);
+					var bound = (t-min>max-t) ? gap+x-wd>>1 : gap+x+wd>>1;
+					dc.drawLine(bound, y+line, gap+x-wd>>1, y+line);
+					var pct = (t-min).toFloat()/(max-min);
+					dc.setPenWidth(3);
+					dc.setColor(activityColor, backgroundColor);
+					dc.drawLine(gap+x-wd>>1 + pct*wd , y+line+1, gap+x-wd>>1 + pct*wd, y+line+2);
+					
+					var c = activityColor;
+					var from; var to;
+					if(t-min>max-t){
+						from = min;
+						to = t;
+						c = dimmedColor;
 					} else {
-						range += "-";
+						from = t;
+						to = max;
 					}
-					range += max.toString()+"°";
-					dc.setColor(dimmedColor, Gfx.COLOR_TRANSPARENT);
-					dc.drawText(x+ (dialSize==0 ? gap<<1 : 0), y+line-3, fontCondensed, range, Gfx.TEXT_JUSTIFY_CENTER);	
-				} 
-				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				dc.drawText(x, y, fontCondensed, t+"°", Gfx.TEXT_JUSTIFY_CENTER);	
+					if(to>=0){
+						if(from==t){
+							to = (from>=0 || to == 0 ? "-" : "+") + to.toString();
+							from = from.toString()+ "°";
+						} else {
+							from = from.toString() + ( from>=0 || to == 0 ? "-" : "+");
+							to = to.toString() + "°";
+						}
+					} else {
+						if(from==t){
+							from = from.toString()+"°";
+						} else {
+							to = to.toString()+"°";
+						}
+					}
+
+					//x -= dc.getTextWidthInPixels(range, fontCondensed)>>1;
+					dc.setColor(c, Gfx.COLOR_TRANSPARENT);
+					dc.drawText(x-1, y, fontCondensed, from, Gfx.TEXT_JUSTIFY_RIGHT);
+					c = c == activityColor ? dimmedColor : activityColor;
+					dc.setColor(c, Gfx.COLOR_TRANSPARENT);
+					dc.drawText(x+1, y, fontCondensed, to, Gfx.TEXT_JUSTIFY_LEFT);	
+				} else {
+					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+					dc.drawText(x, y, fontCondensed, t+"°", Gfx.TEXT_JUSTIFY_LEFT);	
+				}
 				//dc.drawText(x, y, fontCondensed, Math.round(weatherHourly[1]).toString()+"°", Gfx.TEXT_JUSTIFY_CENTER);	
-				
 				// precipitation
-				if(mm != null && mm>0){
+				var mm = weatherHourly[4];
+				if(mm != null && mm>0.5){
 					x = centerX-centerX>>1-6;
 					//y -= (Gfx.getFontHeight(fontCondensed)*.2).toNumber();
-					line = (Gfx.getFontHeight(fontCondensed)*.7).toNumber();
+					line = Math.round(0.55*Gfx.getFontHeight(fontCondensed)).toNumber();
 					dc.setColor(dimmedColor, Gfx.COLOR_TRANSPARENT);
-					//dc.drawText(x, y+line, fontCondensed, "mm", Gfx.TEXT_JUSTIFY_CENTER);	
-					dc.drawText(x-gap>>1, y+line, fontCondensed, "%", Gfx.TEXT_JUSTIFY_CENTER);	
+					dc.drawText(x-2, y+line, fontCondensed, "mm", Gfx.TEXT_JUSTIFY_CENTER);	
 					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 					dc.drawText(x, y, fontCondensed, mm.format("%1.0f"), Gfx.TEXT_JUSTIFY_CENTER);	
 				}
@@ -1212,8 +1255,8 @@ if(rain == null){
 			return;
 		}	
 		// use absolute to get west as positive
-		lonW = loc[1].toFloat();
-		latN = loc[0].toFloat();
+		var lonW = loc[1].toFloat();
+		var latN = loc[0].toFloat();
 
 
 		// compute current date as day number from beg of year

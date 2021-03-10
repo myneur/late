@@ -124,6 +124,10 @@ class lateApp extends Toy.Application.AppBase {
 					if(data["weather"].size()>2){
 						//System.println(data);
 						data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
+						if(data["weather"].size()>3){
+							data["weather"][2] = Math.round( data["weather"][2].toFloat() ).toNumber(); // current temperature
+							data["weather"][3] = Math.round( data["weather"][3].toFloat() ).toNumber(); // current temperature
+						}
 						/*var c;
 						for(var i=2; i<data["weather"].size();i++){
 						c = data["weather"][i];
@@ -353,7 +357,7 @@ class lateApp extends Toy.Application.AppBase {
 					]);
 				}
 			}
-			// sort
+			// sort TODO: insert sort instead
 			var i; var j;
 			for(i=0; i<events_list.size()-1; i++){
 				for (j=0; j<events_list.size()-i-1; j++) {
@@ -370,28 +374,34 @@ class lateApp extends Toy.Application.AppBase {
 
 	function locate(save){	// save = false in background because bakground processes can not save properites (WTF!)
 	    //App.getApp().setProperty("l", App.getApp().getProperty("l")+" "+Sys.getClockTime().min);
-	    var position;
+	    var position=null;
+	    var accuracy=null;
 	    if(Toy.Position has :getInfo){
 	        position = Toy.Position.getInfo();
+        	accuracy = position.accuracy;
+        	position = position.position;
 	    } else {
-	        position = Toy.ActivityMonitor.getInfo();
+	        position = Toy.Activity.getActivityInfo();
+	        if(position != null){
+	        	accuracy = position.currentLocationAccuracy;
+	        	position = position.currentLocation;
+	        }
 	    }
-	    var loc = sanitizeLoc(position.position);   
 	    if(Toy has :Weather){
-	        if(position.accuracy == null || position.accuracy <=1 ){    // 0 N/A, 1 LAST, 2 POOR, 3 USABLE, 4 GOOD
+	        if(accuracy == null || accuracy==0 || accuracy==1){    // 0 N/A, 1 LAST, 2 POOR, 3 USABLE, 4 GOOD // WTF!! (accuracy!=null && accuracy <=1) can fail!!! Those bloody bastards!!
 	            var weather = Toy.Weather.getCurrentConditions();
 	            if(weather != null){
-	                loc = sanitizeLoc(weather.observationLocationPosition);
-	                //App.getApp().setProperty("w", loc);
+	                position = weather.observationLocationPosition;
 	            }
 	        }
 	    }
+	    var loc = sanitizeLoc(position);
 	    if (loc == null){
 	        loc = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often       
 	    } else {
 	    	if(save){
 	        	app.setProperty("location", loc); // save the location to fix a Fenix 5 bug that is loosing the location often
-	        	Sys.println([save, loc]);
+	        	app.setProperty("loc", loc);
 	        }
 	    }
 	    return loc;

@@ -82,4 +82,10 @@
 	<setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
 		<settingConfig type="boolean" />
 	</setting>
+	<setting propertyKey="@Properties.d24" title="@Strings.D1224h">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.D12h</listEntry>						
+			<listEntry value="1">@Strings.D24h</listEntry>
+		</settingConfig>
+	</setting>
 </settings>

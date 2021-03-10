@@ -4,17 +4,15 @@
 	<property id="compatibility" type="number">2</property>
 	
 	<property id="refresh_freq" type="number">60</property>
-	<property id="access_code" type="string"></property>
+	<!--<property id="access_code" type="string"></property>-->
 	
 	<property id="calendar_colors" type="number">1</property>
 	<property id="calendar_ids" type="string"></property>
 	<property id="weather" type="boolean">false</property>
 	<property id="units" type="number">1</property>
-	<property id="d24" type="number">1</property>
-	<!--<property id="d24" type="number">0</property>-->
+	<property id="provider" type="number">0</property>
 	<!--<property id="key" type="string"></property>-->
 
 
-<!--<property id="l" type="string"></property>
-<property id="w" type="string"></property>-->
+<property id="loc" type="string"></property>
 </properties>

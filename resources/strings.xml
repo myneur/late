@@ -50,6 +50,9 @@
 	<string id="BellowHalf">below 50%</string>
 	<string id="Always">Always show battery level</string>
 	<!-- menu items: toggle to turn on showing when there will be a sunrise and sunset across the watch's 24h dial -->
-	<string id="showSunriseSunsetTitle">Sunrise and sunset on 24h dial</string> -->
+	<string id="showSunriseSunsetTitle">Sunrise and sunset on dial</string> 
+	<string id="D1224h">12 or 24h dial for sunrise/sunset?</string>
+	<string id="D12h">12h dial</string>
+	<string id="D24h">24h dial</string>
 	
 </strings>

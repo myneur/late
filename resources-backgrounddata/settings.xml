@@ -56,9 +56,13 @@
 		<settingConfig type="alphaNumeric" />
 	</setting>-->
 
+	<setting propertyKey="@Properties.provider" title="@Strings.Provider" prompt="@Strings.TakesTime">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.Yr</listEntry>						
+			<listEntry value="1">@Strings.Clima</listEntry>
+		</settingConfig>
+	</setting>
 
 
-
-<!--<setting propertyKey="@Properties.l" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>
-<setting propertyKey="@Properties.w" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>-->
+<setting propertyKey="@Properties.loc" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>
 </settings>

@@ -5,8 +5,8 @@
 
 //// manifest app id
 
-//// testing variables
-//// weather localisation test
+//// remove any debug variables
+//// remove weather localisation property
 
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
@@ -688,7 +688,7 @@ class lateView extends Ui.WatchFace {
 			if(d24){
 				a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
 			} else { 
-				//return; // so far for 12h //12//
+				return; // so far for 12h //12//
 				if(hour>11){ hour-=12;}
 				if(0==hour){ hour=12;}
 				a = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
@@ -743,22 +743,21 @@ class lateView extends Ui.WatchFace {
 				if(tillStart < 3480){	// 58 mins
 					var secondsFromLastHour = events_list[i][0] - (Time.now().value()-(clockTime.min*60+clockTime.sec));
 					var a = (secondsFromLastHour).toFloat()/1800*Math.PI; // 2Pi/hour
-					var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
-					//var r = dialSize ? radius : 1.12*radius; //12//
+					//var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
+					var r = dialSize ? radius : 1.12*radius; //12//
 					var x= Math.round(centerX+(r*Math.sin(a)));
 					var y = Math.round(centerY-(r*Math.cos(a)));
 
 					//12// marker 
 					
-					dc.setColor(backgroundColor, backgroundColor);
+					/*dc.setColor(backgroundColor, backgroundColor);
 					dc.fillCircle(x, y, 4);
 					dc.setColor(dateColor, backgroundColor);
-					dc.fillCircle(x, y, 2);
+					dc.fillCircle(x, y, 2);*/
 					
-
-					/*dc.setPenWidth(1);
+					dc.setPenWidth(1);
 					dc.setColor(dateColor, backgroundColor);
-					dc.drawCircle(x, y, circleWidth>>1);*/
+					dc.drawCircle(x, y, circleWidth>>1);
 				}
 				if (tillStart < 3600) {	// hour
 					eventStart = tillStart/60 + "m";
@@ -896,7 +895,7 @@ class lateView extends Ui.WatchFace {
 		return a;
 	}*/
 	
-/*
+
 	function drawTime (dc){
 
 		// draw hour
@@ -964,8 +963,8 @@ class lateView extends Ui.WatchFace {
 		dc.fillCircle(Math.round(centerX+rX), Math.round(centerY-rY), v);
 		dc.fillCircle(centerX, centerY, v);
 	}
-*/
 
+/*
 	function drawTime (dc){
 		// draw hour
 		var h=clockTime.hour;
@@ -1031,7 +1030,7 @@ class lateView extends Ui.WatchFace {
 			}
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
-	}
+	}*/
 
 	function drawBatteryLevel (dc){
 		var bat = Sys.getSystemStats().battery;

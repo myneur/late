@@ -21,22 +21,22 @@
 		</settingConfig>
 	</setting>
 
-	<!--<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar-analog">-->
-	<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar">
+	<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar-analog">
+	<!--<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar">-->
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.CalendarNoChange</listEntry>						
 			<listEntry value="1">@Strings.CalendarByColor</listEntry>
 		</settingConfig>
 	</setting>
-	<setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
+	<!--<setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
 		<settingConfig type="numeric" min="60" max="1440" />
-	</setting>
+	</setting>-->
 	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars" prompt="@Strings.CalendarsPrompt" helpUrl="https://calendar.google.com/calendar/r/settings">
 		<settingConfig type="alphaNumeric" />
 	</setting>
 
-	<!--<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast-analog">-->
-	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast">
+	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast-analog">
+	<!--<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast">-->
 		<settingConfig type="boolean" />
 	</setting>
 	<setting propertyKey="@Properties.units" title="@Strings.Units" prompt="@Strings.TakesTime">
@@ -56,7 +56,7 @@
 		<settingConfig type="alphaNumeric" />
 	</setting>-->
 
-	<setting propertyKey="@Properties.provider" title="@Strings.Provider" prompt="@Strings.TakesTime">
+	<!--<setting propertyKey="@Properties.provider" title="@Strings.Provider" prompt="@Strings.TakesTime">
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.Yr</listEntry>						
 			<listEntry value="1">@Strings.Clima</listEntry>
@@ -64,5 +64,5 @@
 	</setting>
 
 
-<setting propertyKey="@Properties.loc" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>
+<setting propertyKey="@Properties.loc" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>-->
 </settings>

@@ -15,7 +15,7 @@
 	<string id="CalendarsSetting">How to set up calendar:</string><!-- Single help line under calendar color setup followed by a link to documentation -->
 	<string id="AddCalendars">Optional: Calendars to show</string><!-- Optional setting to add more calendars to show. If left blank, just the primary calendar will be shown. -->
 	<string id="CalendarsPrompt">Calendar IDs (typically mail) separated by space or comma</string><!-- Single help line under the setting above explaining what is expected in that option -->
-	<string id="refreshFrequency">Minutes to refresh calendar</string><!-- An input box where user can type how many minutes he wants to refresh the calendar (for battery saving purposes) -->
+	<!--<string id="refreshFrequency">Minutes to refresh calendar</string>--><!-- An input box where user can type how many minutes he wants to refresh the calendar (for battery saving purposes) -->
 	<!-- Error codes displayd as a response to loading calendar or weather forecast. -->
 	<!-- max 25 characters (some watches less), the more will be trimmed by the watch. The shorter the better! -->
 	<string id="Wait4login">Wait to login</string><!-- user needs to wait before the watch can prompt him with login info -->
@@ -45,11 +45,11 @@
 	<string id="D24h">24h dial</string>
 	<string id="TakesTime">Takes time to update</string>
 
-	<string id="Loc">Location</string>
+	<!--<string id="Loc">Location</string>
 	
 	<string id="Provider">Weather Forecast Provider</string>
 	<string id="Yr">Yr.no (best in Europe)</string>
-	<string id="Clima">climacell (if you don't like yr.no)</string>
+	<string id="Clima">climacell (if you don't like yr.no)</string>-->
 
 
 </strings>

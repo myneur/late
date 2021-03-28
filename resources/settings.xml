@@ -61,7 +61,7 @@
    <setting propertyKey="@Properties.boldness" title="@Strings.Boldness">
 		<settingConfig type="list">
 			<listEntry value="3">@Strings.b3</listEntry>
-			<listEntry value="4">@Strings.b4</listEntry>
+			<!--<listEntry value="4">@Strings.b4</listEntry>-->
 			<listEntry value="5">@Strings.b5</listEntry>
 			<listEntry value="7">@Strings.b7</listEntry>
 			<listEntry value="9">@Strings.b9</listEntry>

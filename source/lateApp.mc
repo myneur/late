@@ -401,7 +401,7 @@ class lateApp extends Toy.Application.AppBase {
 	    } else {
 	    	if(save){
 	        	app.setProperty("location", loc); // save the location to fix a Fenix 5 bug that is loosing the location often
-	        	app.setProperty("loc", loc);
+	        	//app.setProperty("loc", loc);
 	        }
 	    }
 	    return loc;

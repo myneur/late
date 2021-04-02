@@ -1,7 +1,8 @@
 //// diff from analog marked //12// drawNowCircle + drawTime
 //// set d24 prop: default 24 or 12h calendar
-//// links in properties to help !!!
+//// links in properties to help with -analog suffix !!!
 //// drawtime switch
+//// boldness
 
 //// manifest app id
 
@@ -108,7 +109,7 @@ class lateView extends Ui.WatchFace {
 			}
 		}
 		var d24new = app.getProperty("d24") == 1 ? true : false; 
-//d24new=false; app.setProperty("d24", d24new); 
+//d24new=true; app.setProperty("d24", d24new); 
 		if(( activity == :calendar) && (d24!= null && d24new != d24)){	// changing 24 / 12h 
 			events_list=[];
 			showMessage(app.scheduleDataLoading());
@@ -139,8 +140,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
-//app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-//showWeather = true; app.setProperty("weather", showWeather); showSunrise = true; app.setProperty("location", [50.1137639,14.4714428]);
+app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+showWeather = true; app.setProperty("weather", showWeather); showSunrise = true; app.setProperty("location", [50.1137639,14.4714428]);
 //percentage = true;
 //activityL = :steps;activityR = :activeMinutesWeek;
 //app.setProperty("calendar_ids", null);
@@ -149,7 +150,7 @@ class lateView extends Ui.WatchFace {
 //dialSize=1;
 
 
-//mainColor=1;circleWidth=4;
+//mainColor=1;circleWidth=9;
 
 
 //weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
@@ -688,7 +689,7 @@ class lateView extends Ui.WatchFace {
 			if(d24){
 				a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
 			} else { 
-				return; // so far for 12h //12//
+				//return; // so far for 12h //12//
 				if(hour>11){ hour-=12;}
 				if(0==hour){ hour=12;}
 				a = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
@@ -743,21 +744,21 @@ class lateView extends Ui.WatchFace {
 				if(tillStart < 3480){	// 58 mins
 					var secondsFromLastHour = events_list[i][0] - (Time.now().value()-(clockTime.min*60+clockTime.sec));
 					var a = (secondsFromLastHour).toFloat()/1800*Math.PI; // 2Pi/hour
-					//var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
-					var r = dialSize ? radius : 1.12*radius; //12//
+					var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
+					//var r = dialSize ? radius : 1.12*radius; //12//
 					var x= Math.round(centerX+(r*Math.sin(a)));
 					var y = Math.round(centerY-(r*Math.cos(a)));
 
 					//12// marker 
 					
-					/*dc.setColor(backgroundColor, backgroundColor);
+					dc.setColor(backgroundColor, backgroundColor);
 					dc.fillCircle(x, y, 4);
 					dc.setColor(dateColor, backgroundColor);
-					dc.fillCircle(x, y, 2);*/
+					dc.fillCircle(x, y, 2);
 					
-					dc.setPenWidth(1);
+					/*dc.setPenWidth(1);
 					dc.setColor(dateColor, backgroundColor);
-					dc.drawCircle(x, y, circleWidth>>1);
+					dc.drawCircle(x, y, circleWidth>>1);*/
 				}
 				if (tillStart < 3600) {	// hour
 					eventStart = tillStart/60 + "m";
@@ -895,7 +896,7 @@ class lateView extends Ui.WatchFace {
 		return a;
 	}*/
 	
-
+	/*
 	function drawTime (dc){
 
 		// draw hour
@@ -911,19 +912,20 @@ class lateView extends Ui.WatchFace {
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 		dc.setPenWidth(1);
 		var minutes = clockTime.min; 
-		var angle =  minutes/60.0*2*Math.PI;
-		v = Math.round(circleWidth/2);
-		r = dialSize ? radius : 1.12*radius;
+		var angle =  minutes.toFloat()/30.0*Math.PI;
+		v = circleWidth>>1+1;
+		r = dialSize ? radius.toFloat() : 1.12*radius;
+		var rX = r*Math.sin(angle);
+		var rY = r*Math.cos(angle);
+		
 		var beta = angle + Math.PI/2;
 		var offX = v*Math.sin(beta);
 		var offY = v*Math.cos(beta);
-		var rX = r*Math.sin(angle);
-		var rY = r*Math.cos(angle);
 		var gap = (0.1*r).toNumber();
 		var gapX = gap*Math.sin(angle);
 		var gapY = gap*Math.cos(angle);		
 		dc.drawLine(Math.round(centerX+gapX+offX), Math.round(centerY-gapY-offY), Math.round(centerX+rX+offX), Math.round(centerY-rY-offY));
-		beta = angle - Math.PI/2;
+		beta = beta - Math.PI;
 		offX = v*Math.sin(beta);
 		offY = v*Math.cos(beta);
 		dc.drawLine(Math.round(centerX+gapX+offX), Math.round(centerY-gapY-offY), Math.round(centerX+rX+offX), Math.round(centerY-rY-offY));
@@ -932,39 +934,44 @@ class lateView extends Ui.WatchFace {
 
 		// Hours
 		var mode24 = false;
-		angle =  h/(mode24==false ? 12.0 : 24.0)*2*Math.PI;
+		angle =  h/(mode24==false ? 6.0 : 12.0)*Math.PI;
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(Math.round(centerX + radius * Math.sin(angle)), Math.round(centerY - radius * Math.cos(angle)), fontSmall, h, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 		if(mode24==false && h==12){h=0;}
 		h = h.toFloat() + minutes.toFloat()/60;
 		
 		dc.setColor(color, Gfx.COLOR_TRANSPARENT);
-		dc.setPenWidth(circleWidth);
-		angle =  h/(mode24==false ? 12.0 : 24.0)*2*Math.PI;
+		angle =  h/(mode24==false ? 6.0 : 12.0)*Math.PI;
 
 		//r = (0.7*radius-circleWidth/4).toNumber();
 		//dc.drawLine(centerX+Math.round(circleWidth*Math.sin(angle)/2), centerY-Math.round(circleWidth*Math.cos(angle)/2), Math.round(centerX+r*Math.sin(angle)), Math.round(centerY-r*Math.cos(angle)));
 		//r = (0.7*radius).toNumber();
 		//dc.fillCircle(centerX, centerY, v);dc.fillCircle(Math.round(centerX+r*Math.sin(angle)), Math.round(centerY-r*Math.cos(angle)), v);
 
-
 		r = 0.7*radius;
 		beta = angle + Math.PI/2;
-		offX = v*Math.sin(beta);
-		offY = v*Math.cos(beta);
 		rX = r*Math.sin(angle);
 		rY = r*Math.cos(angle);
 		
-		beta = angle - Math.PI/2;
+		
+		offX = v*Math.sin(beta);
+		offY = v*Math.cos(beta);
+		beta = beta - Math.PI;
 		var offX2 = v*Math.sin(beta);
 		var offY2 = v*Math.cos(beta);
-		dc.fillPolygon( [[Math.round(centerX+offX), Math.round(centerY-offY)], [Math.round(centerX+rX+offX), Math.round(centerY-rY-offY)], 
-			[Math.round(centerX+rX+offX2), Math.round(centerY-rY-offY2)], [Math.round(centerX+offX2), Math.round(centerY-offY2)] ]);
+		dc.fillPolygon( [
+			[Math.round(centerX+offX), 		Math.round(centerY-offY)], 
+			[Math.round(centerX+rX+offX), 	Math.round(centerY-rY-offY)], 
+			[Math.round(centerX+rX+offX2), 	Math.round(centerY-rY-offY2)], 
+			[Math.round(centerX+offX2), 	Math.round(centerY-offY2)]
+		]);
+		v=v-1;
 		dc.fillCircle(Math.round(centerX+rX), Math.round(centerY-rY), v);
 		dc.fillCircle(centerX, centerY, v);
 	}
+	*/
 
-/*
+
 	function drawTime (dc){
 		// draw hour
 		var h=clockTime.hour;
@@ -1030,7 +1037,7 @@ class lateView extends Ui.WatchFace {
 			}
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
-	}*/
+	}
 
 	function drawBatteryLevel (dc){
 		var bat = Sys.getSystemStats().battery;

@@ -54,6 +54,11 @@ class lateView extends Ui.WatchFace {
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
+		if(!dataLoading){
+			if(app.getProperty("activity")==6){
+				app.setProperty("activity", 1);
+			}
+		}
 		WatchFace.initialize();
 		var s=Sys.getDeviceSettings();
 		height = s.screenHeight;
@@ -140,8 +145,8 @@ class lateView extends Ui.WatchFace {
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
-app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-showWeather = true; app.setProperty("weather", showWeather); showSunrise = true; app.setProperty("location", [50.1137639,14.4714428]);
+//app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+//showWeather = true; app.setProperty("weather", showWeather); showSunrise = true; app.setProperty("location", [50.1137639,14.4714428]);
 //percentage = true;
 //activityL = :steps;activityR = :activeMinutesWeek;
 //app.setProperty("calendar_ids", null);
@@ -427,7 +432,27 @@ showWeather = true; app.setProperty("weather", showWeather); showSunrise = true;
 	}*/
 
 	//! Update the view
+//var horizontal=true;
 	function onUpdate (dc) {	//Sys.println("onUpdate ");
+	// AOD simulation
+/*var diff = 1;
+if(horizontal){
+	centerX = centerX + (centerX==height>>1 ? diff : -diff);
+}else{
+	var move = centerY==height>>1 ? diff : -diff;
+	centerY = centerY + move;
+	dateY = dateY + move;
+}
+horizontal = !horizontal;
+showWeather=false;
+activity=null;
+activityL=null;
+activityR=null;
+showSunrise=false;
+circleWidth=1;*/
+
+
+
 		clockTime = Sys.getClockTime();
 		//if (lastRedrawMin != clockTime.min && redrawAll==0) { redrawAll = 1; }
 		//var ms = [Sys.getTimer()];
@@ -971,7 +996,6 @@ showWeather = true; app.setProperty("weather", showWeather); showSunrise = true;
 	}
 	*/
 
-
 	function drawTime (dc){
 		// draw hour
 		var h=clockTime.hour;
@@ -982,7 +1006,12 @@ showWeather = true; app.setProperty("weather", showWeather); showSunrise = true;
 		}
 		// TODO if(set.notificationCount){dc.drawBitmap(centerX, notifY, iconNotification);}
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);	
+
+/*for(var i=0;i<8;i++){
+	dc.drawText(i&1<<1-1 + centerX, (i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
+}
+dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);*/
+		dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
 
 		var minutes = clockTime.min; 
 		// minutes=m; m++; // testing rendering
@@ -1157,7 +1186,7 @@ showWeather = true; app.setProperty("weather", showWeather); showSunrise = true;
 				//var line = Gfx.getFontHeight(fontCondensed).toNumber()-6;
 				var line;
 				//t=90;min=90;max=99;
-				if(max-min>1){	// now-range	
+				if(max-min>1 && dialSize==0){	// now-range	
 					var c = activityColor;
 					var from; var to;
 					if(t-min>max-t){

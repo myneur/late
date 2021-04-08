@@ -109,6 +109,7 @@ class lateApp extends Toy.Application.AppBase {
 	
 	(:data)
 	function onBackgroundData(data) {	
+//Sys.println("onBackground: "+ Toybox.Application.Storage.getValue("test"));
 		//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
 		//Sys.println(data);
 		try {

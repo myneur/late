@@ -238,7 +238,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		} 
 	}
 
-	function exitWithDataAndToken(responseCode){ // TODO don't return events on errors ///Sys.println("exitWithDataAndToken");
+	function exitWithDataAndToken(responseCode){ Sys.println("exitWithDataAndToken"); // TODO don't return events on errors 
 		var code_events = {"refresh_token"=>refresh_token};
 		if(primary_calendar){
 			code_events["primary_calendar"] = primary_calendar; 
@@ -251,7 +251,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			}
 			refresh_token=null; access_token=null; calendar_ids=null; events_list=null;// cleaning memory before exiting
 			//Sys.println(Sys.getSystemStats().freeMemory +" exiting");
-			//Sys.println("saving");Toybox.Application.Storage.setValue("test", [1, 2, 3]);  Sys.println("saved");Sys.println(Toybox.Application.Storage.getValue("test"));
+//Sys.println(Toybox.Application has :Storage);Sys.println("saving");Toybox.Application.Storage.setValue("test", [1, 2, 3]);  Sys.println("saved"); Sys.println("saved: "+ Toybox.Application.Storage.getValue("test"));
 			Background.exit(code_events);
 
 		} catch(ex) { ///Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);

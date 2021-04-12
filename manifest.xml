@@ -26,6 +26,7 @@
 			
 			<iq:product id="fenix6s"/>
 			<iq:product id="fenix6spro"/>
+
 			<iq:product id="fenix5"/> <!-- = Quatix 5 -->
 			<iq:product id="fenix5plus"/>
 			<iq:product id="fenix5x"/>
@@ -68,10 +69,12 @@
 			<iq:product id="venusqm"/>
 
 			<!-- 218x218 with data 65k memory-->
-			<iq:product id="fenix5s"/>
+			
 			<iq:product id="vivoactive4s"/>
 			<iq:product id="legacyherocaptainmarvel"/>
 			<iq:product id="legacysagarey"/>	
+			<!-- no saving to Storage from background -->
+			<iq:product id="fenix5s"/>
 			<iq:product id="fenixchronos"/>		
 
 			<!-- semi-round 215x180 with data 16c olors 65k memory CIQ2 no support floors climbed no strong -->
@@ -99,6 +102,9 @@
 			<!-- 208x208 no data 8 colors 49k memory -->
 			<iq:product id="fr45"/>
 			
+
+			<!-- NEW DEVICES!! 
+				<iq:product id="garminswim2"/>-->
 		</iq:products>
 
 		<iq:permissions>

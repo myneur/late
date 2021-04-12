@@ -40,6 +40,10 @@ class lateApp extends Toy.Application.AppBase {
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent();
 			changeScheduleToMinutes(5);
+/*if(Toybox.Application has :Storage){	// migration free memory when migrating to Storage
+	app.setProperty("events", null);
+	Sys.println("Events dictionary purge");
+}*/
 			if(watch.activity == :calendar && app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
@@ -113,118 +117,19 @@ class lateApp extends Toy.Application.AppBase {
 		//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
 		//Sys.println(data);
 		try {
-			if(data instanceof Toybox.Lang.Dictionary){
+			if(data instanceof Toybox.Lang.Dictionary) {
 				if(data.hasKey("subscription_id")){	
 					app.setProperty("subs", data["subscription_id"]);
 					if(watch!=null && watch.activity != :calendar){ // clearing the potential message
 						watch.message = false;
 					}
 				}
-				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast
-					//System.println(data["weather"]);
+				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast 	//System.println(data["weather"]);
 					if(data["weather"].size()>2){
-						//System.println(data);
-						data["weather"][1] = Math.round( data["weather"][1].toFloat() ).toNumber(); // current temperature
-						if(data["weather"].size()>3){
-							data["weather"][2] = Math.round( data["weather"][2].toFloat() ).toNumber(); // current temperature
-							data["weather"][3] = Math.round( data["weather"][3].toFloat() ).toNumber(); // current temperature
-						}
-						/*var c;
-						for(var i=2; i<data["weather"].size();i++){
-						c = data["weather"][i];
-						// new yr.no if(c<8){c=0;}else if(c<12){c=1;}else if(c<36){c=2;}else if(c<73){c=3;}else if(c<79){c=4;}else if(c<98){c=5;}else {c=-1;}
-						// climacell if(c<3){c=0;}else if(c<4){c=1;}else if(c<8){c=2;}else if(c<13){c=3;}else if(c<15){c=4;}else if(c<19){c=5;}else {c=-1;}
-						// old climacell if(c<=9){c = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light] else if(c==10){c=-1;}	// clouds: [flurries] else if(c<=13){c=3;}	// rain: [tstorm, rain_heavy, rain] else if(c<=15){c=2;}	// light rain: [rain_light, drizzle] else if(c<=19){c=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy] else if(c==20){c=1;}	// partly cloudy: [partly, cloudy] else if(c>=21){c=0;}	// sun: [clear, mostly_clear] */
-						/* old yrno if(c>=24&&c<28){c=1;}	// partly else if((c>=48&&c<52) || (c>=33&&c<37)){c=0;}	// clear else if(c==23 || c==45){c=-1;} // cloudy else if(c==28 || c==32 || c==38 || (c>=41&&c<46) || c==52 || (c<=58&&c>62) || c==83 || (c>=91&&c<99)){c=4;} // snow else if(c<19 || c==31 || c==37 || c==40 || c==47 || (c>=62&&c<66) || c==70 || (c>=79&&c<83) || c==99){c=3;} // rain else {c=2;} // light rain data["weather"][i] = c;*/
-						//System.println(data["weather"]	);
 						app.setProperty("weatherHourly", data["weather"]);
 						changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
 						app.setProperty("lastLoad", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
 					}
-					// Garmin Weather API 12h
-					// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
-						// 54 values possible | 22 ifs
-						/*
-						0 CLEAR				2x	CLEAR | FAIR | MOSTLY_CLEAR
-						1 PARTLY_CLOUDY		3x	PARTLY_CLOUDY | PARTLY_CLEAR 
-						  MOSTLY_CLOUDY		10x
-						3 RAIN				12x	RAIN | THUNDERSTORMS | HAIL | HEAVY_RAIN | HEAVY_RAIN_SNOW | RAIN_SNOW | HEAVY_SHOWERS | CHANCE_OF_THUNDERSTORMS | TORNADO | HURRICANE | TROPICAL_STORM | SLEET
-						5 SNOW				2x	SNOW | HEAVY_SNOW
-						  WINDY		
-						3 THUNDERSTORMS		
-						  WINTRY_MIX		
-						  FOG		
-						  HAZY		
-						3 HAIL		
-						2 SCATTERED_SHOWERS	7x SCATTERED_SHOWERS > LIGHT_RAIN_SNOW | LIGHT_SHOWERS < CHANCE_OF_SHOWERS | DRIZZLE | CHANCE_OF_RAIN_SNOW > FREEZING_RAIN
-						2 SCATTERED_THUNDERSTORMS		
-						2 UNKNOWN_PRECIPITATION		
-						2 LIGHT_RAIN		
-						3 HEAVY_RAIN		
-						4 LIGHT_SNOW		2x	LIGHT_SNOW | CHANCE_OF_SNOW | CLOUDY_CHANCE_OF_SNOW | ICE_SNOW
-						5 HEAVY_SNOW		
-						2 LIGHT_RAIN_SNOW		
-						3 HEAVY_RAIN_SNOW		
-						  CLOUDY		
-						3 RAIN_SNOW		
-						1 PARTLY_CLEAR		
-						0 MOSTLY_CLEAR		
-						2 LIGHT_SHOWERS		
-						2 SHOWERS		
-						3 HEAVY_SHOWERS		
-						2 CHANCE_OF_SHOWERS		
-						3 CHANCE_OF_THUNDERSTORMS		
-						  MIST		
-						  DUST		
-						2 DRIZZLE		
-						3 TORNADO		
-						  SMOKE		
-						  ICE		
-						  SAND		
-						  SQUALL		
-						  SANDSTORM		
-						  VOLCANIC_ASH		
-						  HAZE		
-						0 FAIR		
-						3 HURRICANE		
-						3 TROPICAL_STORM		
-						4 CHANCE_OF_SNOW		
-						2 CHANCE_OF_RAIN_SNOW		
-						2 CLOUDY_CHANCE_OF_RAIN		
-						4 CLOUDY_CHANCE_OF_SNOW		
-						2 CLOUDY_CHANCE_OF_RAIN_SNOW		
-						2 FLURRIES		
-						2 FREEZING_RAIN		
-						3 SLEET		
-						4 ICE_SNOW		
-						  THIN_CLOUDS		
-						  UNKNOWN		
-						*/
-					/*var c;
-					data = Weather.getHourlyForecast();
-					// +800 kB with array
-					//var weather_map = [0,1,-1,3,5,-1,3,-1,-1,-1,3,2,2,2,2,3,4,5,2,3,-1,3,1,0,2,2,3,2,3,-1,-1,2,3,-1,-1,-1,-1,-1,-1,-1,0,3,3,4,2,2,4,2,2,2,3,4,-1,-1];
-					for(var j=0; j<data.size(); j++){
-						//c = weather_map[data[j].condition];
-						c = data[j].condition;
-						// +600 kb with ifs
-						if( c==Weather.CONDITION_CLEAR || c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR) {c=0;}
-						else if( c==Weather.CONDITION_PARTLY_CLOUDY || c==Weather.CONDITION_PARTLY_CLEAR ) {c=1;}
-						else if( c==Weather.CONDITION_SNOW || c==Weather.CONDITION_HEAVY_SNOW) {c=5;}
-						else if( c==Weather.CONDITION_LIGHT_SNOW || c==Weather.CONDITION_CHANCE_OF_SNOW || c==Weather.CONDITION_CLOUDY_CHANCE_OF_SNOW || c==Weather.CONDITION_ICE_SNOW) {c=4;}
-						else if( c==Weather.CONDITION_RAIN || c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HAIL || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_HEAVY_RAIN_SNOW || 
-							c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_CHANCE_OF_THUNDERSTORMS || c==Weather.CONDITION_TORNADO || c==Weather.CONDITION_HURRICANE || 
-							c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_SLEET) {c=3;}
-						else if( (c>=Weather.CONDITION_SCATTERED_SHOWERS && c<=Weather.CONDITION_LIGHT_RAIN_SNOW) || (c>=Weather.CONDITION_LIGHT_SHOWERS && c<=Weather.CONDITION_CHANCE_OF_SHOWERS) || c==Weather.CONDITION_DRIZZLE || 
-							(c>=Weather.CONDITION_CHANCE_OF_RAIN_SNOW  && c<=Weather.CONDITION_FREEZING_RAIN)) {c=2;}
-						else {c= -1;}
-						data[j]=c;
-					}
-					var t = Weather.getCurrentConditions().feelsLikeTemperature; 
-					if (t==null) {t="";}	// yes, they ocassionally realy can return null. No kidding. 
-					data = {"weather"=>[Sys.getClockTime().hour, t].addAll(data)}; // for prod code real temperature and hour */
-					//Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);
-					
 				} else {
 					if(data.hasKey("refresh_token")){
 						app.setProperty("refresh_token", data.get("refresh_token"));
@@ -234,8 +139,7 @@ class lateApp extends Toy.Application.AppBase {
 						app.setProperty("calendar_ids", [data["primary_calendar"]]);
 					}
 					if (data.hasKey("events")) {
-						data = parseEvents(data.get("events"));
-						app.setProperty("events", data);
+						data = parseAndSaveEvents(data.get("events")); 
 						app.setProperty("lastLoad", 'c'); // for background process to know the next time what was loaded to alternate between weather and calendar loading
 						if(app.getProperty("weather")==true){
 							changeScheduleToMinutes(5);	// when weather not loaded yet, load ASAP						
@@ -267,6 +171,7 @@ class lateApp extends Toy.Application.AppBase {
 								// TODO: 404 with msg no data might actually mean also problem with Google: https://developers.google.com/calendar/v3/errors
 								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
 							} else {	
+								changeScheduleToMinutes(app.getProperty("refresh_freq"));
 								return;
 							}
 						} else if(error==429){
@@ -316,10 +221,119 @@ class lateApp extends Toy.Application.AppBase {
 			}
 		} catch(ex){	//Sys.println("ex: " + ex.getErrorMessage());///Sys.println( ex.printStackTrace());
 			if(watch!=null){
-				watch.onBackgroundData({data["userPrompt"] => Ui.loadResource(Rez.Strings.NastyError)});
+				if(!(data instanceof Toybox.Lang.Dictionary)){
+					data = {};
+				}
+				if(ex.getErrorMessage()){
+					data["userPrompt"] =   ex.getErrorMessage();
+					data["userContext"] = Ui.loadResource(Rez.Strings.NastyError);
+				} else {
+					data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
+				}
+				
+				
+				watch.onBackgroundData(data);
 			}
 		}
 	}   
+
+	/* function transposeWeatherValues(){
+		//System.println(data);
+		var c;
+		for(var i=2; i<data["weather"].size();i++){
+		c = data["weather"][i];
+		// new yr.no if(c<8){c=0;}else if(c<12){c=1;}else if(c<36){c=2;}else if(c<73){c=3;}else if(c<79){c=4;}else if(c<98){c=5;}else {c=-1;}
+		// climacell if(c<3){c=0;}else if(c<4){c=1;}else if(c<8){c=2;}else if(c<13){c=3;}else if(c<15){c=4;}else if(c<19){c=5;}else {c=-1;}
+		// old climacell if(c<=9){c = 4;}	// snow: [freezing_rain_heavy-light, freezing_drizzle, ice_pellets_heavy-light, snow_heavy-light] else if(c==10){c=-1;}	// clouds: [flurries] else if(c<=13){c=3;}	// rain: [tstorm, rain_heavy, rain] else if(c<=15){c=2;}	// light rain: [rain_light, drizzle] else if(c<=19){c=-1;}	// clouds: [fog_light, fog, cloudy, mostly_cloudy] else if(c==20){c=1;}	// partly cloudy: [partly, cloudy] else if(c>=21){c=0;}	// sun: [clear, mostly_clear] 
+		 old yrno if(c>=24&&c<28){c=1;}	// partly else if((c>=48&&c<52) || (c>=33&&c<37)){c=0;}	// clear else if(c==23 || c==45){c=-1;} // cloudy else if(c==28 || c==32 || c==38 || (c>=41&&c<46) || c==52 || (c<=58&&c>62) || c==83 || (c>=91&&c<99)){c=4;} // snow else if(c<19 || c==31 || c==37 || c==40 || c==47 || (c>=62&&c<66) || c==70 || (c>=79&&c<83) || c==99){c=3;} // rain else {c=2;} // light rain data["weather"][i] = c;
+		//System.println(data["weather"]	);
+	}*/
+
+	/* function garminWeatherAPIprototype(){
+		// Garmin Weather API 12h
+		// https://developer.garmin.com/connect-iq/api-docs/Toybox/Weather.html
+			// 54 values possible | 22 ifs
+			//*//*
+			0 CLEAR				2x	CLEAR | FAIR | MOSTLY_CLEAR
+			1 PARTLY_CLOUDY		3x	PARTLY_CLOUDY | PARTLY_CLEAR 
+			  MOSTLY_CLOUDY		10x
+			3 RAIN				12x	RAIN | THUNDERSTORMS | HAIL | HEAVY_RAIN | HEAVY_RAIN_SNOW | RAIN_SNOW | HEAVY_SHOWERS | CHANCE_OF_THUNDERSTORMS | TORNADO | HURRICANE | TROPICAL_STORM | SLEET
+			5 SNOW				2x	SNOW | HEAVY_SNOW
+			  WINDY		
+			3 THUNDERSTORMS		
+			  WINTRY_MIX		
+			  FOG		
+			  HAZY		
+			3 HAIL		
+			2 SCATTERED_SHOWERS	7x SCATTERED_SHOWERS > LIGHT_RAIN_SNOW | LIGHT_SHOWERS < CHANCE_OF_SHOWERS | DRIZZLE | CHANCE_OF_RAIN_SNOW > FREEZING_RAIN
+			2 SCATTERED_THUNDERSTORMS		
+			2 UNKNOWN_PRECIPITATION		
+			2 LIGHT_RAIN		
+			3 HEAVY_RAIN		
+			4 LIGHT_SNOW		2x	LIGHT_SNOW | CHANCE_OF_SNOW | CLOUDY_CHANCE_OF_SNOW | ICE_SNOW
+			5 HEAVY_SNOW		
+			2 LIGHT_RAIN_SNOW		
+			3 HEAVY_RAIN_SNOW		
+			  CLOUDY		
+			3 RAIN_SNOW		
+			1 PARTLY_CLEAR		
+			0 MOSTLY_CLEAR		
+			2 LIGHT_SHOWERS		
+			2 SHOWERS		
+			3 HEAVY_SHOWERS		
+			2 CHANCE_OF_SHOWERS		
+			3 CHANCE_OF_THUNDERSTORMS		
+			  MIST		
+			  DUST		
+			2 DRIZZLE		
+			3 TORNADO		
+			  SMOKE		
+			  ICE		
+			  SAND		
+			  SQUALL		
+			  SANDSTORM		
+			  VOLCANIC_ASH		
+			  HAZE		
+			0 FAIR		
+			3 HURRICANE		
+			3 TROPICAL_STORM		
+			4 CHANCE_OF_SNOW		
+			2 CHANCE_OF_RAIN_SNOW		
+			2 CLOUDY_CHANCE_OF_RAIN		
+			4 CLOUDY_CHANCE_OF_SNOW		
+			2 CLOUDY_CHANCE_OF_RAIN_SNOW		
+			2 FLURRIES		
+			2 FREEZING_RAIN		
+			3 SLEET		
+			4 ICE_SNOW		
+			  THIN_CLOUDS		
+			  UNKNOWN		
+			*//*
+		/*var c;
+		data = Weather.getHourlyForecast();
+		// +800 kB with array
+		//var weather_map = [0,1,-1,3,5,-1,3,-1,-1,-1,3,2,2,2,2,3,4,5,2,3,-1,3,1,0,2,2,3,2,3,-1,-1,2,3,-1,-1,-1,-1,-1,-1,-1,0,3,3,4,2,2,4,2,2,2,3,4,-1,-1];
+		for(var j=0; j<data.size(); j++){
+			//c = weather_map[data[j].condition];
+			c = data[j].condition;
+			// +600 kb with ifs
+			if( c==Weather.CONDITION_CLEAR || c==Weather.CONDITION_FAIR || c==Weather.CONDITION_MOSTLY_CLEAR) {c=0;}
+			else if( c==Weather.CONDITION_PARTLY_CLOUDY || c==Weather.CONDITION_PARTLY_CLEAR ) {c=1;}
+			else if( c==Weather.CONDITION_SNOW || c==Weather.CONDITION_HEAVY_SNOW) {c=5;}
+			else if( c==Weather.CONDITION_LIGHT_SNOW || c==Weather.CONDITION_CHANCE_OF_SNOW || c==Weather.CONDITION_CLOUDY_CHANCE_OF_SNOW || c==Weather.CONDITION_ICE_SNOW) {c=4;}
+			else if( c==Weather.CONDITION_RAIN || c==Weather.CONDITION_THUNDERSTORMS || c==Weather.CONDITION_HAIL || c==Weather.CONDITION_HEAVY_RAIN || c==Weather.CONDITION_HEAVY_RAIN_SNOW || 
+				c==Weather.CONDITION_RAIN_SNOW || c==Weather.CONDITION_HEAVY_SHOWERS || c==Weather.CONDITION_CHANCE_OF_THUNDERSTORMS || c==Weather.CONDITION_TORNADO || c==Weather.CONDITION_HURRICANE || 
+				c==Weather.CONDITION_TROPICAL_STORM || c==Weather.CONDITION_SLEET) {c=3;}
+			else if( (c>=Weather.CONDITION_SCATTERED_SHOWERS && c<=Weather.CONDITION_LIGHT_RAIN_SNOW) || (c>=Weather.CONDITION_LIGHT_SHOWERS && c<=Weather.CONDITION_CHANCE_OF_SHOWERS) || c==Weather.CONDITION_DRIZZLE || 
+				(c>=Weather.CONDITION_CHANCE_OF_RAIN_SNOW  && c<=Weather.CONDITION_FREEZING_RAIN)) {c=2;}
+			else {c= -1;}
+			data[j]=c;
+		}
+		var t = Weather.getCurrentConditions().feelsLikeTemperature; 
+		if (t==null) {t="";}	// yes, they ocassionally realy can return null. No kidding. 
+		data = {"weather"=>[Sys.getClockTime().hour, t].addAll(data)}; // for prod code real temperature and hour 
+		//Sys.println([data.observationLocationName, data.observationLocationPosition.toDegrees(), data.observationTime.value()]);	
+	}*/
 
 	(:data)
 	function getServiceDelegate() {
@@ -327,16 +341,19 @@ class lateApp extends Toy.Application.AppBase {
 	}
 	
 	(:data)
-	function parseEvents(data){
+	function parseAndSaveEvents(data){
 		var events_list = [];
 		var dayDegrees = 86400.0 / (app.getProperty("d24") == 1 ? 360 : 720);	// SECONDS_PER_DAY /
 		var midnight = Time.today();		
 		var date; var dateTo;
 		var fromAngle;
 		var toAngle;
-
+		if(data == true){	// indication that data were stored through Storage
+			data = Toybox.Application.Storage.getValue("events"); 
+		}
 		if(data instanceof Toybox.Lang.Array) { 
 			// parse dates
+			//Sys.println("parsing: "+data.size());
 			for(var i=0; i<data.size() ;i++){
 				date = parseISODate(data[i][0]);
 				dateTo = parseISODate(data[i][1]);
@@ -370,6 +387,11 @@ class lateApp extends Toy.Application.AppBase {
 				}
 			}
 		}
+		if(Toybox.Application has :Storage){
+			Toybox.Application.Storage.setValue("events", events_list);
+		} else {
+			app.setProperty("events", events_list);
+		}
 		return(events_list);
 	}
 
@@ -388,36 +410,38 @@ class lateApp extends Toy.Application.AppBase {
 	        	position = position.currentLocation;
 	        }
 	    }
+	    position = sanitizeLoc(position);
 	    if(Toy has :Weather){
-	        if(accuracy == null || accuracy==0 || accuracy==1){    // 0 N/A, 1 LAST, 2 POOR, 3 USABLE, 4 GOOD // WTF!! (accuracy!=null && accuracy <=1) can fail!!! Those bloody bastards!!
+	        if(position== null || accuracy == null || accuracy==0 || accuracy==1){    // 0 N/A, 1 LAST, 2 POOR, 3 USABLE, 4 GOOD // WTF!! (accuracy!=null && accuracy <=1) can fail!!! Those bloody bastards!!
 	            var weather = Toy.Weather.getCurrentConditions();
 	            if(weather != null){
-	                position = weather.observationLocationPosition;
+	                var p = sanitizeLoc(weather.observationLocationPosition);
+	                if(p!=null){
+	                	position = p;	
+	                }
 	            }
 	        }
 	    }
-	    var loc = sanitizeLoc(position);
-	    if (loc == null){
-	        loc = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often       
+	    if (position == null){
+	        position = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often       
 	    } else {
 	    	if(save){
-	        	app.setProperty("location", loc); // save the location to fix a Fenix 5 bug that is loosing the location often
-	        	//app.setProperty("loc", loc);
+	        	app.setProperty("location", position); // save the location to fix a Fenix 5 bug that is loosing the location often
+				//app.setProperty("loc", position); 
 	        }
 	    }
-	    return loc;
+	    return position;
 	}
 
 	function sanitizeLoc(loc){
 	    if(loc!=null){
 	        loc = loc.toDegrees();
 	        if(loc!=null){
-	            if((loc[0]==0 && loc[1]==0) || loc[0]>=90 || loc[1]>=90 || loc[1]>=180 || loc[1]>=180){ // bloody bug that the currentLocation sometimes returns [0.000000, 0.000000] or [180.0, 180.0] / [lat, lon]. Garmin guys, I hate you so much! 
-	                return null;
+	            if((loc[0]==0 && loc[1]==0) || loc[0]>90){ // bloody bug that the currentLocation sometimes returns [0.000000, 0.000000] or [180.0, 180.0] / [lat, lon]. Garmin guys, I hate you so much! 
+	                loc = null;
 	            } 
-	            return loc;
 	        }
 	    }
-	    return null;
+	    return loc;
 	}
 }

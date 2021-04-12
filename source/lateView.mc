@@ -66,7 +66,13 @@ class lateView extends Ui.WatchFace {
 		centerY = height >> 1;
 		clockTime = Sys.getClockTime();
 		if(events_list.size()==0){
-			var events = app.getProperty("events");
+			var events = Toybox.Application has :Storage ? Toybox.Application.Storage.getValue("events") : app.getProperty("events");
+
+if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
+	events = app.getProperty("events");
+	Toybox.Application.Storage.setValue("events", events);
+	app.setProperty("events", null); // migration	
+}
 			if(events instanceof Lang.Array){
 				events_list = events;
 			}
@@ -613,7 +619,6 @@ circleWidth=1;*/
 			var calendar = msg.hasKey("permanent") ? -1 : 0;
 
 			var fromAngle = ((nowError-Time.today().value())/240.0).toFloat(); // seconds_in_day/360 // TODO bug: for some reason it won't show it at all althought the degrees are correct. 
-
 			events_list = [[nowError, nowError+86400, msg["userPrompt"].toString(), context, calendar, fromAngle, fromAngle+2]].addAll(events_list); // seconds_in_day
 		}
 	}

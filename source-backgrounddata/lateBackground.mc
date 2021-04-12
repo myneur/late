@@ -15,7 +15,8 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	var events_list = [];
 	var primary_calendar = false;
 	var app;
-	var maxResults = 5;
+	//var maxResults = Toybox.Application has :Storage ? 6 : 5;
+	var maxResults = 6;
 	var subscription_id;
 
 	function initialize() {
@@ -162,7 +163,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 	
-	function getEvents(calendar_id) { //Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
+	function getEvents(calendar_id) { 	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		var sys_time = System.getClockTime();
 		var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -184,16 +185,16 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		///*/ln(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
 	}
 	
-	function onEvents(responseCode, data) {
-		//+Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
+	function onEvents(responseCode, data) {	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
 			var event;
 			//var eventsToSafelySend = primary_calendar ? 7 : 8;
+			//var limit = Toybox.Application has :Storage ? 12 : 9;
 			for (var i = 0; i < data.size() && events_list.size() < 9; i++) { // limit events not to get out of memory
+				//+mem+*/Sys.println(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
 				event = data[i];
 				data[i] = null;
-				///*/ln(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
 				if(event["start"]){ // skip day events that have only "summary"
 					try {
 						var eventTrim = [
@@ -216,11 +217,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 						}*/
 					} catch(ex) {
 						events_list = events_list.size() ? [events_list[0]] : null;
-						//Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
+						//+mem+*/Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
 						exitWithDataAndToken(responseCode);
 					}
 				}
 			}
+			//Sys.println(data.size()+" "+events_list.size()+"/"+limit);
 		} else {
 			if(responseCode==-403 || responseCode==-402){ // out of memory while parsing the response
 				if(maxResults>2){
@@ -238,24 +240,33 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		} 
 	}
 
-	function exitWithDataAndToken(responseCode){ Sys.println("exitWithDataAndToken"); // TODO don't return events on errors 
+	function exitWithDataAndToken(responseCode){ //Sys.println("exitWithDataAndToken"); // TODO don't return events on errors 
 		var code_events = {"refresh_token"=>refresh_token};
 		if(primary_calendar){
 			code_events["primary_calendar"] = primary_calendar; 
 		}
-		try {  ///Sys.println(Sys.getSystemStats().freeMemory);
+		try {  
 			if(responseCode==200){
-				code_events.put("events", events_list);
+				/*if(Toybox.Application has :Storage && events_list!=null && events_list.size()>1){ // try passing through storage if there's a risk of running out of memory
+					try {
+						Toybox.Application.Storage.setValue("events", events_list); 
+						code_events.put("events", true)	;
+					} catch(ex) { //Sys.println("excs: "+Sys.getSystemStats().freeMemory+" "+ex.getErrorMessage()); Sys.println( ex.printStackTrace() ); // catch background storage save failure or out of memory
+						code_events.put("events", events_list);
+					}
+				} else {	// pass by exit if no storage or small enough */
+					code_events.put("events", events_list);
+				//}
 			} else {
 				code_events.put("error_code", responseCode);
 			}
-			refresh_token=null; access_token=null; calendar_ids=null; events_list=null;// cleaning memory before exiting
-			//Sys.println(Sys.getSystemStats().freeMemory +" exiting");
-//Sys.println(Toybox.Application has :Storage);Sys.println("saving");Toybox.Application.Storage.setValue("test", [1, 2, 3]);  Sys.println("saved"); Sys.println("saved: "+ Toybox.Application.Storage.getValue("test"));
+			//Sys.println(Sys.getSystemStats().freeMemory +" exiting with "+events_list.size());
+			refresh_token=null; access_token=null; calendar_ids=null; events_list=null;// cleaning memory before exiting not to reach out of memory
+			//+mem+*/Sys.println(Sys.getSystemStats().freeMemory +" exiting");
 			Background.exit(code_events);
 
-		} catch(ex) { ///Sys.System.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex);
-				code_events["events"] = code_events["events"].size() ? [code_events["events"][0]] : null;
+		} catch(ex) { //Sys.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex.getErrorMessage()); Sys.println( ex.printStackTrace() );
+				code_events["events"] = (code_events["events"] instanceof Array && code_events["events"].size()) ? [code_events["events"][0]] : null;
 				Background.exit(code_events);
 		}
 	}
@@ -308,14 +319,14 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if(subscription_id==null){
 			subscription_id = app.getProperty("subs");	// must be read at first call (which is this one) so we don't lose it
 		}
-		var hours = app.getProperty("d24") == 1 ? 24:12;
+		var hours = (app.getProperty("d24") == 1 ? 24:12);
 		//+//System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
 		//Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat());
 		if(subscription_id instanceof String && subscription_id.length()>0){
 			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"unit"=>(app.getProperty("units") ? "c":"f"), 
 					"service"=>"yrno", // app.getProperty("provider") ? "climacell":"yrno"
-					"period_w"=>hours+1, 
+					"period_w"=>(hours+1),
 					"period_p"=>hours,
 					"period_t"=>16
 				}, 
@@ -330,6 +341,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if (responseCode==200) {
 			try { 
 				//Sys.println(data);
+				for(var i=1 ; i<=3; i++){ // round temperatures
+					if(data[i] != null){
+						data[i] = Math.round( data[i].toFloat() ).toNumber(); // current temperature	
+					}
+				}
 				data = {"weather"=>data};	// returning array with the wheather forecast
 				if(subscription_id instanceof String && subscription_id.length()>0){
 					data.put("subscription_id", subscription_id);

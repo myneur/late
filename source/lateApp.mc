@@ -13,7 +13,7 @@ class lateApp extends Toy.Application.AppBase {
 
 	function initialize() {
 		AppBase.initialize();
-		app = Toy.Application.getApp();
+		app = Toy.Application.getApp(); // TODO!!! == self
 	}
 
 	function onSettingsChanged() {

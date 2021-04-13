@@ -7,8 +7,6 @@ round-280x280.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backg
 round-260x260.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
 round-240x240.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
 round-218x218.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata
-venusq.resourcePath  = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
-venusqm.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
 
 #round-390x390.lang.deu = $(round-390x390.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
 #round-280x280.lang.deu = $(round-280x280.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
@@ -23,40 +21,49 @@ round-280x280.sourcePath = source;source-backgrounddata
 round-260x260.sourcePath = source;source-backgrounddata
 round-240x240.sourcePath = source;source-backgrounddata
 round-218x218.sourcePath = source;source-backgrounddata
-venusq.sourcePath = source;source-backgrounddata
-venusqm.sourcePath = source;source-backgrounddata
 
-# no background data communication
+# no background data communication: e. g. fr230, fr235, fr630
 semiround.excludeAnnotations = data
 semiround.resourcePath = $(base.resourcePath)
+
 #semiround.lang.deu = $(semiround.lang.deu)
 
 # CIQ2 Biker Monkeys:
 vivoactive_hr.resourcePath = $(base.resourcePath);resources-CIQ2
 vivoactive_hr.excludeAnnotations = data
+
 #vivoactive_hr.lang.deu = $(vivoactive_hr.lang.deu);resources-CIQ2-deu
-# fr735xt.resourcePath = $(base.resourcePath);resources-CIQ2 # it does not support floors 
+
+# CIQ2 Biker Monkeys groudned without Floors Climbed
+approachs62.resourcePath  = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
+approachs60.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
+venusq.resourcePath  = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
+venusqm.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
+fr245.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
+fr245m.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
+
+approachs62.sourcePath = source;source-backgrounddata
+approachs60.sourcePath = source;source-backgrounddata
+venusq.sourcePath = source;source-backgrounddata
+venusqm.sourcePath = source;source-backgrounddata
+fr245.sourcePath = source;source-backgrounddata
+fr245m.sourcePath = source;source-backgrounddata
 
 # CIQ1 Aikido Monkeys:
 # 218 px, but no data and less activities
 fenix3.excludeAnnotations = data
-fenix3.resourcePath = $(base.resourcePath)
-#fenix3.lang.deu = $(fenix3.lang.deu)
-fr45.excludeAnnotations = data
-fr45.resourcePath = $(base.resourcePath)
-#fr45.lang.deu = $(fr45.lang.deu)
-
 fenix3_hr.excludeAnnotations = data
+d2bravo.excludeAnnotations = data
+d2bravo_titanium.excludeAnnotations = data
+fr45.excludeAnnotations = data
+
+fenix3.resourcePath = $(base.resourcePath)
 fenix3_hr.resourcePath = $(base.resourcePath)
 #fenix3_hr.lang.deu = $(fenix3_hr.lang.deu)
-d2bravo.excludeAnnotations = data
+#fenix3.lang.deu = $(fenix3.lang.deu)
 d2bravo.resourcePath = $(base.resourcePath)
 #d2bravo.lang.deu = $(d2bravo.lang.deu)
-d2bravo_titanium.excludeAnnotations = data
 d2bravo_titanium.resourcePath = $(base.resourcePath)
 #d2bravo_titanium.lang.deu = $(d2bravo_titanium.lang.deu)
-
-## don't support floors climbed
-approachs60.excludeAnnotations = data
-approachs60.resourcePath = $(base.resourcePath)
-#approachs60.lang.deu = $(approachs60.lang.deu)
+fr45.resourcePath = $(base.resourcePath)
+#fr45.lang.deu = $(fr45.lang.deu)

@@ -741,7 +741,7 @@ circleWidth=1;*/
 	}
 
 	(:data)
-	function drawEvent(dc){
+	function drawEvent(dc){ 
 		// calculate time to first event
 		var eventStart;   
 		var eventStartTime; 

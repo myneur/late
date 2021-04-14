@@ -39,6 +39,7 @@ class lateView extends Ui.WatchFace {
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; hidden var messageY; hidden var sunR; //hidden var temp; //hidden var notifY;
 	hidden var icons;
 	hidden var d24;
+	// TODO AOD // hidden var burnInProtection=0;
 	
 	hidden var events_list = [];
 	var message = false;
@@ -97,10 +98,10 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 	(:debug)
 	function onLayout (dc) {	//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l"); //Sys.println(clockTime.min+"load");
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
-		//var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
-		//app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-		//app.setProperty("sunriset", true);
-		//showWeather = true; app.setProperty("weather", showWeather); app.setProperty("location", [50.1137639,14.4714428]);
+		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
+		app.setProperty("activity", 1); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+		app.setProperty("sunriset", false);
+		showWeather = false; app.setProperty("weather", showWeather); app.setProperty("location", [50.1137639,14.4714428]);
 		//percentage = true;
 		//activityL = :steps;activityR = :activeMinutesWeek;
 		//app.setProperty("calendar_ids", null);
@@ -410,6 +411,7 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
 	function onExitSleep(){
+		// TODO AOD // if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=0;circleWidth = app.getProperty("boldness");if(height>280){circleWidth=circleWidth<<1;}}
 		//onShow();
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"x");
 		//Sys.println(clockTime.min+"x");
@@ -423,6 +425,7 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 
 	//! Terminate any active timers and prepare for slow updates.
 	function onEnterSleep(){
+		// TODO AOD // if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=1;circleWidth=2;}
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"e");
 		//Sys.println(clockTime.min+"e");
 		//////Sys.println("onEnterSleep");
@@ -441,82 +444,65 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 	}*/
 
 	//! Update the view
-//var horizontal=true;
 	function onUpdate (dc) {	//Sys.println("onUpdate ");
-	// AOD simulation
-/*var diff = 1;
-if(horizontal){
-	centerX = centerX + (centerX==height>>1 ? diff : -diff);
-}else{
-	var move = centerY==height>>1 ? diff : -diff;
-	centerY = centerY + move;
-	dateY = dateY + move;
-}
-horizontal = !horizontal;
-showWeather=false;
-activity=null;
-activityL=null;
-activityR=null;
-showSunrise=false;
-circleWidth=1;*/
-
-
-
 		clockTime = Sys.getClockTime();
+		var cal = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
 		//if (lastRedrawMin != clockTime.min && redrawAll==0) { redrawAll = 1; }
 		//var ms = [Sys.getTimer()];
 		//if (redrawAll>0){
-			//////Sys.println([clockTime.min, redrawAll, Sys.getSystemStats().freeMemory]);
-			if(dc has :setAntiAlias) {
-				dc.setAntiAlias(true);
-			}
-			dc.setColor(backgroundColor, backgroundColor);
-			dc.clear();
+		//////Sys.println([clockTime.min, redrawAll, Sys.getSystemStats().freeMemory]);
+		if(dc has :setAntiAlias) {
+			dc.setAntiAlias(true);
+		}
+		dc.setColor(backgroundColor, backgroundColor);
+		dc.clear();
+		// TODO AOD // if(burnInProtection){var diff = 4;if(burnInProtection>1){centerX = centerX + ((centerX == (height>>1)) ? diff : -diff);burnInProtection=1;}else{var move = (centerY==(height>>1)) ? diff : -diff;centerY = centerY + move;dateY = dateY + move;burnInProtection=2;}} else {
 			//lastRedrawMin=clockTime.min;
-			var cal = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
 			drawBatteryLevel(dc);
 			
 			//ms.add(Sys.getTimer()-ms[0]);
-			if(centerY>89){
-				// function drawDate(x, y){}
-				dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
-				var text = "";
-				if(dateForm != null){
-					text = Lang.format("$1$ ", ((dateForm == 0) ? [cal.month] : [cal.day_of_week]) );
-				}
-				text += cal.day.format("%0.1d");
-				dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
-				if(Sys.getDeviceSettings().notificationCount){
-					dc.setColor(activityColor, backgroundColor);
-					dc.drawText(centerX-dc.getTextWidthInPixels(text+"  ", fontSmall)>>1, dateY+dc.getFontHeight(fontSmall)>>1+1, icons, "!" /*"!xb"*/, Gfx.TEXT_JUSTIFY_RIGHT | Gfx.TEXT_JUSTIFY_VCENTER);
-					//dc.fillCircle(centerX-dc.getTextWidthInPixels(text, fontSmall)>>1-14, dateY+dc.getFontHeight(fontSmall)>>1+1, 5);
-				}
-				/*dc.drawText(centerX, height-20, fontSmall, Toy.ActivityMonitor.getInfo().moveBarLevel, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);dc.setPenWidth(2);dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(Toy.ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);*/
-				dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
-				var x = centerX-radius - (sunR-radius)>>1-(dc.getTextWidthInPixels("1", fontSmall)/3).toNumber();	// scale 4 with resolution
-				drawActivity(dc, activityL, x, centerY, false);
-				drawActivity(dc, activityR, centerX<<1-x, centerY, false);
-				drawTime(dc);
-				if(activity != null || message){
-					if(activity == :calendar || message){
-						drawEvent(dc);
-					} else { 
-						drawActivity(dc, activity, centerX, activityY, true);
-					}
-				}
-				if(showWeather){
-					drawWeather(dc);
-				}
-				if(activity == :calendar){
-					drawEvents(dc);
-				}
-				if(showSunrise){
-					drawSunBitmaps(dc, cal);
-				}
-				// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
-				drawNowCircle(dc, clockTime.hour);
-				
+
+			// function drawDate(x, y){}
+			dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
+			var text = "";
+			if(dateForm != null){
+				text = Lang.format("$1$ ", ((dateForm == 0) ? [cal.month] : [cal.day_of_week]) );
 			}
+			text += cal.day.format("%0.1d");
+			dc.drawText(centerX, dateY, fontSmall, text, Gfx.TEXT_JUSTIFY_CENTER);
+			if(Sys.getDeviceSettings().notificationCount){
+				dc.setColor(activityColor, backgroundColor);
+				dc.drawText(centerX-dc.getTextWidthInPixels(text+"  ", fontSmall)>>1, dateY+dc.getFontHeight(fontSmall)>>1+1, icons, "!" /*"!xb"*/, Gfx.TEXT_JUSTIFY_RIGHT | Gfx.TEXT_JUSTIFY_VCENTER);
+				//dc.fillCircle(centerX-dc.getTextWidthInPixels(text, fontSmall)>>1-14, dateY+dc.getFontHeight(fontSmall)>>1+1, 5);
+			}
+			/*dc.drawText(centerX, height-20, fontSmall, Toy.ActivityMonitor.getInfo().moveBarLevel, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);dc.setPenWidth(2);dc.drawArc(centerX, height-20, 12, Gfx.ARC_CLOCKWISE, 90, 90-(Toy.ActivityMonitor.getInfo().moveBarLevel.toFloat()/(ActivityMonitor.MOVE_BAR_LEVEL_MAX-ActivityMonitor.MOVE_BAR_LEVEL_MIN)*ActivityMonitor.MOVE_BAR_LEVEL_MAX)*360);*/
+			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
+			var x = centerX-radius - (sunR-radius)>>1-(dc.getTextWidthInPixels("1", fontSmall)/3).toNumber();	// scale 4 with resolution
+			drawActivity(dc, activityL, x, centerY, false);
+			drawActivity(dc, activityR, centerX<<1-x, centerY, false);
+		// TODO AOD // }
+		drawTime(dc);
+		// TODO AOD // if(burnInProtection==0){
+			if(activity != null || message){
+				if(activity == :calendar || message){
+					drawEvent(dc);
+				} else { 
+					drawActivity(dc, activity, centerX, activityY, true);
+				}
+			}
+			if(showWeather){
+				drawWeather(dc);
+			}
+			if(activity == :calendar){
+				drawEvents(dc);
+			}
+			if(showSunrise){
+				drawSunBitmaps(dc, cal);
+			}
+			// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
+			drawNowCircle(dc, clockTime.hour);
+		// TODO AOD // }
+
 		//}
 		//ms.add(Sys.getTimer()-ms[0]);
 		/////Sys.println("ms: " + ms + " sec: " + clockTime.sec + " redrawAll: " + redrawAll);
@@ -1013,14 +999,6 @@ circleWidth=1;*/
 			if(0==h){ h=12;}
 		}
 		// TODO if(set.notificationCount){dc.drawBitmap(centerX, notifY, iconNotification);}
-		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
-
-/*for(var i=0;i<8;i++){
-	dc.drawText(i&1<<1-1 + centerX, (i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
-}
-dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);*/
-		dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
-
 		var minutes = clockTime.min; 
 		// minutes=m; m++; // testing rendering
 		//////Sys.println(minutes+ " mins mem " +Sys.getSystemStats().freeMemory);
@@ -1029,11 +1007,13 @@ dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);*/
 		var sin = Math.sin(angle);
 		var offset=0;
 		var gap=0;
-
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(Math.round(centerX + (radius * sin)), Math.round(centerY - (radius * cos)) , fontSmall, minutes, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
-		
-		
+		// TODO AOD overlapping 4>5 outlines etc // h=(h+7)%24; var d= new [24];for(var q=0;q<d.size();q++){d[q]=[0,0];}d[5]=[4,2];
+		// TODO AOD // if(burnInProtection){ for(var i=0;i<4;i++){dc.drawText(i&1<<1-1 + centerX,(i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); } dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);} else {
+			dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
+			dc.drawText(Math.round(centerX + (radius * sin)), Math.round(centerY - (radius * cos)) , fontSmall, minutes, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
+		// TODO AOD // }
+		dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
 		if(minutes>0){
 			dc.setColor(color, backgroundColor);
 			dc.setPenWidth(circleWidth);
@@ -1072,6 +1052,7 @@ dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);*/
 					}
 				}
 			}
+			//if(burnInProtection){offset=0;gap=0;}
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
 	}

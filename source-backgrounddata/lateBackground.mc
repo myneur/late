@@ -162,8 +162,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			return false;
 		}
 	}
-	
+var m=0;
 	function getEvents(calendar_id) { 	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
+m = Sys.getSystemStats().freeMemory; Sys.println(m);
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		var sys_time = System.getClockTime();
 		var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -177,15 +178,18 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		dateEnd += sign + to;
 
 		calendar_id = Communications.encodeURL(calendar_id);
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "reqest"]); m = Sys.getSystemStats().freeMemory;
 		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/calendars/" + calendar_id + "/events", {
 			"maxResults"=>maxResults.toString(), "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
 				:headers=>{ "Authorization"=>"Bearer " + access_token }},
 			method(:onEvents));
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m,"reqested"]); m = Sys.getSystemStats().freeMemory;
 		// TODO optimize memory to load more events: if there are too many items (probably memory limit) onEvents gets -403 responseCode although the response is good
 		///*/ln(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
 	}
 	
 	function onEvents(responseCode, data) {	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "onEvents"]); m = Sys.getSystemStats().freeMemory;
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
 			var event;
@@ -216,9 +220,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 							exitWithDataAndToken();
 						}*/
 					} catch(ex) {
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "catch"]); m = Sys.getSystemStats().freeMemory;
 						events_list = events_list.size() ? [events_list[0]] : null;
 						//+mem+*/Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "clean"]); m = Sys.getSystemStats().freeMemory;
 						exitWithDataAndToken(responseCode);
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "exit exception"]); m = Sys.getSystemStats().freeMemory;
 					}
 				}
 			}
@@ -231,6 +238,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				}
 			}
 		}
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "cal done "+events_list.size()]); m = Sys.getSystemStats().freeMemory;
 		if (!getNextCalendarEvents()) { // done
 			if(events_list.size()>0){	// we tolerate if some loads did not work, but at least some of them must
 				exitWithDataAndToken(200);
@@ -238,9 +246,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				exitWithDataAndToken(responseCode);
 			}
 		} 
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "done"]); m = Sys.getSystemStats().freeMemory;
 	}
 
 	function exitWithDataAndToken(responseCode){ //Sys.println("exitWithDataAndToken"); // TODO don't return events on errors 
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "exitWithDataAndToken"]); m = Sys.getSystemStats().freeMemory;
 		var code_events = {"refresh_token"=>refresh_token};
 		if(primary_calendar){
 			code_events["primary_calendar"] = primary_calendar; 
@@ -263,11 +273,16 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			//Sys.println(Sys.getSystemStats().freeMemory +" exiting with "+events_list.size());
 			refresh_token=null; access_token=null; calendar_ids=null; events_list=null;// cleaning memory before exiting not to reach out of memory
 			//+mem+*/Sys.println(Sys.getSystemStats().freeMemory +" exiting");
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "exit-finish"]); m = Sys.getSystemStats().freeMemory;
 			Background.exit(code_events);
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "exited"]); m = Sys.getSystemStats().freeMemory;
 
 		} catch(ex) { //Sys.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex.getErrorMessage()); Sys.println( ex.printStackTrace() );
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "exit catch finish"]); m = Sys.getSystemStats().freeMemory;
 				code_events["events"] = (code_events["events"] instanceof Array && code_events["events"].size()) ? [code_events["events"][0]] : null;
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "exit clean finish"]); m = Sys.getSystemStats().freeMemory;
 				Background.exit(code_events);
+Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, "exit exception finish"]); m = Sys.getSystemStats().freeMemory;
 		}
 	}
 

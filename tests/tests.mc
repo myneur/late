@@ -62,9 +62,10 @@ fr735xt has no calendar activity setting
 
 (:test)
 function test(logger){
-	Sys.println("function test");
-	var bg = new lateBackground();
-	logger.debug(bg.onTemporalEvent());
-	Sys.println("logger.debug");
+	//Sys.println("function test print");
+	//logger.debug("function test debug");
+	//var bg = new lateBackground();
+	//logger.debug(bg.onTemporalEvent());
+	//Sys.println("logger.debug");
 	return true;
 }

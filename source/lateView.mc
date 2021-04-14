@@ -89,11 +89,34 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 		//Sys.println("init: "+ weatherHourly);
 	}
 
+	(:release)
 	function onLayout (dc) {
-		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l");
-		//Sys.println(clockTime.min+"load");
 		loadSettings();
-		//Sys.println(Toybox.Application.Storage.getValue("test"));
+	}
+
+	(:debug)
+	function onLayout (dc) {	//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l"); //Sys.println(clockTime.min+"load");
+		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
+		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
+		app.setProperty("activity", 1); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+		app.setProperty("sunriset", false);
+		showWeather = true; app.setProperty("weather", showWeather); app.setProperty("location", [50.1137639,14.4714428]);
+		//percentage = true;
+		//activityL = :steps;activityR = :activeMinutesWeek;
+		//app.setProperty("calendar_ids", null);
+		//Sys.println(Ui.loadResource(Rez.Strings.Vivid));
+
+		//dialSize=1;
+		//mainColor=1;circleWidth=9;
+
+		//weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
+		//app.setProperty("units", 1);
+
+		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
+
+		loadSettings();
+
+
 	}
 
 	function loadSettings(){
@@ -150,26 +173,6 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 		d24 = d24new;
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
-		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
-//app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-//showWeather = true; app.setProperty("weather", showWeather); showSunrise = true; app.setProperty("location", [50.1137639,14.4714428]);
-//percentage = true;
-//activityL = :steps;activityR = :activeMinutesWeek;
-//app.setProperty("calendar_ids", null);
-//Sys.println(Ui.loadResource(Rez.Strings.Vivid));
-
-//dialSize=1;
-
-
-//mainColor=1;circleWidth=9;
-
-
-//weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
-//app.setProperty("units", 1);
-
-
-		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
-
 		if(dialSize>0){
 			activityL=null;
 			activityR=null;

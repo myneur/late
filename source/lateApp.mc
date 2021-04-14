@@ -38,7 +38,7 @@ class lateApp extends Toy.Application.AppBase {
 		//+*/System.println("scheduling: " + [watch.dataLoading , watch.activity == :calendar , watch.showWeather]);
 		loadSettings();
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
-			var nextEvent = durationToNextEvent();
+			var nextEvent = durationToNextEvent(); 
 			changeScheduleToMinutes(5);
 /*if(Toybox.Application has :Storage){	// migration free memory when migrating to Storage
 	app.setProperty("events", null);

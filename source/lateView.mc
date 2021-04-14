@@ -97,10 +97,10 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 	(:debug)
 	function onLayout (dc) {	//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l"); //Sys.println(clockTime.min+"load");
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
-		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
-		app.setProperty("activity", 1); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-		app.setProperty("sunriset", false);
-		showWeather = true; app.setProperty("weather", showWeather); app.setProperty("location", [50.1137639,14.4714428]);
+		//var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
+		//app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+		//app.setProperty("sunriset", true);
+		//showWeather = true; app.setProperty("weather", showWeather); app.setProperty("location", [50.1137639,14.4714428]);
 		//percentage = true;
 		//activityL = :steps;activityR = :activeMinutesWeek;
 		//app.setProperty("calendar_ids", null);

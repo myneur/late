@@ -19,8 +19,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	var maxResults = 6;
 	var subscription_id;
 
-	function initialize() {
-		///Sys.println(Sys.getSystemStats().freeMemory + " on init");
+	function initialize() { ///Sys.println(Sys.getSystemStats().freeMemory + " on init");
 		Sys.ServiceDelegate.initialize();
 		//Communications.registerForOAuthMessages(method(:onPurchase));
 		app = App.getApp();
@@ -45,8 +44,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-	function getOAuthUserCode(){
-		///Sys.println(Sys.getSystemStats().freeMemory + " getOAuthUserCode");
+	function getOAuthUserCode(){	///Sys.println(Sys.getSystemStats().freeMemory + " getOAuthUserCode");
 		Communications.makeWebRequest("https://accounts.google.com/o/oauth2/device/code", 
 			{"client_id"=>app.getProperty("client_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onOAuthUserCode)); 
@@ -82,8 +80,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			method(:onTokenRefresh2GetData));
 	}
 
-	function onTokenRefresh2GetData(responseCode, data){
-		//Sys.println(Sys.getSystemStats().freeMemory + " onTokenRefresh2GetData: "+responseCode); Sys.println(data);
+	function onTokenRefresh2GetData(responseCode, data){	//Sys.println(Sys.getSystemStats().freeMemory + " onTokenRefresh2GetData: "+responseCode); Sys.println(data);
 		if (responseCode == 200) {
 			access_token = data.get("access_token");
 			if(data.get("refresh_token")){
@@ -130,8 +127,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		return false;
 	}
 
-	function getPrimaryCalendar(){
-		///Sys.println(Sys.getSystemStats().freeMemory + " getPrimaryCalendar");
+	function getPrimaryCalendar(){	///Sys.println(Sys.getSystemStats().freeMemory + " getPrimaryCalendar");
 		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/users/me/calendarList",
 			{"maxResults"=>"15", "fields"=>"items(id,primary)", "minAccessRole"=>"owner"/*, "showDeleted"=>false*/}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
 			:headers=>{ "Authorization"=>"Bearer " + access_token}},
@@ -164,10 +160,10 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 // DEBUG MEM //var m=Sys.getSystemStats().freeMemory;function mem(label){Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, label]); m=Sys.getSystemStats().freeMemory;}
-// DEBUG MEM //var balast = new [800];
+// DEBUG MEM BALAST //var balast = new [460];
 
 	function getEvents(calendar_id) { 	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
-// DEBUG MEM //maxResults = 1;
+// DEBUG MEM //mem("getEvents max "+maxResults/*+" with balast "+balast.size()*/);
 // DEBUG MEM //mem("getEvents "+calendar_id);
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		var sys_time = System.getClockTime();
@@ -181,11 +177,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		var dateEnd = Lang.format("$1$-$2$-$3$T$4$:$5$:00", [today.year, today.month, today.day, today.hour, today.min]);
 		dateEnd += sign + to;
 		calendar_id = Communications.encodeURL(calendar_id);
-// DEBUG MEM //mem("request vars " + Sys.getSystemStats().freeMemory/maxResults + "per item "+maxResults);
+// DEBUG MEM //mem("request vars " + Sys.getSystemStats().freeMemory/maxResults + " per item "+maxResults);
 
 
-/*while(maxResults>1 && Sys.getSystemStats().freeMemory/maxResults<800){
-	Sys.println("maxResults down to "+Sys.getSystemStats().freeMemory/maxResults+" downto =>"+maxResults + " = "+Sys.getSystemStats().freeMemory/(maxResults-1));
+/*while(maxResults>1 && (Sys.getSystemStats().freeMemory-2000)/(maxResults-1)<600){
+	Sys.println("maxResults down to "+(Sys.getSystemStats().freeMemory-2000)/(maxResults-1)+" downto =>"+maxResults + " = "+(Sys.getSystemStats().freeMemory-2000)/(maxResults-2));
 	maxResults=maxResults-1;
 }*/
 		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/calendars/" + calendar_id + "/events", {
@@ -241,7 +237,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				}
 			}
 			maxResults = limit-events_list.size(); // TODO limit must not exceed maxResults
-			Sys.println([maxResults, events_list.size()]);
+			// DEBUG MEM //mem("limiting results to " +maxResults + " with events loaded: "+ events_list.size());
 			//Sys.println(data.size()+" "+events_list.size()+"/"+limit);
 		} else {
 			if(responseCode==-403 || responseCode==-402){ // out of memory while parsing the response

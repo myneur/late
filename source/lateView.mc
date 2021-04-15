@@ -3,12 +3,14 @@
 //// links in properties to help with -analog suffix !!!
 //// drawtime switch
 //// boldness
-// Calendar full events loading 7/12: [B:5704/7 venusq, B:3872/5 fr945, exit:3592], fr245 sim failed 2x without trace, failed with [B:5520/7]
 
 //// manifest app id
 
 //// remove any debug variables
 //// remove weather localisation property
+
+// Ensure empiric limits: 2000 first event + 600 every other [B:5704/7 venusq, B:3872/5 fr945, exit:3592]
+
 
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;

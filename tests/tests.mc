@@ -38,10 +38,6 @@ class testView extends lateView {
 		lateView.onBackgroundData(data);
 		return data;
 	}
-
-	function onLayoutRelease (dc) {	// bypass (:debug) onLayout tests
-		loadSettings();
-	}
 }
 
 (:test)

@@ -3,6 +3,7 @@
 //// links in properties to help with -analog suffix !!!
 //// drawtime switch
 //// boldness
+// Calendar full events loading 7/12: [B:5704/7 venusq, B:3872/5 fr945, exit:3592], fr245 sim failed 2x without trace, failed with [B:5520/7]
 
 //// manifest app id
 
@@ -99,22 +100,15 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 	function onLayout (dc) {	//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l"); //Sys.println(clockTime.min+"load");
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
 		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
-		app.setProperty("activity", 1); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-		app.setProperty("sunriset", false);
-		showWeather = false; app.setProperty("weather", showWeather); app.setProperty("location", [50.1137639,14.4714428]);
-		//percentage = true;
-		//activityL = :steps;activityR = :activeMinutesWeek;
-		//app.setProperty("calendar_ids", null);
-		//Sys.println(Ui.loadResource(Rez.Strings.Vivid));
-
-		//dialSize=1;
-		//mainColor=1;circleWidth=9;
-
+		app.setProperty("activity", 6); app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+		app.setProperty("sunriset", true);
+		app.setProperty("weather", true); app.setProperty("location", [50.1137639,14.4714428]);
+		app.setProperty("activityL", 1); app.setProperty("activityR", 2); 
+		app.setProperty("lastLoad", 'w');
+		//dialSize=1; //mainColor=1;circleWidth=9;
 		//weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
 		//app.setProperty("units", 1);
-
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
-
 		loadSettings();
 
 
@@ -444,6 +438,7 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 	}*/
 
 	//! Update the view
+	// TODO AOD-X // var dx=5;var dy=5;
 	function onUpdate (dc) {	//Sys.println("onUpdate ");
 		clockTime = Sys.getClockTime();
 		var cal = Calendar.info(Time.now(), Time.FORMAT_MEDIUM);
@@ -457,6 +452,7 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 		dc.setColor(backgroundColor, backgroundColor);
 		dc.clear();
 		// TODO AOD // if(burnInProtection){var diff = 4;if(burnInProtection>1){centerX = centerX + ((centerX == (height>>1)) ? diff : -diff);burnInProtection=1;}else{var move = (centerY==(height>>1)) ? diff : -diff;centerY = centerY + move;dateY = dateY + move;burnInProtection=2;}} else {
+		// TODO AOD-X // if(burnInProtection){Sys.println([clockTime.hour, dx,dy]);if(burnInProtection>1){dx = dx == -5 ? dx+10 : dx-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=1;}else{dy = dy == -5 ? dy+10 : dy-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=2;}} else {
 			//lastRedrawMin=clockTime.min;
 			drawBatteryLevel(dc);
 			

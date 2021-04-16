@@ -24,6 +24,13 @@ class lateApp extends Toy.Application.AppBase {
 		loadSettings();
 	}
 
+	// function onAppInstall(){}
+
+	// requireds Background permissions:
+		// function onStorageChanged(){} 
+		// function onAppUpdate(){} 
+
+
 	function loadSettings(){
 		app.setProperty("calendar_ids", split(app.getProperty("calendar_ids")));	
 	}
@@ -40,10 +47,6 @@ class lateApp extends Toy.Application.AppBase {
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent(); 
 			changeScheduleToMinutes(5);
-/*if(Toybox.Application has :Storage){	// migration free memory when migrating to Storage
-	app.setProperty("events", null);
-	Sys.println("Events dictionary purge");
-}*/
 			if(watch.activity == :calendar && app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
@@ -127,7 +130,7 @@ class lateApp extends Toy.Application.AppBase {
 				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast 	//System.println(data["weather"]);
 					if(data["weather"].size()>2){
 						app.setProperty("weatherHourly", data["weather"]);
-						changeScheduleToMinutes(app.getProperty("refresh_freq")); // once de data were loaded, continue with the settings interval
+						changeScheduleToMinutes(60); // once de data were loaded, continue with the settings interval
 						app.setProperty("lastLoad", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
 					}
 				} else {
@@ -147,7 +150,7 @@ class lateApp extends Toy.Application.AppBase {
 								data = scheduleDataLoading();
 							}
 						} else {
-							changeScheduleToMinutes(app.getProperty("refresh_freq"));	// when weather not loaded yet, load ASAP		
+							changeScheduleToMinutes(60);	// when weather not loaded yet, load ASAP		
 						}
 						// TODO message to wait to load weather
 					} else if(data.hasKey("user_code")){ // prompt login
@@ -171,7 +174,7 @@ class lateApp extends Toy.Application.AppBase {
 								// TODO: 404 with msg no data might actually mean also problem with Google: https://developers.google.com/calendar/v3/errors
 								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
 							} else {	
-								changeScheduleToMinutes(app.getProperty("refresh_freq"));
+								changeScheduleToMinutes(60);
 								return;
 							}
 						} else if(error==429){

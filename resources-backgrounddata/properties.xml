@@ -3,7 +3,7 @@
 
 	<property id="compatibility" type="number">2</property>
 	
-	<property id="refresh_freq" type="number">60</property>
+	<!--<property id="refresh_freq" type="number">60</property>-->
 	<!--<property id="access_code" type="string"></property>-->
 	
 	<property id="calendar_colors" type="number">1</property>

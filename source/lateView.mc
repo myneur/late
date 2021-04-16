@@ -101,12 +101,14 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 	(:debug)
 	function onLayout (dc) {	//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l"); //Sys.println(clockTime.min+"load");
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
+		
 		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
 		app.setProperty("activity", 6); app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-		app.setProperty("sunriset", true);
+		/*app.setProperty("sunriset", true);
 		app.setProperty("weather", true); app.setProperty("location", [50.1137639,14.4714428]);
-		app.setProperty("activityL", 1); app.setProperty("activityR", 2); 
+		app.setProperty("activityL", 4); app.setProperty("activityR", 5); 
 		app.setProperty("lastLoad", 'w');
+		*/
 		//dialSize=1; //mainColor=1;circleWidth=9;
 		//weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
 		//app.setProperty("units", 1);

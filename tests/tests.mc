@@ -1,6 +1,11 @@
 using Toybox.Test as test;
 using Toybox.System as Sys;
 using Toybox.WatchUi as Ui;
+using Toybox.Graphics as Gfx;
+using Toybox.Lang;
+
+
+//(:test)class mockDc extends Toybox.Graphics.Dc{}
 
 (:test)
 class testApp extends lateApp {
@@ -30,9 +35,24 @@ class testView extends lateView {
     	testApp.setProperty("activity", v);
     }
 
+    function setup(acitvity, activityL, activityR){
+    	app.setProperty("activity", acitvity); 
+		app.setProperty("activityL", activityL); 
+		app.setProperty("activityR", activityR); 
+	}
+
     function setupCalendar(){
-    	var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
-		app.setProperty("activity", 6); activity = activities[app.getProperty("activity")]; app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+    	setup(6, 0, 0);
+		app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+    }
+    function setupNoData(){
+    	setup(1, 4, 5);
+    }
+    function setupNoFloors(){
+    	setup(1, 4, 3);
+    }
+    function setupNoActivityMinutes(){
+    	setup(1, 1, 0);
     }
     function onBackgroundData(data) {	
 		lateView.onBackgroundData(data);
@@ -52,35 +72,47 @@ class mockBackground extends lateBackground {
 		logger.debug([responseCode, data]);
 		return [responseCode, data];
 	}
+	 function onTemporalEvent(){
+	 	lateBackground.onTemporalEvent();
+	 }
 }
 
-(:test)
-function test(logger){
+(:test)	// TODO not detecting missing Floors or Activities
+function testViewDisplay(logger){
 	var mockApp = new testApp();
-
-	//logger.debug(testApp.getProperty("activity"));	//different than in watch
+	var dc = new Gfx.BufferedBitmap({:width=>416, :height=>416/*, :palette=>[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]*/}).getDc();
 	mockApp.getInitialView();
 	test.assert(mockApp.watch);
+	mockApp.watch.setupNoData();
+	mockApp.watch.onLayout(dc); // runs layout of bouth: mock and late
+	mockApp.watch.onUpdate(dc);
+	return true;
+}
 
-	// configure 
-	mockApp.watch.setupCalendar();
-
-	// layout 
+(:test)	// TODO stopped to return scheduleDataLoading Dictionary
+function testCalendar(logger){
+	var mockApp = new testApp();
+	mockApp.getInitialView();
+	test.assert(mockApp.watch);
+	mockApp.watch.setupCalendar(); // configure 
 	mockApp.watch.onLayout(null); // runs layout of bouth: mock and late
 	
-	// test 
+	// tests
 	test.assertMessage(mockApp.watch.activity==:calendar, 
 		"expecting active calendar");
 	var bg = mockApp.getServiceDelegate()[0];
 	var data = mockApp.scheduleDataLoading();
-	logger.debug(data);
+	logger.debug("schedule "+data);
+
+	test.assertMessage(data instanceof Lang.Dictionary, 
+		"no Dictionary from scheduleDataLoading");
 	test.assertMessage(data["error_code"]==511 && data["userPrompt"].find(Ui.loadResource(Rez.Strings.Wait4login))!=null, 
-		"no prompt to log in");
+		"no prompt to log-in");
 	test.assertMessage(data["wait"]>=0, 
 		"time to login must be now or in future");
-	
-	// test data from calendar
 	bg.onTemporalEvent();
+	// test data from calendar
+	
 	// TODO test returned data.hasKey("user_code") that is string longer that 6
 
 	/*

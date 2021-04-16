@@ -62,6 +62,9 @@ class lateView extends Ui.WatchFace {
 			if(app.getProperty("activity")==6){
 				app.setProperty("activity", 1);
 			}
+			if(app.getProperty("weather")){
+				app.setProperty("weather", false);
+			}
 		}
 		WatchFace.initialize();
 		var s=Sys.getDeviceSettings();
@@ -104,12 +107,12 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 		//app.setProperty("units", 1);
 		//set props: mainColor=1;circleWidth=9;
 		
-		app.setProperty("activity", 1); app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-		//app.setProperty("weather", true); app.setProperty("location", [50.1137639,14.4714428]); app.setProperty("sunriset", true);
+		app.setProperty("activity", 6); app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+		app.setProperty("weather", true); app.setProperty("location", [50.1137639,14.4714428]); app.setProperty("sunriset", true);
 		app.setProperty("activityL", 2); app.setProperty("activityR", 0); 
-		app.setProperty("dialSize", 1);
+		app.setProperty("dialSize", 0);
+		initialize();
 		loadSettings();
-
 		//app.setProperty("lastLoad", 'w');
 		//weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}

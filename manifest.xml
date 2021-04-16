@@ -8,18 +8,18 @@
 			<!-- round -->
 			<!-- 416x416 data -->
 				<iq:product id="wearable2021"/>	
-			<!-- 390x390 64c -->
-				<!-- data -->
+			<!-- 390x390 64c data -->
 				<iq:product id="venu"/>
 				<iq:product id="venud"/>
 				<iq:product id="d2air"/>
-				<!-- no data -->
-				<iq:product id="enduro"/>
 			<!-- 360x360 -->
 			<iq:product id="smallwearable2021"/>
-			<!-- 280x280 with data 64 colors 94k memory -->
+			<!-- 280x280 64 colors 94k memory -->
+			<!-- data -->
 			<iq:product id="fenix6xpro"/>
 			<iq:product id="descentmk2"/>
+			<!-- no data -->
+			<iq:product id="enduro"/>
 			
 			<!-- 260x260 with data 94k memory -->
 			<iq:product id="fenix6"/>

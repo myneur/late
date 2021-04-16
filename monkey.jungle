@@ -18,13 +18,13 @@ round-218x218.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backg
 #venusq.lang.deu = $(venusq.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
 #venusqm.lang.deu = $(venusqm.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
 
-round-416x416.sourcePath = source;source-backgrounddata;tests
-round-360x360.sourcePath = source;source-backgrounddata;tests
-round-390x390.sourcePath = source;source-backgrounddata;tests
-round-280x280.sourcePath = source;source-backgrounddata;tests
-round-260x260.sourcePath = source;source-backgrounddata;tests
-round-240x240.sourcePath = source;source-backgrounddata;tests
-round-218x218.sourcePath = source;source-backgrounddata;tests
+round-416x416.sourcePath = source;source-backgrounddata
+round-360x360.sourcePath = source;source-backgrounddata
+round-390x390.sourcePath = source;source-backgrounddata
+round-280x280.sourcePath = source;source-backgrounddata
+round-260x260.sourcePath = source;source-backgrounddata
+round-240x240.sourcePath = source;source-backgrounddata
+round-218x218.sourcePath = source;source-backgrounddata
 
 # exclude data
 enduro.excludeAnnotations = data

@@ -64,5 +64,6 @@
 	</setting>
 
 
-<setting propertyKey="@Properties.loc" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>-->
+-->
+<setting propertyKey="@Properties.loc" title="@Strings.Loc" ><settingConfig type="alphaNumeric" readonly="true"/></setting>
 </settings>

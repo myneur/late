@@ -8,8 +8,8 @@
 
 
 
-# TODO!
-# TODO: 1. test for weather loading 2. check calendar is loaded first 3. refector DONTSAVEPROPERTIES 
+# TODO!!! FINALIZE testing weather together with calendar: now only the calendar loads, because of Fucking Garmin simulator is crashing ! 
+# TODO: 1. implement (:debug) option to load weather before calendar 3. refactor DONTSAVEPROPERTIES 
 
 function simulate(){
 	echo $DEVICES
@@ -170,13 +170,13 @@ function testNoData(){
 	simulate
 }
 
-# no data devices
+
 function testFloorsAndMinutes(){
 	VARS="test-variables-floors-and-minutes.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
 	
-	DEVICES=(fenix3 fr230 fr45 vivoactive_hr fr735xt) # no-data 218 65k 3CIQ1 180 semi-round weakest old disabled-data
+	DEVICES=(fenix3) # no-data 218 65k 3CIQ1 180 semi-round weakest old disabled-data
 	RUN="_minuteFloors"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -209,5 +209,3 @@ testCalendarWithWeatherShown
 #testNoData
 #testFloorsAndMinutes
 # TODO testWeather
-
-# need to change properties: intermediate -r compilation or annotation can be used to store different variable prior)

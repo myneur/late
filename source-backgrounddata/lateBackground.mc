@@ -26,11 +26,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 	
 	function onTemporalEvent() {
-		var t = Gregorian.info(Time.now(), Gregorian.FORMAT_SHORT);
-		//+*/Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad") );
+		//+*/var t = Gregorian.info(Time.now(), Gregorian.FORMAT_SHORT); Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad") );
 		app = App.getApp();
 		//getTokensAndData();return;
-		//+Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
+		//Sys.println(["onTemporalEvent " , app.getProperty("user_code"),app.getProperty("refresh_token")]);
+		//+*/Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
+		//+*/Sys.println([app.getProperty("user_code"), app.getProperty("refresh_token"),app.getProperty("device_code")]);
 		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
@@ -44,7 +45,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-	function getOAuthUserCode(){	///Sys.println(Sys.getSystemStats().freeMemory + " getOAuthUserCode");
+	function getOAuthUserCode(){	///Sys.println(Sys.getSystemStats().freeMemory + " getOAuthUserCode"); Sys.println("getOAuthUserCode");
 		Communications.makeWebRequest("https://accounts.google.com/o/oauth2/device/code", 
 			{"client_id"=>app.getProperty("client_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onOAuthUserCode)); 
@@ -60,18 +61,18 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Background.exit(data);  // prompt to login or show the error
 	}
 
-	function getTokensAndData(){ // device_code can tell if the user granted access //Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData"); //Sys.println(app.getProperty("user_code"));
+	function getTokensAndData(){  ///Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");  // device_code can tell if the user granted access 
 		var params = {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id")};
 		if (app.getProperty("refresh_token") != null) { 
-			//Sys.println("has refresh_token");
 			refresh_token = app.getProperty("refresh_token");
 			params.put("refresh_token",refresh_token);
 			params.put("grant_type","refresh_token");
 		} else {
 			if (app.getProperty("user_code") == null){ // && new Moment(app.getProperty("code_valid_till").compare(Time.now()) < -10))  
+				
 				getOAuthUserCode();
 				return;
-			} else {  
+			} else { 
 				params.put("code",app.getProperty("device_code"));
 				params.put("grant_type","http://oauth.net/grant_type/device/1.0");
 			}
@@ -80,7 +81,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			method(:onTokenRefresh2GetData));
 	}
 
-	function onTokenRefresh2GetData(responseCode, data){	//Sys.println(Sys.getSystemStats().freeMemory + " onTokenRefresh2GetData: "+responseCode); Sys.println(data);
+	function onTokenRefresh2GetData(responseCode, data){	///Sys.println("onTokenRefresh2GetData: "+responseCode); Sys.println(data);
 		if (responseCode == 200) {
 			access_token = data.get("access_token");
 			if(data.get("refresh_token")){
@@ -336,7 +337,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		if(pos == null){
 			app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 		}
-		Sys.println("getWeatherForecast: "+pos);
+		//Sys.println("getWeatherForecast: "+pos);
 		if(pos == null){
 			Background.exit({"error_code"=>-204});
 			return;
@@ -410,7 +411,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			method(:onSubscriptionId));
 	}
 	
-	function buySubscription(responseCode){	//+//System.println("buySubscription "+responseCode);
+	function buySubscription(responseCode){	//+*/System.println("buySubscription "+responseCode);
 		var data = {"device_code"=>subscription_id};
 		//data = {"device_code"=>"test"};
 		if(responseCode==403){ // especially 401: handle as expiration?
@@ -427,7 +428,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Background.exit(data);
 	}
 
-	function onSubscriptionId(responseCode, data) {		//+//Sys.println("onPurchase: " + responseCode +" "+data);
+	function onSubscriptionId(responseCode, data) {		//+*/Sys.println("onPurchase: " + responseCode +" "+data);
 		if (responseCode == 200) {
 			//data = data.get("items");
 			if(data instanceof Toybox.Lang.Dictionary && data.hasKey("device_code") && data["device_code"] instanceof String ){ 

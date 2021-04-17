@@ -41,8 +41,7 @@ class lateApp extends Toy.Application.AppBase {
 	}
 
 	(:data)
-	function scheduleDataLoading(){
-		//+*/System.println("scheduling: " + [watch.dataLoading , watch.activity == :calendar , watch.showWeather]);
+	function scheduleDataLoading(){	//+*/System.println("scheduling: " + [watch.dataLoading , watch.activity == :calendar , watch.showWeather,  app.getProperty("lastLoad")]);
 		loadSettings();
 		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
 			var nextEvent = durationToNextEvent(); 
@@ -113,12 +112,11 @@ class lateApp extends Toy.Application.AppBase {
 	function unScheduleDataLoading(){
 		Background.deleteTemporalEvent();
 	}
+
 	
 	(:data)
 	function onBackgroundData(data) {	
-//Sys.println("onBackground: "+ Toybox.Application.Storage.getValue("test"));
-		//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys());
-		//Sys.println(data);
+		//Sys.println("onBackground: "+ Toybox.Application.Storage.getValue("test"));//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys()); //Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary) {
 				if(data.hasKey("subscription_id")){	

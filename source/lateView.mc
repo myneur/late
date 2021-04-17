@@ -103,17 +103,79 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 
 	(:debug)
 	function onLayout (dc) {	//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l"); //Sys.println(clockTime.min+"load");
+		presetTestVariables();
+		loadSettings();
+		resetTestVariables();	
+	}
+
+	(:debug)
+	function presetTestVariables () {
+		var data = Ui.loadResource(Rez.JsonData.testData);
+		if(data.hasKey("clearProperties")){
+			var d = data["clearProperties"];
+			for(var i=0;i<d.size();i++){
+				Sys.println(" - clear property "+d[i]);
+				app.setProperty(d[i], null);
+			}
+		}
+		if(data.hasKey("Properties")){
+			var d = data["Properties"];
+			var keys = d.keys();
+			for(var i=0;i<keys.size();i++){
+				Sys.println(" - property "+keys[i]+": "+d[keys[i]]);
+				app.setProperty(keys[i], d[keys[i]]);
+			}
+		}
+		if(data.hasKey("clearStorage")){
+			var d = data["clearStorage"];
+			for(var i=0;i<d.size();i++){
+				if(Toybox.Application has :Storage){
+					Sys.println(" - clear storage "+d[i]);	
+					Toybox.Application.Storage.setValue(d[i], null);
+				} else {
+					Sys.println(" - clear property instead of storage "+d[i]);
+					app.setProperty(d[i], null);
+				}
+			}
+		}
+		if(data.hasKey("Storage")){
+			var d = data["Storage"];
+			var keys = d.keys();
+			for(var i=0;i<keys.size();i++){
+				if(Toybox.Application has :Storage){
+					Sys.println(" - storage "+keys[i]);	
+					Toybox.Application.Storage.setValue(keys[i], d[keys[i]]);
+				} else {
+					Sys.println(" - property instead of storage "+keys[i]+": "+d[keys[i]]);
+					app.setProperty(keys[i], d[keys[i]]);
+				}
+			}
+		}
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
 		//app.setProperty("units", 1);
 		//set props: mainColor=1;circleWidth=9;
-		
-		app.setProperty("activity", 6); app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
-		app.setProperty("weather", true); app.setProperty("location", [50.1137639,14.4714428]); app.setProperty("sunriset", true);
-		app.setProperty("activityL", 2); app.setProperty("activityR", 0); 
-		app.setProperty("dialSize", 0);
-		initialize();
-		loadSettings();
-		//app.setProperty("lastLoad", 'w');
+		//app.setProperty("activity", 6); app.setProperty("calendar_ids", ["myneur@gmail.com","petr.meissner@gmail.com"]);
+		//app.setProperty("weather", true); app.setProperty("location", [50.1137639,14.4714428]); app.setProperty("sunriset", true);
+		//app.setProperty("activityL", 2); app.setProperty("activityR", 1); 
+		//app.setProperty("dialSize", 0);
+		if(data.hasKey("Reinitialize")){
+			Sys.println(" - Reinitialize");
+			initialize();
+		}
+	}
+
+	(:debug)
+	function resetTestVariables () {
+		var data = Ui.loadResource(Rez.JsonData.testData);
+
+		if(data.hasKey("AfterLayout")){
+			var d = data["AfterLayout"];
+			var keys = d.keys();
+			for(var i=0;i<keys.size();i++){
+				Sys.println(" - property reset "+keys[i]+": "+d[keys[i]]);
+				app.setProperty(keys[i], d[keys[i]]);
+			}
+		}
 		//weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
 	}
@@ -664,7 +726,6 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 			else if(data.hasKey("userPrompt")){
 				showMessage(data);
 			}
-//Sys.println([weatherHourly, sunrise, sunset]);
 			//debug();
 		}
 		onShow();

@@ -1,0 +1,91 @@
+project.manifest = manifest.xml
+base.sourcePath = source;source-tests
+	
+# bigger display or background data
+round-416x416.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280;resources-390;resources-tests
+round-390x390.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280;resources-390;resources-tests
+round-360x360.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280;resources-390;resources-tests
+round-280x280.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280;resources-tests
+round-260x260.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-tests
+round-240x240.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-tests
+round-218x218.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-tests
+
+#round-390x390.lang.deu = $(round-390x390.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
+#round-280x280.lang.deu = $(round-280x280.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
+#round-260x260.lang.deu = $(round-260x260.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
+#round-240x240.lang.deu = $(round-240x240.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
+#round-218x218.lang.deu = $(round-218x218.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
+#venusq.lang.deu = $(venusq.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
+#venusqm.lang.deu = $(venusqm.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
+
+round-416x416.sourcePath = source;source-backgrounddata;source-tests
+round-360x360.sourcePath = source;source-backgrounddata;source-tests
+round-390x390.sourcePath = source;source-backgrounddata;source-tests
+round-280x280.sourcePath = source;source-backgrounddata;source-tests
+round-260x260.sourcePath = source;source-backgrounddata;source-tests
+round-240x240.sourcePath = source;source-backgrounddata;source-tests
+round-218x218.sourcePath = source;source-backgrounddata;source-tests
+
+# exclude data
+enduro.excludeAnnotations = data
+enduro.sourcePath = source;source-tests
+enduro.resourcePath = resources;resources-CIQ2;resources-240;resources-280;resources-tests
+
+
+# no background data communication: e. g. fr230, fr235, fr630, enduro
+semiround.excludeAnnotations = data
+semiround.resourcePath = $(base.resourcePath)
+
+
+#semiround.lang.deu = $(semiround.lang.deu)
+
+# CIQ2 Biker Monkeys:
+vivoactive_hr.resourcePath = $(base.resourcePath);resources-CIQ2
+vivoactive_hr.excludeAnnotations = data
+
+#vivoactive_hr.lang.deu = $(vivoactive_hr.lang.deu);resources-CIQ2-deu
+
+# CIQ2 Biker Monkeys groudned without Floors Climbed
+approachs62.resourcePath  = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data;resources-tests
+approachs60.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data;resources-tests
+venusq.resourcePath  = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data;resources-tests
+venusqm.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data;resources-tests
+fr245.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data;resources-tests
+fr245m.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data;resources-tests
+
+approachs62.sourcePath = source;source-backgrounddata;source-tests
+approachs60.sourcePath = source;source-backgrounddata;source-tests
+venusq.sourcePath = source;source-backgrounddata;source-tests
+venusqm.sourcePath = source;source-backgrounddata;source-tests
+fr245.sourcePath = source;source-backgrounddata;source-tests
+fr245m.sourcePath = source;source-backgrounddata;source-tests
+
+# CIQ1 Aikido Monkeys:
+# 218 px, but no data and less activities
+fenix3.excludeAnnotations = data
+fenix3_hr.excludeAnnotations = data
+d2bravo.excludeAnnotations = data
+d2bravo_titanium.excludeAnnotations = data
+fr45.excludeAnnotations = data
+garminswim2.excludeAnnotations = data
+
+fenix3.sourcePath = source;source-tests
+fenix3_hr.sourcePath = source;source-tests
+d2bravo.sourcePath = source;source-tests
+d2bravo_titanium.sourcePath = source;source-tests
+fr45.sourcePath = source;source-tests
+garminswim2.sourcePath = source;source-tests
+
+fenix3.resourcePath = $(base.resourcePath)
+fenix3_hr.resourcePath = $(base.resourcePath)
+d2bravo.resourcePath = $(base.resourcePath)
+d2bravo_titanium.resourcePath = $(base.resourcePath)
+fr45.resourcePath = $(base.resourcePath)
+garminswim2.resourcePath = $(base.resourcePath)
+
+# testing deu
+#fenix3_hr.lang.deu = $(fenix3_hr.lang.deu)
+#fenix3.lang.deu = $(fenix3.lang.deu)
+#d2bravo.lang.deu = $(d2bravo.lang.deu)
+#d2bravo_titanium.lang.deu = $(d2bravo_titanium.lang.deu)
+#fr45.lang.deu = $(fr45.lang.deu)

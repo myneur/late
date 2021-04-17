@@ -1,0 +1,12 @@
+<resources>
+<jsonData id="testData">{
+		"Properties": {
+			"weather": false,
+			"activity": 1,
+			"activityL": 1,
+			"activityR": 0,
+			"dialSize": 0,
+			"percents": false,
+		}
+	</jsonData>
+</resources>

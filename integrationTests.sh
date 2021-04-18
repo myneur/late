@@ -9,7 +9,8 @@
 
 
 # TODO!!! FINALIZE testing weather together with calendar: now only the calendar loads, because of Fucking Garmin simulator is crashing ! 
-# TODO: 1. implement (:debug) option to load weather before calendar 3. refactor DONTSAVEPROPERTIES 
+# TODO: option a) 1. test weather in (:debug), follow with calendar in (:release)
+# TODO: option b) 1. implement (:debug) option to load weather before calendar 3. refactor DONTSAVEPROPERTIES 
 
 function simulate(){
 	echo $DEVICES
@@ -60,7 +61,7 @@ function simulate(){
 
 function setVariables(){
 	echo "setVariables"
-	DEVICES=(fenix6)
+	DEVICES=(fenix6xpro)
 	RUN="_init"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -69,7 +70,7 @@ function setVariables(){
 }
 
 function testLogin(){
-	VARS="test-variables-login.xml"
+	VARS="login.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
 	setVariables
@@ -89,7 +90,7 @@ function testLogin(){
 }
 
 function testCalendarWithWeatherShown(){
-	VARS="test-variables-calendar-with-weather-shown.xml"
+	VARS="calendar-with-weather-shown.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
 	setVariables
@@ -104,7 +105,7 @@ function testCalendarWithWeatherShown(){
 }
 
 function testCalendar(){
-	VARS="test-variables-calendar.xml"
+	VARS="calendar.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
 	setVariables
@@ -117,36 +118,31 @@ function testCalendar(){
 	simulate
 }
 
-function testWeather(){
-	VARS="test-variables-weather-with-calendar-shown.xml"
+function testWeatherJustInDebugCalendarFollowsInRelease(){ # TODO !!! now it only loads weather because of the Ficking Garmin Simulaotr is crashing
+	VARS="start-weather.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
 	setVariables
 	DEVICES=(fenix6xpro) 
 	RUN="_weather"
-	BACKGROUND=0
+	BACKGROUND=1
 	RECOMPILE=1
 	RELEASE=1
 	DONTSAVEPROPERTIES=0
-	echo "at fist calendar is loaded"
 	simulate 
-	echo "sleep 5s"
-	sleep 5
-	echo "loading weather despite crashed simulator"
-	/usr/bin/automator ConnectIQbackgroundEvents.workflow 
 	echo "sleep 5s"
 	sleep 5
 	echo "screenshot"
 	screencapture  ~/Downloads/$DEVICE$RUN$RUN 
-echo "TODO!!! don't work yet, because the second load is not done due to crashed simulator !!! "
 
 }
 
 # missing resolutions 
 function testMissingResolutions(){
-	VARS="test-variables-calendar-with-weather-shown.xml"
+	VARS="calendar-with-weather-shown.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	setVariables
 	DEVICES=(wearable2021 venu smallwearable2021 vivoactive4) # 416 390 360 260 
 	RUN="_resolution"
 	BACKGROUND=0
@@ -158,9 +154,10 @@ function testMissingResolutions(){
 
 # no data devices
 function testNoData(){
-	VARS="test-variables-no-data.xml"
+	VARS="no-data.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	setVariables
 	DEVICES=(fenix3 fr230 fr45 vivoactive_hr fr735xt) # no-data 218 65k 3CIQ1 180 semi-round weakest old disabled-data
 	RUN="_no-data"
 	BACKGROUND=0
@@ -172,10 +169,10 @@ function testNoData(){
 
 
 function testFloorsAndMinutes(){
-	VARS="test-variables-floors-and-minutes.xml"
+	VARS="floors-and-minutes.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
-	
+	setVariables
 	DEVICES=(fenix3) # no-data 218 65k 3CIQ1 180 semi-round weakest old disabled-data
 	RUN="_minuteFloors"
 	BACKGROUND=0
@@ -187,10 +184,10 @@ function testFloorsAndMinutes(){
 
 # all resolutions with strong flavor
 function strongInAllReslutions(){
-	VARS="test-variables-full-strong.xml"
+	VARS="full-strong.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
-	
+	setVariables
 	DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro venusq fr945 vivoactive4 fr745 fr735xt garminswim2 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
 	RUN="_strong"
 	BACKGROUND=0
@@ -200,12 +197,41 @@ function strongInAllReslutions(){
 	simulate
 }
 
+function testMonkeyJungleVariations(){
+	VARS="full-strong.vars.xml"
+	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	echo $VARS
+	setVariables
+	DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro venusq venusqm approachs62 approachs60 fr245 fr245m fr945 vivoactive4 fr745 enduro fr735xt garminswim2 vivoactive_hr fenix3 fenix3_hr d2bravo d2bravo_titanium fr45 garminswim2)
+	RUN="_jungle"
+	BACKGROUND=0
+	RECOMPILE=1
+	RELEASE=1
+	DONTSAVEPROPERTIES=1
+	simulate
+}
+
+function toDebug(){
+	VARS="full-strong.vars.xml"
+	VARS="no-data.vars.xml"
+	#cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	#echo $VARS
+	#setVariables
+	DEVICES=(enduro) 
+	RUN="_debug"
+	BACKGROUND=0
+	RECOMPILE=1
+	RELEASE=1
+	simulate
+}
+
+toDebug
 #testLogin
 #setVariables # just demo of what can be done
-testCalendarWithWeatherShown
+#testCalendarWithWeatherShown
 #testMissingResolutions
 #strongInAllReslutions
 
 #testNoData
 #testFloorsAndMinutes
-# TODO testWeather
+#testMonkeyJungleVariations

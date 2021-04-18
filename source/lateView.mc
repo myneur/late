@@ -60,7 +60,7 @@ class lateView extends Ui.WatchFace {
 		}
 		if(!dataLoading){
 			if(app.getProperty("activity")==6){
-				app.setProperty("activity", 1);
+				app.setProperty("activity", 0);
 			}
 			if(app.getProperty("weather")){
 				app.setProperty("weather", false);

@@ -1,14 +1,19 @@
 project.manifest = manifest.xml
 base.sourcePath = source
-	
+
+resIQ2=$(base.resourcePath);resources-CIQ2	
+resBgIQ2=$(resIQ2);resources-backgrounddata
+
+sBg=source;source-backgrounddata
+
 # bigger display or background data
-round-416x416.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280;resources-390
-round-390x390.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280;resources-390
-round-360x360.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280;resources-390
-round-280x280.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240;resources-280
-round-260x260.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
-round-240x240.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata;resources-240
-round-218x218.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backgrounddata
+round-218x218.resourcePath = $(resBgIQ2)
+round-240x240.resourcePath = $(resBgIQ2);resources-240
+round-260x260.resourcePath = $(round-240x240.resourcePath)
+round-280x280.resourcePath = $(round-260x260.resourcePath);resources-280
+round-360x360.resourcePath = $(round-280x280.resourcePath);resources-390
+round-416x416.resourcePath = $(round-360x360.resourcePath)
+round-390x390.resourcePath = $(round-416x416.resourcePath)
 
 #round-390x390.lang.deu = $(round-390x390.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
 #round-280x280.lang.deu = $(round-280x280.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
@@ -18,21 +23,23 @@ round-218x218.resourcePath = $(base.resourcePath);resources-CIQ2;resources-backg
 #venusq.lang.deu = $(venusq.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
 #venusqm.lang.deu = $(venusqm.lang.deu);resources-CIQ2-deu;resources-backgrounddata-deu
 
-round-416x416.sourcePath = source;source-backgrounddata
-round-360x360.sourcePath = source;source-backgrounddata
-round-390x390.sourcePath = source;source-backgrounddata
-round-280x280.sourcePath = source;source-backgrounddata
-round-260x260.sourcePath = source;source-backgrounddata
-round-240x240.sourcePath = source;source-backgrounddata
-round-218x218.sourcePath = source;source-backgrounddata
 
-# exclude data
+round-218x218.sourcePath = $(sBg)
+round-240x240.sourcePath = $(sBg)
+round-260x260.sourcePath = $(sBg)
+round-280x280.sourcePath = $(sBg)
+round-390x390.sourcePath = $(sBg)
+round-360x360.sourcePath = $(sBg)
+round-416x416.sourcePath = $(sBg)
+
+
+# exclude data enduro
 enduro.excludeAnnotations = data
 enduro.sourcePath = source
-enduro.resourcePath = resources;resources-CIQ2;resources-240;resources-280
+enduro.resourcePath = $(resIQ2);resources-240;resources-280
 
 
-# no background data communication: e. g. fr230, fr235, fr630, enduro
+# no background data communication: e. g. fr230, fr235, fr630
 semiround.excludeAnnotations = data
 semiround.resourcePath = $(base.resourcePath)
 
@@ -40,25 +47,25 @@ semiround.resourcePath = $(base.resourcePath)
 #semiround.lang.deu = $(semiround.lang.deu)
 
 # CIQ2 Biker Monkeys:
-vivoactive_hr.resourcePath = $(base.resourcePath);resources-CIQ2
+vivoactive_hr.resourcePath = $(resIQ2)
 vivoactive_hr.excludeAnnotations = data
 
 #vivoactive_hr.lang.deu = $(vivoactive_hr.lang.deu);resources-CIQ2-deu
 
 # CIQ2 Biker Monkeys groudned without Floors Climbed
-approachs62.resourcePath  = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
-approachs60.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
-venusq.resourcePath  = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
-venusqm.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
-fr245.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
-fr245m.resourcePath = resources;resources-CIQ2;resources-backgrounddata;resources-240;resources-exclude-floors-from-data
+approachs62.resourcePath  = $(round-240x240.resourcePath);resources-exclude-floors-from-data
+approachs60.resourcePath = $(approachs62.resourcePath)
+venusq.resourcePath  = $(approachs62.resourcePath)
+venusqm.resourcePath = $(approachs62.resourcePath)
+fr245.resourcePath = $(approachs62.resourcePath)
+fr245m.resourcePath = $(approachs62.resourcePath)
 
-approachs62.sourcePath = source;source-backgrounddata
-approachs60.sourcePath = source;source-backgrounddata
-venusq.sourcePath = source;source-backgrounddata
-venusqm.sourcePath = source;source-backgrounddata
-fr245.sourcePath = source;source-backgrounddata
-fr245m.sourcePath = source;source-backgrounddata
+approachs62.sourcePath = $(sBg)
+approachs60.sourcePath = $(sBg)
+venusq.sourcePath = $(sBg)
+venusqm.sourcePath = $(sBg)
+fr245.sourcePath = $(sBg)
+fr245m.sourcePath = $(sBg)
 
 # CIQ1 Aikido Monkeys:
 # 218 px, but no data and less activities

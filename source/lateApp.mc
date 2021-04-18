@@ -115,8 +115,7 @@ class lateApp extends Toy.Application.AppBase {
 
 	
 	(:data)
-	function onBackgroundData(data) {	
-		//Sys.println("onBackground: "+ Toybox.Application.Storage.getValue("test"));//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys()); //Sys.println(data);
+	function onBackgroundData(data) {	//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys()); Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary) {
 				if(data.hasKey("subscription_id")){	
@@ -131,7 +130,7 @@ class lateApp extends Toy.Application.AppBase {
 						changeScheduleToMinutes(60); // once de data were loaded, continue with the settings interval
 						app.setProperty("lastLoad", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
 					}
-					// app.setProperty("location", Toybox.Application.Storage.getValue("location")); app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location")); 
+					// Location to Property */ app.setProperty("location", Toybox.Application.Storage.getValue("location")); app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location")); 
 				} else {
 					if(data.hasKey("refresh_token")){
 						app.setProperty("refresh_token", data.get("refresh_token"));
@@ -431,7 +430,7 @@ class lateApp extends Toy.Application.AppBase {
 	        	app.setProperty("location", position); // save the location to fix a Fenix 5 bug that is loosing the location often
 				//app.setProperty("loc", position); 
 	        }
-			// some deivces can not save on background Toybox.Application.Storage.setValue("location", position);
+			// Location to storage */ some deivces can not save on background Toybox.Application.Storage.setValue("location", position);
 	    }
 	    return position;
 	}

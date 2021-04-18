@@ -297,41 +297,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-	/*// staging
-	function getWeatherForecast() {
-		var pos = app.locate(false);
-		if(pos == null){
-			app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
-		}
-		Sys.println("getWeatherForecast: "+pos);
-		if(pos == null){
-			Background.exit({"error_code"=>-204});
-			return;
-		}
-		if(subscription_id==null){
-			subscription_id = app.getProperty("subs");	// must be read at first call (which is this one) so we don't lose it
-		}
-		var hours= app.getProperty("d24") == 1 ? 24:12;
-		//+//System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
-		//Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat());
-		if(subscription_id instanceof String && subscription_id.length()>0){
-			Sys.println("here we go");
-			Communications.makeWebRequest("https://almost-late-middleware-staging.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
-				{"unit"=>(app.getProperty("units") ? "c":"f"), 
-					"service"=>"yrno", 
-					"period_w"=>24, 
-					"period_p"=>24,
-					"period_t"=>16
-				}, 
-				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + 
-				"test", 
-				"Accept-Version" => "v2" }},
-				method(:onWeatherForecast));
-		} else {
-			getSubscriptionId();
-		}
-	}*/
-
 	function getWeatherForecast() {
 		var pos = app.locate(false);
 		if(pos == null){
@@ -349,7 +314,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		//+//System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
 		//Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat());
 		if(subscription_id instanceof String && subscription_id.length()>0){
-			Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
+			
+			// STAGING */Communications.makeWebRequest("https://almost-late-middleware-staging.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
+			/* PROD */Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"unit"=>(app.getProperty("units") ? "c":"f"), 
 					"service"=>"yrno", // app.getProperty("provider") ? "climacell":"yrno"
 					"period_w"=>(hours+1),

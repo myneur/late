@@ -72,18 +72,20 @@ class lateView extends Ui.WatchFace {
 		centerX = s.screenWidth >> 1;
 		centerY = height >> 1;
 		clockTime = Sys.getClockTime();
-		if(events_list.size()==0){
-			var events = Toybox.Application has :Storage ? Toybox.Application.Storage.getValue("events") : app.getProperty("events");
+		
 
+		//Sys.println(["events_list before init", events_list ? events_list.toString().substring(0,30)+"...": ""]);
+		var events = Toybox.Application has :Storage ? Toybox.Application.Storage.getValue("events") : app.getProperty("events");
 if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
-	events = app.getProperty("events");
-	Toybox.Application.Storage.setValue("events", events);
-	app.setProperty("events", null); // migration	
+events = app.getProperty("events");
+Toybox.Application.Storage.setValue("events", events);
+app.setProperty("events", null); // migration	
 }
-			if(events instanceof Lang.Array){
-				events_list = events;
-			}
+		if(events instanceof Lang.Array){
+			events_list = events;
 		}
+
+
 		//Sys.println("init: "+ weatherHourly);
 		if(weatherHourly.size()==0){
 			var weather = app.getProperty("weatherHourly");
@@ -97,15 +99,24 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 	}
 
 	(:release)
-	function onLayout (dc) {
+	function onLayout (dc) { 
 		loadSettings();
 	}
 
 	(:debug)
 	function onLayout (dc) {	//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l"); //Sys.println(clockTime.min+"load");
+
+		/*Sys.println(Toy.UserProfile.getHeartRateZones(Toy.UserProfile.HR_ZONE_SPORT_GENERIC));
+		If the watch device is newer it will likely support calling this method, which returns an heart rate value that is updated every second:
+		Activity.getActivityInfo().currentHeartRate()
+		Otherwise, you can call this method and use the most recent value, which will be the heart rate within the last minute:
+		ActivityMonitor.getHeartRateHistory()
+		In both cases you will need to check for a null value, which will happen if the sensor is not available or the user is not wearing the watch.*/
+
 		presetTestVariables();
 		loadSettings();
 		resetTestVariables();	
+		//Sys.println(["postlay", events_list.toString().substring(0,30)+"..."]);
 	}
 
 	(:debug)
@@ -168,13 +179,30 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 	function resetTestVariables () {
 		var data = Ui.loadResource(Rez.JsonData.testData);
 
-		if(data.hasKey("AfterLayout")){
-			var d = data["AfterLayout"];
+		if(data.hasKey("AfterLayoutProperties")){
+			var d = data["AfterLayoutProperties"];
 			var keys = d.keys();
 			for(var i=0;i<keys.size();i++){
 				Sys.println(" - property reset "+keys[i]+": "+d[keys[i]]);
 				app.setProperty(keys[i], d[keys[i]]);
 			}
+		}
+		if(data.hasKey("AfterLayoutStorage")){
+			var d = data["AfterLayoutStorage"];
+			var keys = d.keys();
+			for(var i=0;i<keys.size();i++){
+				if(Toybox.Application has :Storage){
+					Sys.println(" - storage reset "+keys[i]);	
+					Toybox.Application.Storage.setValue(keys[i], d[keys[i]]);
+				} else {
+					Sys.println(" - property instead of storage reset "+keys[i]+": "+d[keys[i]]);
+					app.setProperty(keys[i], d[keys[i]]);
+				}
+			}
+		}
+		if(data.hasKey("Message")){
+			Sys.println(" - Message");
+			showMessage({"userPrompt"=>data["Message"]});
 		}
 		//weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
@@ -676,10 +704,8 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 
 	(:data)
 	function onBackgroundData(data) { //Sys.println("onBackgroundData view"); Sys.println(data);
-//Sys.println(Toybox.Application.Storage.getValue("test"));
 		if(data instanceof Array){	
 			events_list = data;
-//Sys.println(events_list);
 		} 
 		else if(data instanceof Lang.Dictionary){
 			if(data.hasKey("weather")){
@@ -764,7 +790,7 @@ if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
 
 	function drawNowCircle(dc, hour){
 		// show now in a day
-		if( !(events_list.size()>0 && events_list[0][4]==-1) /* permanent message =-1 in 4th event_list item */ && (activity == :calendar || showSunrise || showWeather) ){
+		if( !(events_list.size()>0 && events_list[0][4]==-1) /* permanent message =-1 in 4th events_list item */ && (activity == :calendar || showSunrise || showWeather) ){
 			var a;
 			if(d24){
 				a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod

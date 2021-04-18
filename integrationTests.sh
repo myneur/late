@@ -63,7 +63,6 @@ function setVariables(){
 	echo "setVariables"
 	DEVICES=(fenix6xpro)
 	RUN="_init"
-	BACKGROUND=0
 	RECOMPILE=1
 	RELEASE=0
 	simulate	
@@ -73,6 +72,7 @@ function testLogin(){
 	VARS="login.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	BACKGROUND=0
 	setVariables
 	DEVICES=(fenix6)
 	RUN="_login1"
@@ -93,9 +93,9 @@ function testCalendarWithWeatherShown(){
 	VARS="calendar-with-weather-shown.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	BACKGROUND=1
 	setVariables
-	DEVICES=(fenix6xpro venusq fr245 fr945 fenix5s) # data 280 240 218 OLED rectangle nofloors weakest-with-data no-storage-from-background
-	DEVICES=(fenix6xpro ) 
+	DEVICES=(fenix6xpro venusq fr245 fr945 fenix5s) # data 280 240 218 OLED rectangle nofloors weakest-with-data no-storage-from-background 
 	RUN="_calendar_weather"
 	BACKGROUND=1
 	RECOMPILE=1
@@ -108,6 +108,7 @@ function testCalendar(){
 	VARS="calendar.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	BACKGROUND=1
 	setVariables
 	DEVICES=(fenix6xpro venusq fr245 fr945 fenix5s) # data 280 240 218 OLED rectangle nofloors weakest-with-data no-storage-from-background
 	RUN="_calendar"
@@ -122,6 +123,7 @@ function testWeatherJustInDebugCalendarFollowsInRelease(){ # TODO !!! now it onl
 	VARS="start-weather.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	BACKGROUND=1
 	setVariables
 	DEVICES=(fenix6xpro) 
 	RUN="_weather"
@@ -142,6 +144,7 @@ function testMissingResolutions(){
 	VARS="calendar-with-weather-shown.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	BACKGROUND=1
 	setVariables
 	DEVICES=(wearable2021 venu smallwearable2021 vivoactive4) # 416 390 360 260 
 	RUN="_resolution"
@@ -157,6 +160,7 @@ function testNoData(){
 	VARS="no-data.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	BACKGROUND=0
 	setVariables
 	DEVICES=(fenix3 fr230 fr45 vivoactive_hr fr735xt) # no-data 218 65k 3CIQ1 180 semi-round weakest old disabled-data
 	RUN="_no-data"
@@ -172,6 +176,7 @@ function testFloorsAndMinutes(){
 	VARS="floors-and-minutes.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	BACKGROUND=0
 	setVariables
 	DEVICES=(fenix3) # no-data 218 65k 3CIQ1 180 semi-round weakest old disabled-data
 	RUN="_minuteFloors"
@@ -187,6 +192,7 @@ function strongInAllReslutions(){
 	VARS="full-strong.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	BACKGROUND=1
 	setVariables
 	DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro venusq fr945 vivoactive4 fr745 fr735xt garminswim2 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
 	RUN="_strong"
@@ -201,6 +207,7 @@ function testMonkeyJungleVariations(){
 	VARS="full-strong.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo $VARS
+	BACKGROUND=0
 	setVariables
 	DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro venusq venusqm approachs62 approachs60 fr245 fr245m fr945 vivoactive4 fr745 enduro fr735xt garminswim2 vivoactive_hr fenix3 fenix3_hr d2bravo d2bravo_titanium fr45 garminswim2)
 	RUN="_jungle"
@@ -225,10 +232,10 @@ function toDebug(){
 	simulate
 }
 
-toDebug
+#toDebug
 #testLogin
 #setVariables # just demo of what can be done
-#testCalendarWithWeatherShown
+testCalendarWithWeatherShown
 #testMissingResolutions
 #strongInAllReslutions
 

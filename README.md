@@ -9,7 +9,7 @@
 * Up to 3 activity metrics at the same time
 * Everything else is unnecessary…
 
-[Download on sl8.ch](https://sl8.ch/)
+[Download](https://sl8.ch/)
 [Give feedback](https://portal.productboard.com/myneur/1-simply-late/tabs/8-garmin-watch-face)
  
 Do you want to contribute? Write us. 
@@ -18,6 +18,7 @@ You are allowed to get an inspiration from the code, you are allowed to do your 
 
 
 ## Special thanks
+
 * Thanks to Deniz Uğur: Thank you for finding a way how to read a Google calendar despite all the traps from both Garmin and Google
 * Thanks to Marek Drtílek: Thank you for creating CSS templates for weather forecast subscription.
 * Thanks to Diego Fernandez Bravo: Thank you for sharing your code as a base for this watch face

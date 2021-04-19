@@ -104,7 +104,9 @@ app.setProperty("events", null); // migration
 	}
 
 	(:debug)
-	function onLayout (dc) {	
+	function onLayout (dc) {
+		var mem = Sys.getSystemStats();
+		System.println(" mem: free: " +mem.freeMemory + "/"+mem.totalMemory +" used: "+mem.usedMemory);
 		/* HR prototyping Sys.println(Toy.UserProfile.getHeartRateZones(Toy.UserProfile.HR_ZONE_SPORT_GENERIC));
 		If the watch device is newer it will likely support calling this method, which returns an heart rate value that is updated every second:
 		Activity.getActivityInfo().currentHeartRate()

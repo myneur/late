@@ -26,9 +26,13 @@ class lateApp extends Toy.Application.AppBase {
 
 	// function onAppInstall(){}
 
-	// requireds Background permissions:
-		// function onStorageChanged(){} 
-		// function onAppUpdate(){} 
+	/*
+	(:data)
+	function onStorageChanged(){
+		app.setProperty("location", Toybox.Application.Storage.getValue("location")); app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location"));
+	} 
+*/
+	// function onAppUpdate(){} 
 
 
 	function loadSettings(){
@@ -130,7 +134,7 @@ class lateApp extends Toy.Application.AppBase {
 						changeScheduleToMinutes(60); // once de data were loaded, continue with the settings interval
 						app.setProperty("lastLoad", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
 					}
-					// Location to Property */ app.setProperty("location", Toybox.Application.Storage.getValue("location")); app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location")); 
+					// Location to Property */ app.setProperty("location", Toybox.Application.Storage.getValue("location")); app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location"));
 				} else {
 					if(data.hasKey("refresh_token")){
 						app.setProperty("refresh_token", data.get("refresh_token"));
@@ -428,9 +432,8 @@ class lateApp extends Toy.Application.AppBase {
 	    } else {
 	    	if(save){
 	        	app.setProperty("location", position); // save the location to fix a Fenix 5 bug that is loosing the location often
-				//app.setProperty("loc", position); 
 	        }
-			// Location to storage */ some deivces can not save on background Toybox.Application.Storage.setValue("location", position);
+			// Location to storage */ some deivces can not save on background try { Toybox.Application.Storage.setValue("location", position);} catch(ex){}
 	    }
 	    return position;
 	}

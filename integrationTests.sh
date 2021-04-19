@@ -116,7 +116,7 @@ function testWeatherInDebug(){ # TODO !!! now it only loads weather because of t
 	RUN="_weather1"
 	DEVICES=(fenix6xpro) 
 	simulate
-	RUN="_weather1"
+	RUN="_weather2"
 	simulate	
 
 }
@@ -212,7 +212,7 @@ function testMonkeyJungleVariations(){
 	BACKGROUND=0
 	RECOMPILE=1
 	RELEASE=1
-	DONTSAVEPROPERTIES=1
+	DONTSAVEPROPERTIES=0
 	simulate
 }
 
@@ -230,7 +230,7 @@ function toDebug(){
 	simulate
 }
 
-#testCalendar
+testCalendar
 testWeatherInDebug
 #toDebug
 #testLogin

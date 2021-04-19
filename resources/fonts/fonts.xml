@@ -1,9 +1,8 @@
 <fonts>
 	<font id="Hours" filename="futura83.fnt" filter="0123456789:" antialias="true" />
 	<font id="HoursStrong" filename="futura122num.fnt" filter="0123456789:" antialias="true" />
-	<font id="Minute" filename="futura22num.fnt"  filter="0123456789:" antialias="true" />
-	<font id="MinuteStrong" filename="futura28num.fnt"  filter="0123456789:" antialias="true" />
-	<font id="Small" filename="futura22-i18n.fnt"  antialias="true" />
-	<font id="SmallStrong" filename="futura28-i18n.fnt"  antialias="true" />
-	<font id="Condensed" filename="futura-condensed22-i18n.fnt"  antialias="true" />
+	<font id="Small" filename="futura22mdscandi.fnt"  antialias="true" />
+	<font id="SmallStrong" filename="futura28mdscandi.fnt"  antialias="true" />
+	<font id="Condensed" filename="futura-condensed22i18nmajor.fnt"  antialias="true" />
+	<font id="Ico" filename="../drawables/icons.fnt" antialias="true" />
 </fonts>

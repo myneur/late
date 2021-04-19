@@ -1,8 +1,8 @@
 <strings>
-	<string id="AppName">simply late!</string>
-	<string id="CIQ">2</string>
-	<string id="DataLoading">0</string>
-
+	<string id="AppName">simply late!</string><!-- do not translate -->
+	<string id="CIQ">2</string><!-- do not translate -->
+	<string id="DataLoading">0</string><!-- do not translate -->
+	<!-- new Garmin activity metrics to choose from available (enriched options to /resources id="ActivityTitle") -->
 	<string id="Floors">Floors Climbed</string>
     <string id="ActiveMinutesDay">Active Minutes Today</string>
     <string id="ActiveMinutesWeek">Active Minutes this Week</string>

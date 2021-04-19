@@ -14,5 +14,9 @@ Do you like it? [Would you like to join us and contribute with any of these?](ht
 
 ## Special thanks
 * To Diego Fernandez Bravo: Thank you for sharing your code as a base for this watch face
+<<<<<<< HEAD
 * To Deniz Uğur: Thank you for finding a way how to read a Google calendar despite all the traps from both Garmin and Google
+=======
+* To Deniz Uğur: Thank you for finding a way how to read a Google calendar despite all the traps from both Garmin and Google
+>>>>>>> weather
 

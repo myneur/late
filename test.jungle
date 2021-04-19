@@ -1,0 +1,83 @@
+project.manifest = manifest.xml
+base.sourcePath = source;source-tests
+base.resourcePath = $(base.resourcePath);resources-tests
+
+resIQ2=$(base.resourcePath);resources-CIQ2	
+resBgIQ2=$(resIQ2);resources-backgrounddata
+
+sBg=source;source-backgrounddata
+
+# bigger display or background data
+round-218x218.resourcePath = $(resBgIQ2)
+round-240x240.resourcePath = $(resBgIQ2);resources-240
+round-260x260.resourcePath = $(round-240x240.resourcePath)
+round-280x280.resourcePath = $(round-260x260.resourcePath);resources-280
+round-360x360.resourcePath = $(round-280x280.resourcePath);resources-390
+round-416x416.resourcePath = $(round-360x360.resourcePath)
+round-390x390.resourcePath = $(round-416x416.resourcePath)
+
+round-218x218.sourcePath = $(sBg)
+round-240x240.sourcePath = $(sBg)
+round-260x260.sourcePath = $(sBg)
+round-280x280.sourcePath = $(sBg)
+round-390x390.sourcePath = $(sBg)
+round-360x360.sourcePath = $(sBg)
+round-416x416.sourcePath = $(sBg)
+
+
+# exclude data enduro
+enduro.excludeAnnotations = data
+enduro.sourcePath = source
+enduro.resourcePath = $(resIQ2);resources-240;resources-280
+
+
+# no background data communication: e. g. fr230, fr235, fr630
+semiround.excludeAnnotations = data
+semiround.resourcePath = $(base.resourcePath)
+
+
+#semiround.lang.deu = $(semiround.lang.deu)
+
+# CIQ2 Biker Monkeys:
+vivoactive_hr.resourcePath = $(resIQ2)
+vivoactive_hr.excludeAnnotations = data
+
+#vivoactive_hr.lang.deu = $(vivoactive_hr.lang.deu);resources-CIQ2-deu
+
+# CIQ2 Biker Monkeys groudned without Floors Climbed
+approachs62.resourcePath  = $(round-240x240.resourcePath);resources-exclude-floors-from-data
+approachs60.resourcePath = $(approachs62.resourcePath)
+venusq.resourcePath  = $(approachs62.resourcePath)
+venusqm.resourcePath = $(approachs62.resourcePath)
+fr245.resourcePath = $(approachs62.resourcePath)
+fr245m.resourcePath = $(approachs62.resourcePath)
+
+approachs62.sourcePath = $(sBg)
+approachs60.sourcePath = $(sBg)
+venusq.sourcePath = $(sBg)
+venusqm.sourcePath = $(sBg)
+fr245.sourcePath = $(sBg)
+fr245m.sourcePath = $(sBg)
+
+# CIQ1 Aikido Monkeys:
+# 218 px, but no data and less activities
+fenix3.excludeAnnotations = data
+fenix3_hr.excludeAnnotations = data
+d2bravo.excludeAnnotations = data
+d2bravo_titanium.excludeAnnotations = data
+fr45.excludeAnnotations = data
+garminswim2.excludeAnnotations = data
+
+fenix3.sourcePath = source
+fenix3_hr.sourcePath = source
+d2bravo.sourcePath = source
+d2bravo_titanium.sourcePath = source
+fr45.sourcePath = source
+garminswim2.sourcePath = source
+
+fenix3.resourcePath = $(base.resourcePath)
+fenix3_hr.resourcePath = $(base.resourcePath)
+d2bravo.resourcePath = $(base.resourcePath)
+d2bravo_titanium.resourcePath = $(base.resourcePath)
+fr45.resourcePath = $(base.resourcePath)
+garminswim2.resourcePath = $(base.resourcePath)

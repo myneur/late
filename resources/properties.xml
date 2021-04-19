@@ -4,11 +4,14 @@
 
 	<property id="dateForm" type="number">0</property>
 	<property id="activity" type="number">1</property>
+	<property id="activityL" type="number">0</property>
+	<property id="activityR" type="number">0</property>
+
+	<property id="boldness" type="number">7</property>
+	<property id="dialSize" type="number">0</property>
+	
 	<property id="sunriset" type="boolean">true</property>
 	<property id="bat" type="number">33</property>
-	<property id="dialSize" type="number">0</property>
-	<property id="boldness" type="number">5</property>
-	<property id="compatibility" type="number">0</property>
-	<property id="eventNameLength" type="number">21</property>
-	<property id="eventLocationLength" type="number">8</property>
+	<property id="percents" type="boolean">false</property>
+	<property id="d24" type="number">1</property>
 </properties>

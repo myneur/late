@@ -1,0 +1,9 @@
+<strings>
+	<string id="AppName">simply late!</string><!-- do not translate -->
+	<string id="CIQ">2</string><!-- do not translate -->
+	<string id="DataLoading">0</string><!-- do not translate -->
+	<!-- new Garmin activity metrics to choose from available (enriched options to /resources id="ActivityTitle") -->
+	<string id="Floors">Etagen gestiegen</string>
+    <string id="ActiveMinutesDay">heutige Aktivitätsminuten</string>
+    <string id="ActiveMinutesWeek">Wöchentliche Aktivitätsminuten</string>
+</strings>

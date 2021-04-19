@@ -1,0 +1,20 @@
+<resources>
+<jsonData id="testData">{
+		"Properties": {
+			"weather": true,
+			"activity": 6,
+			"activityL": 1,
+			"activityR": 2,
+			"dialSize": 1,
+			"percents": true,
+			"d24": true,
+			"weatherHourly": [10, 5, 4, 13, 1.100000, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3],
+			"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]
+		},
+		"Storage":
+			{"events": 
+				[[1618660800, 1618662600, "THIS MUST BE REPLACED !", "THIS TOO !", 1, 210, 218], [1618662600, 1618664400, "THIS MUST BE REPLACED !", "THIS TOO !", 1, 218, 225], [1618664400, 1618666200, "THIS MUST BE REPLACED !", "THIS TOO !", 1, 225, 233], [1618666200, 1618668000, "THIS MUST BE REPLACED !", "THIS TOO !", 1, 233, 240], [1618668000, 1618669800, "", "", 1, 240, 248], [1618678800, 1618680600, "THIS MUST BE REPLACED !", "THIS TOO !", 0, 285, 293], [1618680600, 1618682400, "THIS MUST BE REPLACED !", "THIS TOO !", 0, 293, 300], [1618682400, 1618684200, "THIS MUST BE REPLACED !", "THIS TOO !", 0, 300, 308], [1618684200, 1618686000, "THIS MUST BE REPLACED !", "THIS TOO !", 0, 308, 315], [1618686000, 1618687800, "", "", 0, 315, 323], [1618687800, 1618689600, "", "", 0, 323, 330]]
+			}
+		}
+	</jsonData>
+</resources>

@@ -13,8 +13,11 @@
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.Light</listEntry>						
 			<listEntry value="1">@Strings.Dark</listEntry>
+			<listEntry value="3">@Strings.WhiteBg</listEntry>
+			<listEntry value="4">@Strings.ColorBg</listEntry>
 		</settingConfig>
 	</setting>
+
 	
 	<setting propertyKey="@Properties.dateForm" title="@Strings.DateFormTitle">
 		<settingConfig type="list">
@@ -30,6 +33,40 @@
 			<listEntry value="2">@Strings.Calories</listEntry>
 		</settingConfig>
 	</setting>
+	<setting propertyKey="@Properties.activityL" title="@Strings.ActivityTitleL">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.DnD</listEntry>
+			<listEntry value="1">@Strings.Steps</listEntry>
+			<listEntry value="2">@Strings.Calories</listEntry>
+		</settingConfig>
+	</setting>
+	<setting propertyKey="@Properties.activityR" title="@Strings.ActivityTitleR">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.DnD</listEntry>
+			<listEntry value="1">@Strings.Steps</listEntry>
+			<listEntry value="2">@Strings.Calories</listEntry>
+		</settingConfig>
+	</setting>
+	<setting propertyKey="@Properties.percents" title="@Strings.showPercents">
+		<settingConfig type="boolean" />
+	</setting>
+
+		<setting propertyKey="@Properties.dialSize" title="@Strings.DialSize">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.s0</listEntry>
+			<listEntry value="1">@Strings.s1</listEntry>
+		</settingConfig>
+	</setting>
+
+   <setting propertyKey="@Properties.boldness" title="@Strings.Boldness">
+		<settingConfig type="list">
+			<listEntry value="3">@Strings.b3</listEntry>
+			<!--<listEntry value="4">@Strings.b4</listEntry>-->
+			<listEntry value="5">@Strings.b5</listEntry>
+			<listEntry value="7">@Strings.b7</listEntry>
+			<listEntry value="9">@Strings.b9</listEntry>
+		</settingConfig>
+	</setting>
 
 	<setting propertyKey="@Properties.bat" title="@Strings.BatteryTitle">
 		<settingConfig type="list">
@@ -42,24 +79,13 @@
 		</settingConfig>
 	</setting>
 
-	<setting propertyKey="@Properties.dialSize" title="@Strings.DialSize">
-		<settingConfig type="list">
-			<listEntry value="0">@Strings.s0</listEntry>
-			<listEntry value="1">@Strings.s1</listEntry>
-		</settingConfig>
-	</setting>
-
-   <setting propertyKey="@Properties.boldness" title="@Strings.Boldness">
-		<settingConfig type="list">
-			<listEntry value="3">@Strings.b3</listEntry>
-			<listEntry value="4">@Strings.b4</listEntry>
-			<listEntry value="5">@Strings.b5</listEntry>
-			<listEntry value="7">@Strings.b7</listEntry>
-			<listEntry value="9">@Strings.b9</listEntry>
-		</settingConfig>
-	</setting>
-
 	<setting propertyKey="@Properties.sunriset" title="@Strings.showSunriseSunsetTitle">
 		<settingConfig type="boolean" />
+	</setting>
+	<setting propertyKey="@Properties.d24" title="@Strings.D1224h">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.D12h</listEntry>						
+			<listEntry value="1">@Strings.D24h</listEntry>
+		</settingConfig>
 	</setting>
 </settings>

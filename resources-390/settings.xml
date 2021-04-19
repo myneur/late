@@ -1,0 +1,11 @@
+<settings>
+   <setting propertyKey="@Properties.boldness" title="@Strings.Boldness">
+		<settingConfig type="list">
+			<listEntry value="5">@Strings.b3</listEntry>
+			<!--<listEntry value="7">@Strings.b4</listEntry>-->
+			<listEntry value="9">@Strings.b5</listEntry>
+			<listEntry value="12">@Strings.b7</listEntry>
+			<listEntry value="16">@Strings.b9</listEntry>
+		</settingConfig>
+	</setting>
+</settings>

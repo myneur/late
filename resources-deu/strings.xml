@@ -1,0 +1,55 @@
+﻿<strings>
+	<string id="AppName">simply late! 1</string><!-- do not translate -->
+	<string id="AppVersionTitle">version</string><!-- do not translate -->
+	<string id="CIQ">1</string><!-- do not translate -->
+	<string id="DataLoading">0</string><!-- do not translate -->
+	<!-- menu items: choosing a color scheme -->
+	<string id="ColorTitle">Farbe</string><!-- main color of the watch -->
+	<string id="ToneTitle">Farbton</string><!-- the tone provides slight variations of the tone of the main color -->
+	<string id="Light">Hell</string>
+	<string id="Dark">Dunkel</string>
+	<!-- color options to choose from -->
+	<string id="ColorRed">Rot</string>
+	<string id="ColorOrange">Gelblich</string><!-- this varies from yellow to orange, depending on Tone setting -->
+	<string id="ColorBlue">Blau</string>
+	<string id="ColorGreen">Grün</string>
+	<string id="ColorPurple">Leicht violett</string>
+	<string id="ColorGray">Grau</string>
+	<string id="WhiteBg">Experimentell: weißer Hintergrund</string><!-- experimental means not all color combinations might be great yet -->
+	<string id="ColorBg">Experimentell: farbiger Hintergrund</string>
+	<!-- menu items: choosing a date format: Month or Day of week -->
+	<string id="DateFormTitle">Datumsformat</string>
+	<string id="DateFormMonth">Monat</string>
+	<string id="DateFormDayOfWeek">Wochentag</string>
+	<!-- menu items: choosing a flavor of the watch -->
+	<string id="Boldness">Dicke des Kreises</string><!-- how bold is the minute arc -->
+	<string id="b3">3</string><!-- do not translate -->
+	<string id="b4">4</string><!-- do not translate -->
+	<string id="b5">5</string><!-- do not translate -->
+	<string id="b7">7</string><!-- do not translate -->
+	<string id="b9">9</string><!-- do not translate -->
+	<!-- Choose from two flavors of the watch face dial -->
+	<string id="DialSize">Ziffenblattr</string><!-- the flavor means it is a matter of taste and we don't mind if he uses one or the another -->
+	<string id="s0">Elegant</string><!-- Elegant emphasizes this is more fine-tuned variant -->
+	<string id="s1">Stark</string><!-- Strong emphasizes this is more rough variant that is intended to shout -->
+	<!-- menu items: choosing what activity metric to show on the watch -->
+	<string id="ActivityTitle">Aktivitätsinfo</string><!-- choosing information about what activity to show (like steps or calories) -->
+	<string id="ActivityTitleL">Aktivitätsinfo: links (nur bei elegantem Ziffernblatt)</string><!-- only in Elegant means that it does not display beautifuly in a Strong Flavor setting -->
+    <string id="ActivityTitleR">Aktivitätsinfo: rechts (nur bei elegantem Ziffernblat)</string>
+	<string id="DnD">Nichts: Störe mich nicht!</string><!-- Do not disturb me! means we have an appreciation for the simplicity and when people don't want to be bother by an unecessary info they are not interested in -->
+	<!-- Garmin activity metrics to choose from -->
+	<string id="Calories">Kalorien verbrannt</string>
+	<string id="Steps">Schritte</string>
+	<string id="showPercents">Kuchendiagramm anstelle des Wertes</string><!-- this togle switches between showing a number (metric of an activity) and a pie chart representing a percentage of goal reached (when turned on) -->
+	<!-- menu items: at what threshold to show the battery indicator -->
+	<string id="BatteryTitle">Batterieanzeige anzeigen</string><!-- what level to show a battery indicator from -->
+	<string id="BellowFive">unter 5%</string>
+	<string id="BellowTen">unter 10%</string>
+	<string id="BellowTwenty">unter 20%</string>
+	<string id="BellowThird">unter 33%</string>
+	<string id="BellowHalf">unter 50%</string>
+	<string id="Always">immer anzeigen</string>
+	<!-- menu items: toggle to turn on showing when there will be a sunrise and sunset across the watch's 24h dial -->
+	<string id="showSunriseSunsetTitle">Sonnenauf- und untergang auf 24h Zifferblatt anzeigen</string> -->
+	
+</strings>

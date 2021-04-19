@@ -2,3 +2,7 @@ credentials.json
 credentials.xml
 .project
 .DS_Store
+*.prg
+*.iq
+late.prg.debug.xml
+late-settings.json

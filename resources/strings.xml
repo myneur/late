@@ -1,48 +1,58 @@
 <strings>
-	<string id="AppName">simply late! 1</string>
-	<string id="AppVersionTitle">version</string>
-	<string id="CIQ">1</string>
-	<string id="DataLoading">0</string>
-
-	<string id="ColorTitle">Color</string>
-	<string id="ToneTitle">Tone</string>
+	<string id="AppName">simply late! 1</string><!-- do not translate -->
+	<string id="AppVersionTitle">version</string><!-- do not translate -->
+	<string id="CIQ">1</string><!-- do not translate -->
+	<string id="DataLoading">0</string><!-- do not translate -->
+	<!-- menu items: choosing a color scheme -->
+	<string id="ColorTitle">Color</string><!-- main color of the watch -->
+	<string id="ToneTitle">Tone</string><!-- the tone provides slight variations of the tone of the main color -->
 	<string id="Light">Light</string>
 	<string id="Dark">Dark</string>
-
+	<!-- color options to choose from -->
 	<string id="ColorRed">Red</string>
-	<string id="ColorOrange">Orange</string>
+	<string id="ColorOrange">Yellowish</string><!-- this varies from yellow to orange, depending on Tone setting -->
 	<string id="ColorBlue">Blue</string>
 	<string id="ColorGreen">Green</string>
-	<string id="ColorPurple">Purple</string>
+	<string id="ColorPurple">Purplish</string>
 	<string id="ColorGray">Gray</string>
-
+	<string id="WhiteBg">Experimental: White background</string><!-- experimental means not all color combinations might be great yet -->
+	<string id="ColorBg">Experimental: Color background</string>
+	<!-- menu items: choosing a date format: Month or Day of week -->
 	<string id="DateFormTitle">Date Format</string>
 	<string id="DateFormMonth">Month</string>
 	<string id="DateFormDayOfWeek">Day of week</string>
-
-	<string id="ActivityTitle">Activity Info</string>
-	<string id="DnD">Nothing: Do not disturb me!</string>
+	<!-- menu items: choosing a flavor of the watch -->
+	<string id="Boldness">Boldness</string><!-- how bold is the minute arc -->
+	<string id="b3">3</string><!-- do not translate -->
+	<!--<string id="b4">4</string>--><!-- do not translate -->
+	<string id="b5">5</string><!-- do not translate -->
+	<string id="b7">7</string><!-- do not translate -->
+	<string id="b9">9</string><!-- do not translate -->
+	<!-- Choose from two flavors of the watch face dial -->
+	<string id="DialSize">Dial flavor</string><!-- the flavor means it is a matter of taste and we don't mind if he uses one or the another -->
+	<string id="s0">Elegant</string><!-- Elegant emphasizes this is more fine-tuned variant -->
+	<string id="s1">Strong</string><!-- Strong emphasizes this is more rough variant that is intended to shout -->
+	<!-- menu items: choosing what activity metric to show on the watch -->
+	<string id="ActivityTitle">Activity Info</string><!-- choosing information about what activity to show (like steps or calories) -->
+	<string id="ActivityTitleL">Activity Info: Left (only in Elegant Flavor)</string><!-- only in Elegant means that it does not display beautifuly in a Strong Flavor setting -->
+    <string id="ActivityTitleR">Activity Info: Right (only in Elegant Flavor)</string>
+	<string id="DnD">Nothing: Do not disturb me!</string><!-- Do not disturb me! means we have an appreciation for the simplicity and when people don't want to be bother by an unecessary info they are not interested in -->
+	<!-- Garmin activity metrics to choose from -->
 	<string id="Calories">Calories Burned</string>
 	<string id="Steps">Steps</string>
-
-	<string id="BatteryTitle">Battery level</string>
+	<string id="showPercents">Percentage of goal instead of number</string><!-- this togle switches between showing a number (metric of an activity) and a pie chart representing a percentage of goal reached (when turned on) -->
+	<!-- menu items: at what threshold to show the battery indicator -->
+	<string id="BatteryTitle">Battery level from</string><!-- what level to show a battery indicator from -->
 	<string id="BellowFive">below 5%</string>
 	<string id="BellowTen">below 10%</string>
 	<string id="BellowTwenty">below 20%</string>
 	<string id="BellowThird">below 33%</string>
 	<string id="BellowHalf">below 50%</string>
 	<string id="Always">Always show battery level</string>
-
-	<string id="Boldness">Boldness</string>
-	<string id="b3">3</string>
-	<string id="b4">4</string>
-	<string id="b5">5</string>
-	<string id="b7">7</string>
-	<string id="b9">9</string>
-
-	<string id="DialSize">Dial flavor</string>
-	<string id="s0">Elegant</string>
-	<string id="s1">Strong</string>
-
-	<string id="showSunriseSunsetTitle">Sunrise and sunset on 24h dial</string>
+	<!-- menu items: toggle to turn on showing when there will be a sunrise and sunset across the watch's 24h dial -->
+	<string id="showSunriseSunsetTitle">Sunrise and sunset on dial</string> 
+	<string id="D1224h">12 or 24h dial for sunrise/sunset?</string>
+	<string id="D12h">12h dial</string>
+	<string id="D24h">24h dial</string>
+	
 </strings>

@@ -216,23 +216,20 @@ function testMonkeyJungleVariations(){
 	simulate
 }
 
-function toDebug(){
-	VARS="full-strong.vars.xml"
-	VARS="no-data.vars.xml"
-	#cp resources-tests-templates/$VARS resources-tests/test-variables.xml
-	#echo " < "$VARS
-	#setVariables
-	DEVICES=(enduro) 
-	RUN="_debug"
-	BACKGROUND=0
+function currentDebug(){
+	RELEASE=0
 	RECOMPILE=1
-	RELEASE=1
+	RUN="_debug"
+	VARS="full-strong.vars.xml"
+	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > resources-tests/test-variables.xml
+	DEVICES=(fenix6) 	
+	BACKGROUND=0
 	simulate
 }
 
-testCalendar
-testWeatherInDebug
-#toDebug
+#testCalendar
+#testWeatherInDebug
+currentDebug
 #testLogin
 #testSubscriptionInDebug
 #setVariables # just demo of what can be done

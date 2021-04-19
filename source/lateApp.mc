@@ -115,7 +115,7 @@ class lateApp extends Toy.Application.AppBase {
 
 	
 	(:data)
-	function onBackgroundData(data) {	//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys()); Sys.println(data);
+	function onBackgroundData(data) {	//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys()); //Sys.println(data);
 		try {
 			if(data instanceof Toybox.Lang.Dictionary) {
 				if(data.hasKey("subscription_id")){	

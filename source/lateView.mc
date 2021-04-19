@@ -104,9 +104,8 @@ app.setProperty("events", null); // migration
 	}
 
 	(:debug)
-	function onLayout (dc) {	//App.getApp().setProperty("l", App.getApp().getProperty("l")+"l"); //Sys.println(clockTime.min+"load");
-
-		/*Sys.println(Toy.UserProfile.getHeartRateZones(Toy.UserProfile.HR_ZONE_SPORT_GENERIC));
+	function onLayout (dc) {	
+		/* HR prototyping Sys.println(Toy.UserProfile.getHeartRateZones(Toy.UserProfile.HR_ZONE_SPORT_GENERIC));
 		If the watch device is newer it will likely support calling this method, which returns an heart rate value that is updated every second:
 		Activity.getActivityInfo().currentHeartRate()
 		Otherwise, you can call this method and use the most recent value, which will be the heart rate within the last minute:
@@ -116,12 +115,19 @@ app.setProperty("events", null); // migration
 		presetTestVariables();
 		loadSettings();
 		resetTestVariables();	
-		//Sys.println(["postlay", events_list.toString().substring(0,30)+"..."]);
 	}
 
 	(:debug)
 	function presetTestVariables () {
 		var data = Ui.loadResource(Rez.JsonData.testData);
+		if(data.hasKey("CopyProperties")){
+			var d = data["Properties"];
+			var keys = d.keys();
+			for(var i=0;i<keys.size();i++){
+				Sys.println(" - copy property "+keys[i]+" to "+(d[keys[i]]!=null ? d[keys[i]].toString().substring(0,30) : "[MISSING]"));
+				app.setProperty(keys[i], app.setProperty(keys[i],d[keys[i]]));
+			}
+		}
 		if(data.hasKey("clearProperties")){
 			var d = data["clearProperties"];
 			for(var i=0;i<d.size();i++){
@@ -133,7 +139,15 @@ app.setProperty("events", null); // migration
 			var d = data["Properties"];
 			var keys = d.keys();
 			for(var i=0;i<keys.size();i++){
-				Sys.println(" - property "+keys[i]+": "+d[keys[i]]);
+				Sys.println(" - property "+keys[i]+": "+(d[keys[i]]!=null ? d[keys[i]].toString().substring(0,30) : "[MISSING]"));
+				app.setProperty(keys[i], d[keys[i]]);
+			}
+		}
+		if(data.hasKey("CharProperties")){
+			var d = data["CharProperties"];
+			var keys = d.keys();
+			for(var i=0;i<keys.size();i++){
+				Sys.println(" - char property "+keys[i]+": "+d[keys[i]].toCharArray()[0]);
 				app.setProperty(keys[i], d[keys[i]]);
 			}
 		}
@@ -155,13 +169,14 @@ app.setProperty("events", null); // migration
 			for(var i=0;i<keys.size();i++){
 				if(Toybox.Application has :Storage){
 					Sys.println(" - storage "+keys[i]);	
-					Toybox.Application.Storage.setValue(keys[i], d[keys[i]]);
+					Toybox.Application.Storage.setValue(keys[i], (d[keys[i]]!=null ? d[keys[i]].toString().substring(0,30) : "[MISSING]"));
 				} else {
 					Sys.println(" - property instead of storage "+keys[i]+": "+d[keys[i]]);
 					app.setProperty(keys[i], d[keys[i]]);
 				}
 			}
 		}
+
 		//app.setProperty("d24", Sys.getDeviceSettings().is24Hour); 
 		//app.setProperty("units", 1);
 		//set props: mainColor=1;circleWidth=9;
@@ -183,8 +198,16 @@ app.setProperty("events", null); // migration
 			var d = data["AfterLayoutProperties"];
 			var keys = d.keys();
 			for(var i=0;i<keys.size();i++){
-				Sys.println(" - property reset "+keys[i]+": "+d[keys[i]]);
+				Sys.println(" - property reset "+keys[i]+": "+(d[keys[i]]!=null ? d[keys[i]].toString().substring(0,30) : "[MISSING]"));
 				app.setProperty(keys[i], d[keys[i]]);
+			}
+		}
+		if(data.hasKey("AfterLayoutCharProperties")){
+			var d = data["AfterLayoutCharProperties"];
+			var keys = d.keys();
+			for(var i=0;i<keys.size();i++){
+				Sys.println(" - char property reset "+keys[i]+": "+d[keys[i]].toCharArray()[0]);
+				app.setProperty(keys[i], d[keys[i]].toCharArray()[0]);
 			}
 		}
 		if(data.hasKey("AfterLayoutStorage")){
@@ -195,7 +218,7 @@ app.setProperty("events", null); // migration
 					Sys.println(" - storage reset "+keys[i]);	
 					Toybox.Application.Storage.setValue(keys[i], d[keys[i]]);
 				} else {
-					Sys.println(" - property instead of storage reset "+keys[i]+": "+d[keys[i]]);
+					Sys.println(" - property instead of storage reset "+keys[i]+": "+(d[keys[i]] ? d[keys[i]].toString().substring(0,30) : "[MISSING]"));
 					app.setProperty(keys[i], d[keys[i]]);
 				}
 			}

@@ -51,7 +51,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>on run {input, parameters}				if application "ConnectIQ" is running then				tell application "System Events"						set theName to name of the first process whose frontmost is true					end tell				tell application "ConnectIQ" to activate				tell application "System Events"			tell process "Connect IQ Device Simulator"				set frontmost to true				click menu item "Background Events" of menu "Simulation" of menu bar 1				# click (first button where its accessibility description = "OK")				# delay 1.0				# click (first button)				click button "OK" of window "Background Events"							end tell					end tell				tell application theName to activate			end if		return input	end run</string>
+					<string>on run {input, parameters}				if application "ConnectIQ" is running then				tell application "System Events"						set theName to name of the first process whose frontmost is true					end tell				tell application "ConnectIQ" to activate				tell application "System Events"			tell process "Connect IQ Device Simulator"				set frontmost to true				click menu item "Background Events" of menu "Simulation" of menu bar 1				# click (first button where its accessibility description = "OK")				# delay 1.0				# click (first button)				click button "OK" of window "Background Events"							end tell					end tell				tell application theName to activate			end if		return " &gt; Background Event started"	end run</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -105,7 +105,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>447.000000:839.000000</string>
+				<string>363.000000:744.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>

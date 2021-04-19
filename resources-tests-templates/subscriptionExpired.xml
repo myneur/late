@@ -1,0 +1,19 @@
+<resources>
+<jsonData id="testData">{
+		"CopyProperties":
+			{"sub": "sub.bak", 
+			}
+		},
+		"ClearProperties": ["sub"],
+		"Reinitialize": true,
+		"Properties": {
+			"weather": true,
+			"activity": 0,
+			"location": [50.1,14.4],
+		},
+		"AfterLayoutCharProperties":
+			{"lastLoad": "c"}
+		}
+		
+	</jsonData><!-- lastLoad must be "w", because we need to actually lost the calendar first, so in the next run the weather gets loaded -->
+</resources>

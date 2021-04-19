@@ -1,17 +1,12 @@
-# almost late! Garmin fēnix 3 Connect IQ watchface
+# Garmin Smart Watch with Calendar & Weather
 
-![concept teaser](/docs/tease.png) 
+## Shared as an inspiration only for your personal use
 
-* you rarely need to know an exact hour and minute in the day
-* you rather need to know what is a current hour quickly (here digital watches are great)
-* ...and get a sense of where you are within the hour (here analog watches are great)
-* this concept combines the best from both worlds
+You are allowed to get an inspiration from the code, you are allowed to do your own version ONLY FOR YOUR PERSONAL use, but you are not allowed to publish or distribute any derivative work to others or to use any part of the code or design in a competing app without a written permission. 
 
-Based on a [design concept](https://www.behance.net/gallery/33752138/Smart-watch-face-navigating-through-the-day) optimizing watch for daily usabilty. 
-Availabe in [Garmin Connect IQ Store](https://apps.garmin.com/en-US/apps/3532114a-c93c-447a-bc8e-25999ea599fc).
- 
- If you can contribute to show calendar events in the watchface, that would be awesome! 
 
 ## Special thanks
-* To Diego Fernandez Bravo: Thank you for sharing your code which was base to this watch face
 
+* Thanks to Deniz Uğur: Thank you for finding a way how to read a Google calendar despite all the traps from both Garmin and Google
+* Thanks to Marek Drtílek: Thank you for creating CSS templates for weather forecast subscription.
+* Thanks to Diego Fernandez Bravo: Thank you for sharing your code as a base for this watch face

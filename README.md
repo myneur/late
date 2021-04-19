@@ -12,7 +12,7 @@
 [Download](https://sl8.ch/)
 [Give feedback](https://portal.productboard.com/myneur/1-simply-late/tabs/8-garmin-watch-face)
  
-Do you want to contribute? Write us. 
+[Do you want to contribute?](https://sl8.ch/contribute)
 
 You are allowed to get an inspiration from the code, you are allowed to do your own version ONLY FOR YOUR PERSONAL use, but you are not allowed to publish or distribute any derivative work to others or to use any part of the code or design in a competing app without a written permission. 
 

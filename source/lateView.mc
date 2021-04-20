@@ -42,7 +42,7 @@ class lateView extends Ui.WatchFace {
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; hidden var messageY; hidden var sunR; //hidden var temp; //hidden var notifY;
 	hidden var icons;
 	hidden var d24;
-	// TODO AOD // hidden var burnInProtection=0;
+	/* TODO AOD */ hidden var burnInProtection=0;
 	
 	hidden var events_list = [];
 	var message = false;
@@ -524,7 +524,7 @@ app.setProperty("events", null); // migration
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
 	function onExitSleep(){
-		// TODO AOD // if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=0;circleWidth = app.getProperty("boldness");if(height>280){circleWidth=circleWidth<<1;}}
+		/* TODO AOD */ if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=0;circleWidth = app.getProperty("boldness");if(height>280){circleWidth=circleWidth<<1;}}
 		//onShow();
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"x");
 		//Sys.println(clockTime.min+"x");
@@ -538,7 +538,7 @@ app.setProperty("events", null); // migration
 
 	//! Terminate any active timers and prepare for slow updates.
 	function onEnterSleep(){
-		// TODO AOD // if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=1;circleWidth=2;}
+		/* TODO AOD */ if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=1;circleWidth=2;}
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"e");
 		//Sys.println(clockTime.min+"e");
 		//////Sys.println("onEnterSleep");
@@ -570,7 +570,7 @@ app.setProperty("events", null); // migration
 		}
 		dc.setColor(backgroundColor, backgroundColor);
 		dc.clear();
-		// TODO AOD // if(burnInProtection){var diff = 4;if(burnInProtection>1){centerX = centerX + ((centerX == (height>>1)) ? diff : -diff);burnInProtection=1;}else{var move = (centerY==(height>>1)) ? diff : -diff;centerY = centerY + move;dateY = dateY + move;burnInProtection=2;}} else {
+		/* TODO AOD */ if(burnInProtection){var diff = 4;if(burnInProtection>1){centerX = centerX + ((centerX == (height>>1)) ? diff : -diff);burnInProtection=1;}else{var move = (centerY==(height>>1)) ? diff : -diff;centerY = centerY + move;dateY = dateY + move;burnInProtection=2;}} else {
 		// TODO AOD-X // if(burnInProtection){Sys.println([clockTime.hour, dx,dy]);if(burnInProtection>1){dx = dx == -5 ? dx+10 : dx-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=1;}else{dy = dy == -5 ? dy+10 : dy-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=2;}} else {
 			//lastRedrawMin=clockTime.min;
 			drawBatteryLevel(dc);
@@ -595,9 +595,9 @@ app.setProperty("events", null); // migration
 			var x = centerX-radius - (sunR-radius)>>1-(dc.getTextWidthInPixels("1", fontSmall)/3).toNumber();	// scale 4 with resolution
 			drawActivity(dc, activityL, x, centerY, false);
 			drawActivity(dc, activityR, centerX<<1-x, centerY, false);
-		// TODO AOD // }
+		/* TODO AOD */ }
 		drawTime(dc);
-		// TODO AOD // if(burnInProtection==0){
+		/* TODO AOD */ if(burnInProtection==0){
 			if(activity != null || message){
 				if(activity == :calendar || message){
 					drawEvent(dc);
@@ -616,7 +616,7 @@ app.setProperty("events", null); // migration
 			}
 			// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 			drawNowCircle(dc, clockTime.hour);
-		// TODO AOD // }
+		/* TODO AOD */ }
 
 		//}
 		//ms.add(Sys.getTimer()-ms[0]);
@@ -1121,10 +1121,28 @@ app.setProperty("events", null); // migration
 		var gap=0;
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 		// TODO AOD overlapping 4>5 outlines etc // h=(h+7)%24; var d= new [24];for(var q=0;q<d.size();q++){d[q]=[0,0];}d[5]=[4,2];
-		// TODO AOD // if(burnInProtection){ for(var i=0;i<4;i++){dc.drawText(i&1<<1-1 + centerX,(i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); } dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);} else {
+		
+		/* TODO AOD */ 
+		if(burnInProtection){ 
+			var stroke = (minutes==0 || minutes == 59 ) ? 3 : 1;
+			for(var i=0;i<4;i++){
+				dc.drawText((i&1<<1-1)*stroke + centerX, (i&3>>1<<1-1)*stroke + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); 
+			} 
+			dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);
+			if(stroke==2){
+				for(var i=0;i<4;i++){
+					dc.drawText(i&1<<1-1 + centerX,(i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); 
+				} 
+			}
+
+		}  else { /* TODO AOD */ 
 			dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(Math.round(centerX + (radius * sin)), Math.round(centerY - (radius * cos)) , fontSmall, minutes, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
-		// TODO AOD // }
+		}
+Sys.println(minutes);
+			
+
+		//}/* TODO AOD */ 
 		dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
 		if(minutes>0){
 			dc.setColor(color, backgroundColor);

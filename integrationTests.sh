@@ -227,9 +227,9 @@ function currentDebug(){
 	simulate
 }
 
-#testCalendar
+testCalendar
 #testWeatherInDebug
-currentDebug
+#currentDebug
 #testLogin
 #testSubscriptionInDebug
 #setVariables # just demo of what can be done

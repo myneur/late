@@ -113,7 +113,6 @@ app.setProperty("events", null); // migration
 		Otherwise, you can call this method and use the most recent value, which will be the heart rate within the last minute:
 		ActivityMonitor.getHeartRateHistory()
 		In both cases you will need to check for a null value, which will happen if the sensor is not available or the user is not wearing the watch.*/
-
 		presetTestVariables();
 		loadSettings();
 		resetTestVariables();	

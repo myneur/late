@@ -45,7 +45,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	function getOAuthUserCode(){	///Sys.println(Sys.getSystemStats().freeMemory + " getOAuthUserCode"); Sys.println("getOAuthUserCode");
 		Communications.makeWebRequest("https://accounts.google.com/o/oauth2/device/code", 
-			{"client_id"=>app.getProperty("client_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+			{"client_id"=>app.getProperty("Google_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onOAuthUserCode)); 
 	}
 
@@ -60,7 +60,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function getTokensAndData(){  ///Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");  // device_code can tell if the user granted access 
-		var params = {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id")};
+		var params = {"client_secret"=>app.getProperty("Google_secret"), "client_id"=>app.getProperty("Google_id")};
 		if (app.getProperty("refresh_token") != null) { 
 			refresh_token = app.getProperty("refresh_token");
 			params.put("refresh_token",refresh_token);
@@ -99,15 +99,22 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				// polling for auth device user_code 428:{error=>authorization_pending, error_description=>Precondition Failed} || 400: {"error" : "authorization_pending","error_description": "Bad Request"}
 				Background.exit({"user_code"=>app.getProperty("user_code"), "device_code"=>app.getProperty("device_code"), "verification_url"=>app.getProperty("verification_url")});
 			} 
-			else if(responseCode==403 || (responseCode == 400 && (keyContains(data, "error", "invalid_grant") || keyContains(data, "error", "expired_token")))){ 
+			else if(responseCode==403 
+				|| (responseCode == 400 && (keyContains(data, "error", "invalid_grant") || keyContains(data, "error", "expired_token")))
+				|| (responseCode == 401 && (keyContains(data, "error", "unauthorized_client")))
+				){ 
 				// 400: {error=> invalid_grant, error_description=> Token has been expired or revoked.} 
+				//      {error=>invalid_grant, error_description=>Bad Request}				
+				// 401: invalid_client // probably renewed client_id/client_secret
+				//      {error=>unauthorized_client, error_description=>Unauthorized} // client_id + client_secret changed
 				//      {error=> expired_token, error_description=> Expired user code}
+				//      {error=>invalid_client, error_description=>Unauthorized} // client_secret
+				//		{error=>invalid_client, error_description=>The OAuth client was not found.}	// client_id changed
 				// 403: {error=> access_denied, error_description=> Forbidden}
 				getOAuthUserCode();
 			} 
 			else { 
 				// 400: invalid_request || unsupported_grant_type
-				// 401: invalid_client
 				// 429: {error=> slow_down, error_description=>Rate Limit Exceeded}
 				onOAuthUserCode(responseCode, data); // returning the error same way 
 			}

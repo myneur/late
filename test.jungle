@@ -12,6 +12,7 @@ round-218x218.resourcePath = $(resBgIQ2)
 round-240x240.resourcePath = $(resBgIQ2);resources-240
 round-260x260.resourcePath = $(round-240x240.resourcePath)
 round-280x280.resourcePath = $(round-260x260.resourcePath);resources-280
+# AOD
 round-360x360.resourcePath = $(round-280x280.resourcePath);resources-390
 round-416x416.resourcePath = $(round-360x360.resourcePath)
 round-390x390.resourcePath = $(round-416x416.resourcePath)
@@ -20,6 +21,7 @@ round-218x218.sourcePath = $(sBg)
 round-240x240.sourcePath = $(sBg)
 round-260x260.sourcePath = $(sBg)
 round-280x280.sourcePath = $(sBg)
+# AOD
 round-390x390.sourcePath = $(sBg)
 round-360x360.sourcePath = $(sBg)
 round-416x416.sourcePath = $(sBg)
@@ -32,7 +34,7 @@ round-280x280.excludeAnnotations = aod
 
 
 # exclude data enduro
-enduro.excludeAnnotations = data
+enduro.excludeAnnotations = data;aod
 enduro.sourcePath = source
 enduro.resourcePath = $(resIQ2);resources-240;resources-280
 
@@ -56,39 +58,36 @@ approachs60.resourcePath = $(approachs62.resourcePath)
 fr245.resourcePath = $(approachs62.resourcePath)
 fr245m.resourcePath = $(approachs62.resourcePath)
 
-venusq.resourcePath  = $(approachs62.resourcePath)
-venusqm.resourcePath = $(approachs62.resourcePath)
-
 approachs62.sourcePath = $(sBg)
 approachs60.sourcePath = $(sBg)
 fr245.sourcePath = $(sBg)
 fr245m.sourcePath = $(sBg)
 
+# AOD
+venusq.resourcePath  = $(approachs62.resourcePath)
+venusqm.resourcePath = $(approachs62.resourcePath)
+
 venusq.sourcePath = $(sBg)
 venusqm.sourcePath = $(sBg)
 
 # CIQ1 Aikido Monkeys:
-# 218 px, but no data and less activities
-fenix3.excludeAnnotations = data
-fenix3_hr.excludeAnnotations = data
-d2bravo.excludeAnnotations = data
-d2bravo_titanium.excludeAnnotations = data
-
-fr45.excludeAnnotations = data
-garminswim2.excludeAnnotations = data;aod
+# 218 px, but no data and less activities and no AOD
+fenix3.excludeAnnotations = data;aod
+fenix3_hr.excludeAnnotations = data;aod
+d2bravo.excludeAnnotations = data;aod
+d2bravo_titanium.excludeAnnotations = data;aod
+round-208x208.excludeAnnotations = data;aod
 
 fenix3.sourcePath = source
 fenix3_hr.sourcePath = source
 d2bravo.sourcePath = source
 d2bravo_titanium.sourcePath = source
 
-fr45.sourcePath = source
-garminswim2.sourcePath = source
+round-208x208.sourcePath = source
 
 fenix3.resourcePath = $(base.resourcePath)
 fenix3_hr.resourcePath = $(base.resourcePath)
 d2bravo.resourcePath = $(base.resourcePath)
 d2bravo_titanium.resourcePath = $(base.resourcePath)
 
-fr45.resourcePath = $(base.resourcePath)
-garminswim2.resourcePath = $(base.resourcePath)
+round-208x208.resourcePath = $(base.resourcePath)

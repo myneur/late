@@ -509,7 +509,7 @@ app.setProperty("events", null); // migration
 	}
 
 	//! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
-	function onShow() {
+	//function onShow() {
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"w");
 		//Sys.println(clockTime.min+"w");
 		//Sys.println("onShow");
@@ -519,17 +519,18 @@ app.setProperty("events", null); // migration
 		} else {
 			redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
 		}*/
-	}
+	//}
 	
 	//! Called when this View is removed from the screen. Save the state of this View here. This includes freeing resources from memory.
-	function onHide(){
+	//function onHide(){
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"h");
 		//Sys.println(clockTime.min+"h");
 		/////Sys.println("onHide");
 		//redrawAll=0;
-	}
+	//}
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
+	(:aod)
 	function onExitSleep(){
 		/* TODO AOD */ 
 		if(Sys.getDeviceSettings().requiresBurnInProtection){
@@ -555,6 +556,7 @@ app.setProperty("events", null); // migration
 	}
 
 	//! Terminate any active timers and prepare for slow updates.
+	(:aod)
 	function onEnterSleep(){
 		/* TODO AOD */ 
 		if(Sys.getDeviceSettings().requiresBurnInProtection){
@@ -595,7 +597,18 @@ app.setProperty("events", null); // migration
 		}
 		dc.setColor(backgroundColor, backgroundColor);
 		dc.clear();
-		/* TODO AOD */ if(burnInProtection){var diff = 4;if(burnInProtection>1){centerX = centerX + ((centerX == (height>>1)) ? diff : -diff);burnInProtection=1;}else{var move = (centerY==(height>>1)) ? diff : -diff;centerY = centerY + move;dateY = dateY + move;burnInProtection=2;}} else {
+		/* TODO AOD */ if(burnInProtection){
+			var diff = 4;
+			if(burnInProtection>1){
+				centerX = centerX + ((centerX == (height>>1)) ? diff : -diff);
+				burnInProtection=1;
+			}else{
+				var move = (centerY==(height>>1)) ? diff : -diff;
+				centerY = centerY + move;
+				dateY = dateY + move;
+				burnInProtection=2;
+			}
+		} else {
 		// TODO AOD-X // if(burnInProtection){Sys.println([clockTime.hour, dx,dy]);if(burnInProtection>1){dx = dx == -5 ? dx+10 : dx-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=1;}else{dy = dy == -5 ? dy+10 : dy-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=2;}} else {
 			//lastRedrawMin=clockTime.min;
 			drawBatteryLevel(dc);
@@ -620,9 +633,11 @@ app.setProperty("events", null); // migration
 			var x = centerX-radius - (sunR-radius)>>1-(dc.getTextWidthInPixels("1", fontSmall)/3).toNumber();	// scale 4 with resolution
 			drawActivity(dc, activityL, x, centerY, false);
 			drawActivity(dc, activityR, centerX<<1-x, centerY, false);
-		/* TODO AOD */ }
+		/* TODO AOD */ 
+		}
 		drawTime(dc);
-		/* TODO AOD */ if(burnInProtection==0){
+		/* TODO AOD */ 
+		if(burnInProtection==0){
 			if(activity != null || message){
 				if(activity == :calendar || message){
 					drawEvent(dc);

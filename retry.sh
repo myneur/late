@@ -1,4 +1,4 @@
-DEVICE="fenix6xpro"
+DEVICE="smallwearable2021"
 /usr/bin/automator KillDevice.workflow 	
 /usr/bin/automator QuitApp.workflow 	
 #sleep 5

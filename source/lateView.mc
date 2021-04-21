@@ -287,6 +287,9 @@ app.setProperty("events", null); // migration
 		d24 = d24new;
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
+
+		setColor(mainColor, tone);
+
 		if(dialSize>0){
 			activityL=null;
 			activityR=null;
@@ -298,6 +301,22 @@ app.setProperty("events", null); // migration
 			computeSun();
 			//Sys.println([sunrise, sunset]);
 		}
+		
+		if(height==208 ){	// FR45 with 8 colors do not support gray. Contrary the simluator, the real watch do not support even LT_GRAY. 
+			activityColor = Gfx.COLOR_WHITE; 
+			if(tone != 3 && tone != 4){
+				dateColor = Gfx.COLOR_WHITE;
+			}
+		}
+		if(showWeather || activity == :calendar){
+			loadDataColors(mainColor, tone, app);
+		}
+		setLayoutVars();
+		onShow();
+	}
+
+
+	function setColor(mainColor, tone){
 		//	red, 	, yellow, 	green, 		blue, 	violet, 	grey
 		color = [
 			[0xFF0000, 0xFFAA00, 0x00FF00, 0x00AAFF, 0xFF00FF, 0xAAAAAA],
@@ -333,19 +352,7 @@ app.setProperty("events", null); // migration
 			activityColor = 0xAAAAAA;
 			dimmedColor = 0x555555;
 			dateColor = 0xFFFFFF;
-
 		}
-		if(height==208 ){	// FR45 with 8 colors do not support gray. Contrary the simluator, the real watch do not support even LT_GRAY. 
-			activityColor = Gfx.COLOR_WHITE; 
-			if(tone != 3 && tone != 4){
-				dateColor = Gfx.COLOR_WHITE;
-			}
-		}
-		if(showWeather || activity == :calendar){
-			loadDataColors(mainColor, tone, app);
-		}
-		setLayoutVars();
-		onShow();
 	}
 
 	(:data)
@@ -524,7 +531,18 @@ app.setProperty("events", null); // migration
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
 	function onExitSleep(){
-		/* TODO AOD */ if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=0;circleWidth = app.getProperty("boldness");if(height>280){circleWidth=circleWidth<<1;}}
+		/* TODO AOD */ 
+		if(Sys.getDeviceSettings().requiresBurnInProtection){
+			burnInProtection=0;
+			circleWidth = app.getProperty("boldness");
+			if(height>280){
+				circleWidth=circleWidth<<1;
+				}
+			}
+			if(app.getProperty("tone")>2){
+				setColor(app.getProperty("mainColor"), app.getProperty("tone"));
+			}
+		
 		//onShow();
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"x");
 		//Sys.println(clockTime.min+"x");
@@ -538,7 +556,14 @@ app.setProperty("events", null); // migration
 
 	//! Terminate any active timers and prepare for slow updates.
 	function onEnterSleep(){
-		/* TODO AOD */ if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=1;circleWidth=2;}
+		/* TODO AOD */ 
+		if(Sys.getDeviceSettings().requiresBurnInProtection){
+			burnInProtection=1;
+			circleWidth=2;
+			if(backgroundColor!=0x0){
+				setColor(app.getProperty("mainColor"), 0);
+			}
+		}
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"e");
 		//Sys.println(clockTime.min+"e");
 		//////Sys.println("onEnterSleep");
@@ -1124,24 +1149,22 @@ app.setProperty("events", null); // migration
 		
 		/* TODO AOD */ 
 		if(burnInProtection){ 
-			var stroke = (minutes==0 || minutes == 59 ) ? 3 : 1;
+			//var stroke = (minutes==0 || minutes == 59 ) ? 3 : 1;
+			var stroke=1;
 			for(var i=0;i<4;i++){
 				dc.drawText((i&1<<1-1)*stroke + centerX, (i&3>>1<<1-1)*stroke + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); 
 			} 
 			dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);
-			if(stroke==2){
+			/*if(stroke==2){
 				for(var i=0;i<4;i++){
 					dc.drawText(i&1<<1-1 + centerX,(i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); 
 				} 
-			}
+			}*/
 
 		}  else { /* TODO AOD */ 
 			dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(Math.round(centerX + (radius * sin)), Math.round(centerY - (radius * cos)) , fontSmall, minutes, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 		}
-Sys.println(minutes);
-			
-
 		//}/* TODO AOD */ 
 		dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
 		if(minutes>0){
@@ -1182,7 +1205,11 @@ Sys.println(minutes);
 					}
 				}
 			}
-			//if(burnInProtection){offset=0;gap=0;}
+			if(burnInProtection){ 
+				offset=0;
+				gap=0;
+				
+			}
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
 	}

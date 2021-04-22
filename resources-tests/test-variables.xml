@@ -1,11 +1,11 @@
 <resources>
 <jsonData id="testData">{
 		"Properties": {
-			"weather": true,
+			"weather": false,
 			"activity": 6,
 			"activityL": 1,
 			"activityR": 2,
-			"dialSize": 1,
+			"dialSize": 0,
 			"percents": true,
 			"d24": true,
 			"weatherHourly": [10, 5, 4, 13, 1.100000, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3],

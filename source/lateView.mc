@@ -529,7 +529,7 @@ app.setProperty("events", null); // migration
 	//}
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
-	(:aod)
+	(:oled)
 	function onExitSleep(){
 		/* TODO AOD */ 
 		if(Sys.getDeviceSettings().requiresBurnInProtection){
@@ -555,7 +555,7 @@ app.setProperty("events", null); // migration
 	}
 
 	//! Terminate any active timers and prepare for slow updates.
-	(:aod)
+	(:oled)
 	function onEnterSleep(){
 		/* TODO AOD */ 
 		if(Sys.getDeviceSettings().requiresBurnInProtection){

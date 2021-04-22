@@ -12,7 +12,7 @@ round-218x218.resourcePath = $(resBgIQ2)
 round-240x240.resourcePath = $(resBgIQ2);resources-240
 round-260x260.resourcePath = $(round-240x240.resourcePath)
 round-280x280.resourcePath = $(round-260x260.resourcePath);resources-280
-# AOD
+# OLED
 round-360x360.resourcePath = $(round-280x280.resourcePath);resources-390
 round-416x416.resourcePath = $(round-360x360.resourcePath)
 round-390x390.resourcePath = $(round-416x416.resourcePath)
@@ -21,26 +21,26 @@ round-218x218.sourcePath = $(sBg)
 round-240x240.sourcePath = $(sBg)
 round-260x260.sourcePath = $(sBg)
 round-280x280.sourcePath = $(sBg)
-# AOD
+# OLED
 round-390x390.sourcePath = $(sBg)
 round-360x360.sourcePath = $(sBg)
 round-416x416.sourcePath = $(sBg)
 
-# MiP displays don't need AOD
-round-218x218.excludeAnnotations = aod
-round-240x240.excludeAnnotations = aod
-round-260x260.excludeAnnotations = aod
-round-280x280.excludeAnnotations = aod
+# MiP displays don't need OLED
+round-218x218.excludeAnnotations = oled
+round-240x240.excludeAnnotations = oled
+round-260x260.excludeAnnotations = oled
+round-280x280.excludeAnnotations = oled
 
 
 # exclude data enduro
-enduro.excludeAnnotations = data;aod
+enduro.excludeAnnotations = data;oled
 enduro.sourcePath = source
 enduro.resourcePath = $(resIQ2);resources-240;resources-280
 
 
 # no background data communication: e. g. fr230, fr235, fr630
-semiround.excludeAnnotations = data;aod
+semiround.excludeAnnotations = data;oled
 semiround.resourcePath = $(base.resourcePath)
 
 
@@ -48,7 +48,7 @@ semiround.resourcePath = $(base.resourcePath)
 
 # CIQ2 Biker Monkeys:
 vivoactive_hr.resourcePath = $(resIQ2)
-vivoactive_hr.excludeAnnotations = data;aod
+vivoactive_hr.excludeAnnotations = data;oled
 
 #vivoactive_hr.lang.deu = $(vivoactive_hr.lang.deu);resources-CIQ2-deu
 
@@ -63,7 +63,7 @@ approachs60.sourcePath = $(sBg)
 fr245.sourcePath = $(sBg)
 fr245m.sourcePath = $(sBg)
 
-# AOD
+# OLED
 venusq.resourcePath  = $(approachs62.resourcePath)
 venusqm.resourcePath = $(approachs62.resourcePath)
 
@@ -71,12 +71,12 @@ venusq.sourcePath = $(sBg)
 venusqm.sourcePath = $(sBg)
 
 # CIQ1 Aikido Monkeys:
-# 218 px, but no data and less activities and no AOD
-fenix3.excludeAnnotations = data;aod
-fenix3_hr.excludeAnnotations = data;aod
-d2bravo.excludeAnnotations = data;aod
-d2bravo_titanium.excludeAnnotations = data;aod
-round-208x208.excludeAnnotations = data;aod
+# 218 px, but no data and less activities and no OLED
+fenix3.excludeAnnotations = data;oled
+fenix3_hr.excludeAnnotations = data;oled
+d2bravo.excludeAnnotations = data;oled
+d2bravo_titanium.excludeAnnotations = data;oled
+round-208x208.excludeAnnotations = data;oled
 
 fenix3.sourcePath = source
 fenix3_hr.sourcePath = source

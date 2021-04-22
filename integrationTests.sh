@@ -26,22 +26,24 @@ function simulate(){
 				echo " > compile :debug"
 			fi
 			monkeyc -o bin/late.prg -y ../developer_key.der -f $JUNGLE -d $DEVICE $FLAGS
-		else 
 			echo " > sleep 2s"
 			sleep 2
+		else 
+			echo " > sleep 3s"
+			sleep 3
 		fi
 		# echo " > sleep 5s"; sleep 5
 		echo " > simulate "$DEVICE 
 		monkeydo bin/late.prg $DEVICE &
-		echo " > sleep 2s"
-		sleep 2
+		echo " > sleep 3s"
+		sleep 3
 		if [[ $BACKGROUND -eq 1 ]] ;then
 			/usr/bin/automator ConnectIQbackgroundEvents.workflow 
 			echo " > sleep 5s"
 			echo " > sim will crash:"
 			sleep 5
 		fi
-		echo " > screenshot"
+		echo " > screenshot "$DEVICE$RUN 
 		screencapture  ~/Downloads/$DEVICE$RUN 
 	done
 }
@@ -227,7 +229,7 @@ function currentDebug(){
 	simulate
 }
 
-testCalendar
+#testCalendar
 #testWeatherInDebug
 #currentDebug
 #testLogin
@@ -237,4 +239,4 @@ testCalendar
 #testStrongInAllReslutions
 #testNoData
 #testFloorsAndMinutes
-#testMonkeyJungleVariations
+testMonkeyJungleVariations

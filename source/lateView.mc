@@ -243,10 +243,6 @@ app.setProperty("events", null); // migration
 		activityR = activities[app.getProperty("activityR")];
 		showSunrise = app.getProperty("sunriset");
 		batThreshold = app.getProperty("bat");
-		circleWidth = app.getProperty("boldness");
-		if(height>280){
-			circleWidth=circleWidth<<1;
-		}
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather"); if(showWeather==null) {showWeather=false;} // because it is not in settings of non-data devices
 		percentage = app.getProperty("percents");
@@ -284,6 +280,10 @@ app.setProperty("events", null); // migration
 			*/
 		}
 		d24 = d24new;
+		circleWidth = app.getProperty("boldness");
+		if(height>280){
+			circleWidth=circleWidth<<1;
+		}
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
 
@@ -608,7 +608,7 @@ app.setProperty("events", null); // migration
 		} else {
 		// TODO AOD-X // if(burnInProtection){Sys.println([clockTime.hour, dx,dy]);if(burnInProtection>1){dx = dx == -5 ? dx+10 : dx-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=1;}else{dy = dy == -5 ? dy+10 : dy-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=2;}} else {
 			//lastRedrawMin=clockTime.min;
-			drawBatteryLevel(dc);
+			
 			
 			//ms.add(Sys.getTimer()-ms[0]);
 
@@ -653,6 +653,8 @@ app.setProperty("events", null); // migration
 			}
 			// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 			drawNowCircle(dc, clockTime.hour);
+		} else {
+			drawBatteryLevel(dc);
 		}
 
 		//}

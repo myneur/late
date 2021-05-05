@@ -50,7 +50,7 @@ function simulate(){
 
 function setVariables(){
 	echo " > setVariables"
-	DEVICES=(fenix6xpro)
+	DEVICES=(fenix6)
 	RUN="_init"
 	RECOMPILE=1
 	RELEASE=0
@@ -93,7 +93,7 @@ function testCalendar(){
 	simulate
 }
 
-function testCalendar(){
+function testCalendarOnly(){
 	VARS="calendar.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo " < "$VARS
@@ -229,14 +229,15 @@ function currentDebug(){
 	simulate
 }
 
+setVariables # just demo of what can be done
 #testCalendar
 #testWeatherInDebug
 #currentDebug
 #testLogin
 #testSubscriptionInDebug
-#setVariables # just demo of what can be done
+
 #testMissingResolutions
 #testStrongInAllReslutions
 #testNoData
 #testFloorsAndMinutes
-testMonkeyJungleVariations
+#testMonkeyJungleVariations

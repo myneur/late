@@ -45,7 +45,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	function getOAuthUserCode(){	///Sys.println(Sys.getSystemStats().freeMemory + " getOAuthUserCode"); Sys.println("getOAuthUserCode");
 		Communications.makeWebRequest("https://accounts.google.com/o/oauth2/device/code", 
-			{"client_id"=>app.getProperty("Google_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+			{"client_id"=>app.getProperty("Ggl_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onOAuthUserCode)); 
 	}
 
@@ -60,7 +60,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function getTokensAndData(){  ///Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");  // device_code can tell if the user granted access 
-		var params = {"client_secret"=>app.getProperty("Google_secret"), "client_id"=>app.getProperty("Google_id")};
+		var params = {"client_secret"=>app.getProperty("Ggl_secret"), "client_id"=>app.getProperty("Ggl_id")};
 		if (app.getProperty("refresh_token") != null) { 
 			refresh_token = app.getProperty("refresh_token");
 			params.put("refresh_token",refresh_token);
@@ -335,7 +335,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-	function onWeatherForecast(responseCode, data){		//+//Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
+	function onWeatherForecast(responseCode, data){		//+*/Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
 		if (responseCode==200) {
 			try { 
 				//Sys.println(data);
@@ -379,7 +379,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	function getSubscriptionId(){	//+System.println("getSubscriptionId");
 		Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
-			{"client_id"=>app.getProperty("weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
+			{"client_id"=>app.getProperty("Weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
 			method(:onSubscriptionId));
 	}
 	
@@ -412,6 +412,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				return;
 			} 
 		} else {
+			// 400 TODO wrong client_id: {msg=>Incorrect device identification, code=>MISSING_ID}
 			// 404: no internet
 			// 405: device code expired
 			// 407: No Quota

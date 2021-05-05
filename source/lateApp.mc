@@ -26,12 +26,12 @@ class lateApp extends Toy.Application.AppBase {
 
 	// function onAppInstall(){}
 
-	/*
-	(:data)
-	function onStorageChanged(){
+	
+	/*(:data)
+	function onStorageChanged(){ // WTF it raises an exception "can't access storage on background" WTF? This is not the background process... ?≠£◊#$~#!!!
 		app.setProperty("location", Toybox.Application.Storage.getValue("location")); app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location"));
-	} 
-*/
+	} */
+
 	// function onAppUpdate(){} 
 
 
@@ -201,8 +201,7 @@ class lateApp extends Toy.Application.AppBase {
 							} else if(error>=400 && error<=403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
 								if(data.hasKey("subscription_id")){	// subscription is not in db: expired or wasn't paid at all
 									app.setProperty("subscription_id", null);
-									data["userPrompt"] = Ui.loadResource(Rez.Strings.Subscribe);
-									///Sys.println(Ui.loadResource(Rez.Strings.Subscribe));
+									data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Update : Rez.Strings.Subscribe);
 								} else {
 									app.setProperty("refresh_token", null);
 									app.setProperty("user_code", null);

@@ -558,7 +558,7 @@ app.setProperty("events", null); // migration
 	function onEnterSleep(){
 		if(Sys.getDeviceSettings().requiresBurnInProtection){
 			burnInProtection=1;
-			circleWidth=2;
+			circleWidth=10;
 			if(backgroundColor!=0x0){
 				setColor(app.getProperty("mainColor"), 0);
 			}
@@ -653,9 +653,9 @@ app.setProperty("events", null); // migration
 			}
 			// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 			drawNowCircle(dc, clockTime.hour);
-		} else {
 			drawBatteryLevel(dc);
-		}
+		} 
+		
 
 		//}
 		//ms.add(Sys.getTimer()-ms[0]);
@@ -859,7 +859,7 @@ app.setProperty("events", null); // migration
 			if(d24){
 				a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
 			} else { 
-				//return; // so far for 12h //12//
+				return; // so far for 12h //12//
 				if(hour>11){ hour-=12;}
 				if(0==hour){ hour=12;}
 				a = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
@@ -914,14 +914,14 @@ app.setProperty("events", null); // migration
 				if(tillStart < 3480){	// 58 mins
 					var secondsFromLastHour = events_list[i][0] - (Time.now().value()-(clockTime.min*60+clockTime.sec));
 					var a = (secondsFromLastHour).toFloat()/1800*Math.PI; // 2Pi/hour
-					var r = (tillStart>=120 || clockTime.min<10 || burnInProtection>0) ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
-					//var r = dialSize ? radius : 1.12*radius; //12//
+					//var r = (tillStart>=120 || clockTime.min<10 || burnInProtection>0) ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
+					var r = dialSize ? radius : 1.12*radius; //12//
 					var x= Math.round(centerX+(r*Math.sin(a)));
 					var y = Math.round(centerY-(r*Math.cos(a)));
 
 					//12// marker 
 					
-					if(burnInProtection==0){
+					/*if(burnInProtection==0){
 						dc.setColor(backgroundColor, backgroundColor);
 						dc.fillCircle(x, y, 4);
 						dc.setColor(dateColor, backgroundColor);
@@ -931,11 +931,11 @@ app.setProperty("events", null); // migration
 						dc.fillCircle(x, y, 4);
 						dc.setColor(backgroundColor, backgroundColor);
 						dc.fillCircle(x, y, 3);
-					}
+					}*/
 					
-					/*dc.setPenWidth(1);
+					dc.setPenWidth(1);
 					dc.setColor(dateColor, backgroundColor);
-					dc.drawCircle(x, y, circleWidth>>1);*/
+					dc.drawCircle(x, y, circleWidth>>1);
 				}
 				if (tillStart < 3600) {	// hour
 					eventStart = tillStart/60 + "m";
@@ -1073,7 +1073,7 @@ app.setProperty("events", null); // migration
 		return a;
 	}*/
 	
-	/*
+	
 	function drawTime (dc){
 
 		// draw hour
@@ -1111,12 +1111,14 @@ app.setProperty("events", null); // migration
 
 		// Hours
 		var mode24 = false;
-		angle =  h/(mode24==false ? 6.0 : 12.0)*Math.PI;
-		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(Math.round(centerX + radius * Math.sin(angle)), Math.round(centerY - radius * Math.cos(angle)), fontSmall, h, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
-		if(mode24==false && h==12){h=0;}
-		h = h.toFloat() + minutes.toFloat()/60;
-		
+		if(burnInProtection==0){ 
+			angle =  h/(mode24==false ? 6.0 : 12.0)*Math.PI;
+			dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
+			dc.drawText(Math.round(centerX + radius * Math.sin(angle)), Math.round(centerY - radius * Math.cos(angle)), fontSmall, h, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
+			if(mode24==false && h==12){h=0;}
+			h = h.toFloat() + minutes.toFloat()/60;
+		}
+
 		dc.setColor(color, Gfx.COLOR_TRANSPARENT);
 		angle =  h/(mode24==false ? 6.0 : 12.0)*Math.PI;
 
@@ -1136,18 +1138,35 @@ app.setProperty("events", null); // migration
 		beta = beta - Math.PI;
 		var offX2 = v*Math.sin(beta);
 		var offY2 = v*Math.cos(beta);
-		dc.fillPolygon( [
-			[Math.round(centerX+offX), 		Math.round(centerY-offY)], 
-			[Math.round(centerX+rX+offX), 	Math.round(centerY-rY-offY)], 
-			[Math.round(centerX+rX+offX2), 	Math.round(centerY-rY-offY2)], 
-			[Math.round(centerX+offX2), 	Math.round(centerY-offY2)]
-		]);
-		v=v-1;
-		dc.fillCircle(Math.round(centerX+rX), Math.round(centerY-rY), v);
-		dc.fillCircle(centerX, centerY, v);
+		if(burnInProtection){ 
+			dc.drawLine( 
+				Math.round(centerX+offX), 		Math.round(centerY-offY), 
+				Math.round(centerX+rX+offX), 	Math.round(centerY-rY-offY)); 
+			dc.drawLine( 
+				Math.round(centerX+rX+offX2), 	Math.round(centerY-rY-offY2),
+				Math.round(centerX+offX2), 	Math.round(centerY-offY2));
+			v=v-1;
+			
+			//dc.drawCircle(Math.round(centerX+rX), Math.round(centerY-rY), v);
+			angle = 360*angle/(2*Math.PI)-90;
+			dc.drawArc(Math.round(centerX+rX), Math.round(centerY-rY), v, Gfx.ARC_CLOCKWISE, -angle+90, -angle-90);
+			
+			//dc.drawCircle(centerX, centerY, v);
+			dc.drawArc(Math.round(centerX), Math.round(centerY), v, Gfx.ARC_CLOCKWISE, -angle-90, -angle+90);
+		} else {
+			dc.fillPolygon( [
+				[Math.round(centerX+offX), 		Math.round(centerY-offY)], 
+				[Math.round(centerX+rX+offX), 	Math.round(centerY-rY-offY)], 
+				[Math.round(centerX+rX+offX2), 	Math.round(centerY-rY-offY2)], 
+				[Math.round(centerX+offX2), 	Math.round(centerY-offY2)]
+			]);
+			v=v-1;
+			dc.fillCircle(Math.round(centerX+rX), Math.round(centerY-rY), v);
+			dc.fillCircle(centerX, centerY, v);
+		}
 	}
-	*/
-
+	
+/*
 	function drawTime (dc){
 		// draw hour
 		var h=clockTime.hour;
@@ -1175,11 +1194,11 @@ app.setProperty("events", null); // migration
 				dc.drawText((i&1<<1-1)*stroke + centerX, (i&3>>1<<1-1)*stroke + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); 
 			} 
 			dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);
-			/*if(stroke==2){
-				for(var i=0;i<4;i++){
-					dc.drawText(i&1<<1-1 + centerX,(i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); 
-				} 
-			}*/
+			//if(stroke==2){
+			//	for(var i=0;i<4;i++){
+			//		dc.drawText(i&1<<1-1 + centerX,(i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); 
+			//	} 
+			//}
 
 		}  else { 
 			dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
@@ -1232,6 +1251,7 @@ app.setProperty("events", null); // migration
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
 	}
+*/
 
 	function drawBatteryLevel (dc){
 		var bat = Sys.getSystemStats().battery;

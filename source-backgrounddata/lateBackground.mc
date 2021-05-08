@@ -75,7 +75,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				params.put("grant_type","http://oauth.net/grant_type/device/1.0");
 			}
 		}
-		Communications.makeWebRequest("https://oauth2.googleapis.com/token", params, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+		Communications.makeWebRequest("https://oauth2.googleapis.com/token", params, {
+			//:headers => { "Content-Type" => Communications.REQUEST_CONTENT_TYPE_URL_ENCODED},
+			:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onTokenRefresh2GetData));
 	}
 

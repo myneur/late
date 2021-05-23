@@ -78,7 +78,7 @@ function testLogin(){
 	simulate	
 }
 
-function testCalendar(){
+function testCalendarWithWeatherShow(){
 	VARS="calendar-with-weather-shown.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo " < "$VARS
@@ -141,7 +141,7 @@ function testSubscriptionInDebug(){ # TODO !!! now it only loads weather because
 
 # missing resolutions 
 function testMissingResolutions(){
-	VARS="calendar-with-weather-shown.vars.xml"
+	VARS="calendar-with-weather-shown.vars.xml" "start-weather.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
@@ -153,6 +153,29 @@ function testMissingResolutions(){
 	RELEASE=1
 	DONTSAVEPROPERTIES=0
 	simulate
+}
+
+# all resolutions permutations with or without calendar and weather
+function testResolutionsPermutations(){
+	CONFS=("calendar-with-weather-shown.vars.xml" "calendar.vars.xml" "start-weather.vars.xml" "no-data.vars.xml")
+	echo $CONFS
+	I=1
+	for CONF in "${CONFS[@]}"
+	do
+		VARS=$CONF
+		cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+		echo " < "$VARS
+		BACKGROUND=1
+		setVariables
+		DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro vivoactive4 fenix5 fenix5s fr45) # 416 390 360 280 260 240 218 208
+		BACKGROUND=0
+		RECOMPILE=1
+		RELEASE=1
+		DONTSAVEPROPERTIES=0
+		RUN="_"$I
+		simulate
+		I=$((I+1))
+	done
 }
 
 # no data devices
@@ -229,15 +252,16 @@ function currentDebug(){
 	simulate
 }
 
-setVariables # just demo of what can be done
-#testCalendar
+#setVariables # just demo of what can be done
+testCalendarWithWeatherShow
 #testWeatherInDebug
 #currentDebug
 #testLogin
 #testSubscriptionInDebug
 
 #testMissingResolutions
-#testStrongInAllReslutions
+testStrongInAllReslutions
 #testNoData
 #testFloorsAndMinutes
 #testMonkeyJungleVariations
+#testResolutionsPermutations

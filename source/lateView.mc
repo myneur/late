@@ -431,7 +431,10 @@ app.setProperty("events", null); // migration
 
 	function setLayoutVars(){
 		icons = Ui.loadResource(Rez.Fonts.Ico);
-		sunR = centerX-5;// - (height>=390 ? (showWeather ? 23:16) : (showWeather ? 15:11)); // base: -9-11, weather: 15
+		sunR = Math.ceil(centerX-5*height/218)+1;// - (height>=390 ? (showWeather ? 23:16) : (showWeather ? 15:11)); // base: -9-11, weather: 15
+		if(sunR>centerX-6){
+			sunR=centerX - (!(activity==:calendar || showWeather) ? 6 :5); // drawCircle is wider than fillCircle
+		}
 		if(showSunrise){
 			//sunrs.getWidth()>>1;
 			if(activity==:calendar){ sunR -= height<390 ? 9:13;}
@@ -653,9 +656,8 @@ app.setProperty("events", null); // migration
 			}
 			// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 			drawNowCircle(dc, clockTime.hour);
-		} else {
 			drawBatteryLevel(dc);
-		}
+		} 
 
 		//}
 		//ms.add(Sys.getTimer()-ms[0]);

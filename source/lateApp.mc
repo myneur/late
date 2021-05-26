@@ -29,7 +29,9 @@ class lateApp extends Toy.Application.AppBase {
 	
 	/*(:data)
 	function onStorageChanged(){ // WTF it raises an exception "can't access storage on background" WTF? This is not the background process... ?≠£◊#$~#!!!
-		app.setProperty("location", Toybox.Application.Storage.getValue("location")); app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location"));
+		Sys.println(Toybox.Application.Storage.getValue("location"));
+		app.setProperty("location", Toybox.Application.Storage.getValue("location")); 
+		app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location"));
 	} */
 
 	// function onAppUpdate(){} 
@@ -400,9 +402,9 @@ class lateApp extends Toy.Application.AppBase {
 	}
 
 	function locate(save){	// save = false in background because bakground processes can not save properites (WTF!)
-	    //App.getApp().setProperty("l", App.getApp().getProperty("l")+" "+Sys.getClockTime().min);
-	    var position=null;
-	    var accuracy=null;
+	    var position =null;
+	    var accuracy = null;
+	    var location = "";
 	    if(Toy.Position has :getInfo){
 	        position = Toy.Position.getInfo();
         	accuracy = position.accuracy;
@@ -420,6 +422,7 @@ class lateApp extends Toy.Application.AppBase {
 	            var weather = Toy.Weather.getCurrentConditions();
 	            if(weather != null){
 	                var p = sanitizeLoc(weather.observationLocationPosition);
+	                location = weather.observationLocationName;
 	                if(p!=null){
 	                	position = p;	
 	                }
@@ -427,12 +430,20 @@ class lateApp extends Toy.Application.AppBase {
 	        }
 	    }
 	    if (position == null){
-	        position = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often       
+	        position = app.getProperty("location"); // load the last location, because the weatch can forget its location often      
 	    } else {
+	    	if(position instanceof Array){
+	    		position.addAll([accuracy, location]);
+	    	}
 	    	if(save){
 	        	app.setProperty("location", position); // save the location to fix a Fenix 5 bug that is loosing the location often
 	        }
-			// Location to storage */ some deivces can not save on background try { Toybox.Application.Storage.setValue("location", position);} catch(ex){}
+			// Location to storage */ some deivces can not save on background 
+			/*try { 
+				if(Toy.Application has :Storage){
+					Toybox.Application.Storage.setValue("location", position);
+				}
+			} catch(ex){}*/
 	    }
 	    return position;
 	}

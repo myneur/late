@@ -246,21 +246,21 @@ function currentDebug(){
 	RECOMPILE=1
 	RUN="_debug"
 	VARS="full-strong.vars.xml"
-	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > resources-tests/test-variables.xml
+	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"dialSize":0,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > resources-tests/test-variables.xml
 	DEVICES=(fenix6) 	
 	BACKGROUND=0
 	simulate
 }
 
 #setVariables # just demo of what can be done
-testCalendarWithWeatherShow
+#testCalendarWithWeatherShow
 #testWeatherInDebug
-#currentDebug
+currentDebug
 #testLogin
 #testSubscriptionInDebug
 
 #testMissingResolutions
-testStrongInAllReslutions
+#testStrongInAllReslutions
 #testNoData
 #testFloorsAndMinutes
 #testMonkeyJungleVariations

@@ -176,7 +176,6 @@ function parseISODate(date) {
     return moment.add(new Time.Duration(tzOffset));
 }
 
-(:data)
 function split(id_list){    
     if(id_list instanceof Toybox.Lang.String){
         // this really has to be that ugly, because monkey c cannot replace or split strings like human

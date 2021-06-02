@@ -78,7 +78,7 @@ function testLogin(){
 	simulate	
 }
 
-function testCalendarWithWeatherShow(){
+function testCalendarWithWeatherShown(){
 	VARS="calendar-with-weather-shown.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo " < "$VARS
@@ -253,9 +253,9 @@ function currentDebug(){
 }
 
 #setVariables # just demo of what can be done
-#testCalendarWithWeatherShow
+testCalendarWithWeatherShown
 #testWeatherInDebug
-currentDebug
+#currentDebug
 #testLogin
 #testSubscriptionInDebug
 

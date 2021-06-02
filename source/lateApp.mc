@@ -47,12 +47,12 @@ class lateApp extends Toy.Application.AppBase {
 	}
 
 	(:data)
-	function scheduleDataLoading(){	//+*/System.println("scheduling: " + [watch.dataLoading , watch.activity == :calendar , watch.showWeather,  app.getProperty("lastLoad")]);
+	function scheduleDataLoading(dataLoading, activity, showWeather){	//+*/System.println("scheduling: " + [dataLoading , activity == :calendar , showWeather,  app.getProperty("lastLoad")]);
 		loadSettings();
-		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
+		if(dataLoading && (activity == :calendar || showWeather)) {
 			var nextEvent = durationToNextEvent(); 
 			changeScheduleToMinutes(5);
-			if(watch.activity == :calendar && app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
+			if(activity == :calendar && app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {
@@ -60,7 +60,7 @@ class lateApp extends Toy.Application.AppBase {
 					return ({"userPrompt"=>prompt, "error_code"=>511, "wait"=>nextEvent});
 				}
 			}  
-			if(watch.showWeather && app.getProperty("subs") == null){
+			if(showWeather && app.getProperty("subs") == null){
 				var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 				var data = {"error_code"=>511, "wait"=>nextEvent};
 				if(pos == null){
@@ -151,7 +151,7 @@ class lateApp extends Toy.Application.AppBase {
 						if(app.getProperty("weather")==true){
 							changeScheduleToMinutes(5);	// when weather not loaded yet, load ASAP						
 							if(app.getProperty("subs") == null){	// first time loading forecast => instruct to check the phone
-								data = scheduleDataLoading();
+								data = scheduleDataLoading(true, :calendar, true);
 							}
 						} else {
 							changeScheduleToMinutes(60);	// when weather not loaded yet, load ASAP		
@@ -370,6 +370,7 @@ class lateApp extends Toy.Application.AppBase {
 				}
 				//if(fromAngle>360){fromAngle-=360;}if(toAngle>360){toAngle-=360;}
 				if(date!=null){
+					//if(!(data[i][4] instanceof Toybox.Lang.Number)){data[i][4]=-1;} // not to cause errors in indexing calendars if it might be wrong
 					events_list.add([
 						date.value(),                                               // start
 						dateTo.value(),                           // end

@@ -76,15 +76,9 @@ class lateView extends Ui.WatchFace {
 
 		//Sys.println(["events_list before init", events_list ? events_list.toString().substring(0,30)+"...": ""]);
 		var events = Toybox.Application has :Storage ? Toybox.Application.Storage.getValue("events") : app.getProperty("events");
-if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
-events = app.getProperty("events");
-Toybox.Application.Storage.setValue("events", events);
-app.setProperty("events", null); // migration	
-}
 		if(events instanceof Lang.Array){
 			events_list = events;
 		}
-
 
 		//Sys.println("init: "+ weatherHourly);
 		if(weatherHourly.size()==0){
@@ -255,7 +249,7 @@ app.setProperty("events", null); // migration
 //d24new=true; app.setProperty("d24", d24new); 
 		if(( activity == :calendar) && (d24!= null && d24new != d24)){	// changing 24 / 12h 
 			events_list=[];
-			showMessage(app.scheduleDataLoading());
+			showMessage(app.scheduleDataLoading(dataLoading, activity, showWeather));
 			/*	TODO: changing angle immediately
 						var hour = clockTime.hour;
 			var mul; var a; var b;
@@ -494,7 +488,7 @@ app.setProperty("events", null); // migration
 		}*/
 		if(dataLoading){
 			if(activity == :calendar || showWeather){
-				showMessage(app.scheduleDataLoading());
+				showMessage(app.scheduleDataLoading(dataLoading, activity, showWeather));
 				if(activity == :calendar){
 					activityY = messageY;
 				}
@@ -971,8 +965,7 @@ app.setProperty("events", null); // migration
 			var x = centerX;
 			var justify = Gfx.TEXT_JUSTIFY_CENTER;
 			var eventHeight=Gfx.getFontHeight(fontCondensed)-1;  
-			
-			if(events_list[i][4]>=0){ // no calendar event, but prompt
+			if(events_list[i][4]>=0){ // calendar event
 				dc.setColor(dateColor , Gfx.COLOR_TRANSPARENT); // empha
 				x-=(dc.getTextWidthInPixels(eventStart+eventLocation, fontCondensed)>>1 
 					-(dc.getTextWidthInPixels(eventStart, fontCondensed)));
@@ -1058,8 +1051,10 @@ app.setProperty("events", null); // migration
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.setPenWidth(width);
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle+1, 90-fromAngle);
-			if(events_list[i][4]>=0){
-				dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
+			var cal = events_list[i][4];
+			if(cal!=null && cal>=0){
+				cal = cal%(calendarColors.size());
+				dc.setColor(calendarColors[cal], backgroundColor);
 			}
 			dc.setPenWidth(width);
 			center = fromAngle>=60 && fromAngle<240 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even

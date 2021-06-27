@@ -7,7 +7,7 @@ function test(){
 	for DEVICE in "${DEVICES[@]}"
 	do
 		connectiq
-		monkeydo bin/late.prg $DEVICE &
+		monkeydo late.prg $DEVICE &
 		sleep 5
 		/usr/bin/automator ConnectIQbackgroundEvents.workflow 
 

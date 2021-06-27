@@ -18,14 +18,14 @@ function simulate(){
 		if [[ $RECOMPILE -eq 1 ]] ;then
 			if [[ $RELEASE -eq 1 ]] ;then
 				FLAGS="-r"
-				JUNGLE=monkey.jungle
+				JUNGLE=../monkey.jungle
 				echo " > compile :release"
 			else
 				FLAGS=""
-				JUNGLE=test.jungle
+				JUNGLE=../test.jungle
 				echo " > compile :debug"
 			fi
-			monkeyc -o bin/late.prg -y ../developer_key.der -f $JUNGLE -d $DEVICE $FLAGS
+			monkeyc -o late.prg -y ../../developer_key.der -f $JUNGLE -d $DEVICE $FLAGS
 			echo " > sleep 2s"
 			sleep 2
 		else 
@@ -34,7 +34,7 @@ function simulate(){
 		fi
 		# echo " > sleep 5s"; sleep 5
 		echo " > simulate "$DEVICE 
-		monkeydo bin/late.prg $DEVICE &
+		monkeydo late.prg $DEVICE &
 		echo " > sleep 3s"
 		sleep 3
 		if [[ $BACKGROUND -eq 1 ]] ;then

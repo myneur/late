@@ -1,5 +1,5 @@
 # export all/all columns > subscriptions.csv
-# export ALL > dataclips.csv
+# export ALL accesses > log.csv
 # ignore scheduled cancels
 
 import csv
@@ -8,14 +8,14 @@ from datetime import timedelta
 #import dateutil.parser as parser
 
 accessLog = {} # get last access per subscription id
-with open("../log.csv") as csvfile:
+with open("../../log.csv") as csvfile:
 		reader = csv.reader(csvfile, quoting=csv.QUOTE_NONE) 
 		for row in reader: 
 			if len(row[1])>10:
 				accessLog[row[0]]= datetime.strptime(row[1], '%Y-%m-%d %H:%M:%S.%f+00')
 
 subscriptions = {}	# get last access and all subscription ids per mail
-with open("../subscriptions.csv") as csvfile:
+with open("../../subscriptions.csv") as csvfile:
 	reader = csv.reader(csvfile, quoting=csv.QUOTE_NONE) 
 	for row in reader: 
 		subid = row[0]

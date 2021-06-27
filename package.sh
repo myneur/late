@@ -1,1 +1,0 @@
-monkeyc -r -e -o bin/late.iq -y ../developer_key.der -f monkey.jungle

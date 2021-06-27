@@ -1,4 +1,4 @@
-DEVICE="fenix6xpro"
+DEVICE="fenix5s"
 /usr/bin/automator KillDevice.workflow 	
 /usr/bin/automator QuitApp.workflow 	
 #sleep 5

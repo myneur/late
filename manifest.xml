@@ -7,13 +7,13 @@
 			<!-- groups by shape, resolution, memory and # colors, -->
 			<!-- round -->
 			<!-- 416x416 data -->
-				<iq:product id="wearable2021"/>	
+				<iq:product id="venu2"/>	
 			<!-- 390x390 64c data -->
 				<iq:product id="venu"/>
 				<iq:product id="venud"/>
 				<iq:product id="d2air"/>
 			<!-- 360x360 -->
-			<iq:product id="smallwearable2021"/>
+			<iq:product id="venu2s"/>
 			<!-- 280x280 64 colors 94k memory -->
 			<!-- data -->
 			<iq:product id="fenix6xpro"/>
@@ -29,7 +29,7 @@
 			<iq:product id="legacysagadarthvader"/>
 			
 			<!-- 240x240 with data 64 colors 94k memory-->
-			
+			<iq:product id="descentmk2s"/>
 			<iq:product id="fenix6s"/>
 			<iq:product id="fenix6spro"/>
 

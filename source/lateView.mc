@@ -228,7 +228,6 @@ class lateView extends Ui.WatchFace {
 
 	function loadSettings(){
 		//rain = app.getProperty("rain");
-
 		dateForm = app.getProperty("dateForm");
 		
 		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];

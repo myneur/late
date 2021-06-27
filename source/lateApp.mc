@@ -26,12 +26,14 @@ class lateApp extends Toy.Application.AppBase {
 
 	// function onAppInstall(){}
 
-	/*
-	(:data)
-	function onStorageChanged(){
-		app.setProperty("location", Toybox.Application.Storage.getValue("location")); app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location"));
-	} 
-*/
+	
+	/*(:data)
+	function onStorageChanged(){ // WTF it raises an exception "can't access storage on background" WTF? This is not the background process... ?≠£◊#$~#!!!
+		Sys.println(Toybox.Application.Storage.getValue("location"));
+		app.setProperty("location", Toybox.Application.Storage.getValue("location")); 
+		app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location"));
+	} */
+
 	// function onAppUpdate(){} 
 
 
@@ -45,12 +47,12 @@ class lateApp extends Toy.Application.AppBase {
 	}
 
 	(:data)
-	function scheduleDataLoading(){	//+*/System.println("scheduling: " + [watch.dataLoading , watch.activity == :calendar , watch.showWeather,  app.getProperty("lastLoad")]);
+	function scheduleDataLoading(dataLoading, activity, showWeather){	//+*/System.println("scheduling: " + [dataLoading , activity == :calendar , showWeather,  app.getProperty("lastLoad")]);
 		loadSettings();
-		if(watch.dataLoading && (watch.activity == :calendar || watch.showWeather)) {
+		if(dataLoading && (activity == :calendar || showWeather)) {
 			var nextEvent = durationToNextEvent(); 
 			changeScheduleToMinutes(5);
-			if(watch.activity == :calendar && app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
+			if(activity == :calendar && app.getProperty("refresh_token") == null){	//////Sys.println("no auth");
 				if(app.getProperty("user_code")){
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {
@@ -58,7 +60,7 @@ class lateApp extends Toy.Application.AppBase {
 					return ({"userPrompt"=>prompt, "error_code"=>511, "wait"=>nextEvent});
 				}
 			}  
-			if(watch.showWeather && app.getProperty("subs") == null){
+			if(showWeather && app.getProperty("subs") == null){
 				var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 				var data = {"error_code"=>511, "wait"=>nextEvent};
 				if(pos == null){
@@ -149,7 +151,7 @@ class lateApp extends Toy.Application.AppBase {
 						if(app.getProperty("weather")==true){
 							changeScheduleToMinutes(5);	// when weather not loaded yet, load ASAP						
 							if(app.getProperty("subs") == null){	// first time loading forecast => instruct to check the phone
-								data = scheduleDataLoading();
+								data = scheduleDataLoading(true, :calendar, true);
 							}
 						} else {
 							changeScheduleToMinutes(60);	// when weather not loaded yet, load ASAP		
@@ -201,8 +203,7 @@ class lateApp extends Toy.Application.AppBase {
 							} else if(error>=400 && error<=403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
 								if(data.hasKey("subscription_id")){	// subscription is not in db: expired or wasn't paid at all
 									app.setProperty("subscription_id", null);
-									data["userPrompt"] = Ui.loadResource(Rez.Strings.Subscribe);
-									///Sys.println(Ui.loadResource(Rez.Strings.Subscribe));
+									data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Update : Rez.Strings.Subscribe);
 								} else {
 									app.setProperty("refresh_token", null);
 									app.setProperty("user_code", null);
@@ -369,6 +370,7 @@ class lateApp extends Toy.Application.AppBase {
 				}
 				//if(fromAngle>360){fromAngle-=360;}if(toAngle>360){toAngle-=360;}
 				if(date!=null){
+					//if(!(data[i][4] instanceof Toybox.Lang.Number)){data[i][4]=-1;} // not to cause errors in indexing calendars if it might be wrong
 					events_list.add([
 						date.value(),                                               // start
 						dateTo.value(),                           // end
@@ -401,9 +403,9 @@ class lateApp extends Toy.Application.AppBase {
 	}
 
 	function locate(save){	// save = false in background because bakground processes can not save properites (WTF!)
-	    //App.getApp().setProperty("l", App.getApp().getProperty("l")+" "+Sys.getClockTime().min);
-	    var position=null;
-	    var accuracy=null;
+	    var position =null;
+	    var accuracy = null;
+	    var location = "";
 	    if(Toy.Position has :getInfo){
 	        position = Toy.Position.getInfo();
         	accuracy = position.accuracy;
@@ -421,6 +423,7 @@ class lateApp extends Toy.Application.AppBase {
 	            var weather = Toy.Weather.getCurrentConditions();
 	            if(weather != null){
 	                var p = sanitizeLoc(weather.observationLocationPosition);
+	                location = weather.observationLocationName;
 	                if(p!=null){
 	                	position = p;	
 	                }
@@ -428,12 +431,20 @@ class lateApp extends Toy.Application.AppBase {
 	        }
 	    }
 	    if (position == null){
-	        position = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often       
+	        position = app.getProperty("location"); // load the last location, because the weatch can forget its location often      
 	    } else {
+	    	if(position instanceof Array){
+	    		position.addAll([accuracy, location]);
+	    	}
 	    	if(save){
 	        	app.setProperty("location", position); // save the location to fix a Fenix 5 bug that is loosing the location often
 	        }
-			// Location to storage */ some deivces can not save on background try { Toybox.Application.Storage.setValue("location", position);} catch(ex){}
+			// Location to storage */ some deivces can not save on background 
+			/*try { 
+				if(Toy.Application has :Storage){
+					Toybox.Application.Storage.setValue("location", position);
+				}
+			} catch(ex){}*/
 	    }
 	    return position;
 	}

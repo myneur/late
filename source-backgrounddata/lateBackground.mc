@@ -45,7 +45,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	function getOAuthUserCode(){	///Sys.println(Sys.getSystemStats().freeMemory + " getOAuthUserCode"); Sys.println("getOAuthUserCode");
 		Communications.makeWebRequest("https://accounts.google.com/o/oauth2/device/code", 
-			{"client_id"=>app.getProperty("client_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
+			{"client_id"=>app.getProperty("Ggl_id"), "scope"=>"https://www.googleapis.com/auth/calendar.readonly"}, {:method => Communications.HTTP_REQUEST_METHOD_POST}, 
 			method(:onOAuthUserCode)); 
 	}
 
@@ -60,7 +60,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function getTokensAndData(){  ///Sys.println(Sys.getSystemStats().freeMemory + " on getTokensAndData");  // device_code can tell if the user granted access 
-		var params = {"client_secret"=>app.getProperty("client_secret"), "client_id"=>app.getProperty("client_id")};
+		var params = {"client_secret"=>app.getProperty("Ggl_secret"), "client_id"=>app.getProperty("Ggl_id")};
 		if (app.getProperty("refresh_token") != null) { 
 			refresh_token = app.getProperty("refresh_token");
 			params.put("refresh_token",refresh_token);
@@ -99,15 +99,22 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				// polling for auth device user_code 428:{error=>authorization_pending, error_description=>Precondition Failed} || 400: {"error" : "authorization_pending","error_description": "Bad Request"}
 				Background.exit({"user_code"=>app.getProperty("user_code"), "device_code"=>app.getProperty("device_code"), "verification_url"=>app.getProperty("verification_url")});
 			} 
-			else if(responseCode==403 || (responseCode == 400 && (keyContains(data, "error", "invalid_grant") || keyContains(data, "error", "expired_token")))){ 
+			else if(responseCode==403 
+				|| (responseCode == 400 && (keyContains(data, "error", "invalid_grant") || keyContains(data, "error", "expired_token")))
+				|| (responseCode == 401 && (keyContains(data, "error", "unauthorized_client")))
+				){ 
 				// 400: {error=> invalid_grant, error_description=> Token has been expired or revoked.} 
+				//      {error=>invalid_grant, error_description=>Bad Request}				
+				// 401: invalid_client // probably renewed client_id/client_secret
+				//      {error=>unauthorized_client, error_description=>Unauthorized} // client_id + client_secret changed
 				//      {error=> expired_token, error_description=> Expired user code}
+				//      {error=>invalid_client, error_description=>Unauthorized} // client_secret
+				//		{error=>invalid_client, error_description=>The OAuth client was not found.}	// client_id changed
 				// 403: {error=> access_denied, error_description=> Forbidden}
 				getOAuthUserCode();
 			} 
 			else { 
 				// 400: invalid_request || unsupported_grant_type
-				// 401: invalid_client
 				// 429: {error=> slow_down, error_description=>Rate Limit Exceeded}
 				onOAuthUserCode(responseCode, data); // returning the error same way 
 			}
@@ -161,7 +168,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 // DEBUG MEM //var m=Sys.getSystemStats().freeMemory;function mem(label){Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, label]); m=Sys.getSystemStats().freeMemory;}
 // DEBUG MEM BALAST //var balast = new [460];
 
-	function getEvents(calendar_id) { 	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
+	function getEvents(calendar_id) { 	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData "+ calendar_id);
 // DEBUG MEM //mem("getEvents max "+maxResults/*+" with balast "+balast.size()*/);
 // DEBUG MEM //mem("getEvents "+calendar_id);
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
@@ -201,9 +208,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			//var eventsToSafelySend = primary_calendar ? 7 : 8;
 			//var limit = Toybox.Application has :Storage ? 12 : 9;
 			var limit = 11;
+//Sys.println(data.size());
 			for (var i = 0; i < data.size() && events_list.size() < limit; i++) { // limit events not to get out of memory
 				//+mem+*/Sys.println(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
 				event = data[i];
+//Sys.println(event);
 				data[i] = null;
 				if(event["start"]){ // skip day events that have only "summary"
 					try {
@@ -235,6 +244,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 					}
 				}
 			}
+//Sys.println(events_list.size());
 			maxResults = limit-events_list.size(); // TODO limit must not exceed maxResults
 			// DEBUG MEM //mem("limiting results to " +maxResults + " with events loaded: "+ events_list.size());
 			//Sys.println(data.size()+" "+events_list.size()+"/"+limit);
@@ -328,7 +338,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-	function onWeatherForecast(responseCode, data){		//+//Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
+	function onWeatherForecast(responseCode, data){		//+*/Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
 		if (responseCode==200) {
 			try { 
 				//Sys.println(data);
@@ -372,7 +382,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	function getSubscriptionId(){	//+System.println("getSubscriptionId");
 		Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
-			{"client_id"=>app.getProperty("weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
+			{"client_id"=>app.getProperty("Weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
 			method(:onSubscriptionId));
 	}
 	
@@ -405,6 +415,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				return;
 			} 
 		} else {
+			// 400 TODO wrong client_id: {msg=>Incorrect device identification, code=>MISSING_ID}
 			// 404: no internet
 			// 405: device code expired
 			// 407: No Quota

@@ -42,7 +42,7 @@ class lateView extends Ui.WatchFace {
 	hidden var dateY = null; hidden var radius; hidden var circleWidth = 3; hidden var dialSize = 0; hidden var batteryY; hidden var activityY; hidden var messageY; hidden var sunR; //hidden var temp; //hidden var notifY;
 	hidden var icons;
 	hidden var d24;
-	// TODO AOD // hidden var burnInProtection=0;
+	hidden var burnInProtection=0;
 	
 	hidden var events_list = [];
 	var message = false;
@@ -76,15 +76,9 @@ class lateView extends Ui.WatchFace {
 
 		//Sys.println(["events_list before init", events_list ? events_list.toString().substring(0,30)+"...": ""]);
 		var events = Toybox.Application has :Storage ? Toybox.Application.Storage.getValue("events") : app.getProperty("events");
-if(!(events instanceof Lang.Array) && (Toybox.Application has :Storage)){
-events = app.getProperty("events");
-Toybox.Application.Storage.setValue("events", events);
-app.setProperty("events", null); // migration	
-}
 		if(events instanceof Lang.Array){
 			events_list = events;
 		}
-
 
 		//Sys.println("init: "+ weatherHourly);
 		if(weatherHourly.size()==0){
@@ -113,7 +107,6 @@ app.setProperty("events", null); // migration
 		Otherwise, you can call this method and use the most recent value, which will be the heart rate within the last minute:
 		ActivityMonitor.getHeartRateHistory()
 		In both cases you will need to check for a null value, which will happen if the sensor is not available or the user is not wearing the watch.*/
-
 		presetTestVariables();
 		loadSettings();
 		resetTestVariables();	
@@ -235,7 +228,6 @@ app.setProperty("events", null); // migration
 
 	function loadSettings(){
 		//rain = app.getProperty("rain");
-
 		dateForm = app.getProperty("dateForm");
 		
 		var activities = [null, :steps, :calories, :activeMinutesDay, :activeMinutesWeek, :floorsClimbed, :calendar];
@@ -244,10 +236,6 @@ app.setProperty("events", null); // migration
 		activityR = activities[app.getProperty("activityR")];
 		showSunrise = app.getProperty("sunriset");
 		batThreshold = app.getProperty("bat");
-		circleWidth = app.getProperty("boldness");
-		if(height>280){
-			circleWidth=circleWidth<<1;
-		}
 		dialSize = app.getProperty("dialSize");
 		showWeather = app.getProperty("weather"); if(showWeather==null) {showWeather=false;} // because it is not in settings of non-data devices
 		percentage = app.getProperty("percents");
@@ -260,7 +248,7 @@ app.setProperty("events", null); // migration
 //d24new=true; app.setProperty("d24", d24new); 
 		if(( activity == :calendar) && (d24!= null && d24new != d24)){	// changing 24 / 12h 
 			events_list=[];
-			showMessage(app.scheduleDataLoading());
+			showMessage(app.scheduleDataLoading(dataLoading, activity, showWeather));
 			/*	TODO: changing angle immediately
 						var hour = clockTime.hour;
 			var mul; var a; var b;
@@ -285,8 +273,15 @@ app.setProperty("events", null); // migration
 			*/
 		}
 		d24 = d24new;
+		circleWidth = app.getProperty("boldness");
+		if(height>280){
+			circleWidth=circleWidth<<1;
+		}
 		var tone = app.getProperty("tone").toNumber()%5;
 		var mainColor = app.getProperty("mainColor").toNumber()%6;
+
+		setColor(mainColor, tone);
+
 		if(dialSize>0){
 			activityL=null;
 			activityR=null;
@@ -298,6 +293,22 @@ app.setProperty("events", null); // migration
 			computeSun();
 			//Sys.println([sunrise, sunset]);
 		}
+		
+		if(height==208 ){	// FR45 with 8 colors do not support gray. Contrary the simluator, the real watch do not support even LT_GRAY. 
+			activityColor = Gfx.COLOR_WHITE; 
+			if(tone != 3 && tone != 4){
+				dateColor = Gfx.COLOR_WHITE;
+			}
+		}
+		if(showWeather || activity == :calendar){
+			loadDataColors(mainColor, tone, app);
+		}
+		setLayoutVars();
+		onShow();
+	}
+
+
+	function setColor(mainColor, tone){
 		//	red, 	, yellow, 	green, 		blue, 	violet, 	grey
 		color = [
 			[0xFF0000, 0xFFAA00, 0x00FF00, 0x00AAFF, 0xFF00FF, 0xAAAAAA],
@@ -333,19 +344,7 @@ app.setProperty("events", null); // migration
 			activityColor = 0xAAAAAA;
 			dimmedColor = 0x555555;
 			dateColor = 0xFFFFFF;
-
 		}
-		if(height==208 ){	// FR45 with 8 colors do not support gray. Contrary the simluator, the real watch do not support even LT_GRAY. 
-			activityColor = Gfx.COLOR_WHITE; 
-			if(tone != 3 && tone != 4){
-				dateColor = Gfx.COLOR_WHITE;
-			}
-		}
-		if(showWeather || activity == :calendar){
-			loadDataColors(mainColor, tone, app);
-		}
-		setLayoutVars();
-		onShow();
 	}
 
 	(:data)
@@ -425,7 +424,10 @@ app.setProperty("events", null); // migration
 
 	function setLayoutVars(){
 		icons = Ui.loadResource(Rez.Fonts.Ico);
-		sunR = centerX-5;// - (height>=390 ? (showWeather ? 23:16) : (showWeather ? 15:11)); // base: -9-11, weather: 15
+		sunR = Math.ceil(centerX-5*height/218)+1;// - (height>=390 ? (showWeather ? 23:16) : (showWeather ? 15:11)); // base: -9-11, weather: 15
+		if(sunR>centerX-6){
+			sunR=centerX - (!(activity==:calendar || showWeather) ? 6 :5); // drawCircle is wider than fillCircle
+		}
 		if(showSunrise){
 			//sunrs.getWidth()>>1;
 			if(activity==:calendar){ sunR -= height<390 ? 9:13;}
@@ -485,7 +487,7 @@ app.setProperty("events", null); // migration
 		}*/
 		if(dataLoading){
 			if(activity == :calendar || showWeather){
-				showMessage(app.scheduleDataLoading());
+				showMessage(app.scheduleDataLoading(dataLoading, activity, showWeather));
 				if(activity == :calendar){
 					activityY = messageY;
 				}
@@ -502,7 +504,7 @@ app.setProperty("events", null); // migration
 	}
 
 	//! Called when this View is brought to the foreground. Restore the state of this View and prepare it to be shown. This includes loading resources into memory.
-	function onShow() {
+	//function onShow() {
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"w");
 		//Sys.println(clockTime.min+"w");
 		//Sys.println("onShow");
@@ -512,19 +514,30 @@ app.setProperty("events", null); // migration
 		} else {
 			redrawAll=2; // 2: 2 clearDC() because of lag of refresh of the screen ?
 		}*/
-	}
+	//}
 	
 	//! Called when this View is removed from the screen. Save the state of this View here. This includes freeing resources from memory.
-	function onHide(){
+	//function onHide(){
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"h");
 		//Sys.println(clockTime.min+"h");
 		/////Sys.println("onHide");
 		//redrawAll=0;
-	}
+	//}
 	
 	//! The user has just looked at their watch. Timers and animations may be started here.
+	(:oled)
 	function onExitSleep(){
-		// TODO AOD // if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=0;circleWidth = app.getProperty("boldness");if(height>280){circleWidth=circleWidth<<1;}}
+		if(Sys.getDeviceSettings().requiresBurnInProtection){
+			burnInProtection=0;
+			circleWidth = app.getProperty("boldness");
+			if(height>280){
+				circleWidth=circleWidth<<1;
+				}
+			}
+			if(app.getProperty("tone")>2){
+				setColor(app.getProperty("mainColor"), app.getProperty("tone"));
+			}
+		
 		//onShow();
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"x");
 		//Sys.println(clockTime.min+"x");
@@ -537,8 +550,15 @@ app.setProperty("events", null); // migration
 	}
 
 	//! Terminate any active timers and prepare for slow updates.
+	(:oled)
 	function onEnterSleep(){
-		// TODO AOD // if(Sys.getDeviceSettings().requiresBurnInProtection){burnInProtection=1;circleWidth=2;}
+		if(Sys.getDeviceSettings().requiresBurnInProtection){
+			burnInProtection=1;
+			circleWidth=2;
+			if(backgroundColor!=0x0){
+				setColor(app.getProperty("mainColor"), 0);
+			}
+		}
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"e");
 		//Sys.println(clockTime.min+"e");
 		//////Sys.println("onEnterSleep");
@@ -570,10 +590,21 @@ app.setProperty("events", null); // migration
 		}
 		dc.setColor(backgroundColor, backgroundColor);
 		dc.clear();
-		// TODO AOD // if(burnInProtection){var diff = 4;if(burnInProtection>1){centerX = centerX + ((centerX == (height>>1)) ? diff : -diff);burnInProtection=1;}else{var move = (centerY==(height>>1)) ? diff : -diff;centerY = centerY + move;dateY = dateY + move;burnInProtection=2;}} else {
+		if(burnInProtection){
+			var diff = 4;
+			if(burnInProtection>1){
+				centerX = centerX + ((centerX == (height>>1)) ? diff : -diff);
+				burnInProtection=1;
+			}else{
+				var move = (centerY==(height>>1)) ? diff : -diff;
+				centerY = centerY + move;
+				dateY = dateY + move;
+				burnInProtection=2;
+			}
+		} else {
 		// TODO AOD-X // if(burnInProtection){Sys.println([clockTime.hour, dx,dy]);if(burnInProtection>1){dx = dx == -5 ? dx+10 : dx-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=1;}else{dy = dy == -5 ? dy+10 : dy-10;centerX = centerX + dx;centerY = centerY + dy;burnInProtection=2;}} else {
 			//lastRedrawMin=clockTime.min;
-			drawBatteryLevel(dc);
+			
 			
 			//ms.add(Sys.getTimer()-ms[0]);
 
@@ -595,16 +626,18 @@ app.setProperty("events", null); // migration
 			var x = centerX-radius - (sunR-radius)>>1-(dc.getTextWidthInPixels("1", fontSmall)/3).toNumber();	// scale 4 with resolution
 			drawActivity(dc, activityL, x, centerY, false);
 			drawActivity(dc, activityR, centerX<<1-x, centerY, false);
-		// TODO AOD // }
+		}
 		drawTime(dc);
-		// TODO AOD // if(burnInProtection==0){
-			if(activity != null || message){
+		if(activity != null || message){
 				if(activity == :calendar || message){
 					drawEvent(dc);
 				} else { 
-					drawActivity(dc, activity, centerX, activityY, true);
+					if(burnInProtection==0){
+						drawActivity(dc, activity, centerX, activityY, true);
+					}
 				}
 			}
+		if(burnInProtection==0){
 			if(showWeather){
 				drawWeather(dc);
 			}
@@ -616,7 +649,8 @@ app.setProperty("events", null); // migration
 			}
 			// TODO recalculate sunrise and sunset every day or when position changes (timezone is probably too rough for traveling)
 			drawNowCircle(dc, clockTime.hour);
-		// TODO AOD // }
+			drawBatteryLevel(dc);
+		} 
 
 		//}
 		//ms.add(Sys.getTimer()-ms[0]);
@@ -875,17 +909,24 @@ app.setProperty("events", null); // migration
 				if(tillStart < 3480){	// 58 mins
 					var secondsFromLastHour = events_list[i][0] - (Time.now().value()-(clockTime.min*60+clockTime.sec));
 					var a = (secondsFromLastHour).toFloat()/1800*Math.PI; // 2Pi/hour
-					var r = tillStart>=120 || clockTime.min<10 ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
+					var r = (tillStart>=120 || clockTime.min<10 || burnInProtection>0) ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
 					//var r = dialSize ? radius : 1.12*radius; //12//
 					var x= Math.round(centerX+(r*Math.sin(a)));
 					var y = Math.round(centerY-(r*Math.cos(a)));
 
 					//12// marker 
 					
-					dc.setColor(backgroundColor, backgroundColor);
-					dc.fillCircle(x, y, 4);
-					dc.setColor(dateColor, backgroundColor);
-					dc.fillCircle(x, y, 2);
+					if(burnInProtection==0){
+						dc.setColor(backgroundColor, backgroundColor);
+						dc.fillCircle(x, y, 4);
+						dc.setColor(dateColor, backgroundColor);
+						dc.fillCircle(x, y, 2);
+					} else {
+						dc.setColor(dateColor, backgroundColor);
+						dc.fillCircle(x, y, 4);
+						dc.setColor(backgroundColor, backgroundColor);
+						dc.fillCircle(x, y, 3);
+					}
 					
 					/*dc.setPenWidth(1);
 					dc.setColor(dateColor, backgroundColor);
@@ -911,7 +952,7 @@ app.setProperty("events", null); // migration
 		}
 
 		// draw first event if it is close enough
-		if(eventStart != null){
+		if(eventStart != null && burnInProtection==0){
 			if(events_list[i][4]<0){ // no calendar event, but prompt
 				dc.setColor(dateColor , Gfx.COLOR_TRANSPARENT); // emphasized event without date
 			} else {
@@ -923,8 +964,7 @@ app.setProperty("events", null); // migration
 			var x = centerX;
 			var justify = Gfx.TEXT_JUSTIFY_CENTER;
 			var eventHeight=Gfx.getFontHeight(fontCondensed)-1;  
-			
-			if(events_list[i][4]>=0){ // no calendar event, but prompt
+			if(events_list[i][4]>=0){ // calendar event
 				dc.setColor(dateColor , Gfx.COLOR_TRANSPARENT); // empha
 				x-=(dc.getTextWidthInPixels(eventStart+eventLocation, fontCondensed)>>1 
 					-(dc.getTextWidthInPixels(eventStart, fontCondensed)));
@@ -1010,8 +1050,10 @@ app.setProperty("events", null); // migration
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.setPenWidth(width);
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle+1, 90-fromAngle);
-			if(events_list[i][4]>=0){
-				dc.setColor(calendarColors[events_list[i][4]%(calendarColors.size())], backgroundColor);
+			var cal = events_list[i][4];
+			if(cal!=null && cal>=0){
+				cal = cal%(calendarColors.size());
+				dc.setColor(calendarColors[cal], backgroundColor);
 			}
 			dc.setPenWidth(width);
 			center = fromAngle>=60 && fromAngle<240 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
@@ -1121,10 +1163,24 @@ app.setProperty("events", null); // migration
 		var gap=0;
 		dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 		// TODO AOD overlapping 4>5 outlines etc // h=(h+7)%24; var d= new [24];for(var q=0;q<d.size();q++){d[q]=[0,0];}d[5]=[4,2];
-		// TODO AOD // if(burnInProtection){ for(var i=0;i<4;i++){dc.drawText(i&1<<1-1 + centerX,(i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); } dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);} else {
+		
+		if(burnInProtection){ 
+			//var stroke = (minutes==0 || minutes == 59 ) ? 3 : 1;
+			var stroke=1;
+			for(var i=0;i<4;i++){
+				dc.drawText((i&1<<1-1)*stroke + centerX, (i&3>>1<<1-1)*stroke + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); 
+			} 
+			dc.setColor(backgroundColor, Gfx.COLOR_TRANSPARENT);
+			/*if(stroke==2){
+				for(var i=0;i<4;i++){
+					dc.drawText(i&1<<1-1 + centerX,(i&3>>1<<1-1) + centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER); 
+				} 
+			}*/
+
+		}  else { 
 			dc.setColor(timeColor, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(Math.round(centerX + (radius * sin)), Math.round(centerY - (radius * cos)) , fontSmall, minutes, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
-		// TODO AOD // }
+		}
 		dc.drawText(centerX, centerY-(dc.getFontHeight(fontHours)>>1), fontHours, h.format("%0.1d"), Gfx.TEXT_JUSTIFY_CENTER);
 		if(minutes>0){
 			dc.setColor(color, backgroundColor);
@@ -1164,7 +1220,11 @@ app.setProperty("events", null); // migration
 					}
 				}
 			}
-			//if(burnInProtection){offset=0;gap=0;}
+			if(burnInProtection){ 
+				offset=0;
+				gap=0;
+				
+			}
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
 		}
 	}

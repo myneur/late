@@ -170,7 +170,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 // DEBUG MEM //var m=Sys.getSystemStats().freeMemory;function mem(label){Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, label]); m=Sys.getSystemStats().freeMemory;}
 // DEBUG MEM BALAST //var balast = new [460];
 
-	function getEvents(calendar_id) { 	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData");
+	function getEvents(calendar_id) { 	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData "+ calendar_id);
 // DEBUG MEM //mem("getEvents max "+maxResults/*+" with balast "+balast.size()*/);
 // DEBUG MEM //mem("getEvents "+calendar_id);
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
@@ -210,9 +210,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			//var eventsToSafelySend = primary_calendar ? 7 : 8;
 			//var limit = Toybox.Application has :Storage ? 12 : 9;
 			var limit = 11;
+//Sys.println(data.size());
 			for (var i = 0; i < data.size() && events_list.size() < limit; i++) { // limit events not to get out of memory
 				//+mem+*/Sys.println(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
 				event = data[i];
+//Sys.println(event);
 				data[i] = null;
 				if(event["start"]){ // skip day events that have only "summary"
 					try {
@@ -244,6 +246,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 					}
 				}
 			}
+//Sys.println(events_list.size());
 			maxResults = limit-events_list.size(); // TODO limit must not exceed maxResults
 			// DEBUG MEM //mem("limiting results to " +maxResults + " with events loaded: "+ events_list.size());
 			//Sys.println(data.size()+" "+events_list.size()+"/"+limit);

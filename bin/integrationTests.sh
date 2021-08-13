@@ -18,14 +18,14 @@ function simulate(){
 		if [[ $RECOMPILE -eq 1 ]] ;then
 			if [[ $RELEASE -eq 1 ]] ;then
 				FLAGS="-r"
-				JUNGLE=monkey.jungle
+				JUNGLE=../monkey.jungle
 				echo " > compile :release"
 			else
 				FLAGS=""
-				JUNGLE=test.jungle
+				JUNGLE=../test.jungle
 				echo " > compile :debug"
 			fi
-			monkeyc -o bin/late.prg -y ../developer_key.der -f $JUNGLE -d $DEVICE $FLAGS
+			monkeyc -o late.prg -y ../../developer_key.der -f $JUNGLE -d $DEVICE $FLAGS
 			echo " > sleep 2s"
 			sleep 2
 		else 
@@ -34,7 +34,7 @@ function simulate(){
 		fi
 		# echo " > sleep 5s"; sleep 5
 		echo " > simulate "$DEVICE 
-		monkeydo bin/late.prg $DEVICE &
+		monkeydo late.prg $DEVICE &
 		echo " > sleep 3s"
 		sleep 3
 		if [[ $BACKGROUND -eq 1 ]] ;then
@@ -78,7 +78,7 @@ function testLogin(){
 	simulate	
 }
 
-function testCalendar(){
+function testCalendarWithWeatherShown(){
 	VARS="calendar-with-weather-shown.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo " < "$VARS
@@ -141,7 +141,7 @@ function testSubscriptionInDebug(){ # TODO !!! now it only loads weather because
 
 # missing resolutions 
 function testMissingResolutions(){
-	VARS="calendar-with-weather-shown.vars.xml"
+	VARS="calendar-with-weather-shown.vars.xml" "start-weather.vars.xml"
 	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
@@ -153,6 +153,29 @@ function testMissingResolutions(){
 	RELEASE=1
 	DONTSAVEPROPERTIES=0
 	simulate
+}
+
+# all resolutions permutations with or without calendar and weather
+function testResolutionsPermutations(){
+	CONFS=("calendar-with-weather-shown.vars.xml" "calendar.vars.xml" "start-weather.vars.xml" "no-data.vars.xml")
+	echo $CONFS
+	I=1
+	for CONF in "${CONFS[@]}"
+	do
+		VARS=$CONF
+		cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+		echo " < "$VARS
+		BACKGROUND=1
+		setVariables
+		DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro vivoactive4 fenix5 fenix5s fr45) # 416 390 360 280 260 240 218 208
+		BACKGROUND=0
+		RECOMPILE=1
+		RELEASE=1
+		DONTSAVEPROPERTIES=0
+		RUN="_"$I
+		simulate
+		I=$((I+1))
+	done
 }
 
 # no data devices
@@ -223,14 +246,14 @@ function currentDebug(){
 	RECOMPILE=1
 	RUN="_debug"
 	VARS="full-strong.vars.xml"
-	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > resources-tests/test-variables.xml
+	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"dialSize":0,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > resources-tests/test-variables.xml
 	DEVICES=(fenix6) 	
 	BACKGROUND=0
 	simulate
 }
 
-setVariables # just demo of what can be done
-#testCalendar
+#setVariables # just demo of what can be done
+testCalendarWithWeatherShown
 #testWeatherInDebug
 #currentDebug
 #testLogin
@@ -241,3 +264,4 @@ setVariables # just demo of what can be done
 #testNoData
 #testFloorsAndMinutes
 #testMonkeyJungleVariations
+#testResolutionsPermutations

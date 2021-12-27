@@ -1,4 +1,4 @@
-DEVICE="fenix6"
+DEVICE="fr55"
 GarminHOME=~/Library/Application\ Support/Garmin/ConnectIQ/Sdks/connectiq-sdk/bin
 connectiq 	
 sleep 2

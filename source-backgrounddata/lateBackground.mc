@@ -324,16 +324,23 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		//+//System.println(Sys.getSystemStats().freeMemory + " getWeatherForecast paid by: "+subscription_id);
 		//Sys.println("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat());
 		if(subscription_id instanceof String && subscription_id.length()>0){
-			
 			// STAGING */Communications.makeWebRequest("https://almost-late-middleware-staging.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
-			/* PROD */Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
+			/* OLD PROD */Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
+			// NEW PROD not working yet */Communications.makeWebRequest("https://subscription.sl8.ch/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"unit"=>(app.getProperty("units") ? "c":"f"), 
 					"service"=>"yrno", // app.getProperty("provider") ? "climacell":"yrno"
 					"period_w"=>(hours+1),
 					"period_p"=>hours,
 					"period_t"=>16
 				}, 
-				{:method => Communications.HTTP_REQUEST_METHOD_GET, :headers=>{ "Authorization"=>"Bearer " + subscription_id, "Accept-Version" => "v2" }},
+				{	:method => Communications.HTTP_REQUEST_METHOD_GET, 
+					:headers=>{ 
+						"Authorization"=>"Bearer " + subscription_id, 
+						"Accept-Version" => "v2",
+						"X-Device-Identifier" => Sys.getDeviceSettings().uniqueIdentifier
+						}, 
+
+					},
 				method(:onWeatherForecast));
 		} else {
 			getSubscriptionId();
@@ -382,9 +389,13 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		Background.exit(data);
 	}
 
-	function getSubscriptionId(){	//+System.println("getSubscriptionId");
-		Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
-			{"client_id"=>app.getProperty("Weather_id")},  {:method=>Communications.HTTP_REQUEST_METHOD_GET},
+	function getSubscriptionId(){	//+*/System.println("getSubscriptionId");
+		//Communications.makeWebRequest("https://almost-late-middleware-staging.herokuapp.com/auth/code",
+		Communications.makeWebRequest("https://subscription.sl8.ch/auth/code",
+			{"client_id"=>app.getProperty("Weather_id")},  
+				{	:method=>Communications.HTTP_REQUEST_METHOD_GET, 
+					:headers=> {"X-Device-Identifier" => Sys.getDeviceSettings().uniqueIdentifier}
+					},
 			method(:onSubscriptionId));
 	}
 	
@@ -395,8 +406,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 		data.put("r", Math.rand().toString());
 		//Sys.println(["https://almost-late-middleware.herokuapp.com/" + (responseCode==407 ? "waitlist" : "checkout/pay"), data]);
-		Communications.openWebPage("https://almost-late-middleware.herokuapp.com/" + (responseCode==407 ? "waitlist" : "checkout/pay"), 
-			data, {:method=>Communications.HTTP_REQUEST_METHOD_GET}); 
+		//Communications.openWebPage("https://almost-late-middleware-staging.herokuapp.com/" + (responseCode==407 ? "waitlist" : "checkout/pay"), 
+		Communications.openWebPage("https://subscription.sl8.ch/" + (responseCode==407 ? "waitlist" : "checkout/pay"), 
+			data, 
+			{	:method=>Communications.HTTP_REQUEST_METHOD_GET, 
+				:headers=> {"X-Device-Identifier" => Sys.getDeviceSettings().uniqueIdentifier}
+				}); 
 		data = {"subscription_id"=>subscription_id};
 		if(responseCode!=200){
 			data.put("error_code", responseCode);

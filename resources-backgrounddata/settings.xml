@@ -9,7 +9,8 @@
 		</settingConfig>
 	</setting>
 
-	<setting propertyKey="@Properties.activity" title="@Strings.ActivityTitle" prompt="@Strings.CalendarPrompt" helpUrl="https://sl8.ch/calendar">
+	<setting propertyKey="@Properties.activity" title="@Strings.ActivityTitle" prompt="@Strings.CalendarPrompt" helpUrl="https://sl8.ch/calendar-analog">
+	<!--<setting propertyKey="@Properties.activity" title="@Strings.ActivityTitle" prompt="@Strings.CalendarPrompt" helpUrl="https://sl8.ch/calendar">-->
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.DnD</listEntry>
 			<listEntry value="1">@Strings.Steps</listEntry>

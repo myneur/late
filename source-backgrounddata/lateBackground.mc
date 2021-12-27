@@ -391,7 +391,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 
 	function getSubscriptionId(){	//+*/System.println("getSubscriptionId");
 		//Communications.makeWebRequest("https://almost-late-middleware-staging.herokuapp.com/auth/code",
-		Communications.makeWebRequest("https://subscription.sl8.ch/auth/code",
+		Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/auth/code",
 			{"client_id"=>app.getProperty("Weather_id")},  
 				{	:method=>Communications.HTTP_REQUEST_METHOD_GET, 
 					:headers=> {"X-Device-Identifier" => Sys.getDeviceSettings().uniqueIdentifier}

@@ -349,7 +349,7 @@ class lateView extends Ui.WatchFace {
 
 	(:data)
 	function loadDataColors(mainColor, tone, app){
-		var mainColor = app.getProperty("mainColor").toNumber()%6;
+		mainColor = app.getProperty("mainColor").toNumber()%6;
 		if(showWeather){
 			meteoColors = Ui.loadResource(Rez.JsonData.metCol);
 			//Sys.println([0xFFAA00,	0xAA5500,	0x005555, 0x00AAFF,	0xAAAAAA, 0xFFFFFF, 0x555500];);
@@ -1049,7 +1049,7 @@ class lateView extends Ui.WatchFace {
 			//Sys.println([i, nowAngle,tomorrow, fromAngle, toAngle]);		
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.setPenWidth(width);
-			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle+1, 90-fromAngle);
+			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 450-fromAngle+1, 450-fromAngle);
 			var cal = events_list[i][4];
 			if(cal!=null && cal>=0){
 				cal = cal%(calendarColors.size());
@@ -1057,7 +1057,7 @@ class lateView extends Ui.WatchFace {
 			}
 			dc.setPenWidth(width);
 			center = fromAngle>=60 && fromAngle<240 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
-			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-fromAngle, 90-toAngle);	// draw event on dial
+			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 450-fromAngle, 450-toAngle);	// draw event on dial
 
 		}
 	}
@@ -1225,7 +1225,10 @@ class lateView extends Ui.WatchFace {
 				gap=0;
 				
 			}
-			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6+offset);
+			//dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6 + offset);
+			//Sys.println([90-gap, 90-minutes*6 + offset]);
+			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90-gap, 90-minutes*6 + offset);
+			//dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90, 270);
 		}
 	}
 
@@ -1280,7 +1283,7 @@ class lateView extends Ui.WatchFace {
 	(:data)
 	function drawWeather(dc){  //Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
 		var h = trimPastHoursInWeatherHourly();
-		/////Sys.println("weather from hour: "+h + " offset: "+offset);
+		//Sys.println("weather from hour: "+h + " offset: "+offset);
 		var limit; var step; var hours;
 		if(d24){ 
 			limit = 29; step = 15; hours = 24;
@@ -1303,9 +1306,11 @@ class lateView extends Ui.WatchFace {
 					} else {
 						center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
 					}
-					/////Sys.println([i, h, weatherHourly[i], color]);
 					dc.setColor(color, Gfx.COLOR_TRANSPARENT);
-					dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 90-h*step, 90-(h+1)*step);
+					//dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 15, 5);return;
+					//Sys.println([h, 450-h*step, 450-(h+1)*step]);
+					dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 450-h*step, 450-(h+1)*step);
+
 				}
 			}
 			// write temperature

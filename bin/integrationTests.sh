@@ -146,7 +146,7 @@ function testMissingResolutions(){
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
-	DEVICES=(wearable2021 venu smallwearable2021 vivoactive4) # 416 390 360 260 
+	DEVICES=(venu2 venu venu2s vivoactive4) # 416 390 360 260 
 	RUN="_resolution"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -167,7 +167,7 @@ function testResolutionsPermutations(){
 		echo " < "$VARS
 		BACKGROUND=1
 		setVariables
-		DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro vivoactive4 fenix5 fenix5s fr45) # 416 390 360 280 260 240 218 208
+		DEVICES=(venu2 venu venu2s fenix6xpro vivoactive4 fenix5 fenix5s fr45) # 416 390 360 280 260 240 218 208
 		BACKGROUND=0
 		RECOMPILE=1
 		RELEASE=1
@@ -217,7 +217,7 @@ function testStrongInAllReslutions(){
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
-	DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro venusq fr945 vivoactive4 fr745 fr735xt garminswim2 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
+	DEVICES=(venu2 venu venu2s fenix6xpro venusq fr945 vivoactive4 fr745 fr735xt garminswim2 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
 	RUN="_strong"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -232,7 +232,7 @@ function testMonkeyJungleVariations(){
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
-	DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro venusq venusqm approachs62 approachs60 fr245 fr245m fr945 vivoactive4 fr745 enduro fr735xt garminswim2 vivoactive_hr fenix3 fenix3_hr d2bravo d2bravo_titanium fr45 garminswim2)
+	DEVICES=(venu2 venu venu2s fenix6xpro venusq venusqm approachs62 approachs60 fr245 fr245m fr945 vivoactive4 fr745 enduro fr735xt garminswim2 vivoactive_hr fenix3 fenix3_hr d2bravo d2bravo_titanium fr45 garminswim2)
 	RUN="_jungle"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -254,14 +254,14 @@ function currentDebug(){
 
 #setVariables # just demo of what can be done
 testCalendarWithWeatherShown
-#testWeatherInDebug
+testWeatherInDebug
 #currentDebug
 #testLogin
 #testSubscriptionInDebug
 
-#testMissingResolutions
-#testStrongInAllReslutions
+testMissingResolutions
+testStrongInAllReslutions
 #testNoData
-#testFloorsAndMinutes
-#testMonkeyJungleVariations
-#testResolutionsPermutations
+testFloorsAndMinutes
+testMonkeyJungleVariations
+testResolutionsPermutations

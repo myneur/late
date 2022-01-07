@@ -59,7 +59,7 @@ function setVariables(){
 
 function testLogin(){
 	VARS="login.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
@@ -80,7 +80,7 @@ function testLogin(){
 
 function testCalendarWithWeatherShown(){
 	VARS="calendar-with-weather-shown.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
@@ -95,7 +95,7 @@ function testCalendarWithWeatherShown(){
 
 function testCalendarOnly(){
 	VARS="calendar.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
@@ -110,7 +110,7 @@ function testCalendarOnly(){
 
 function testWeatherInDebug(){ # TODO !!! now it only loads weather because of the Ficking Garmin Simulaotr is crashing
 	VARS="start-weather.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	RECOMPILE=1
@@ -125,7 +125,7 @@ function testWeatherInDebug(){ # TODO !!! now it only loads weather because of t
 
 function testSubscriptionInDebug(){ # TODO !!! now it only loads weather because of the Ficking Garmin Simulaotr is crashing
 	VARS="start-weather.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	RECOMPILE=1
@@ -141,12 +141,12 @@ function testSubscriptionInDebug(){ # TODO !!! now it only loads weather because
 
 # missing resolutions 
 function testMissingResolutions(){
-	VARS="calendar-with-weather-shown.vars.xml" "start-weather.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	VARS="calendar-with-weather-shown.vars.xml"
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
-	DEVICES=(wearable2021 venu smallwearable2021 vivoactive4) # 416 390 360 260 
+	DEVICES=(venu2 venu venu2s vivoactive4) # 416 390 360 260 
 	RUN="_resolution"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -163,11 +163,11 @@ function testResolutionsPermutations(){
 	for CONF in "${CONFS[@]}"
 	do
 		VARS=$CONF
-		cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+		cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 		echo " < "$VARS
 		BACKGROUND=1
 		setVariables
-		DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro vivoactive4 fenix5 fenix5s fr45) # 416 390 360 280 260 240 218 208
+		DEVICES=(venu2 venu venu2s fenix6xpro vivoactive4 fenix5 fenix5s fr45) # 416 390 360 280 260 240 218 208
 		BACKGROUND=0
 		RECOMPILE=1
 		RELEASE=1
@@ -181,7 +181,7 @@ function testResolutionsPermutations(){
 # no data devices
 function testNoData(){
 	VARS="no-data.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
@@ -197,7 +197,7 @@ function testNoData(){
 
 function testFloorsAndMinutes(){
 	VARS="floors-and-minutes.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
@@ -213,11 +213,11 @@ function testFloorsAndMinutes(){
 # all resolutions with strong flavor
 function testStrongInAllReslutions(){
 	VARS="full-strong.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
-	DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro venusq fr945 vivoactive4 fr745 fr735xt garminswim2 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
+	DEVICES=(venu2 venu venu2s fenix6xpro venusq fr945 vivoactive4 fr745 fr735xt garminswim2 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
 	RUN="_strong"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -228,11 +228,11 @@ function testStrongInAllReslutions(){
 
 function testMonkeyJungleVariations(){
 	VARS="full-strong.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
-	DEVICES=(wearable2021 venu smallwearable2021 fenix6xpro venusq venusqm approachs62 approachs60 fr245 fr245m fr945 vivoactive4 fr745 enduro fr735xt garminswim2 vivoactive_hr fenix3 fenix3_hr d2bravo d2bravo_titanium fr45 garminswim2)
+	DEVICES=(venu2 venu venu2s fenix6xpro venusq venusqm approachs62 approachs60 fr245 fr245m fr945 vivoactive4 fr745 enduro fr735xt garminswim2 vivoactive_hr fenix3 fenix3_hr d2bravo d2bravo_titanium fr45 garminswim2)
 	RUN="_jungle"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -246,21 +246,21 @@ function currentDebug(){
 	RECOMPILE=1
 	RUN="_debug"
 	VARS="full-strong.vars.xml"
-	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"dialSize":0,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > resources-tests/test-variables.xml
+	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"dialSize":0,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > ../resources-tests/test-variables.xml
 	DEVICES=(fenix6) 	
 	BACKGROUND=0
 	simulate
 }
 
 #setVariables # just demo of what can be done
-testCalendarWithWeatherShown
+##testCalendarWithWeatherShown
 #testWeatherInDebug
 #currentDebug
 #testLogin
 #testSubscriptionInDebug
 
-#testMissingResolutions
-#testStrongInAllReslutions
+testMissingResolutions
+testStrongInAllReslutions
 #testNoData
 #testFloorsAndMinutes
 #testMonkeyJungleVariations

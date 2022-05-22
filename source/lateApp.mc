@@ -405,7 +405,7 @@ class lateApp extends Toy.Application.AppBase {
 	function locate(save){	// save = false in background because bakground processes can not save properites (WTF!)
 	    var position =null;
 	    var accuracy = null;
-	    var location = "";
+	    //var location = "";
 	    if(Toy.Position has :getInfo){
 	        position = Toy.Position.getInfo();
         	accuracy = position.accuracy;
@@ -423,7 +423,7 @@ class lateApp extends Toy.Application.AppBase {
 	            var weather = Toy.Weather.getCurrentConditions();
 	            if(weather != null){
 	                var p = sanitizeLoc(weather.observationLocationPosition);
-	                location = weather.observationLocationName;
+	                //location = weather.observationLocationName;
 	                if(p!=null){
 	                	position = p;	
 	                }
@@ -433,11 +433,14 @@ class lateApp extends Toy.Application.AppBase {
 	    if (position == null){
 	        position = app.getProperty("location"); // load the last location, because the weatch can forget its location often      
 	    } else {
-	    	if(position instanceof Array){
-	    		position.addAll([accuracy, location]);
-	    	}
+	    	//if(position instanceof Array){position.addAll([accuracy, location]);}
 	    	if(save){
 	        	app.setProperty("location", position); // save the location to fix a Fenix 5 bug that is loosing the location often
+	        	if(position instanceof Array && position.size()>1) {
+	        		//app.setProperty("info", "Location: " + (location.length()>0 ? location : position) );
+	        		app.setProperty("info", "Weather coordinates: " +  position[0].format("%1.1f")+" ,"+position[1].format("%1.1f") ) ;
+	        		//Sys.println(app.getProperty("info"));
+	        	}
 	        }
 			// Location to storage */ some deivces can not save on background 
 			/*try { 

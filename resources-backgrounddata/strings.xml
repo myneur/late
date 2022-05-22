@@ -34,11 +34,19 @@
 	<string id="Update">Update watch face</string><!-- the watch face is outdated and need to be updated to the newest version in order to usee all functions -->
 
 	<string id="Weather">Premium: Show Weather Forecast</string><!-- Toggle a premium feature that Shows a Weather Forecast -->
+
+	<!--<string id="Range">Forecast: Min-Max</string>-->
+	<!--<string id="Now">Min-Now OR Now-Max</string>-->
+
 	<string id="WeatherPrompt">How to subscribe and unsubscribe: </string><!-- Single help line telling what will be on the following link explaining how to setup it up -->
 	<string id="Units">Temperature units</string><!-- And option that will allow user to choose What temperature units he is using (Celsius/Fahrenheit) -->
 	<string id="Celsius">Celsius</string>
 	<string id="Fahrenheit">Fahrenheit</string>
-
+	<string id="Forecast">Weather forecast service</string>
+	
+	<string id="Yr">Best in Europe (Yr.no)</string>
+	<string id="Ca">When not accurate: try more pesimistic (ClearOutside)</string>
+	<string id="Info">Info or unsubscribe on: sl8.ch</string>
 
 <!-- new to translate -->
 	<string id="D1224h">12 or 24h Calendar/Weather outlook?</string>

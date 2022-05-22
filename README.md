@@ -11,7 +11,7 @@
 
 [Download](https://sl8.ch/)
 
-[Give feedback](https://portal.productboard.com/myneur/1-simply-late/tabs/8-garmin-watch-face)
+[Give feedback](https://sl8.ch/feedback-and-credits)
  
 [Do you want to contribute?](https://sl8.ch/contribute)
 

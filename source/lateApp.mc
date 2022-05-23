@@ -57,24 +57,24 @@ class lateApp extends Toy.Application.AppBase {
 					return promptLogin(app.getProperty("user_code"), app.getProperty("verification_url"));
 				} else {
 					var prompt = Ui.loadResource( Sys.getDeviceSettings().phoneConnected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected );
-					return ({"userPrompt"=>prompt, "error_code"=>511, "wait"=>nextEvent});
+					return ({"msg"=>prompt, "err"=>511, "wait"=>nextEvent});
 				}
 			}  
 			if(showWeather && app.getProperty("subs") == null){
 				var pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
-				var data = {"error_code"=>511, "wait"=>nextEvent};
+				var data = {"err"=>511, "wait"=>nextEvent};
 				if(pos == null){
-					data["userPrompt"] = Ui.loadResource(Rez.Strings.NoGPS);
-					data["userContext"] = Ui.loadResource(Rez.Strings.HowGPS);
-					data.put("permanent", true);
+					data["msg"] = Ui.loadResource(Rez.Strings.NoGPS);
+					data["msg2"] = Ui.loadResource(Rez.Strings.HowGPS);
+					data.put("now", true);
 					
 				} else {
-					data.put("userPrompt", Ui.loadResource( Sys.getDeviceSettings().phoneConnected ? Rez.Strings.Subscribe : Rez.Strings.NotConnected ));
+					data.put("msg", Ui.loadResource( Sys.getDeviceSettings().phoneConnected ? Rez.Strings.Subscribe : Rez.Strings.NotConnected ));
 				}
 				return (data);
 			}
 		} else { // not supported by the watch
-			return ({"userPrompt"=>Ui.loadResource(Rez.Strings.NotSupportedData), "error_code"=>501}); 
+			return ({"msg"=>Ui.loadResource(Rez.Strings.NotSupportedData), "err"=>501}); 
 		}
 		return true;
 	}
@@ -99,7 +99,7 @@ class lateApp extends Toy.Application.AppBase {
 	(:data)
 	function promptLogin(user_code, url){
 		//////Sys.println([user_code, url]);
-		return ({"userPrompt"=>url.substring(url.find("www.")+4, url.length()), "userContext"=>user_code, "permanent"=>true, "wait"=>durationToNextEvent()});
+		return ({"msg"=>url.substring(url.find("www.")+4, url.length()), "msg2"=>user_code, "now"=>true, "wait"=>durationToNextEvent()});
 	}
 
 	(:data)
@@ -165,8 +165,8 @@ class lateApp extends Toy.Application.AppBase {
 						changeScheduleToMinutes(5);
 						data = promptLogin(data.get("user_code"), data.get("verification_url"));
 						//app.setProperty("code_valid_till", new Time.now().value() + add(data.get("expires_in").toNumber()));
-					} else if(data.hasKey("error_code")){
-						var error = data["error_code"];
+					} else if(data.hasKey("err")){
+						var error = data["err"];
 						//System.println(data);
 						data["wait"] = durationToNextEvent();
 						var connected = Sys.getDeviceSettings().phoneConnected;
@@ -176,7 +176,7 @@ class lateApp extends Toy.Application.AppBase {
 							if(watch!=null && ((watch.activity == :calendar && app.getProperty("refresh_token")==null) || (watch.showWeather && app.getProperty("subs")==null)) ){
 							//if(watch.activity == :calendar && (app.getProperty("lastLoad")!="c" || showWeather==false) && app.getProperty("refresh_token")==null){	// no internet or not connected when logging in
 								// TODO: 404 with msg no data might actually mean also problem with Google: https://developers.google.com/calendar/v3/errors
-								data["userPrompt"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
+								data["msg"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
 							} else {	
 								changeScheduleToMinutes(60);
 								return;
@@ -191,31 +191,31 @@ class lateApp extends Toy.Application.AppBase {
 							changeScheduleToMinutes(data["wait"]/60);
 						} else {
 							changeScheduleToMinutes(5);
-							// if(error==511 ){ // ///Sys.println("login request");// login prompt on OAuth data["userPrompt"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);} else 
+							// if(error==511 ){ // ///Sys.println("login request");// login prompt on OAuth data["msg"] = Ui.loadResource( connected ? Rez.Strings.Wait4login : Rez.Strings.NotConnected);} else 
 							if (error == -204){
-								data["userPrompt"] = Ui.loadResource(Rez.Strings.NoGPS);
-								data["userContext"] = Ui.loadResource(Rez.Strings.HowGPS);
-								data.put("permanent", true);
+								data["msg"] = Ui.loadResource(Rez.Strings.NoGPS);
+								data["msg2"] = Ui.loadResource(Rez.Strings.HowGPS);
+								data.put("now", true);
 							} else if(data.hasKey("error")){	// when reason is passed from background
 								//////Sys.println(data["error"]);
-								data["userPrompt"] = data["error"];
-								data.put("permanent", true);
+								data["msg"] = data["error"];
+								data.put("now", true);
 							} else if(error>=400 && error<=403) { // general codes of not being authorized and not explained: invalid user_code || unauthorized || access denied
 								if(data.hasKey("subscription_id")){	// subscription is not in db: expired or wasn't paid at all
 									app.setProperty("subscription_id", null);
-									data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Update : Rez.Strings.Subscribe);
+									data["msg"] = Ui.loadResource(error==400 ? Rez.Strings.Update : Rez.Strings.Subscribe);
 								} else {
 									app.setProperty("refresh_token", null);
 									app.setProperty("user_code", null);
-									data["userPrompt"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
+									data["msg"] = Ui.loadResource(error==400 ? Rez.Strings.Expired : Rez.Strings.Unauthorized);
 								}
 							} else if(error==-403){
-								data["userPrompt"] = Ui.loadResource(Rez.Strings.OutOfMemory);
+								data["msg"] = Ui.loadResource(Rez.Strings.OutOfMemory);
 							}
 							else { // all other unanticipated errors
-								data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
-								data["userContext"] = data.get("error_code");
-								data.put("permanent", true);
+								data["msg"] = Ui.loadResource(Rez.Strings.NastyError);
+								data["msg2"] = data.get("err");
+								data.put("now", true);
 							}
 						}
 					}
@@ -231,10 +231,10 @@ class lateApp extends Toy.Application.AppBase {
 					data = {};
 				}
 				if(ex.getErrorMessage()){
-					data["userPrompt"] =   ex.getErrorMessage();
-					data["userContext"] = Ui.loadResource(Rez.Strings.NastyError);
+					data["msg"] =   ex.getErrorMessage();
+					data["msg2"] = Ui.loadResource(Rez.Strings.NastyError);
 				} else {
-					data["userPrompt"] = Ui.loadResource(Rez.Strings.NastyError);
+					data["msg"] = Ui.loadResource(Rez.Strings.NastyError);
 				}
 				
 				
@@ -405,7 +405,7 @@ class lateApp extends Toy.Application.AppBase {
 	function locate(save){	// save = false in background because bakground processes can not save properites (WTF!)
 	    var position =null;
 	    var accuracy = null;
-	    var location = "";
+	    //var location = "";
 	    if(Toy.Position has :getInfo){
 	        position = Toy.Position.getInfo();
         	accuracy = position.accuracy;
@@ -423,7 +423,7 @@ class lateApp extends Toy.Application.AppBase {
 	            var weather = Toy.Weather.getCurrentConditions();
 	            if(weather != null){
 	                var p = sanitizeLoc(weather.observationLocationPosition);
-	                location = weather.observationLocationName;
+	                //location = weather.observationLocationName;
 	                if(p!=null){
 	                	position = p;	
 	                }
@@ -433,11 +433,14 @@ class lateApp extends Toy.Application.AppBase {
 	    if (position == null){
 	        position = app.getProperty("location"); // load the last location, because the weatch can forget its location often      
 	    } else {
-	    	if(position instanceof Array){
-	    		position.addAll([accuracy, location]);
-	    	}
+	    	//if(position instanceof Array){position.addAll([accuracy, location]);}
 	    	if(save){
 	        	app.setProperty("location", position); // save the location to fix a Fenix 5 bug that is loosing the location often
+	        	if(position instanceof Array && position.size()>1) {
+	        		//app.setProperty("info", "Location: " + (location.length()>0 ? location : position) );
+	        		app.setProperty("info", Rez.Strings.Coord +  position[0].format("%1.1f")+" ,"+position[1].format("%1.1f") ) ;
+	        		//Sys.println(app.getProperty("info"));
+	        	}
 	        }
 			// Location to storage */ some deivces can not save on background 
 			/*try { 

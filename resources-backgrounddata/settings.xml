@@ -21,9 +21,11 @@
 			<listEntry value="6">@Strings.Calendar</listEntry>
 		</settingConfig>
 	</setting>
-
-	<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar-analog">
-	<!--<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar">-->
+	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars" prompt="@Strings.CalendarsPrompt" helpUrl="https://calendar.google.com/calendar/r/settings">
+		<settingConfig type="alphaNumeric" />
+	</setting>
+	<!--<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar-analog">-->
+	<setting propertyKey="@Properties.calendar_colors" title="@Strings.CalendarColors" prompt="@Strings.CalendarsSetting" helpUrl="https://sl8.ch/calendar">
 		<settingConfig type="list">
 			<listEntry value="0">@Strings.CalendarNoChange</listEntry>						
 			<listEntry value="1">@Strings.CalendarByColor</listEntry>
@@ -32,9 +34,6 @@
 	<!--<setting propertyKey="@Properties.refresh_freq" title="@Strings.refreshFrequency">
 		<settingConfig type="numeric" min="60" max="1440" />
 	</setting>-->
-	<setting propertyKey="@Properties.calendar_ids" title="@Strings.AddCalendars" prompt="@Strings.CalendarsPrompt" helpUrl="https://calendar.google.com/calendar/r/settings">
-		<settingConfig type="alphaNumeric" />
-	</setting>
 
 	<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast-analog">
 	<!--<setting propertyKey="@Properties.weather" title="@Strings.Weather" prompt="@Strings.WeatherPrompt" helpUrl="https://sl8.ch/weather-forecast">-->
@@ -46,6 +45,12 @@
 			<listEntry value="0">@Strings.Fahrenheit</listEntry>
 		</settingConfig>
 	</setting>
+	<setting propertyKey="@Properties.forecast" title="@Strings.Forecast">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.Yr</listEntry>						
+			<listEntry value="1">@Strings.Ca</listEntry>
+		</settingConfig>
+	</setting>
 
 	<setting propertyKey="@Properties.d24" title="@Strings.D1224h" prompt="@Strings.TakesTime">
 		<settingConfig type="list">
@@ -53,6 +58,9 @@
 			<listEntry value="1">@Strings.D24h</listEntry>
 		</settingConfig>
 	</setting>
+	<setting propertyKey="@Properties.info" title="@Strings.Info">
+        <settingConfig type="alphaNumeric" readonly="true" />
+    </setting>
 	<!--<setting propertyKey="@Properties.key" title="@Strings.Key">
 		<settingConfig type="alphaNumeric" />
 	</setting>-->

@@ -220,7 +220,7 @@ class lateView extends Ui.WatchFace {
 		}
 		if(data.hasKey("Message")){
 			Sys.println(" - Message");
-			showMessage({"userPrompt"=>data["Message"]});
+			showMessage({"msg"=>data["Message"]});
 		}
 		//weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
@@ -747,17 +747,17 @@ class lateView extends Ui.WatchFace {
 	}*/
 
 	function showMessage(msg){	//Sys.println("message "+message);
-		if(msg instanceof Lang.Dictionary && msg.hasKey("userPrompt")){
+		if(msg instanceof Lang.Dictionary && msg.hasKey("msg")){
 			var nowError = Time.now().value();
 			message = true;
 			if(msg.hasKey("wait")){
 				nowError += msg["wait"].toNumber();
 			}
-			var context = msg.hasKey("userContext") ? " "+ msg["userContext"] : "";
-			var calendar = msg.hasKey("permanent") ? -1 : 0;
+			var context = msg.hasKey("msg2") ? " "+ msg["msg2"] : "";
+			var calendar = msg.hasKey("now") ? -1 : 0;
 
 			var fromAngle = ((nowError-Time.today().value())/240.0).toFloat(); // seconds_in_day/360 // TODO bug: for some reason it won't show it at all althought the degrees are correct. 
-			events_list = [[nowError, nowError+86400, msg["userPrompt"].toString(), context, calendar, fromAngle, fromAngle+2]].addAll(events_list); // seconds_in_day
+			events_list = [[nowError, nowError+86400, msg["msg"].toString(), context, calendar, fromAngle, fromAngle+2]].addAll(events_list); // seconds_in_day
 		}
 	}
 
@@ -808,7 +808,7 @@ class lateView extends Ui.WatchFace {
 				}
 				app.setProperty("weatherHourly", weatherHourly);
 			}
-			else if(data.hasKey("userPrompt")){
+			else if(data.hasKey("msg")){
 				showMessage(data);
 			}
 			//debug();
@@ -835,7 +835,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	//if(App.getApp().getProperty("calendar_ids").size()>0){
-		//if(App.getApp().getProperty("calendar_ids")[0].find("myneur")!=null){//showMessage({"userPrompt"=> message});
+		//if(App.getApp().getProperty("calendar_ids")[0].find("myneur")!=null){//showMessage({"msg"=> message});
 		//weatherHourly = [13, 9, 0, 1, 6, 4, 5, 2, 3];App.getApp().setProperty("weatherHourly", weatherHourly);}}
 }*/
 
@@ -883,15 +883,16 @@ class lateView extends Ui.WatchFace {
 		var eventLocation="";    
 		var i=0;
 		for(; i<events_list.size(); i++){
+			//Sys.println(events_list[i]);
 			eventStartTime = new Time.Moment(events_list[i][0]);
 			var timeNow = Time.now();
 			var tillStart = eventStartTime.compare(timeNow);
 			if(tillStart >= (d24 ? 86400 : 43200)){ 
 				continue;
-			}
+			} 
 			var eventEnd = new Time.Moment(events_list[i][1]);
-			
-			if(eventEnd.compare(timeNow)<0){
+
+			if(eventEnd.compare(timeNow)<0 || tillStart < -28800) { // past event or event that started more than 8 hours in past regardless if it still lasts
 				events_list.remove(events_list[i]);
 				if(events_list.size()==0){
 					message = false;
@@ -899,6 +900,7 @@ class lateView extends Ui.WatchFace {
 				i--;
 				continue;
 			}
+
 			if(tillStart < -300){
 			  continue;  
 			}
@@ -996,9 +998,10 @@ class lateView extends Ui.WatchFace {
 		/*var h; var idx=2;	// offset 
 		var weatherStart; var weatherEnd;*/
 
-		for(var i=0; i <events_list.size() && events_list[i][0]<tomorrow; i++){			
-			fromAngle = events_list[i][5];
-			toAngle = events_list[i][6];	
+		for(var i=0; i <events_list.size() && events_list[i][0]<tomorrow; i++){		
+			var event = events_list[i];
+			fromAngle = event[5];
+			toAngle = event[6];	
 			/*var midnight = Time.today().value();	
 			var dayDegrees = 86400.0 / (App.getApp().getProperty("d24") == 1 ? 360 : 720);	// SECONDS_PER_DAY /
 			fromAngle = Math.round((events_list[i][0]-(midnight))/dayDegrees).toNumber();
@@ -1007,23 +1010,29 @@ class lateView extends Ui.WatchFace {
 				toAngle = fromAngle+1;
 			}*/
 			//Sys.println([i, events_list[i][0], nowAngle,tomorrow, fromAngle, toAngle]);		
-			if(events_list[i][1] >= events_list[0][0] + (d24 ? 86400 : 43200)){	// not to overlapp the start of the current event
+			// TODO drop event that started yesterday
+			if(event[1] >= events_list[0][0] + (d24 ? 86400 : 43200)){	// event end overlaps first event start
 				toAngle = events_list[0][5].toNumber()%360;
 				//toAngle = Math.round((events_list[0][0]-(midnight))/dayDegrees).toNumber()%360;
-				if((fromAngle.toNumber()+1)%360>=toAngle){
-					//Sys.println([i, nowAngle,tomorrow, fromAngle, toAngle]);		
-					continue;
+				if((fromAngle.toNumber()+1)%360>=toAngle){ // intented to prevent shorter events than 1° to fail. 
+					//Sys.println(["f", i, nowAngle,tomorrow, fromAngle, toAngle]);		
+					toAngle = fromAngle+1;
+					//continue; // 
+				} else {
+					toAngle-=1;
 				}
-				toAngle-=1;
 			} 
-			if(events_list[i][1]>=tomorrow && events_list[i][6]>nowAngle ) { // crop tomorrow event overlapping now on 360° dial
+			if(event[1]>=tomorrow && event[6]>nowAngle ) { // event ending tomorrow overlaps now
 			//if(events_list[i][1]>=tomorrow && Math.round((events_list[i][1]-(midnight))/dayDegrees).toNumber()>nowAngle ) { // crop tomorrow event overlapping now on 360° dial
 				toAngle=nowAngle.toNumber()%360;
-				if((fromAngle.toNumber()+1)%360>=toAngle){
-					//Sys.println([i, nowAngle,tomorrow, fromAngle, toAngle]);		
-					continue;
+				if((fromAngle.toNumber()+1)%360>=toAngle){ // intented to prevent shorter events than 1° to fail. 
+					//Sys.println(["s", i, nowAngle,tomorrow, fromAngle, toAngle]);		
+					//toAngle = nowAngle;
+					//continue;
+					toAngle = fromAngle+1;
+				} else {
+					toAngle-=1;
 				}
-				toAngle-=1;
 
 			} 
 			/*if(showWeather && weatherHourly.size()>2){
@@ -1050,7 +1059,7 @@ class lateView extends Ui.WatchFace {
 			dc.setColor(backgroundColor, backgroundColor);
 			dc.setPenWidth(width);
 			dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 450-fromAngle+1, 450-fromAngle);
-			var cal = events_list[i][4];
+			var cal = event[4];
 			if(cal!=null && cal>=0){
 				cal = cal%(calendarColors.size());
 				dc.setColor(calendarColors[cal], backgroundColor);
@@ -1371,43 +1380,47 @@ class lateView extends Ui.WatchFace {
 				//var line = Gfx.getFontHeight(fontCondensed).toNumber()-6;
 				var line;
 				//t=90;min=90;max=99;
-				if(max-min>1 && dialSize==0){	// now-range	
+				if(max-min>2 && dialSize==0){	// now-range	
 					var c = activityColor;
-					var from; var to;
-					if(t-min>max-t){
-						from = min;
-						to = t;
-						c = dimmedColor;
-					} else {
-						from = t;
-						to = max;
-					}
-					if(to>=0){
-						if(from==t){
-							if(to<100){	// tripple digits won't fit the screen
-								to = (from>=0 || to == 0 ? "-" : "+") + to.toString();
-							} else {
-								to = "!";
-							}
-							from = from.toString()+ "°";
+					//TODO if NOW-Max OR Min-NOW
+						var from; var to;
+						if(t-min>max-t){
+							from = min;
+							to = t;
+							c = dimmedColor;
 						} else {
-							if(to<100){	// tripple digits won't fit the screen
-								from = from.toString() + ( from>=0 || to == 0 ? "-" : "+");
+							from = t;
+							to = max;
+						}
+						if(to>=0){
+							if(from==t){
+								if(to<100){	// tripple digits won't fit the screen
+									to = (from>=0 || to == 0 ? "-" : "+") + to.toString();
+								} else {
+									to = "!";
+								}
+								from = from.toString()+ "°";
 							} else {
-								from ="";
+								if(to<100){	// tripple digits won't fit the screen
+									from = from.toString() + ( from>=0 || to == 0 ? "-" : "+");
+								} else {
+									from ="";
+								}
+								to = to.toString() + "°";
 							}
-							to = to.toString() + "°";
-						}
-					} else {
-						if(from==t){
-							from = from.toString()+"°";
-							to = to.toString();
 						} else {
-							to = to.toString()+"°";
-							from=from.toString();
+							if(from==t){
+								from = from.toString()+"°";
+								to = to.toString();
+							} else {
+								to = to.toString()+"°";
+								from=from.toString();
+							}
 						}
-					}
-					gap=((dc.getTextWidthInPixels(from, fontCondensed))-dc.getTextWidthInPixels(from+to, fontCondensed)>>1);
+						gap=((dc.getTextWidthInPixels(from, fontCondensed))-dc.getTextWidthInPixels(from+to, fontCondensed)>>1);
+
+
+
 
 					var wd = dc.getTextWidthInPixels("0", fontCondensed)*3;
 					line = Gfx.getFontHeight(fontCondensed).toNumber();
@@ -1421,12 +1434,14 @@ class lateView extends Ui.WatchFace {
 					dc.setColor(activityColor, backgroundColor);
 					dc.drawLine(x-wd>>1 + pct*wd , y+line+1, x-wd>>1 + pct*wd, y+line+2);
 
-					//x -= dc.getTextWidthInPixels(range, fontCondensed)>>1;
-					dc.setColor(c, Gfx.COLOR_TRANSPARENT);
-					dc.drawText(x+gap-1, y, fontCondensed, from, Gfx.TEXT_JUSTIFY_RIGHT);
-					c = c == activityColor ? dimmedColor : activityColor;
-					dc.setColor(c, Gfx.COLOR_TRANSPARENT);
-					dc.drawText(x+gap+1, y, fontCondensed, to, Gfx.TEXT_JUSTIFY_LEFT);	
+						//x -= dc.getTextWidthInPixels(range, fontCondensed)>>1;
+						dc.setColor(c, Gfx.COLOR_TRANSPARENT);
+						dc.drawText(x+gap-1, y, fontCondensed, from, Gfx.TEXT_JUSTIFY_RIGHT);
+						c = c == activityColor ? dimmedColor : activityColor;
+						dc.setColor(c, Gfx.COLOR_TRANSPARENT);
+						dc.drawText(x+gap+1, y, fontCondensed, to, Gfx.TEXT_JUSTIFY_LEFT);	
+					// else draw Min-Max in dimmedColor
+
 				} else {
 					dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 					dc.drawText(x, y, fontCondensed, t+"°", Gfx.TEXT_JUSTIFY_CENTER);	

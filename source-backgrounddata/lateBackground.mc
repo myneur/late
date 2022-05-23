@@ -37,7 +37,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				getTokensAndData();
 			} else {
 				if(app.getProperty("refresh_token") == null){
-					Background.exit({"error_code"=>404}); // no phone connection = no internet
+					Background.exit({"err"=>404}); // no phone connection = no internet
 				}
 			}
 		}
@@ -49,12 +49,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			method(:onOAuthUserCode)); 
 	}
 
-	function onOAuthUserCode(responseCode, data){ // {device_code, user_code, verification_url} ///Sys.println(Sys.getSystemStats().freeMemory + " onOAuthUserCode: "+responseCode); //Sys.println(data);
+	function onOAuthUserCode(responseCode, data){ // {device_code, user_code, url} ///Sys.println(Sys.getSystemStats().freeMemory + " onOAuthUserCode: "+responseCode); //Sys.println(data);
 		if(responseCode != 200){
 			if(data == null) { // no data connection 
 				data = {};
 			} 
-			data.put("error_code", responseCode);
+			data.put("err", responseCode);
 		} /*else { showInstructionOnMobile(data);	// wasn't reliable, but if it gets reliable in the future, it would be better experience }*/
 		Background.exit(data);  // prompt to login or show the error
 	}
@@ -153,7 +153,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			}
 			getNextCalendarEvents();
 		} else {
-			Background.exit({"error_code"=>responseCode});
+			Background.exit({"err"=>responseCode});
 		}
 	}
 		
@@ -167,12 +167,11 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-// DEBUG MEM //var m=Sys.getSystemStats().freeMemory;function mem(label){Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, label]); m=Sys.getSystemStats().freeMemory;}
+// DEBUG MEM */var m=Sys.getSystemStats().freeMemory;function mem(label){Sys.println([Sys.getSystemStats().freeMemory, Sys.getSystemStats().freeMemory-m, label]); m=Sys.getSystemStats().freeMemory;}
 // DEBUG MEM BALAST //var balast = new [460];
 
 	function getEvents(calendar_id) { 	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory + " getCalendarData "+ calendar_id);
-// DEBUG MEM //mem("getEvents max "+maxResults/*+" with balast "+balast.size()*/);
-// DEBUG MEM //mem("getEvents "+calendar_id);
+// DEBUG MEM */mem("get "+maxResults +" events from " + calendar_id/*+" with balast "+balast.size()*/);
 		var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		var sys_time = System.getClockTime();
 		var UTCdelta = sys_time.timeZoneOffset < 0 ? sys_time.timeZoneOffset * -1 : sys_time.timeZoneOffset;
@@ -185,8 +184,6 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		var dateEnd = Lang.format("$1$-$2$-$3$T$4$:$5$:00", [today.year, today.month, today.day, today.hour, today.min]);
 		dateEnd += sign + to;
 		calendar_id = Communications.encodeURL(calendar_id);
-// DEBUG MEM //mem("request vars " + Sys.getSystemStats().freeMemory/maxResults + " per item "+maxResults);
-
 
 /*while(maxResults>1 && (Sys.getSystemStats().freeMemory-2000)/(maxResults-1)<600){
 	Sys.println("maxResults down to "+(Sys.getSystemStats().freeMemory-2000)/(maxResults-1)+" downto =>"+maxResults + " = "+(Sys.getSystemStats().freeMemory-2000)/(maxResults-2));
@@ -196,20 +193,22 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			"maxResults"=>maxResults.toString(), "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
 				:headers=>{ "Authorization"=>"Bearer " + access_token }},
 			method(:onEvents));
-// DEBUG MEM //mem("requested");
+// DEBUG MEM */mem("request with " + Sys.getSystemStats().freeMemory/maxResults + " *"+maxResults);
 		// TODO optimize memory to load more events: if there are too many items (probably memory limit) onEvents gets -403 responseCode although the response is good
 		///*/ln(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
 	}
 	
 	function onEvents(responseCode, data) {	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);
-// DEBUG MEM //mem("onEvents "+responseCode);
+// DEBUG MEM */mem("onEvents "+responseCode);
+// DEBUG MEM */Sys.println(responseCode);
 		if(responseCode == 200) { // TODO handle non 200 codes
 			data = data.get("items");
-// DEBUG MEM //mem("events: "+data.size());
+// DEBUG MEM */Sys.println(data.size());
+// DEBUG MEM */mem("events: "+data.size());
 			var event;
 			//var eventsToSafelySend = primary_calendar ? 7 : 8;
 			//var limit = Toybox.Application has :Storage ? 12 : 9;
-			var limit = 11;
+			var limit = 10;
 //Sys.println(data.size());
 			for (var i = 0; i < data.size() && events_list.size() < limit; i++) { // limit events not to get out of memory
 				//+mem+*/Sys.println(Sys.getSystemStats().freeMemory+" "+i /*+" "+event["start"]["dateTime"]*/);
@@ -237,24 +236,24 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 							exitWithDataAndToken();
 						}*/
 					} catch(ex) {
-// DEBUG MEM //mem("catch onEvents");
+// DEBUG MEM */mem("catch onEvents");
 						events_list = events_list.size() ? [events_list[0]] : null;
 						//+mem+*/Sys.println("ex: " + ex.getErrorMessage()); Sys.println( ex.printStackTrace());
-// DEBUG MEM //mem("catch onEvents cleaned");
+// DEBUG MEM */mem("catch onEvents cleaned");
 						exitWithDataAndToken(responseCode);
-// DEBUG MEM //mem("catch onEvents exited");
+// DEBUG MEM */mem("catch onEvents exited");
 					}
 				}
 			}
 //Sys.println(events_list.size());
 			maxResults = limit-events_list.size(); // TODO limit must not exceed maxResults
-			// DEBUG MEM //mem("limiting results to " +maxResults + " with events loaded: "+ events_list.size());
+			//mem("limiting results to " +maxResults + " with events loaded: "+ events_list.size());
 			//Sys.println(data.size()+" "+events_list.size()+"/"+limit);
 		} else {
 			if(responseCode==-403 || responseCode==-402){ // out of memory while parsing the response
 				if(maxResults>1){
 					maxResults=1; // let's try to load smaller volume
-// DEBUG MEM //mem("maxResults=1: "+maxResults);
+// DEBUG MEM */mem("maxResults=1: "+maxResults);
 					current_index--; // it never helped to load the same calendar with not even a one item for some reason: 
 				}
 			}
@@ -266,16 +265,16 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				exitWithDataAndToken(responseCode);
 			}
 		} 
-// DEBUG MEM //mem("onEvents done "+events_list.size());
+// DEBUG MEM */mem("done events "+events_list.size());
 	}
 
 	function exitWithDataAndToken(responseCode){ //Sys.println("exitWithDataAndToken"); // TODO don't return events on errors 
-// DEBUG MEM //mem("exitWithDataAndToken "+responseCode);
+// DEBUG MEM */mem("exitWithDataAndToken "+responseCode);
 		var code_events = {"refresh_token"=>refresh_token};
 		if(primary_calendar){
 			code_events["primary_calendar"] = primary_calendar; 
 		}
-// DEBUG MEM //mem("exitWithDataAndToken primary calendar "+primary_calendar + " events "+events_list.size());
+// DEBUG MEM */mem("exitWithDataAndToken primary calendar "+primary_calendar + " events "+events_list.size());
 		try {  
 			if(responseCode==200){
 				/*if(Toybox.Application has :Storage && events_list!=null && events_list.size()>1){ // try passing through storage if there's a risk of running out of memory
@@ -289,32 +288,32 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 					code_events.put("events", events_list);
 				//}
 			} else {
-				code_events.put("error_code", responseCode);
+				code_events.put("err", responseCode);
 			}
 			//Sys.println(Sys.getSystemStats().freeMemory +" exiting with "+events_list.size());
 			refresh_token=null; access_token=null; calendar_ids=null; events_list=null;// cleaning memory before exiting not to reach out of memory
 			//+mem+*/Sys.println(Sys.getSystemStats().freeMemory +" exiting");
-// DEBUG MEM //mem("exitWithDataAndToken try exit ");
+// DEBUG MEM */mem("exitWithDataAndToken try exit ");
 			Background.exit(code_events);
-// DEBUG MEM //mem("exitWithDataAndToken exited ");
+// DEBUG MEM */mem("exitWithDataAndToken exited ");
 
 		} catch(ex) { //Sys.println("exc: "+Sys.getSystemStats().freeMemory+" "+ex.getErrorMessage()); Sys.println( ex.printStackTrace() );
-// DEBUG MEM //mem("exitWithDataAndToken catch ");
+// DEBUG MEM */mem("exitWithDataAndToken catch ");
 				code_events["events"] = (code_events["events"] instanceof Array && code_events["events"].size()) ? [code_events["events"][0]] : null;
-// DEBUG MEM //mem("exitWithDataAndToken catch cleaned");
+// DEBUG MEM */mem("exitWithDataAndToken catch cleaned");
 				Background.exit(code_events);
-// DEBUG MEM //mem("exitWithDataAndToken catch exited");
+// DEBUG MEM */mem("exitWithDataAndToken catch exited");
 		}
 	}
 
 	function getWeatherForecast() {
 		var pos = app.locate(false);
 		if(pos == null){
-			app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
+			pos = app.getProperty("location"); // load the last location to fix a Fenix 5 bug that is loosing the location often
 		}
-		//Sys.println("getWeatherForecast: "+pos);
+		//+*/Sys.println("getWeatherForecast: "+pos);
 		if(pos == null){
-			Background.exit({"error_code"=>-204});
+			Background.exit({"err"=>-204});
 			return;
 		}
 		if(subscription_id==null){
@@ -328,7 +327,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			/* OLD PROD */Communications.makeWebRequest("https://almost-late-middleware.herokuapp.com/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 			// NEW PROD not working yet */Communications.makeWebRequest("https://subscription.sl8.ch/api/"+pos[0].toFloat()+"/"+pos[1].toFloat(), 
 				{"unit"=>(app.getProperty("units") ? "c":"f"), 
-					"service"=>"yrno", // app.getProperty("provider") ? "climacell":"yrno"
+					"service"=> app.getProperty("forecast") ? "clearoutside":"yrno",
 					"period_w"=>(hours+1),
 					"period_p"=>hours,
 					"period_t"=>16
@@ -348,7 +347,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function onWeatherForecast(responseCode, data){		//+*/Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
-		if (responseCode==200) {
+		if (responseCode==200 ) {
 			try { 
 				//Sys.println(data);
 				for(var i=1 ; i<=3; i++){ // round temperatures
@@ -384,7 +383,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			if(!(data instanceof Toybox.Lang.Dictionary)){
 				data = {};
 			}
-			data.put("error_code", responseCode);
+			data.put("err", responseCode);
 		}
 		Background.exit(data);
 	}
@@ -414,7 +413,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				}); 
 		data = {"subscription_id"=>subscription_id};
 		if(responseCode!=200){
-			data.put("error_code", responseCode);
+			data.put("err", responseCode);
 		}
 		Background.exit(data);
 	}
@@ -428,8 +427,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 					responseCode = 403;
 				} 
 				subscription_id = data["device_code"];
-				buySubscription(responseCode); 
-				return;
+				if(data["restored"] != true){
+					buySubscription(responseCode); 
+					return;
+				}
+				data.put("subscription_id", subscription_id);
+				
 			} 
 		} else {
 			// 400 TODO wrong client_id: {msg=>Incorrect device identification, code=>MISSING_ID}
@@ -446,7 +449,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 				data = {};
 			}
 			data.put("subscription_id", subscription_id);
-			data.put("error_code", responseCode);
+			data.put("err", responseCode);
 		}
 		Background.exit(data);
 	}

@@ -10,7 +10,7 @@ function simulate(){
 		else 
 			#echo "quit, wait 5s, kill"
 			/usr/bin/automator KillDevice.workflow 	
-			/usr/bin/automator QuitApp.workflow 	
+			#/usr/bin/automator QuitApp.workflow 	
 			#sleep 5
 		fi
 		echo " > run simulator"
@@ -26,17 +26,17 @@ function simulate(){
 				echo " > compile :debug"
 			fi
 			monkeyc -o late.prg -y ../../developer_key.der -f $JUNGLE -d $DEVICE $FLAGS
-			echo " > sleep 2s"
-			sleep 2
+			echo " > sleep 4s"
+			sleep 4
 		else 
-			echo " > sleep 3s"
-			sleep 3
+			echo " > sleep 5s"
+			sleep 5
 		fi
 		# echo " > sleep 5s"; sleep 5
 		echo " > simulate "$DEVICE 
 		monkeydo late.prg $DEVICE &
-		echo " > sleep 3s"
-		sleep 3
+		echo " > sleep 5s"
+		sleep 5
 		if [[ $BACKGROUND -eq 1 ]] ;then
 			/usr/bin/automator ConnectIQbackgroundEvents.workflow 
 			echo " > sleep 5s"
@@ -59,7 +59,7 @@ function setVariables(){
 
 function testLogin(){
 	VARS="login.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
@@ -80,7 +80,7 @@ function testLogin(){
 
 function testCalendarWithWeatherShown(){
 	VARS="calendar-with-weather-shown.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
@@ -95,7 +95,7 @@ function testCalendarWithWeatherShown(){
 
 function testCalendarOnly(){
 	VARS="calendar.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
@@ -110,7 +110,7 @@ function testCalendarOnly(){
 
 function testWeatherInDebug(){ # TODO !!! now it only loads weather because of the Ficking Garmin Simulaotr is crashing
 	VARS="start-weather.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	RECOMPILE=1
@@ -125,7 +125,7 @@ function testWeatherInDebug(){ # TODO !!! now it only loads weather because of t
 
 function testSubscriptionInDebug(){ # TODO !!! now it only loads weather because of the Ficking Garmin Simulaotr is crashing
 	VARS="start-weather.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	RECOMPILE=1
@@ -141,8 +141,8 @@ function testSubscriptionInDebug(){ # TODO !!! now it only loads weather because
 
 # missing resolutions 
 function testMissingResolutions(){
-	VARS="calendar-with-weather-shown.vars.xml" "start-weather.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	VARS="calendar-with-weather-shown.vars.xml"
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
@@ -163,7 +163,7 @@ function testResolutionsPermutations(){
 	for CONF in "${CONFS[@]}"
 	do
 		VARS=$CONF
-		cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+		cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 		echo " < "$VARS
 		BACKGROUND=1
 		setVariables
@@ -181,7 +181,7 @@ function testResolutionsPermutations(){
 # no data devices
 function testNoData(){
 	VARS="no-data.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
@@ -197,7 +197,7 @@ function testNoData(){
 
 function testFloorsAndMinutes(){
 	VARS="floors-and-minutes.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
@@ -213,7 +213,7 @@ function testFloorsAndMinutes(){
 # all resolutions with strong flavor
 function testStrongInAllReslutions(){
 	VARS="full-strong.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
@@ -228,7 +228,7 @@ function testStrongInAllReslutions(){
 
 function testMonkeyJungleVariations(){
 	VARS="full-strong.vars.xml"
-	cp resources-tests-templates/$VARS resources-tests/test-variables.xml
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
@@ -246,7 +246,7 @@ function currentDebug(){
 	RECOMPILE=1
 	RUN="_debug"
 	VARS="full-strong.vars.xml"
-	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"dialSize":0,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > resources-tests/test-variables.xml
+	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"dialSize":0,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > ../resources-tests/test-variables.xml
 	DEVICES=(fenix6) 	
 	BACKGROUND=0
 	simulate

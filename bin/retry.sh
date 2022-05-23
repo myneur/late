@@ -1,6 +1,6 @@
-DEVICE="fr945"
+DEVICE="enduro"
 /usr/bin/automator KillDevice.workflow 	
-/usr/bin/automator QuitApp.workflow 	
+#/usr/bin/automator QuitApp.workflow 	
 #sleep 5
 #kill `ps aux | grep ConnectIQ.app | grep simulator | awk {'print $2'}` 2>/dev/null
 connectiq 

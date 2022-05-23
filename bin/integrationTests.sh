@@ -10,7 +10,7 @@ function simulate(){
 		else 
 			#echo "quit, wait 5s, kill"
 			/usr/bin/automator KillDevice.workflow 	
-			/usr/bin/automator QuitApp.workflow 	
+			#/usr/bin/automator QuitApp.workflow 	
 			#sleep 5
 		fi
 		echo " > run simulator"
@@ -26,17 +26,17 @@ function simulate(){
 				echo " > compile :debug"
 			fi
 			monkeyc -o late.prg -y ../../developer_key.der -f $JUNGLE -d $DEVICE $FLAGS
-			echo " > sleep 2s"
-			sleep 2
+			echo " > sleep 4s"
+			sleep 4
 		else 
-			echo " > sleep 3s"
-			sleep 3
+			echo " > sleep 5s"
+			sleep 5
 		fi
 		# echo " > sleep 5s"; sleep 5
 		echo " > simulate "$DEVICE 
 		monkeydo late.prg $DEVICE &
-		echo " > sleep 3s"
-		sleep 3
+		echo " > sleep 5s"
+		sleep 5
 		if [[ $BACKGROUND -eq 1 ]] ;then
 			/usr/bin/automator ConnectIQbackgroundEvents.workflow 
 			echo " > sleep 5s"
@@ -253,14 +253,14 @@ function currentDebug(){
 }
 
 #setVariables # just demo of what can be done
-##testCalendarWithWeatherShown
+testCalendarWithWeatherShown
 #testWeatherInDebug
 #currentDebug
 #testLogin
 #testSubscriptionInDebug
 
-testMissingResolutions
-testStrongInAllReslutions
+#testMissingResolutions
+#testStrongInAllReslutions
 #testNoData
 #testFloorsAndMinutes
 #testMonkeyJungleVariations

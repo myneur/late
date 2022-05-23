@@ -220,7 +220,7 @@ class lateView extends Ui.WatchFace {
 		}
 		if(data.hasKey("Message")){
 			Sys.println(" - Message");
-			showMessage({"userPrompt"=>data["Message"]});
+			showMessage({"msg"=>data["Message"]});
 		}
 		//weatherHourly = [18, 9, 0, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3, 1, 6, 4, 5, 2, 3];
 		//if(activity == :calendar && app.getProperty("refresh_token") == null){dialSize = 0;	/* there is no space to show code in strong mode */}
@@ -747,17 +747,17 @@ class lateView extends Ui.WatchFace {
 	}*/
 
 	function showMessage(msg){	//Sys.println("message "+message);
-		if(msg instanceof Lang.Dictionary && msg.hasKey("userPrompt")){
+		if(msg instanceof Lang.Dictionary && msg.hasKey("msg")){
 			var nowError = Time.now().value();
 			message = true;
 			if(msg.hasKey("wait")){
 				nowError += msg["wait"].toNumber();
 			}
-			var context = msg.hasKey("userContext") ? " "+ msg["userContext"] : "";
-			var calendar = msg.hasKey("permanent") ? -1 : 0;
+			var context = msg.hasKey("msg2") ? " "+ msg["msg2"] : "";
+			var calendar = msg.hasKey("now") ? -1 : 0;
 
 			var fromAngle = ((nowError-Time.today().value())/240.0).toFloat(); // seconds_in_day/360 // TODO bug: for some reason it won't show it at all althought the degrees are correct. 
-			events_list = [[nowError, nowError+86400, msg["userPrompt"].toString(), context, calendar, fromAngle, fromAngle+2]].addAll(events_list); // seconds_in_day
+			events_list = [[nowError, nowError+86400, msg["msg"].toString(), context, calendar, fromAngle, fromAngle+2]].addAll(events_list); // seconds_in_day
 		}
 	}
 
@@ -808,7 +808,7 @@ class lateView extends Ui.WatchFace {
 				}
 				app.setProperty("weatherHourly", weatherHourly);
 			}
-			else if(data.hasKey("userPrompt")){
+			else if(data.hasKey("msg")){
 				showMessage(data);
 			}
 			//debug();
@@ -835,7 +835,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	//if(App.getApp().getProperty("calendar_ids").size()>0){
-		//if(App.getApp().getProperty("calendar_ids")[0].find("myneur")!=null){//showMessage({"userPrompt"=> message});
+		//if(App.getApp().getProperty("calendar_ids")[0].find("myneur")!=null){//showMessage({"msg"=> message});
 		//weatherHourly = [13, 9, 0, 1, 6, 4, 5, 2, 3];App.getApp().setProperty("weatherHourly", weatherHourly);}}
 }*/
 

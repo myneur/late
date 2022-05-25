@@ -47,7 +47,7 @@ class lateApp extends Toy.Application.AppBase {
 	}
 
 	(:data)
-	function scheduleDataLoading(dataLoading, activity, showWeather){	//+*/System.println("scheduling: " + [dataLoading , activity == :calendar , showWeather,  app.getProperty("lastLoad")]);
+	function scheduleDataLoading(dataLoading, activity, showWeather){	//+*/System.println("scheduling: " + [dataLoading , activity == :calendar , showWeather,  app.getProperty("last")]);
 		loadSettings();
 		if(dataLoading && (activity == :calendar || showWeather)) {
 			var nextEvent = durationToNextEvent(); 
@@ -134,7 +134,7 @@ class lateApp extends Toy.Application.AppBase {
 					if(data["weather"].size()>2){
 						app.setProperty("weatherHourly", data["weather"]);
 						changeScheduleToMinutes(60); // once de data were loaded, continue with the settings interval
-						app.setProperty("lastLoad", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
+						app.setProperty("last", 'w');	// for background process to know the next time what was loaded to alternate between weather and calendar loading
 					}
 					// Location to Property */ app.setProperty("location", Toybox.Application.Storage.getValue("location")); app.setProperty("loc", Sys.getClockTime().hour +":"+Sys.getClockTime().min+" "+Toybox.Application.Storage.getValue("location"));
 				} else {
@@ -147,7 +147,7 @@ class lateApp extends Toy.Application.AppBase {
 					}
 					if (data.hasKey("events")) {
 						data = parseAndSaveEvents(data.get("events")); 
-						app.setProperty("lastLoad", 'c'); // for background process to know the next time what was loaded to alternate between weather and calendar loading
+						app.setProperty("last", 'c'); // for background process to know the next time what was loaded to alternate between weather and calendar loading
 						if(app.getProperty("weather")==true){
 							changeScheduleToMinutes(5);	// when weather not loaded yet, load ASAP						
 							if(app.getProperty("subs") == null){	// first time loading forecast => instruct to check the phone
@@ -171,10 +171,10 @@ class lateApp extends Toy.Application.AppBase {
 						data["wait"] = durationToNextEvent();
 						var connected = Sys.getDeviceSettings().phoneConnected;
 						if(error==-300 || error==404 || error==-2 || error==-5 || error==-104 || error==-400){ // no internet or bluetooth or no-json
-							//System.println([watch.activity == :calendar , app.getProperty("lastLoad")!="c", watch.showWeather==false, app.getProperty("refresh_token")==null]);
+							//System.println([watch.activity == :calendar , app.getProperty("last")!="c", watch.showWeather==false, app.getProperty("refresh_token")==null]);
 							//System.println([watch.activity == :calendar ,app.getProperty("refresh_token") , watch.showWeather ,app.getProperty("subs")]);
 							if(watch!=null && ((watch.activity == :calendar && app.getProperty("refresh_token")==null) || (watch.showWeather && app.getProperty("subs")==null)) ){
-							//if(watch.activity == :calendar && (app.getProperty("lastLoad")!="c" || showWeather==false) && app.getProperty("refresh_token")==null){	// no internet or not connected when logging in
+							//if(watch.activity == :calendar && (app.getProperty("last")!="c" || showWeather==false) && app.getProperty("refresh_token")==null){	// no internet or not connected when logging in
 								// TODO: 404 with msg no data might actually mean also problem with Google: https://developers.google.com/calendar/v3/errors
 								data["msg"] = Ui.loadResource(connected ? Rez.Strings.NoInternet : Rez.Strings.NotConnected);
 							} else {	

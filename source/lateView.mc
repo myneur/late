@@ -241,7 +241,7 @@ class lateView extends Ui.WatchFace {
 		percentage = app.getProperty("percents");
 		if(app.getProperty("subs")!=null && weatherHourly!=null && weatherHourly instanceof Array){
 			if(weatherHourly.size()>5){	// if we know at least some forecast
-				app.setProperty("lastLoad", 'w');	// to refresh the calendar first after the reload
+				app.setProperty("last", 'w');	// to refresh the calendar first after the reload
 			}
 		}
 		var d24new = app.getProperty("d24") == 1 ? true : false; 
@@ -387,7 +387,7 @@ class lateView extends Ui.WatchFace {
 			}
 		}*/
 		if(activity == :calendar){
-			if(app.getProperty("calendar_colors")){	// match calendar colors to watch
+			if(app.getProperty("calendar_colors") || !(app.getProperty("calendarColors") instanceof Array) ){	// match calendar colors to watch
 				calendarColors = Ui.loadResource(Rez.JsonData.calCol)[mainColor];
 				/*Sys.println( [
 					[0xAA0055, 0xFFFF00, 0x555555], 
@@ -403,20 +403,16 @@ class lateView extends Ui.WatchFace {
 				if(tone == 4) {	// color background 
 					calendarColors[0] = 0xFFFFFF;
 					calendarColors[2] = 0x0;
-					if(mainColor==1 || mainColor==2){calendarColors[1]=0xFFFF55;}
-					else if(mainColor==5){calendarColors[1]=0xAAFFFF;}
+					if(mainColor==1 || mainColor==2) {calendarColors[1]=0xFFFF55;}
+					else if(mainColor==5) {calendarColors[1]=0xAAFFFF;}
 				} else if(tone == 3) { // white background
-					if(mainColor==0 || mainColor==3){calendarColors[1]=0xAA00FF;}
-					else if(mainColor==2){calendarColors[0]=0x00AA00;}
-					else if(mainColor==2){calendarColors[0]=0xFF5500;}
+					if(mainColor==0 || mainColor==3) {calendarColors[1]=0xAA00FF;}
+					else if(mainColor==2) {calendarColors[0]=0x00AA00;}
+					else if(mainColor==2) {calendarColors[0]=0xFF5500;}
 				}
 				app.setProperty("calendarColors", calendarColors);
 			} else {	// keep last calendar colors
-				if(app.getProperty("calendarColors")!=null){
-					calendarColors = app.getProperty("calendarColors");
-				} else {
-					app.setProperty("calendarColors", calendarColors);
-				}
+				calendarColors = app.getProperty("calendarColors");
 			}
 		}
 	}

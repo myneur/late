@@ -2,10 +2,10 @@
 <jsonData id="testData">{
 		"Reinitialize": true,
 		"Properties": {
-			"weather": true,
-			"activity": 6,
-			"activityL": 1,
-			"activityR": 2,
+			"weather": false,
+			"activity": 1,
+			"activityL": 0,
+			"activityR": 0,
 			"dialSize": 0,
 			"percents": true,
 			"d24": true,
@@ -14,8 +14,7 @@
 			"calendar_ids": ["c_c7d007852dbed7442a8a023674f96f97476d681063cb47a3ad11cb89149f2d10@group.calendar.google.com", "c_tcda76in1brk0ku9k4as30avsc@group.calendar.google.com"]
 		},
 		"AfterLayoutCharProperties":
-			{"lastLoad": "w"},
-		"Message":"!THIS MUST RELOAD!"
+			{"lastLoad": "w"}
 	}
 	</jsonData>
 </resources>

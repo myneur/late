@@ -25,12 +25,12 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		app = App.getApp();
 	}
 	
-	function onTemporalEvent() {	//+*/var t = Gregorian.info(Time.now(), Gregorian.FORMAT_SHORT); Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("lastLoad") );
+	function onTemporalEvent() {	//+*/var t = Gregorian.info(Time.now(), Gregorian.FORMAT_SHORT); Sys.println( t.hour +":" +t.min + ": " + Sys.getSystemStats().freeMemory + " onTemporalEvent, last: "+ app.getProperty("last") );
 		app = App.getApp();
 		//Sys.println(["onTemporalEvent " , app.getProperty("user_code"),app.getProperty("refresh_token")]);
-		//+*/Sys.println("last: "+app.getProperty("lastLoad")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
+		//+*/Sys.println("last: "+app.getProperty("last")+(app.getProperty("weather")?" weather ":"")+(app.getProperty("activity")==6 ?" calendar":""));
 		//+*/Sys.println([app.getProperty("user_code"), app.getProperty("refresh_token"),app.getProperty("device_code")]);
-		if(app.getProperty("weather")==true && (app.getProperty("lastLoad")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
+		if(app.getProperty("weather")==true && (app.getProperty("last")=='c' || app.getProperty("activity")!=6)){	// alternating between loading calendar and weather by what lateApp.onBackgroundData saved was loaded before
 			getWeatherForecast();
 		} else {
 			if(Sys.getDeviceSettings().phoneConnected==true){

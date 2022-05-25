@@ -1,4 +1,4 @@
-DEVICE="venu2"
+DEVICE="epix2"
 /usr/bin/automator KillDevice.workflow 	
 #/usr/bin/automator QuitApp.workflow 	
 #sleep 5

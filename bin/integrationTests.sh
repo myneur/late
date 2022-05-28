@@ -10,10 +10,11 @@ function simulate(){
 		else 
 			#echo "quit, wait 5s, kill"
 			/usr/bin/automator KillDevice.workflow 	
-			#/usr/bin/automator QuitApp.workflow 	
-			#sleep 5
+			/usr/bin/automator QuitApp.workflow 	
+			
 		fi
 		echo " > run simulator"
+		sleep 2s
 		connectiq
 		if [[ $RECOMPILE -eq 1 ]] ;then
 			if [[ $RELEASE -eq 1 ]] ;then

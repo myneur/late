@@ -55,6 +55,7 @@ class lateView extends Ui.WatchFace {
 
 	function initialize (){
 		app = App.getApp();
+		
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
@@ -67,6 +68,8 @@ class lateView extends Ui.WatchFace {
 			}
 		}
 		WatchFace.initialize();
+
+
 		var s=Sys.getDeviceSettings();
 		height = s.screenHeight;
 		centerX = s.screenWidth >> 1;
@@ -245,7 +248,7 @@ class lateView extends Ui.WatchFace {
 			}
 		}
 		var d24new = app.getProperty("d24") == 1 ? true : false; 
-//d24new=true; app.setProperty("d24", d24new); 
+		//d24new=true; app.setProperty("d24", d24new); 
 		if(( activity == :calendar) && (d24!= null && d24new != d24)){	// changing 24 / 12h 
 			events_list=[];
 			showMessage(app.scheduleDataLoading(dataLoading, activity, showWeather));
@@ -418,6 +421,23 @@ class lateView extends Ui.WatchFace {
 	}
 
 
+	function setBaseVars(){
+		var s=Sys.getDeviceSettings();
+		height = s.screenHeight;
+		centerX = s.screenWidth >> 1;
+		centerY = height >> 1;
+
+		if(dialSize>0){
+			dateY = (centerY-radius*.5-Gfx.getFontHeight(fontSmall)).toNumber();
+			if(height<208){
+				dateY += 7;
+			}
+		} else {
+			dateY = (centerY-(radius+Gfx.getFontHeight(fontSmall))*1.17).toNumber();
+		}
+	}
+
+
 	function setLayoutVars(){
 		icons = Ui.loadResource(Rez.Fonts.Ico);
 		sunR = Math.ceil(centerX-5*height/218)+1;// - (height>=390 ? (showWeather ? 23:16) : (showWeather ? 15:11)); // base: -9-11, weather: 15
@@ -439,20 +459,20 @@ class lateView extends Ui.WatchFace {
 				radius = centerX-15-circleWidth>>1;
 				sunR+=1;	
 			}
-			dateY = (centerY-radius*.5-Gfx.getFontHeight(fontSmall)).toNumber();
 			circleWidth=circleWidth*3;
 			batteryY=height-14;
+
 			if(height<208){
 				radius -= 11;
-				dateY += 7;
 			}
 		} else { // elegant design
 			fontHours = Ui.loadResource(Rez.Fonts.Hours);
 			fontSmall = Ui.loadResource(Rez.Fonts.Small);
 			radius = (Gfx.getFontHeight(fontHours)).toNumber();
-			dateY = (centerY-(radius+Gfx.getFontHeight(fontSmall))*1.17).toNumber();
 			batteryY = centerY+0.6*radius;			
 		}
+		setBaseVars();
+
 		fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
 		if(activity != null || showWeather){
 			if(dialSize==0){
@@ -530,6 +550,7 @@ class lateView extends Ui.WatchFace {
 				circleWidth=circleWidth<<1;
 				}
 			}
+			setBaseVars();
 			if(app.getProperty("tone")>2){
 				setColor(app.getProperty("mainColor"), app.getProperty("tone"));
 			}
@@ -588,10 +609,10 @@ class lateView extends Ui.WatchFace {
 		dc.clear();
 		if(burnInProtection){
 			var diff = 4;
-			if(burnInProtection>1){
+			if(burnInProtection>1) {
 				centerX = centerX + ((centerX == (height>>1)) ? diff : -diff);
 				burnInProtection=1;
-			}else{
+			} else {
 				var move = (centerY==(height>>1)) ? diff : -diff;
 				centerY = centerY + move;
 				dateY = dateY + move;
@@ -647,7 +668,7 @@ class lateView extends Ui.WatchFace {
 			drawNowCircle(dc, clockTime.hour);
 			drawBatteryLevel(dc);
 		} 
-
+//showMessage({"msg":"testing"});
 		//}
 		//ms.add(Sys.getTimer()-ms[0]);
 		/////Sys.println("ms: " + ms + " sec: " + clockTime.sec + " redrawAll: " + redrawAll);

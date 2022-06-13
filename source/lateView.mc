@@ -459,7 +459,7 @@ class lateView extends Ui.WatchFace {
 				radius = centerX-15-circleWidth>>1;
 				sunR+=1;	
 			}
-			circleWidth=circleWidth*3;
+			circleWidth=circleWidth*3; // TODO inify with AOD
 			batteryY=height-14;
 
 			if(height<208){
@@ -1478,6 +1478,7 @@ class lateView extends Ui.WatchFace {
 		if(day != cal.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
 			computeSun();
 		}
+//sunrise = 5.0;sunset = 22.0;
 		if(sunrise!= null) {
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 			if(d24){ 
@@ -1500,6 +1501,7 @@ class lateView extends Ui.WatchFace {
 
 	function computeSun() {	//var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().accuracy);
 		var loc = app.locate(true);
+
 		if(loc == null){
 			sunrise = null;
 			return;
@@ -1511,6 +1513,7 @@ class lateView extends Ui.WatchFace {
 
 		// compute current date as day number from beg of year
 		utcOffset = clockTime.timeZoneOffset;
+
 		var timeInfo = Calendar.info(Time.now().add(new Time.Duration(utcOffset)), Calendar.FORMAT_SHORT);
 
 		day = timeInfo.day;
@@ -1536,12 +1539,16 @@ class lateView extends Ui.WatchFace {
 		var offset=new Time.Duration(utcOffset).value()/3600;
 		sunrise += offset;
 		sunset += offset;
-
 		if(sunrise<0){
-			sunrise = sunrise +24;
+			sunrise += 24;
+		} else if(sunrise>24){
+			sunrise -= 24;
 		}
+
 		if(sunset<0){
-			sunset = sunset +24;
+			sunset += 24;
+		} else if(sunset>24){
+			sunset -= 24;
 		}
 
 		/*for (var i = 0; i < SUNRISET_NBR; i++){

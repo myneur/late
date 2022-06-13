@@ -545,11 +545,16 @@ class lateView extends Ui.WatchFace {
 	function onExitSleep(){
 		if(Sys.getDeviceSettings().requiresBurnInProtection){
 			burnInProtection=0;
+			
 			circleWidth = app.getProperty("boldness");
 			if(height>280){
 				circleWidth=circleWidth<<1;
 				}
 			}
+			if(dialSize>0){
+				circleWidth*=3;
+			}
+
 			setBaseVars();
 			if(app.getProperty("tone")>2){
 				setColor(app.getProperty("mainColor"), app.getProperty("tone"));
@@ -1539,6 +1544,7 @@ class lateView extends Ui.WatchFace {
 		var offset=new Time.Duration(utcOffset).value()/3600;
 		sunrise += offset;
 		sunset += offset;
+
 		if(sunrise<0){
 			sunrise += 24;
 		} else if(sunrise>24){

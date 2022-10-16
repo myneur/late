@@ -134,8 +134,9 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	}
 
 	function getPrimaryCalendar(){	///Sys.println(Sys.getSystemStats().freeMemory + " getPrimaryCalendar");
-		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/users/me/calendarList",
-			{"maxResults"=>"15", "fields"=>"items(id,primary)", "minAccessRole"=>"owner"/*, "showDeleted"=>false*/}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
+		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/users/me/calendarList", {"maxResults"=>"15", "fields"=>"items(id,primary)", "minAccessRole"=>"owner"/*, "showDeleted"=>false*/}, 
+		//Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/users/me/calendarList?maxResults=15&fields=items(id,primary)&minAccessRole=owner", null, 
+			{:method=>Communications.HTTP_REQUEST_METHOD_GET, 
 			:headers=>{ "Authorization"=>"Bearer " + access_token}},
 			method(:onPrimaryCalendarCandidates));
 	}
@@ -344,7 +345,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 		}
 	}
 
-	function onWeatherForecast(responseCode, data){		//+*/Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
+	function onWeatherForecast(responseCode, data){		//*/Sys.println(Sys.getSystemStats().freeMemory + " onWeatherForecast: "+responseCode ); //Sys.println(data instanceof Array ? data.slice(0, 8)+"..." : data);
 		if (responseCode==200 ) {
 			try { 
 				//Sys.println(data);
@@ -381,8 +382,10 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			if(!(data instanceof Toybox.Lang.Dictionary)){
 				data = {};
 			}
+			data.put("subscription_id", subscription_id);
 			data.put("err", responseCode);
 		}
+		//System.println("exit"); System.println(data);
 		Background.exit(data);
 	}
 
@@ -429,7 +432,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 					buySubscription(responseCode); 
 					return;
 				}
-				data.put("subscription_id", subscription_id);
+				data.put("subscription_id", subscription_id); 
 				
 			} 
 		} else {

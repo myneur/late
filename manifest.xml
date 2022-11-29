@@ -36,6 +36,9 @@
 			<iq:product id="legacyherofirstavenger"/>
 			<iq:product id="vivoactive4"/>
 			<iq:product id="legacysagadarthvader"/>
+			<iq:product id="fr255"/>
+			<iq:product id="fr255s"/>
+			<iq:product id="fr955"/>
 			
 			<!-- 240x240 with data 64 colors 94k memory-->
 			<iq:product id="descentmk2s"/>
@@ -94,6 +97,9 @@
 			<!-- no saving to Storage from background -->
 			<iq:product id="fenix5s"/>
 			<iq:product id="fenixchronos"/>		
+			<iq:product id="fr255m"/>
+			<iq:product id="fr255sm"/>
+
 
 			<!-- don't enabling data -->
 			<!-- semi-round 215x180 with data 16 colors 65k memory CIQ2 no support floors climbed: weak watch: don't enabling data -->

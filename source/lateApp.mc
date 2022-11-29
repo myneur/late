@@ -121,7 +121,7 @@ class lateApp extends Toy.Application.AppBase {
 
 	
 	(:data)
-	function onBackgroundData(data) {	//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys()); //Sys.println(data);
+	function onBackgroundData(data) {	//+*/Sys.println(Sys.getSystemStats().freeMemory+" onBackgroundData app+ "+data.keys()); Sys.println(data); 
 		try {
 			if(data instanceof Toybox.Lang.Dictionary) {
 				if(data.hasKey("subscription_id")){	
@@ -130,7 +130,8 @@ class lateApp extends Toy.Application.AppBase {
 						watch.message = false;
 					}
 				}
-				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast 	//System.println(data["weather"]);
+				if(data.hasKey("weather") && data["weather"] instanceof Array){ // array with weaather forecast 	
+					//System.println(data["weather"]); 
 					if(data["weather"].size()>2){
 						app.setProperty("weatherHourly", data["weather"]);
 						changeScheduleToMinutes(60); // once de data were loaded, continue with the settings interval

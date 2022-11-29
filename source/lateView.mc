@@ -451,6 +451,7 @@ class lateView extends Ui.WatchFace {
 			//if(activity==:calendar && showWeather) { sunR -= 2;}
 			// TODO sunrs.width() - calendar f6: 6 venu: 10 / weather: f6: 3 venu: 5
 		}
+		fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
 		if(dialSize>0){ // strong design
 			fontHours = Ui.loadResource(Rez.Fonts.HoursStrong);
 			fontSmall = Ui.loadResource(Rez.Fonts.SmallStrong);
@@ -459,7 +460,7 @@ class lateView extends Ui.WatchFace {
 				radius = centerX-15-circleWidth>>1;
 				sunR+=1;	
 			}
-			circleWidth=circleWidth*3;
+			circleWidth=circleWidth*3; // TODO inify with AOD
 			batteryY=height-14;
 
 			if(height<208){
@@ -472,25 +473,17 @@ class lateView extends Ui.WatchFace {
 			batteryY = centerY+0.6*radius;			
 		}
 		setBaseVars();
-
-		fontCondensed = Ui.loadResource(Rez.Fonts.Condensed);
-		if(activity != null || showWeather){
-			if(dialSize==0){
-				activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
-				if(dataLoading && (activity == :calendar || showWeather)){
-					messageY = (centerY-radius+10)>>2 - Gfx.getFontHeight(fontCondensed)-1 + centerY+radius+10;						
-				} else if(activity == :calendar){ 
-					activity = null;
-				}
-			} else {
-				activityY= centerY+Gfx.getFontHeight(fontHours)>>1+15;
-				if(height<208){
-					activityY -= 7;
-				}
-				if(activity==:calendar || showWeather){
-					messageY =activityY - Gfx.getFontHeight(fontSmall)>>1 -10; 
-				}
+		
+// MEM logs: 39368-39376
+		if(dialSize==0){
+			activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
+			messageY = (centerY-radius+10)>>2 - Gfx.getFontHeight(fontCondensed)-1 + centerY+radius+10;						
+		} else {
+			activityY= centerY+Gfx.getFontHeight(fontHours)>>1+15;
+			if(height<208){
+				activityY -= 7;
 			}
+			messageY =activityY - Gfx.getFontHeight(fontSmall)>>1 -10; 
 		}
 		/*if(batteryY<centerY+radius+circleWidth>>1){
 			if(activity!=:calendar){
@@ -501,6 +494,7 @@ class lateView extends Ui.WatchFace {
 			}
 			
 		}*/
+
 		if(dataLoading){
 			if(activity == :calendar || showWeather){
 				showMessage(app.scheduleDataLoading(dataLoading, activity, showWeather));
@@ -510,7 +504,13 @@ class lateView extends Ui.WatchFace {
 			} else {
 				app.unScheduleDataLoading();
 			}
+		} else {
+			showWeather = false;
+			if(activity == :calendar){ 
+				activity = null; 
+			}
 		}
+
 
 		var langTest = Calendar.info(Time.now(), Time.FORMAT_MEDIUM).day_of_week.toCharArray()[0]; // test if the name of week is in latin. Name of week because name of month contains mix of latin and non-latin characters for some languages. 
 		if(langTest.toNumber()>382){ // fallback for not-supported latin fonts 
@@ -545,11 +545,16 @@ class lateView extends Ui.WatchFace {
 	function onExitSleep(){
 		if(Sys.getDeviceSettings().requiresBurnInProtection){
 			burnInProtection=0;
+			
 			circleWidth = app.getProperty("boldness");
 			if(height>280){
 				circleWidth=circleWidth<<1;
 				}
 			}
+			if(dialSize>0){
+				circleWidth*=3;
+			}
+
 			setBaseVars();
 			if(app.getProperty("tone")>2){
 				setColor(app.getProperty("mainColor"), app.getProperty("tone"));
@@ -654,6 +659,7 @@ class lateView extends Ui.WatchFace {
 					}
 				}
 			}
+		// DEBUG System.println([clockTime.sec , showWeather, burnInProtection]); 
 		if(burnInProtection==0){
 			if(showWeather){
 				drawWeather(dc);
@@ -779,7 +785,7 @@ class lateView extends Ui.WatchFace {
 	}
 
 	(:data)
-	function onBackgroundData(data) { //Sys.println("onBackgroundData view"); Sys.println(data);
+	function onBackgroundData(data) { //+*/Sys.println("onBackgroundData view "+clockTime.hour + ":" + clockTime.min); Sys.println(data); 
 		if(data instanceof Array){	
 			events_list = data;
 		} 
@@ -788,7 +794,7 @@ class lateView extends Ui.WatchFace {
 				weatherHourly = data["weather"];
 				//Sys.println(weatherHourly);
 				var h = Sys.getClockTime().hour; // first hour of the forecast
-//Sys.println([weatherHourly]);
+				//	Sys.println(["meteoColors", meteoColors]); Sys.println(["weatherHourly", weatherHourly]); 
 				if (weatherHourly instanceof Array && weatherHourly.size()>5){	
 					if(weatherHourly[0]!=h){ // delayed response or time passed
 						if((h+1)%24 == weatherHourly[0]){	// forecast from future
@@ -976,7 +982,7 @@ class lateView extends Ui.WatchFace {
 				dc.setColor(dateColor , Gfx.COLOR_TRANSPARENT); // emphasized event without date
 			} else {
 				dc.setColor(activityColor , Gfx.COLOR_TRANSPARENT);
-			}
+			} 				// TODO weirdly, messageY can be null => FIX! 
 			dc.drawText(centerX, messageY, fontCondensed, height>=280 ? events_list[i][2] : events_list[i][2].substring(0,21), Gfx.TEXT_JUSTIFY_CENTER);
 			dc.setColor(dateColor, Gfx.COLOR_TRANSPARENT);
 			// TODO remove prefix for simplicity and size limitations
@@ -1313,10 +1319,12 @@ class lateView extends Ui.WatchFace {
 					gap = gap + 24;
 				}
 				weatherHourly = [h].addAll(weatherHourly.slice(1,5)).addAll(weatherHourly.slice(gap,null));
+				// DEBUG System.println(["trim", h, gap, weatherHourly]); 
 			} else {
 				return h;
 			}
 		} else {
+			// DEBUG System.println(["not array", weatherHourly]); 
 			weatherHourly = [];
 			h = -1;
 		}	
@@ -1324,9 +1332,9 @@ class lateView extends Ui.WatchFace {
 		return h;
 	}
 
-
+var dbg = null;
 	(:data)
-	function drawWeather(dc){  //Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly);
+	function drawWeather(dc){  //Sys.println("drawWeather: " + Sys.getSystemStats().freeMemory+ " " + weatherHourly); 
 		var h = trimPastHoursInWeatherHourly();
 		//Sys.println("weather from hour: "+h + " offset: "+offset);
 		var limit; var step; var hours;
@@ -1335,12 +1343,19 @@ class lateView extends Ui.WatchFace {
 		} else {
 			limit = 17; step = 30; hours = 12;
 		}
+			/// DEBUG if(dbg != clockTime.min ) {System.println(["limits", clockTime.min, h, limit, step, hours, weatherHourly.size(), meteoColors.size()]);} 
+		
 		if(h>=0){
+
+			// DEBUG if(dbg != clockTime.min ) {dbg = clockTime.min;var debug = new [weatherHourly.size()]; var hh = h;for(var ii=0; ii<weatherHourly.size() && ii<limit; ii++, hh++){	var cc = weatherHourly[ii]; if(ii<5){debug[ii]=weatherHourly[ii];}						else {debug[ii]= (cc>=0 && cc < meteoColors.size()) ? meteoColors[cc] : null;}			}System.println(["arcs", debug]);}
+
 			dc.setPenWidth(height>=390 ? 8 : 5);
 			var color; var center;
 			//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
 
 			// draw weather arcs
+
+
 			for(var i=5; i<weatherHourly.size() && i<limit; i++, h++){
 				color = weatherHourly[i];
 				if(color>=0 && color < meteoColors.size()){
@@ -1497,6 +1512,7 @@ class lateView extends Ui.WatchFace {
 		if(day != cal.day || utcOffset != clockTime.timeZoneOffset ){ // TODO should be recalculated rather when passing sunrise/sunset
 			computeSun();
 		}
+//sunrise = 5.0;sunset = 22.0;
 		if(sunrise!= null) {
 			dc.setColor(activityColor, Gfx.COLOR_TRANSPARENT);
 			if(d24){ 
@@ -1519,6 +1535,7 @@ class lateView extends Ui.WatchFace {
 
 	function computeSun() {	//var t = Calendar.info(Time.now(), Calendar.FORMAT_SHORT);//+Sys.println(t.hour +":"+ t.min + " computeSun: " + App.getApp().getProperty("location") + " accuracy: "+ Activity.getActivityInfo().accuracy);
 		var loc = app.locate(true);
+
 		if(loc == null){
 			sunrise = null;
 			return;
@@ -1530,6 +1547,7 @@ class lateView extends Ui.WatchFace {
 
 		// compute current date as day number from beg of year
 		utcOffset = clockTime.timeZoneOffset;
+
 		var timeInfo = Calendar.info(Time.now().add(new Time.Duration(utcOffset)), Calendar.FORMAT_SHORT);
 
 		day = timeInfo.day;
@@ -1557,10 +1575,15 @@ class lateView extends Ui.WatchFace {
 		sunset += offset;
 
 		if(sunrise<0){
-			sunrise = sunrise +24;
+			sunrise += 24;
+		} else if(sunrise>24){
+			sunrise -= 24;
 		}
+
 		if(sunset<0){
-			sunset = sunset +24;
+			sunset += 24;
+		} else if(sunset>24){
+			sunset -= 24;
 		}
 
 		/*for (var i = 0; i < SUNRISET_NBR; i++){

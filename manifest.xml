@@ -5,6 +5,9 @@
 		<iq:products>
 			<!-- product parameters are in connectiq-sdk-mac/bin/devices.xml -->
 			<!-- groups by shape, resolution, memory and # colors, -->
+			
+
+
 			<!-- NEW TO ADD TO MONKEY!  -->
 				<!-- venu2system5preview fenix6prosystem5preview -->
 
@@ -19,14 +22,15 @@
 				<iq:product id="venu"/>
 				<iq:product id="venud"/>
 				<iq:product id="d2air"/>
+			<!-- 360x320 -->
+			<!--<iq:product id="venusq2"/> not adapted to rectangular display yet-->
 			<!-- 360x360 -->
 			<iq:product id="venu2s"/>
+
 			<!-- 280x280 64 colors 94k memory -->
-			<!-- data -->
-			<iq:product id="fenix7x"/>
+			<iq:product id="fenix7x"/> <!-- also enduro 2-->
 			<iq:product id="fenix6xpro"/>
 			<iq:product id="descentmk2"/>
-			<!-- no data -->
 			<iq:product id="enduro"/>
 			
 			<!-- 260x260 with data 94k memory -->

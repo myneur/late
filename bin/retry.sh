@@ -1,4 +1,4 @@
-DEVICE="fr955"
+DEVICE="enduro2"
 /usr/bin/automator KillDevice.workflow 	
 /usr/bin/automator QuitApp.workflow 	
 sleep 2s

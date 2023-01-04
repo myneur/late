@@ -188,13 +188,25 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 	Sys.println("maxResults down to "+(Sys.getSystemStats().freeMemory-2000)/(maxResults-1)+" downto =>"+maxResults + " = "+(Sys.getSystemStats().freeMemory-2000)/(maxResults-2));
 	maxResults=maxResults-1;
 }*/
-		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/calendars/" + calendar_id + "/events", {
-			"maxResults"=>maxResults.toString(), "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, {:method=>Communications.HTTP_REQUEST_METHOD_GET, 
-				:headers=>{ "Authorization"=>"Bearer " + access_token }},
+		// Garmin bug is workarounded for GMT-, but propagates for GMT+ time zones: //
+		//Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/calendars/" + calendar_id + "/events?"
+			//+"timeMin="+dateStart+"&timeMax="+dateEnd+"&maxResults="+maxResults.toString()+"&fields=items%28summary%2Clocation%2Cstart%2FdateTime%2Cend%2FdateTime%29&orderBy=startTime", null, 
+			//+"timeMin="+dateStart+"&timeMax="+dateEnd+"&maxResults="+maxResults.toString()+"&fields=items(summary,location,start/dateTime,end/dateTime)&orderBy=startTime", null, 
+		
+		Communications.makeWebRequest("https://www.googleapis.com/calendar/v3/calendars/" + calendar_id + "/events", {		
+			"maxResults"=>maxResults.toString(), "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"}, 
+
+			{:method=>Communications.HTTP_REQUEST_METHOD_GET, 
+			:headers=>{ "Authorization"=>"Bearer " + access_token }},
 			method(:onEvents));
 // DEBUG MEM */mem("request with " + Sys.getSystemStats().freeMemory/maxResults + " *"+maxResults);
 		// TODO optimize memory to load more events: if there are too many items (probably memory limit) onEvents gets -403 responseCode although the response is good
 		///*/ln(Sys.getSystemStats().freeMemory + " after loading " + calendar_id );
+
+
+			/*Sys.println({"maxResults"=>maxResults.toString(), "orderBy"=>"startTime", "singleEvents"=>"true", "timeMin"=>dateStart, "timeMax"=>dateEnd, "fields"=>"items(summary,location,start/dateTime,end/dateTime)"});
+			Sys.println("timeMin="+dateStart+"&timeMax="+dateEnd+"&maxResults="+maxResults.toString()+"&fields=items%28summary%2Clocation%2Cstart%2FdateTime%2Cend%2FdateTime%29&orderBy=startTime");
+			Sys.println("timeMin="+dateStart+"&timeMax="+dateEnd+"&maxResults="+maxResults.toString()+"&fields=items(summary,location,start/dateTime,end/dateTime)&orderBy=startTime");*/
 	}
 	
 	function onEvents(responseCode, data) {	//+mem+*/Sys.println(Sys.getSystemStats().freeMemory +" onEvents: "+responseCode + ", max: "+maxResults); //Sys.println(data);

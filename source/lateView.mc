@@ -1331,7 +1331,7 @@ var dbg = null;
 			// DEBUG if(dbg != clockTime.min ) {dbg = clockTime.min;var debug = new [weatherHourly.size()]; var hh = h;for(var ii=0; ii<weatherHourly.size() && ii<limit; ii++, hh++){	var cc = weatherHourly[ii]; if(ii<5){debug[ii]=weatherHourly[ii];}						else {debug[ii]= (cc>=0 && cc < meteoColors.size()) ? meteoColors[cc] : null;}			}System.println(["arcs", debug]);}
 
 			dc.setPenWidth(height>=390 ? 8 : 5);
-			var color; var center;
+			var color; var correction;
 			//weatherHourly[10]=9;weatherHourly[12]=13;weatherHourly[13]=15;weatherHourly[15]=20;weatherHourly[16]=21; // testing colors
 
 			// draw weather arcs
@@ -1343,14 +1343,14 @@ var dbg = null;
 					color = meteoColors[color];
 					h = h%hours;
 					if(hours==12){
-						center = h>=2 && h<8 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
+						correction = h>=2 && h<8 ? -1 : 0; // correcting the center is not in the center because the display resolution is even
 					} else {
-						center = h>=4 && h<16 ? centerX-1 : centerX; // correcting the center is not in the center because the display resolution is even
+						correction = h>=4 && h<16 ? -1 : 0; // correcting the center is not in the center because the display resolution is even
 					}
 					dc.setColor(color, Gfx.COLOR_TRANSPARENT);
 					//dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 15, 5);return;
 					//Sys.println([h, 450-h*step, 450-(h+1)*step]);
-					dc.drawArc(center, center, centerY-1, Gfx.ARC_CLOCKWISE, 450-h*step, 450-(h+1)*step);
+					dc.drawArc(centerX+correction, centerY+correction, centerY-1, Gfx.ARC_CLOCKWISE, 450-h*step, 450-(h+1)*step);
 
 				}
 			}

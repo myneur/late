@@ -22,8 +22,10 @@
 				<iq:product id="venu"/>
 				<iq:product id="venud"/>
 				<iq:product id="d2air"/>
+				<iq:product id="marq2"/>
+				<iq:product id="marq2aviator"/>
 			<!-- 360x320 -->
-			<!--<iq:product id="venusq2"/> not adapted to rectangular display yet-->
+			<!--<iq:product id="venusq2"/> not adapted to rectangular display yet + comment out monkey and test.jungle-->
 			<!-- 360x360 -->
 			<iq:product id="venu2s"/>
 
@@ -95,7 +97,7 @@
 
 			<!-- 218x218 with data 65k memory-->
 			
-			
+			<iq:product id="vivoactive4s"/>
 			<iq:product id="legacyherocaptainmarvel"/>
 			<iq:product id="legacysagarey"/>	
 			<!-- no saving to Storage from background -->

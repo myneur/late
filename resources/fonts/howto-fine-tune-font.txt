@@ -1,5 +1,6 @@
 lineHeight = height + 2
-base = lineHeight * 0.9
+base = height of '0' char id=48 because of Garmin bug: https://forums.garmin.com/developer/connect-iq/i/bug-reports/fr645-and-others-since-fw-7-20-major-issues-with-custom-fonts
+ - prevously I used base = lineheight * 0.9
 yoffset -= min(yoffset+1)
 xoffset of '1' reduced by 1/3
 xadvance of '1' reduced by 2x reducement of xoffset

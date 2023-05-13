@@ -5,11 +5,20 @@
 		<iq:products>
 			<!-- product parameters are in connectiq-sdk-mac/bin/devices.xml -->
 			<!-- groups by shape, resolution, memory and # colors, -->
+			
+
+
 			<!-- NEW TO ADD TO MONKEY!  -->
 				<!-- venu2system5preview fenix6prosystem5preview -->
 
 			<!-- round -->
+            <!-- 454x454 data -->
+<!-- ugprade framework: OLED:
+                <iq:product id="fr965"/> -->
 			<!-- 416x416 data -->
+
+                <iq:product id="fr265"/>
+                <iq:product id="fr265s"/>
 				<iq:product id="venu2"/>
 				<iq:product id="venu2plus"/> 
 				<iq:product id="epix2"/>
@@ -19,14 +28,17 @@
 				<iq:product id="venu"/>
 				<iq:product id="venud"/>
 				<iq:product id="d2air"/>
+				<iq:product id="marq2"/>
+				<iq:product id="marq2aviator"/>
+			<!-- 360x320 -->
+			<!--<iq:product id="venusq2"/> not adapted to rectangular display yet + comment out monkey and test.jungle-->
 			<!-- 360x360 -->
 			<iq:product id="venu2s"/>
+
 			<!-- 280x280 64 colors 94k memory -->
-			<!-- data -->
-			<iq:product id="fenix7x"/>
+			<iq:product id="fenix7x"/> <!-- also enduro 2-->
 			<iq:product id="fenix6xpro"/>
 			<iq:product id="descentmk2"/>
-<iq:product id="enduro2"/>
 			<iq:product id="enduro"/>
 			
 			<!-- 260x260 with data 94k memory -->
@@ -91,7 +103,7 @@
 
 			<!-- 218x218 with data 65k memory-->
 			
-			
+			<iq:product id="vivoactive4s"/>
 			<iq:product id="legacyherocaptainmarvel"/>
 			<iq:product id="legacysagarey"/>	
 			<!-- no saving to Storage from background -->

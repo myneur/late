@@ -68,9 +68,11 @@ fr245m.sourcePath = $(sBg)
 # OLED
 venusq.resourcePath  = $(approachs62.resourcePath)
 venusqm.resourcePath = $(approachs62.resourcePath)
+#venusq2.resourcePath = $(approachs62.resourcePath)
 
 venusq.sourcePath = $(sBg)
 venusqm.sourcePath = $(sBg)
+#venusq2.sourcePath = $(sBg)
 
 # CIQ1 Aikido Monkeys:
 # 218 px, but no data and less activities and no OLED

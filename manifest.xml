@@ -5,26 +5,30 @@
 		<iq:products>
 			<!-- product parameters are in connectiq-sdk-mac/bin/devices.xml -->
 			<!-- groups by shape, resolution, memory and # colors, -->
-			
-
-
-			<!-- NEW TO ADD TO MONKEY!  -->
-				<!-- venu2system5preview fenix6prosystem5preview -->
-
 			<!-- round -->
-            <!-- 454x454 data -->
-<!-- ugprade framework: OLED:
-                <iq:product id="fr965"/> -->
+            <!-- 454x454 data OLED 1.4" -->
+                <iq:product id="fr965"/> 
+                <iq:product id="descentmk351mm"/> 
+                <iq:product id="venu3"/> 
+                <iq:product id="epix2pro51mm"/>
+                <iq:product id="approachs7047mm"/>
 			<!-- 416x416 data -->
-
+				<iq:product id="epix2pro47mm"/> <!-- = quatix -->
                 <iq:product id="fr265"/>
-                <iq:product id="fr265s"/>
-				<iq:product id="venu2"/>
+                
+				<iq:product id="venu2"/> <!-- 1.3" -->
 				<iq:product id="venu2plus"/> 
 				<iq:product id="epix2"/>
 				<iq:product id="d2airx10"/>
 				<iq:product id="d2mach1"/>
-			<!-- 390x390 64c data -->
+			<!-- 390x390 OLED 64c data -->
+					<iq:product id="descentmk343mm"/> 
+					<iq:product id="venu3s"/> 
+					<iq:product id="epix2pro42mm"/> 
+					<iq:product id="approachs7042mm"/> 
+					<!-- - no baro -->
+					<iq:product id="vivoactive5"/> 
+
 				<iq:product id="venu"/>
 				<iq:product id="venud"/>
 				<iq:product id="d2air"/>
@@ -33,15 +37,20 @@
 			<!-- 360x320 -->
 			<!--<iq:product id="venusq2"/> not adapted to rectangular display yet + comment out monkey and test.jungle-->
 			<!-- 360x360 -->
+				<iq:product id="fr265s"/>
 			<iq:product id="venu2s"/>
 
 			<!-- 280x280 64 colors 94k memory -->
-			<iq:product id="fenix7x"/> <!-- also enduro 2-->
+				<iq:product id="fenix7xpro"/>
+				<iq:product id="fenix7xpronowifi"/>
+			<iq:product id="fenix7x"/> <!-- = enduro 2-->
 			<iq:product id="fenix6xpro"/>
 			<iq:product id="descentmk2"/>
 			<iq:product id="enduro"/>
 			
 			<!-- 260x260 with data 94k memory -->
+				<iq:product id="fenix7pro"/>
+				<iq:product id="fenix7pronowifi"/>	
 			<iq:product id="fenix7"/>
 			<iq:product id="fenix6"/>
 			<iq:product id="fenix6pro"/>
@@ -53,7 +62,9 @@
 			<iq:product id="fr955"/>
 			
 			<!-- 240x240 with data 64 colors 94k memory-->
+
 			<iq:product id="descentmk2s"/>
+			<iq:product id="fenix7spro"/>
 			<iq:product id="fenix7s"/>
 			<iq:product id="fenix6s"/>
 			<iq:product id="fenix6spro"/>
@@ -71,6 +82,7 @@
 			<iq:product id="fr945"/>
 			<iq:product id="fr945lte"/>
 			<iq:product id="vivoactive3"/>
+			<!-- <iq:product id="vivolife"/> GPS-less Vivoactive 3 that is only sold in asia-pacific markets-->
 			<iq:product id="vivoactive3m"/>
 			<iq:product id="vivoactive3mlte"/>
 			<iq:product id="vivoactive3d"/>
@@ -113,37 +125,37 @@
 			<iq:product id="fr255sm"/>
 
 
-			<!-- don't enabling data -->
-			<!-- semi-round 215x180 with data 16 colors 65k memory CIQ2 no support floors climbed: weak watch: don't enabling data -->
-			<iq:product id="fr735xt"/>
+			<!-- NO DATA -->
+				<!-- weak watches -->
+				<!-- semi-round 215x180 with data 16 colors 65k memory CIQ2 no support floors climbed: weak watch: don't enabling data -->
+				<iq:product id="fr735xt"/>
 
-			<!-- rectangle 148x205 with data, but too narrow display to show calendar 64 colors 61k memory CIQ2 no strong -->
-			<iq:product id="vivoactive_hr"/>
-			
-			<!-- no data or lower memory -->
-			<!-- 218x218 no data 65k memory-->
-			<iq:product id="fenix3"/> <!-- = Tactix Bravo, Quatix 3 -->
-			<iq:product id="fenix3_hr"/>
-			<iq:product id="d2bravo"/>
-			<iq:product id="d2bravo_titanium"/>
-			
-			<!-- semi-round 215x180 no data 16 colors 65k memory CIQ2 no strong-->
-			<iq:product id="fr230"/>
-			<iq:product id="fr235"/>
-			<iq:product id="fr630"/>
-			
-			<!-- rectangle 205x148 no data 64 colors 65k memory CIQ2 no strong-->
-			<!--<iq:product id="vivoactive"/>-->
-			<!--<iq:product id="fr920xt"/>-->
-			
-			<!-- 208x208 no data 8 colors 49k memory -->
-			<iq:product id="fr45"/>
-			<iq:product id="fr55"/>
-			<iq:product id="garminswim2"/>
+				<!-- rectangle 148x205 with data, but too narrow display to show calendar 64 colors 61k memory CIQ2 no strong -->
+				<iq:product id="vivoactive_hr"/>
+				
+				<!-- NO DATA support -->
 
-			<!-- NEW DEVICES!! 
-				<iq:product id="vivolife"/> GPS-less Vivoactive 3 that is only sold in asia-pacific markets
-			-->
+				<!-- 218x218 no data 65k memory-->
+				<iq:product id="fenix3"/> <!-- = Tactix Bravo, Quatix 3 -->
+				<iq:product id="fenix3_hr"/>
+				<iq:product id="d2bravo"/>
+				<iq:product id="d2bravo_titanium"/>
+				
+				<!-- semi-round 215x180 no data 16 colors 65k memory CIQ2 no strong-->
+				<iq:product id="fr230"/>
+				<iq:product id="fr235"/>
+				<iq:product id="fr630"/>
+				
+				<!-- DEPRECIATED rectangle 205x148 no data 64 colors 65k memory CIQ2 no strong-->
+				<!--<iq:product id="vivoactive"/>-->
+				<!--<iq:product id="fr920xt"/>-->
+				
+				<!-- 208x208 no data 8 colors 49k memory -->
+				<iq:product id="fr45"/>
+				<iq:product id="fr55"/>
+				<!-- <iq:product id="garminswim2"/> bug https://forums.garmin.com/developer/connect-iq/i/bug-reports/wf-crashes-in-the-sim-for-the-swim2-device -->
+
+			
 		</iq:products>
 
 		<iq:permissions>

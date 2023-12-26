@@ -1,0 +1,247 @@
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 1; ]
+import Toybox.Lang;
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 2; ]
+using Toybox.WatchUi;
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 3; ]
+using Toybox.WatchUi as :Ui;
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 4; ]
+using Toybox.Graphics;
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 5; ]
+using Toybox.Graphics as :Gfx;
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 7; ]
+module Rez {
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 7; ]
+    <init> {
+    }
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 8; ]
+    module Drawables {
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 8; ]
+        <init> {
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 9; @position = 27; initialized = true; ]
+        var Sunset as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 10; @position = 27; initialized = true; ]
+        var Sunrise as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 11; @position = 27; initialized = true; ]
+        var calories as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 12; @position = 27; initialized = true; ]
+        var steps as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 13; @position = 27; initialized = true; ]
+        var activeMinutesWeek as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 14; @position = 27; initialized = true; ]
+        var floorsClimbed as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 15; @position = 27; initialized = true; ]
+        var Bat as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 16; @position = 27; initialized = true; ]
+        var LauncherIcon as Symbol;
+    }
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 19; ]
+    module Fonts {
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 19; ]
+        <init> {
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 20; @position = 27; initialized = true; ]
+        var Hours as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 21; @position = 27; initialized = true; ]
+        var HoursStrong as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 22; @position = 27; initialized = true; ]
+        var Small as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 23; @position = 27; initialized = true; ]
+        var SmallStrong as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 24; @position = 27; initialized = true; ]
+        var Condensed as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 25; @position = 27; initialized = true; ]
+        var Ico as Symbol;
+    }
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 28; ]
+    module JsonData {
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 28; ]
+        <init> {
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 29; @position = 27; initialized = true; ]
+        var testData as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 30; @position = 27; initialized = true; ]
+        var calCol as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 31; @position = 27; initialized = true; ]
+        var metCol as Symbol;
+    }
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 34; ]
+    module Layouts {
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 34; ]
+        <init> {
+        }
+    }
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 37; ]
+    module Menus {
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 37; ]
+        <init> {
+        }
+    }
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 40; ]
+    module Strings {
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 40; ]
+        <init> {
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 41; @position = 27; initialized = true; ]
+        var OutOfMemory as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 42; @position = 27; initialized = true; ]
+        var BellowTwenty as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 43; @position = 27; initialized = true; ]
+        var Subscribe as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 44; @position = 27; initialized = true; ]
+        var Update as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 45; @position = 27; initialized = true; ]
+        var BatteryTitle as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 46; @position = 27; initialized = true; ]
+        var ColorRed as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 47; @position = 27; initialized = true; ]
+        var b3 as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 48; @position = 27; initialized = true; ]
+        var b5 as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 49; @position = 27; initialized = true; ]
+        var b7 as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 50; @position = 27; initialized = true; ]
+        var ActiveMinutesDay as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 51; @position = 27; initialized = true; ]
+        var Light as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 52; @position = 27; initialized = true; ]
+        var b9 as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 53; @position = 27; initialized = true; ]
+        var WhiteBg as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 54; @position = 27; initialized = true; ]
+        var CalendarPrompt as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 55; @position = 27; initialized = true; ]
+        var Boldness as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 56; @position = 27; initialized = true; ]
+        var s0 as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 57; @position = 27; initialized = true; ]
+        var s1 as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 58; @position = 27; initialized = true; ]
+        var Floors as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 59; @position = 27; initialized = true; ]
+        var ActiveMinutesWeek as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 60; @position = 27; initialized = true; ]
+        var AppVersionTitle as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 61; @position = 27; initialized = true; ]
+        var DataLoading as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 62; @position = 27; initialized = true; ]
+        var NoInternet as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 63; @position = 27; initialized = true; ]
+        var CIQ as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 64; @position = 27; initialized = true; ]
+        var Expired as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 65; @position = 27; initialized = true; ]
+        var NotSupportedData as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 66; @position = 27; initialized = true; ]
+        var ColorOrange as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 67; @position = 27; initialized = true; ]
+        var DateFormTitle as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 68; @position = 27; initialized = true; ]
+        var Units as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 69; @position = 27; initialized = true; ]
+        var D1224h as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 70; @position = 27; initialized = true; ]
+        var Vivid as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 71; @position = 27; initialized = true; ]
+        var Dark as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 72; @position = 27; initialized = true; ]
+        var Forecast as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 73; @position = 27; initialized = true; ]
+        var ColorGray as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 74; @position = 27; initialized = true; ]
+        var CalendarByColor as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 75; @position = 27; initialized = true; ]
+        var ColorBg as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 76; @position = 27; initialized = true; ]
+        var BellowHalf as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 77; @position = 27; initialized = true; ]
+        var Yr as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 78; @position = 27; initialized = true; ]
+        var BellowFive as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 79; @position = 27; initialized = true; ]
+        var ColorPurple as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 80; @position = 27; initialized = true; ]
+        var DateFormDayOfWeek as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 81; @position = 27; initialized = true; ]
+        var Always as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 82; @position = 27; initialized = true; ]
+        var D12h as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 83; @position = 27; initialized = true; ]
+        var D24h as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 84; @position = 27; initialized = true; ]
+        var Steps as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 85; @position = 27; initialized = true; ]
+        var ColorBlue as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 86; @position = 27; initialized = true; ]
+        var ColorTitle as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 87; @position = 27; initialized = true; ]
+        var showSunriseSunsetTitle as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 88; @position = 27; initialized = true; ]
+        var NastyError as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 89; @position = 27; initialized = true; ]
+        var ToneTitle as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 90; @position = 27; initialized = true; ]
+        var CalendarColors as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 91; @position = 27; initialized = true; ]
+        var AppName as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 92; @position = 27; initialized = true; ]
+        var TakesTime as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 93; @position = 27; initialized = true; ]
+        var ActivityTitle as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 94; @position = 27; initialized = true; ]
+        var showPercents as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 95; @position = 27; initialized = true; ]
+        var Unauthorized as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 96; @position = 27; initialized = true; ]
+        var DnD as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 97; @position = 27; initialized = true; ]
+        var Celsius as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 98; @position = 27; initialized = true; ]
+        var ColorGreen as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 99; @position = 27; initialized = true; ]
+        var BellowThird as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 100; @position = 27; initialized = true; ]
+        var ActivityTitleL as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 101; @position = 27; initialized = true; ]
+        var DateFormMonth as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 102; @position = 27; initialized = true; ]
+        var Calendar as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 103; @position = 27; initialized = true; ]
+        var AddCalendars as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 104; @position = 27; initialized = true; ]
+        var BellowTen as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 105; @position = 27; initialized = true; ]
+        var ActivityTitleR as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 106; @position = 27; initialized = true; ]
+        var HowGPS as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 107; @position = 27; initialized = true; ]
+        var NotConnected as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 108; @position = 27; initialized = true; ]
+        var DialSize as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 109; @position = 27; initialized = true; ]
+        var WeatherPrompt as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 110; @position = 27; initialized = true; ]
+        var Info as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 111; @position = 27; initialized = true; ]
+        var Fahrenheit as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 112; @position = 27; initialized = true; ]
+        var Calories as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 113; @position = 27; initialized = true; ]
+        var Weather as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 114; @position = 27; initialized = true; ]
+        var CalendarsSetting as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 115; @position = 27; initialized = true; ]
+        var NoGPS as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 116; @position = 27; initialized = true; ]
+        var CalendarNoChange as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 117; @position = 27; initialized = true; ]
+        var Wait4login as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 118; @position = 27; initialized = true; ]
+        var CalendarsPrompt as Symbol;
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 119; @position = 27; initialized = true; ]
+        var Ca as Symbol;
+    }
+}
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 1; ]
+<init> {
+}

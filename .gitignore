@@ -6,4 +6,6 @@ credentials.xml
 *.iq
 late.prg.debug.xml
 late-settings.json
-.DS_Store
+bin/mir
+bin/gen
+gin/internal-mir

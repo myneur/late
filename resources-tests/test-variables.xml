@@ -1,26 +1,21 @@
 <resources>
 <jsonData id="testData">{
-		"Reinitialize": true,
 		"Properties": {
 			"weather": true,
 			"activity": 6,
-			"activityL": 0,
-			"activityR": 0,
+			"activityL": 1,
+			"activityR": 2,
 			"dialSize": 0,
-			"boldness": 5,
-			"percents": false,
-			"dateForm":1,
-			"tone":4,
-			
-			"weatherHourly": [0, 4, 4, 13, 1.9, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3],
-			"location": [65.6,-16.9],
-			"calendar_ids": ["simply@myneur.eu", "c_c7d007852dbed7442a8a023674f96f97476d681063cb47a3ad11cb89149f2d10@group.calendar.google.com", "c_tcda76in1brk0ku9k4as30avsc@group.calendar.google.com"],
-
-			"d24": true
+			"percents": true,
+			"d24": true,
+			"weatherHourly": [10, 5, 4, 13, 1.100000, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3],
+			"calendar_ids": ["myneur@gmail.com", "petr.meissner@gmail.com"]
 		},
+
 		"AfterLayoutCharProperties":
-			{"lastLoad": "w"},
-		"Message":"!THIS MUST RELOAD!"
+			{"lastLoad": "w"}
+		},
+		"Reinitialize": true
 	}
 	</jsonData>
 </resources>

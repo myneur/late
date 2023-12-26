@@ -4,6 +4,7 @@ using Toybox.Communications;
 using Toybox.Application as App;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
+//using Toybox.Lang;
 
 (:background)
 class lateBackground extends Toybox.System.ServiceDelegate {
@@ -49,6 +50,7 @@ class lateBackground extends Toybox.System.ServiceDelegate {
 			method(:onOAuthUserCode)); 
 	}
 
+	//function onOAuthUserCode(responseCode as Lang.Number, data as Null or Lang.Dictionary or Lang.String) as Void { 
 	function onOAuthUserCode(responseCode, data){ // {device_code, user_code, url} ///Sys.println(Sys.getSystemStats().freeMemory + " onOAuthUserCode: "+responseCode); //Sys.println(data);
 		if(responseCode != 200){
 			if(data == null) { // no data connection 

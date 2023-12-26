@@ -78,6 +78,10 @@ class lateApp extends Toy.Application.AppBase {
 		}
 		return true;
 	}
+	(:nodata)
+	function scheduleDataLoading(dataLoading, activity, showWeather){
+		return false;
+	}
 
 	(:data)
 	function durationToNextEvent(){
@@ -117,6 +121,10 @@ class lateApp extends Toy.Application.AppBase {
 	(:data)
 	function unScheduleDataLoading(){
 		Background.deleteTemporalEvent();
+	}
+	(:nodata)
+	function unScheduleDataLoading(){
+		return false;
 	}
 
 	

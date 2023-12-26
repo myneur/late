@@ -1,4 +1,7 @@
+# Tests uncommented scenarios at the bottom on defined devices on MacOS and screenshots results into ~/Downloads
+
 echo ""
+
 function simulate(){
 	echo $DEVICES
 	for DEVICE in "${DEVICES[@]}"
@@ -14,7 +17,7 @@ function simulate(){
 			
 		fi
 		echo " > run simulator"
-		sleep 2s
+		sleep 2
 		connectiq
 		if [[ $RECOMPILE -eq 1 ]] ;then
 			if [[ $RELEASE -eq 1 ]] ;then
@@ -26,7 +29,7 @@ function simulate(){
 				JUNGLE=../test.jungle
 				echo " > compile :debug"
 			fi
-			monkeyc -o late.prg -y ../../developer_key.der -f $JUNGLE -d $DEVICE $FLAGS
+			monkeyc -l 0 -o late.prg -y ../../developer_key.der -f $JUNGLE -d $DEVICE $FLAGS
 			echo " > sleep 4s"
 			sleep 4
 		else 
@@ -45,12 +48,13 @@ function simulate(){
 			sleep 5
 		fi
 		echo " > screenshot "$DEVICE$RUN 
-		screencapture  ~/Downloads/$DEVICE$RUN 
+		screencapture  ~/Downloads/$TEST$DEVICE$RUN".png"
 	done
 }
 
 function setVariables(){
 	echo " > setVariables"
+	TEST="setup-"
 	DEVICES=(fenix6)
 	RUN="_init"
 	RECOMPILE=1
@@ -58,12 +62,46 @@ function setVariables(){
 	simulate	
 }
 
+# new resolutions 
+function testNewResolutions(){
+	VARS="calendar-with-weather-shown.vars.xml"
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
+	echo " < "$VARS
+	BACKGROUND=1
+	setVariables
+	TEST="new_res-"
+	DEVICES=(fr965 fr45) # 454
+	RUN="_resolution"
+	BACKGROUND=0
+	RECOMPILE=1
+	RELEASE=1
+	DONTSAVEPROPERTIES=0
+	simulate
+}
+function testNewResolutionsInStrong(){
+	VARS="full-strong.vars.xml"
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
+	echo " < "$VARS
+	BACKGROUND=1
+	setVariables
+	TEST="strong-"
+	DEVICES=(fr965 fr45) # 454
+	RUN="_strong"
+	BACKGROUND=0
+	RECOMPILE=1
+	RELEASE=1
+	DONTSAVEPROPERTIES=0
+	simulate
+}
+
+# expects the watch is logged out
 function testLogin(){
 	VARS="login.vars.xml"
 	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
+	TEST="login-"
 	DEVICES=(fenix6)
 	RUN="_login1"
 	BACKGROUND=1
@@ -85,6 +123,7 @@ function testCalendarWithWeatherShown(){
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
+	TEST="cal-weather-"
 	DEVICES=(fenix6xpro venusq fr245 fr945 fenix5s) # data 280 240 218 OLED rectangle nofloors weakest-with-data no-storage-from-background 
 	RUN="_calendar_weather"
 	BACKGROUND=1
@@ -100,6 +139,7 @@ function testCalendarOnly(){
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
+	TEST="cal-"
 	DEVICES=(fenix6xpro venusq fr245 fr945 fenix5s) # data 280 240 218 OLED rectangle nofloors weakest-with-data no-storage-from-background
 	RUN="_calendar"
 	BACKGROUND=1
@@ -110,6 +150,7 @@ function testCalendarOnly(){
 }
 
 function testWeatherInDebug(){ # TODO !!! now it only loads weather because of the Ficking Garmin Simulaotr is crashing
+	TEST="weather-debug-"
 	VARS="start-weather.vars.xml"
 	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
@@ -125,6 +166,7 @@ function testWeatherInDebug(){ # TODO !!! now it only loads weather because of t
 }
 
 function testSubscriptionInDebug(){ # TODO !!! now it only loads weather because of the Ficking Garmin Simulaotr is crashing
+	TEST="subs-"
 	VARS="start-weather.vars.xml"
 	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
 	echo " < "$VARS
@@ -140,22 +182,6 @@ function testSubscriptionInDebug(){ # TODO !!! now it only loads weather because
 	simulate	
 }
 
-# missing resolutions 
-function testMissingResolutions(){
-	VARS="calendar-with-weather-shown.vars.xml"
-	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
-	echo " < "$VARS
-	BACKGROUND=1
-	setVariables
-	DEVICES=(venu2 venu venu2s vivoactive4) # 416 390 360 260 
-	RUN="_resolution"
-	BACKGROUND=0
-	RECOMPILE=1
-	RELEASE=1
-	DONTSAVEPROPERTIES=0
-	simulate
-}
-
 # all resolutions permutations with or without calendar and weather
 function testResolutionsPermutations(){
 	CONFS=("calendar-with-weather-shown.vars.xml" "calendar.vars.xml" "start-weather.vars.xml" "no-data.vars.xml")
@@ -168,6 +194,7 @@ function testResolutionsPermutations(){
 		echo " < "$VARS
 		BACKGROUND=1
 		setVariables
+		TEST="allres-"
 		DEVICES=(venu2 venu venu2s fenix6xpro vivoactive4 fenix5 fenix5s fr45) # 416 390 360 280 260 240 218 208
 		BACKGROUND=0
 		RECOMPILE=1
@@ -186,6 +213,7 @@ function testNoData(){
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
+	TEST="nodata-"
 	DEVICES=(fenix3 fr230 fr45 vivoactive_hr fr735xt) # no-data 218 65k 3CIQ1 180 semi-round weakest old disabled-data
 	RUN="_no-data"
 	BACKGROUND=0
@@ -202,6 +230,7 @@ function testFloorsAndMinutes(){
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
+	TEST="floors-and-mins-"
 	DEVICES=(fenix3) # no-data 218 65k 3CIQ1 180 semi-round weakest old disabled-data
 	RUN="_minuteFloors"
 	BACKGROUND=0
@@ -218,7 +247,8 @@ function testStrongInAllReslutions(){
 	echo " < "$VARS
 	BACKGROUND=1
 	setVariables
-	DEVICES=(venu2 venu venu2s fenix6xpro venusq fr945 vivoactive4 fr745 fr735xt garminswim2 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
+	TEST="strong-"
+	DEVICES=(venu2 venu venu2s fenix6xpro venusq fr945 vivoactive4 fr745 fr735xt fr45 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
 	RUN="_strong"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -233,7 +263,8 @@ function testMonkeyJungleVariations(){
 	echo " < "$VARS
 	BACKGROUND=0
 	setVariables
-	DEVICES=(venu2 venu venu2s fenix6xpro venusq venusqm approachs62 approachs60 fr245 fr245m fr945 vivoactive4 fr745 enduro fr735xt garminswim2 vivoactive_hr fenix3 fenix3_hr d2bravo d2bravo_titanium fr45 garminswim2)
+	TEST="monkeys-"
+	DEVICES=(venu2 venu venu2s fenix6xpro venusq venusqm approachs62 approachs60 fr245 fr245m fr945 vivoactive4 fr745 enduro fr735xt vivoactive_hr fenix3 fenix3_hr d2bravo d2bravo_titanium fr45)
 	RUN="_jungle"
 	BACKGROUND=0
 	RECOMPILE=1
@@ -242,7 +273,8 @@ function testMonkeyJungleVariations(){
 	simulate
 }
 
-function currentDebug(){
+function testAdHocDebug(){
+	TEST="current-"
 	RELEASE=0
 	RECOMPILE=1
 	RUN="_debug"
@@ -253,16 +285,34 @@ function currentDebug(){
 	simulate
 }
 
-#setVariables # just demo of what can be done
-testCalendarWithWeatherShown
-testWeatherInDebug
-#currentDebug
+# EVERY RELEASE to check that it does not get out of memory by loadinc many calendar events
+
+#testCalendarWithWeatherShown
+
+# WEATHER UPDATES
+
+#testWeatherInDebug
+
+# MAJOR UPDATES 
+
 #testLogin
 #testSubscriptionInDebug
 
-testMissingResolutions
-testStrongInAllReslutions
+# SUPPORT FOR NEW DEVICES
+
+testNewResolutions
+#testNewResolutionsInStrong
+#testResolutionsPermutations
+#testStrongInAllReslutions
+
+# OLD OR WEAK DEVICES 
+
 #testNoData
-testFloorsAndMinutes
-testMonkeyJungleVariations
-testResolutionsPermutations
+#testFloorsAndMinutes
+#testMonkeyJungleVariations
+
+# USED BY ALL ABOVE
+#setVariables # used to init variables
+
+# AD HOC
+#testAdHocDebug

@@ -55,7 +55,7 @@ class lateView extends Ui.WatchFace {
 
 	function initialize (){
 		app = App.getApp();
-		
+
 		if(Ui.loadResource(Rez.Strings.DataLoading).toNumber()==1){ // our code is ready for data loading for this device
 			dataLoading = Sys has :ServiceDelegate;	// watch is capable of data loading
 		}
@@ -117,7 +117,7 @@ class lateView extends Ui.WatchFace {
 
 	(:debug)
 	function presetTestVariables () {
-		var data = Ui.loadResource(Rez.JsonData.testData);
+		var data = loadJsonResource(:testData);
 		if(data.hasKey("CopyProperties")){
 			var d = data["Properties"];
 			var keys = d.keys();
@@ -167,7 +167,7 @@ class lateView extends Ui.WatchFace {
 			for(var i=0;i<keys.size();i++){
 				if(Toybox.Application has :Storage){
 					Sys.println(" - storage "+keys[i]);	
-					Toybox.Application.Storage.setValue(keys[i], (d[keys[i]]!=null ? d[keys[i]].toString().substring(0,30) : "[MISSING]"));
+					Toybox.Application.Storage.setValue(keys[i], (d[keys[i]]!=null ? d[keys[i]] : "[MISSING]"));
 				} else {
 					Sys.println(" - property instead of storage "+keys[i]+": "+d[keys[i]]);
 					app.setProperty(keys[i], d[keys[i]]);
@@ -190,7 +190,7 @@ class lateView extends Ui.WatchFace {
 
 	(:debug)
 	function resetTestVariables () {
-		var data = Ui.loadResource(Rez.JsonData.testData);
+		var data = loadJsonResource(:testData);
 
 		if(data.hasKey("AfterLayoutProperties")){
 			var d = data["AfterLayoutProperties"];
@@ -253,26 +253,26 @@ class lateView extends Ui.WatchFace {
 			events_list=[];
 			showMessage(app.scheduleDataLoading(dataLoading, activity, showWeather));
 			/*	TODO: changing angle immediately
-						var hour = clockTime.hour;
-			var mul; var a; var b;
-			if(d24new){
-				mul = 2;
-				a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
-				if(hour>11){ hour-=12;}
-				if(0==hour){ hour=12;}
-				b = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
-			} else {
-				mul = 0.5;
-				if(hour>11){ hour-=12;}
-				if(0==hour){ hour=12;}
-				b = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
-				hour = clockTime.hour;
-				a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
-			}
-			for(var i=0; i<events_list.size(); i++){
-				events_list[5] = ((a - events_list[5])*mul +b).toNumber();
-				events_list[6] = ((a - events_list[6])*mul +b).toNumber();
-			}
+				var hour = clockTime.hour;
+				var mul; var a; var b;
+				if(d24new){
+					mul = 2;
+					a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
+					if(hour>11){ hour-=12;}
+					if(0==hour){ hour=12;}
+					b = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
+				} else {
+					mul = 0.5;
+					if(hour>11){ hour-=12;}
+					if(0==hour){ hour=12;}
+					b = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
+					hour = clockTime.hour;
+					a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
+				}
+				for(var i=0; i<events_list.size(); i++){
+					events_list[5] = ((a - events_list[5])*mul +b).toNumber();
+					events_list[6] = ((a - events_list[6])*mul +b).toNumber();
+				}
 			*/
 		}
 		d24 = d24new;
@@ -351,10 +351,16 @@ class lateView extends Ui.WatchFace {
 	}
 
 	(:data)
+	function loadJsonResource(id){
+		return Ui.loadResource(Rez.JsonData[id]);
+	}
+	(:nodata) function loadJsonResource(id){ return {}; }
+
+	(:data)
 	function loadDataColors(mainColor, tone, app){
 		mainColor = app.getProperty("mainColor").toNumber()%6;
 		if(showWeather){
-			meteoColors = Ui.loadResource(Rez.JsonData.metCol);
+			meteoColors = loadJsonResource(:metCol);
 			//Sys.println([0xFFAA00,	0xAA5500,	0x005555, 0x00AAFF,	0xAAAAAA, 0xFFFFFF, 0x555500];);
 				//enum {	clear, 		partly, 	lghtrain, rain,	 	mild snow, snow, clear neight} // clean moon can be 555555 instead of sun and mostly cloudy can be skipped
 			if(tone>2){
@@ -391,7 +397,7 @@ class lateView extends Ui.WatchFace {
 		}*/
 		if(activity == :calendar){
 			if(app.getProperty("calendar_colors") || !(app.getProperty("calendarColors") instanceof Array) ){	// match calendar colors to watch
-				calendarColors = Ui.loadResource(Rez.JsonData.calCol)[mainColor];
+				calendarColors = loadJsonResource(:calCol)[mainColor];
 				/*Sys.println( [
 					[0xAA0055, 0xFFFF00, 0x555555], 
 					[0xFFFF00, 0xAA00FF, 0x555555], 
@@ -419,6 +425,7 @@ class lateView extends Ui.WatchFace {
 			}
 		}
 	}
+	(:nodata) function loadDataColors(mainColor, tone, app){ return false;}
 
 
 	function setBaseVars(){
@@ -474,10 +481,10 @@ class lateView extends Ui.WatchFace {
 		}
 		setBaseVars();
 		
-// MEM logs: 39368-39376
+		// MEM logs: 39368-39376
 		if(dialSize==0){
 			activityY = (height>180) ? height-Gfx.getFontHeight(fontCondensed)-10 : centerY+80-Gfx.getFontHeight(fontCondensed)>>1 ;
-			messageY = (centerY-radius+10)>>2 - Gfx.getFontHeight(fontCondensed)-1 + centerY+radius+10;						
+/* ±10? */		messageY = (centerY-radius+10)>>2 - Gfx.getFontHeight(fontCondensed)-1 + centerY+radius+10;						
 		} else {
 			activityY= centerY+Gfx.getFontHeight(fontHours)>>1+15;
 			if(height<208){
@@ -686,9 +693,9 @@ class lateView extends Ui.WatchFace {
 		return info.steps.toFloat()/info.stepGoal;
 	}
 	function calories(info){
-		var h = ActivityMonitor.getHistory();
-		if(h.size()>0){
-			return info.calories.toFloat()/ActivityMonitor.getHistory()[0].calories;	
+		var hist = ActivityMonitor.getHistory();
+		if(hist.size()>0 && hist[0].calories){
+			return info.calories.toFloat()/ActivityMonitor.getHistory()[0].calories;
 		} else {
 			return 0;
 		}
@@ -1002,6 +1009,7 @@ class lateView extends Ui.WatchFace {
 			dc.drawText(x, messageY+eventHeight, fontCondensed, eventLocation, justify);
 		}
 	}
+	(:nodata)function drawEvent(dc){ return false;}
 
 	(:data)
 	function drawEvents(dc){
@@ -1093,6 +1101,7 @@ class lateView extends Ui.WatchFace {
 
 		}
 	}
+	(:nodata) function drawEvents(dc){ return false;}
 
 	/*function drawIconP(percent, icon, dc){
 		var a = percent * 2*Math.PI;
@@ -1494,6 +1503,7 @@ var dbg = null;
 			}
 		}
 	}
+	(:nodata) function drawWeather(dc){ return false;}
 	
 	/*function abs(a){
 		return a>=0 ? a : -a;

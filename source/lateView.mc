@@ -884,7 +884,7 @@ class lateView extends Ui.WatchFace {
 			if(d24){
 				a = Math.PI/(720.0) * (hour*60+clockTime.min);	// 720 = 2PI/24hod
 			} else { 
-				return; // so far for 12h //12//
+				//return; // so far for 12h //12//
 				if(hour>11){ hour-=12;}
 				if(0==hour){ hour=12;}
 				a = Math.PI/(360.0) * (hour*60+clockTime.min);	// 360 = 2PI/12hod
@@ -941,14 +941,14 @@ class lateView extends Ui.WatchFace {
 				if(tillStart < 3480){	// 58 mins
 					var secondsFromLastHour = events_list[i][0] - (Time.now().value()-(clockTime.min*60+clockTime.sec));
 					var a = (secondsFromLastHour).toFloat()/1800*Math.PI; // 2Pi/hour
-					//var r = (tillStart>=120 || clockTime.min<10 || burnInProtection>0) ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
-					var r = dialSize ? radius : 1.12*radius; //12//
+					var r = (tillStart>=120 || clockTime.min<10 || burnInProtection>0) ? radius : radius-Gfx.getFontHeight(fontSmall)>>1-1; //12//
+					//var r = dialSize ? radius : 1.12*radius; //12//
 					var x= Math.round(centerX+(r*Math.sin(a)));
 					var y = Math.round(centerY-(r*Math.cos(a)));
 
 					//12// marker 
 					
-					/*if(burnInProtection==0){
+					if(burnInProtection==0){
 						dc.setColor(backgroundColor, backgroundColor);
 						dc.fillCircle(x, y, 4);
 						dc.setColor(dateColor, backgroundColor);
@@ -958,7 +958,7 @@ class lateView extends Ui.WatchFace {
 						dc.fillCircle(x, y, 4);
 						dc.setColor(backgroundColor, backgroundColor);
 						dc.fillCircle(x, y, 3);
-					}*/
+					}
 					
 					dc.setPenWidth(1);
 					dc.setColor(dateColor, backgroundColor);
@@ -1111,6 +1111,7 @@ class lateView extends Ui.WatchFace {
 	}*/
 	
 	
+	/*
 	function drawTime (dc){
 
 		// draw hour
@@ -1201,8 +1202,8 @@ class lateView extends Ui.WatchFace {
 			dc.fillCircle(centerX, centerY, v);
 		}
 	}
+	*/
 	
-/*
 	function drawTime (dc){
 		// draw hour
 		var h=clockTime.hour;
@@ -1290,7 +1291,6 @@ class lateView extends Ui.WatchFace {
 			//dc.drawArc(centerX, centerY, radius, Gfx.ARC_CLOCKWISE, 90, 270);
 		}
 	}
-*/
 
 	function drawBatteryLevel (dc){
 		var bat = Sys.getSystemStats().battery;

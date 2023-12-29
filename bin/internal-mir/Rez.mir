@@ -1,247 +1,1592 @@
-[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 1; ]
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 1; ]
 import Toybox.Lang;
-[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 2; ]
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 2; ]
 using Toybox.WatchUi;
-[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 3; ]
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 3; ]
 using Toybox.WatchUi as :Ui;
-[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 4; ]
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 4; ]
 using Toybox.Graphics;
-[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 5; ]
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 5; ]
 using Toybox.Graphics as :Gfx;
-[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 7; ]
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 7; ]
 module Rez {
-    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 7; ]
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 7; ]
     <init> {
     }
-    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 8; ]
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 8; ]
     module Drawables {
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 8; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 8; ]
         <init> {
         }
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 9; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 9; @position = 27; initialized = true; ]
         var Sunset as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 10; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 10; @position = 27; initialized = true; ]
         var Sunrise as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 11; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 11; @position = 27; initialized = true; ]
         var calories as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 12; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 12; @position = 27; initialized = true; ]
         var steps as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 13; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 13; @position = 27; initialized = true; ]
         var activeMinutesWeek as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 14; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 14; @position = 27; initialized = true; ]
         var floorsClimbed as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 15; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 15; @position = 27; initialized = true; ]
         var Bat as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 16; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 16; @position = 27; initialized = true; ]
         var LauncherIcon as Symbol;
     }
-    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 19; ]
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 19; ]
     module Fonts {
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 19; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 19; ]
         <init> {
         }
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 20; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 20; @position = 27; initialized = true; ]
         var Hours as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 21; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 21; @position = 27; initialized = true; ]
         var HoursStrong as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 22; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 22; @position = 27; initialized = true; ]
         var Small as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 23; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 23; @position = 27; initialized = true; ]
         var SmallStrong as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 24; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 24; @position = 27; initialized = true; ]
         var Condensed as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 25; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 25; @position = 27; initialized = true; ]
         var Ico as Symbol;
     }
-    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 28; ]
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 28; ]
     module JsonData {
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 28; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 28; ]
         <init> {
         }
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 29; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 29; @position = 27; initialized = true; ]
         var testData as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 30; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 30; @position = 27; initialized = true; ]
         var calCol as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 31; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 31; @position = 27; initialized = true; ]
         var metCol as Symbol;
     }
-    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 34; ]
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 34; ]
     module Layouts {
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 34; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 34; ]
         <init> {
         }
     }
-    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 37; ]
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 37; ]
     module Menus {
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 37; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 37; ]
         <init> {
         }
     }
-    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 40; ]
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 40; ]
     module Strings {
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 40; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 40; ]
         <init> {
         }
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 41; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 41; @position = 27; initialized = true; ]
         var OutOfMemory as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 42; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 42; @position = 27; initialized = true; ]
         var BellowTwenty as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 43; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 43; @position = 27; initialized = true; ]
         var Subscribe as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 44; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 44; @position = 27; initialized = true; ]
         var Update as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 45; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 45; @position = 27; initialized = true; ]
         var BatteryTitle as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 46; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 46; @position = 27; initialized = true; ]
         var ColorRed as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 47; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 47; @position = 27; initialized = true; ]
         var b3 as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 48; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 48; @position = 27; initialized = true; ]
         var b5 as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 49; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 49; @position = 27; initialized = true; ]
         var b7 as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 50; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 50; @position = 27; initialized = true; ]
         var ActiveMinutesDay as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 51; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 51; @position = 27; initialized = true; ]
         var Light as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 52; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 52; @position = 27; initialized = true; ]
         var b9 as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 53; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 53; @position = 27; initialized = true; ]
         var WhiteBg as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 54; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 54; @position = 27; initialized = true; ]
         var CalendarPrompt as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 55; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 55; @position = 27; initialized = true; ]
         var Boldness as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 56; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 56; @position = 27; initialized = true; ]
         var s0 as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 57; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 57; @position = 27; initialized = true; ]
         var s1 as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 58; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 58; @position = 27; initialized = true; ]
         var Floors as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 59; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 59; @position = 27; initialized = true; ]
         var ActiveMinutesWeek as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 60; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 60; @position = 27; initialized = true; ]
         var AppVersionTitle as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 61; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 61; @position = 27; initialized = true; ]
         var DataLoading as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 62; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 62; @position = 27; initialized = true; ]
         var NoInternet as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 63; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 63; @position = 27; initialized = true; ]
         var CIQ as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 64; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 64; @position = 27; initialized = true; ]
         var Expired as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 65; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 65; @position = 27; initialized = true; ]
         var NotSupportedData as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 66; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 66; @position = 27; initialized = true; ]
         var ColorOrange as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 67; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 67; @position = 27; initialized = true; ]
         var DateFormTitle as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 68; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 68; @position = 27; initialized = true; ]
         var Units as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 69; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 69; @position = 27; initialized = true; ]
         var D1224h as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 70; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 70; @position = 27; initialized = true; ]
         var Vivid as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 71; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 71; @position = 27; initialized = true; ]
         var Dark as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 72; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 72; @position = 27; initialized = true; ]
         var Forecast as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 73; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 73; @position = 27; initialized = true; ]
         var ColorGray as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 74; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 74; @position = 27; initialized = true; ]
         var CalendarByColor as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 75; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 75; @position = 27; initialized = true; ]
         var ColorBg as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 76; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 76; @position = 27; initialized = true; ]
         var BellowHalf as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 77; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 77; @position = 27; initialized = true; ]
         var Yr as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 78; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 78; @position = 27; initialized = true; ]
         var BellowFive as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 79; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 79; @position = 27; initialized = true; ]
         var ColorPurple as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 80; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 80; @position = 27; initialized = true; ]
         var DateFormDayOfWeek as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 81; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 81; @position = 27; initialized = true; ]
         var Always as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 82; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 82; @position = 27; initialized = true; ]
         var D12h as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 83; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 83; @position = 27; initialized = true; ]
         var D24h as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 84; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 84; @position = 27; initialized = true; ]
         var Steps as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 85; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 85; @position = 27; initialized = true; ]
         var ColorBlue as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 86; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 86; @position = 27; initialized = true; ]
         var ColorTitle as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 87; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 87; @position = 27; initialized = true; ]
         var showSunriseSunsetTitle as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 88; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 88; @position = 27; initialized = true; ]
         var NastyError as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 89; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 89; @position = 27; initialized = true; ]
         var ToneTitle as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 90; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 90; @position = 27; initialized = true; ]
         var CalendarColors as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 91; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 91; @position = 27; initialized = true; ]
         var AppName as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 92; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 92; @position = 27; initialized = true; ]
         var TakesTime as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 93; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 93; @position = 27; initialized = true; ]
         var ActivityTitle as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 94; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 94; @position = 27; initialized = true; ]
         var showPercents as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 95; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 95; @position = 27; initialized = true; ]
         var Unauthorized as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 96; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 96; @position = 27; initialized = true; ]
         var DnD as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 97; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 97; @position = 27; initialized = true; ]
         var Celsius as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 98; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 98; @position = 27; initialized = true; ]
         var ColorGreen as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 99; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 99; @position = 27; initialized = true; ]
         var BellowThird as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 100; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 100; @position = 27; initialized = true; ]
         var ActivityTitleL as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 101; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 101; @position = 27; initialized = true; ]
         var DateFormMonth as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 102; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 102; @position = 27; initialized = true; ]
         var Calendar as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 103; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 103; @position = 27; initialized = true; ]
         var AddCalendars as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 104; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 104; @position = 27; initialized = true; ]
         var BellowTen as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 105; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 105; @position = 27; initialized = true; ]
         var ActivityTitleR as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 106; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 106; @position = 27; initialized = true; ]
         var HowGPS as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 107; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 107; @position = 27; initialized = true; ]
         var NotConnected as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 108; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 108; @position = 27; initialized = true; ]
         var DialSize as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 109; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 109; @position = 27; initialized = true; ]
         var WeatherPrompt as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 110; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 110; @position = 27; initialized = true; ]
         var Info as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 111; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 111; @position = 27; initialized = true; ]
         var Fahrenheit as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 112; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 112; @position = 27; initialized = true; ]
         var Calories as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 113; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 113; @position = 27; initialized = true; ]
         var Weather as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 114; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 114; @position = 27; initialized = true; ]
         var CalendarsSetting as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 115; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 115; @position = 27; initialized = true; ]
         var NoGPS as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 116; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 116; @position = 27; initialized = true; ]
         var CalendarNoChange as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 117; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 117; @position = 27; initialized = true; ]
         var Wait4login as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 118; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 118; @position = 27; initialized = true; ]
         var CalendarsPrompt as Symbol;
-        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 119; @position = 27; initialized = true; ]
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 119; @position = 27; initialized = true; ]
         var Ca as Symbol;
     }
+    [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 122; ]
+    module Styles {
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 122; ]
+        <init> {
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 123; ]
+        module prompt_font_enhanced_readability__body_with_title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 123; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 124; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 127; ]
+        module system_size__menu_header {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 127; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 128; @position = 18; ]
+            const width as Number = 454;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 129; @position = 18; ]
+            const height as Number = 152;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 132; ]
+        module system_loc__hint_button_left_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 132; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 133; @position = 18; ]
+            const x as Number = 17;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 134; @position = 18; ]
+            const y as Number = 300;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 137; ]
+        module prompt_font_enhanced_readability__body_no_title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 137; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 138; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 141; ]
+        module prompt_loc__body_no_title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 141; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 142; @position = 18; ]
+            const x as Number = 38;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 143; @position = 18; ]
+            const y as Number = 38;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 146; ]
+        module system_icon_dark__about {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 146; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 147; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__about.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 148; @position = 18; ]
+            const compress as String = "true";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 149; @position = 18; ]
+            const dithering as String = "none";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 150; @position = 18; ]
+            const automaticPalette as String = "true";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 153; ]
+        module system_icon_light__question {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 153; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 154; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__question.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 155; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 158; ]
+        module system_loc__hint_button_left_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 158; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 159; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 162; ]
+        module prompt_font__title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 162; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 163 18 ]
+                %tmp.1 = getm $.Toybox.Graphics;
+                %tmp.2 = getv %tmp.1 :TEXT_JUSTIFY_CENTER;
+                %tmp.3 = getm $.Toybox.Graphics;
+                %tmp.4 = getv %tmp.3 :TEXT_JUSTIFY_VCENTER;
+                %tmp.5 = bitor %tmp.2 %tmp.4;
+                putv self :justification %tmp.5;
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 164 18 ]
+                %tmp.6 = getm $.Toybox.Graphics;
+                %tmp.7 = getv %tmp.6 :FONT_XTINY;
+                putv self :font %tmp.7;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 163; @position = 18; ]
+            const justification;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 164; @position = 18; ]
+            const font;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 167; ]
+        module system_icon_dark__discard {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 167; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 168; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__discard.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 169; @position = 18; ]
+            const compress as String = "true";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 170; @position = 18; ]
+            const dithering as String = "none";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 171; @position = 18; ]
+            const automaticPalette as String = "true";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 174; ]
+        module system_size__menu_item {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 174; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 175; @position = 18; ]
+            const width as Number = 454;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 176; @position = 18; ]
+            const height as Number = 152;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 179; ]
+        module system_color_dark__text {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 179; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 181 18 ]
+                %tmp.8 = getm $.Toybox.Graphics;
+                %tmp.9 = getv %tmp.8 :COLOR_TRANSPARENT;
+                putv self :background %tmp.9;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 180; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 181; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 184; ]
+        module system_icon_destructive__discard {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 184; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 185; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_destructive__discard.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 186; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 189; ]
+        module system_icon_dark__hint_action_menu {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 189; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 190; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__hint_button_right_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 191; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 194; ]
+        module prompt_size__title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 194; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 195; @position = 18; ]
+            const width as Number = 363;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 196; @position = 18; ]
+            const height as Number = 69;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 199; ]
+        module confirmation_font__body {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 199; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 200 18 ]
+                %tmp.10 = getm $.Toybox.Graphics;
+                %tmp.11 = getv %tmp.10 :TEXT_JUSTIFY_CENTER;
+                %tmp.12 = getm $.Toybox.Graphics;
+                %tmp.13 = getv %tmp.12 :TEXT_JUSTIFY_VCENTER;
+                %tmp.14 = bitor %tmp.11 %tmp.13;
+                putv self :justification %tmp.14;
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 201 18 ]
+                %tmp.15 = getm $.Toybox.Graphics;
+                %tmp.16 = getv %tmp.15 :FONT_TINY;
+                putv self :font %tmp.16;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 200; @position = 18; ]
+            const justification;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 201; @position = 18; ]
+            const font;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 204; ]
+        module system_color_dark__background {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 204; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 205; @position = 18; ]
+            const color as Number = 0x000000;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 206; @position = 18; ]
+            const background as Number = 0x000000;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 209; ]
+        module system_icon_destructive__hint_button_left_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 209; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 210; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_destructive__hint_button_left_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 211; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 214; ]
+        module system_size__launch_icon {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 214; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 215; @position = 18; ]
+            const scaleX as Number = 60;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 216; @position = 18; ]
+            const scaleY as Number = 60;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 217; @position = 18; ]
+            const scaleRelativeTo as String = "screen";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 220; ]
+        module confirmation_input__confirm {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 220; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 221 18 ]
+                %tmp.17 = getm $.Toybox.WatchUi;
+                %tmp.18 = getv %tmp.17 :KEY_ENTER;
+                putv self :button %tmp.18;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 221; @position = 18; ]
+            const button;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 224; ]
+        module prompt_font__body_with_title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 224; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 225 18 ]
+                %tmp.19 = getm $.Toybox.Graphics;
+                %tmp.20 = getv %tmp.19 :TEXT_JUSTIFY_CENTER;
+                putv self :justification %tmp.20;
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 226 18 ]
+                %tmp.21 = getm $.Toybox.Graphics;
+                %tmp.22 = getv %tmp.21 :FONT_TINY;
+                putv self :font %tmp.22;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 225; @position = 18; ]
+            const justification;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 226; @position = 18; ]
+            const font;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 229; ]
+        module confirmation_loc__body {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 229; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 230; @position = 18; ]
+            const x as Number = 76;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 231; @position = 18; ]
+            const y as Number = 76;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 234; ]
+        module system_icon_destructive__hint_button_left_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 234; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 235; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_destructive__hint_button_left_bottom.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 236; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 239; ]
+        module prompt_color_dark__background {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 239; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 240; @position = 18; ]
+            const color as Number = 0x000000;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 241; @position = 18; ]
+            const background as Number = 0x000000;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 244; ]
+        module system_icon_destructive__hint_action_menu {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 244; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 245; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_destructive__hint_button_right_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 246; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 249; ]
+        module system_loc__hint_action_menu {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 249; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 250; @position = 18; ]
+            const x as Number = 393;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 251; @position = 18; ]
+            const y as Number = 84;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 254; ]
+        module confirmation_icon__hint_confirm {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 254; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 255; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_completion.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 256; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 259; ]
+        module system_loc__hint_button_left_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 259; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 260; @position = 18; ]
+            const x as Number = 4;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 261; @position = 18; ]
+            const y as Number = 189;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 264; ]
+        module prompt_size__body_no_title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 264; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 265; @position = 18; ]
+            const width as Number = 363;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 266; @position = 18; ]
+            const height as Number = 363;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 269; ]
+        module system_icon_light__hint_button_left_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 269; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 270; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__hint_button_left_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 271; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 274; ]
+        module prompt_color_light__background {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 274; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 275; @position = 18; ]
+            const color as Number = 0x000000;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 276; @position = 18; ]
+            const background as Number = 0x000000;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 279; ]
+        module confirmation_input__delete {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 279; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 280 18 ]
+                %tmp.23 = getm $.Toybox.WatchUi;
+                %tmp.24 = getv %tmp.23 :KEY_ENTER;
+                putv self :button %tmp.24;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 280; @position = 18; ]
+            const button;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 283; ]
+        module system_icon_dark__hint_button_left_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 283; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 284; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__hint_button_left_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 285; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 288; ]
+        module system_input__action_menu {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 288; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 289 18 ]
+                %tmp.25 = getm $.Toybox.WatchUi;
+                %tmp.26 = getv %tmp.25 :KEY_ENTER;
+                putv self :button %tmp.26;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 289; @position = 18; ]
+            const button;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 292; ]
+        module system_icon_light__save {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 292; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 293; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__save.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 294; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 297; ]
+        module prompt_color_light__body {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 297; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 299 18 ]
+                %tmp.27 = getm $.Toybox.Graphics;
+                %tmp.28 = getv %tmp.27 :COLOR_TRANSPARENT;
+                putv self :background %tmp.28;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 298; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 299; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 302; ]
+        module system_loc__subwindow {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 302; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 303; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 306; ]
+        module system_icon_light__warning {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 306; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 307; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__warning.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 308; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 311; ]
+        module confirmation_color_light__body {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 311; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 313 18 ]
+                %tmp.29 = getm $.Toybox.Graphics;
+                %tmp.30 = getv %tmp.29 :COLOR_TRANSPARENT;
+                putv self :background %tmp.30;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 312; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 313; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 316; ]
+        module confirmation_icon_light__hint_keep {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 316; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 317; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_keep.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 318; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 321; ]
+        module activity_color_light__background {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 321; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 322; @position = 18; ]
+            const color as Number = 0x000000;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 323; @position = 18; ]
+            const background as Number = 0x000000;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 326; ]
+        module system_icon_positive__hint_button_right_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 326; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 327; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_positive__hint_button_right_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 328; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 331; ]
+        module system_size__screen {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 331; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 332; @position = 18; ]
+            const width as Number = 454;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 333; @position = 18; ]
+            const height as Number = 454;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 336; ]
+        module system_icon_destructive__hint_button_right_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 336; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 337; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_destructive__hint_button_right_bottom.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 338; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 341; ]
+        module system_color_light__background {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 341; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 342; @position = 18; ]
+            const color as Number = 0x000000;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 343; @position = 18; ]
+            const background as Number = 0x000000;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 346; ]
+        module system_icon_destructive__hint_button_right_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 346; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 347; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_destructive__hint_button_right_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 348; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 351; ]
+        module confirmation_loc__hint_confirm {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 351; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 352; @position = 18; ]
+            const x as Number = 362;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 353; @position = 18; ]
+            const y as Number = 84;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 356; ]
+        module activity_color_dark__text {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 356; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 358 18 ]
+                %tmp.31 = getm $.Toybox.Graphics;
+                %tmp.32 = getv %tmp.31 :COLOR_TRANSPARENT;
+                putv self :background %tmp.32;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 357; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 358; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 361; ]
+        module confirmation_input__keep {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 361; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 362 18 ]
+                %tmp.33 = getm $.Toybox.WatchUi;
+                %tmp.34 = getv %tmp.33 :KEY_DOWN;
+                putv self :button %tmp.34;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 362; @position = 18; ]
+            const button;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 365; ]
+        module prompt_loc__body_with_title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 365; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 366; @position = 18; ]
+            const x as Number = 38;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 367; @position = 18; ]
+            const y as Number = 115;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 370; ]
+        module system_icon_dark__search {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 370; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 371; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__search.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 372; @position = 18; ]
+            const compress as String = "true";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 373; @position = 18; ]
+            const dithering as String = "none";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 374; @position = 18; ]
+            const automaticPalette as String = "true";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 377; ]
+        module activity_color_light__text {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 377; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 379 18 ]
+                %tmp.35 = getm $.Toybox.Graphics;
+                %tmp.36 = getv %tmp.35 :COLOR_TRANSPARENT;
+                putv self :background %tmp.36;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 378; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 379; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 382; ]
+        module confirmation_icon__hint_keep {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 382; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 383; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_keep.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 384; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 387; ]
+        module system_icon_dark__save {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 387; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 388; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__save.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 389; @position = 18; ]
+            const compress as String = "true";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 390; @position = 18; ]
+            const dithering as String = "none";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 391; @position = 18; ]
+            const automaticPalette as String = "true";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 394; ]
+        module system_icon_destructive__hint_button_left_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 394; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 395; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_destructive__hint_button_left_middle.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 396; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 399; ]
+        module system_icon_light__search {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 399; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 400; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__search.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 401; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 404; ]
+        module system_icon_dark__hint_button_left_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 404; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 405; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__hint_button_left_bottom.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 406; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 409; ]
+        module system_icon_positive__hint_button_left_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 409; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 410; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_positive__hint_button_left_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 411; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 414; ]
+        module system_loc__hint_button_right_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 414; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 415; @position = 18; ]
+            const x as Number = 393;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 416; @position = 18; ]
+            const y as Number = 300;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 419; ]
+        module confirmation_icon_dark__hint_reject {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 419; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 420; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_reject.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 421; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 424; ]
+        module confirmation_color_dark__body {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 424; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 426 18 ]
+                %tmp.37 = getm $.Toybox.Graphics;
+                %tmp.38 = getv %tmp.37 :COLOR_TRANSPARENT;
+                putv self :background %tmp.38;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 425; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 426; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 429; ]
+        module confirmation_icon_light__hint_confirm {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 429; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 430; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_completion.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 431; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 434; ]
+        module prompt_color_dark__title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 434; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 436 18 ]
+                %tmp.39 = getm $.Toybox.Graphics;
+                %tmp.40 = getv %tmp.39 :COLOR_TRANSPARENT;
+                putv self :background %tmp.40;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 435; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 436; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 439; ]
+        module system_icon_destructive__cancel {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 439; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 440; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_destructive__cancel.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 441; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 444; ]
+        module system_icon_light__hint_button_right_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 444; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 445; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__hint_button_right_bottom.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 446; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 449; ]
+        module prompt_loc__title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 449; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 450; @position = 18; ]
+            const x as Number = 38;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 451; @position = 18; ]
+            const y as Number = 27;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 454; ]
+        module confirmation_font_enhanced_readability__body {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 454; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 455; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 458; ]
+        module prompt_color_light__title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 458; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 460 18 ]
+                %tmp.41 = getm $.Toybox.Graphics;
+                %tmp.42 = getv %tmp.41 :COLOR_TRANSPARENT;
+                putv self :background %tmp.42;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 459; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 460; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 463; ]
+        module system_icon_dark__hint_button_right_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 463; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 464; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__hint_button_right_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 465; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 468; ]
+        module system_icon_dark__hint_button_left_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 468; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 469; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__hint_button_left_middle.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 470; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 473; ]
+        module confirmation_icon_dark__hint_keep {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 473; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 474; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_keep.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 475; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 478; ]
+        module system_icon_light__cancel {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 478; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 479; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__cancel.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 480; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 483; ]
+        module confirmation_icon_light__hint_reject {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 483; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 484; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_reject.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 485; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 488; ]
+        module system_icon_light__about {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 488; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 489; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__about.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 490; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 493; ]
+        module system_size__toast_icon {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 493; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 494; @position = 18; ]
+            const scaleX as Number = 61;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 495; @position = 18; ]
+            const scaleY as Number = 61;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 496; @position = 18; ]
+            const scaleRelativeTo as String = "screen";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 499; ]
+        module system_icon_dark__hint_button_right_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 499; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 500; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 503; ]
+        module confirmation_icon__hint_reject {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 503; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 504; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_reject.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 505; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 508; ]
+        module system_icon_light__hint_action_menu {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 508; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 509; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__hint_button_right_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 510; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 513; ]
+        module system_icon_light__hint_button_right_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 513; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 514; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 517; ]
+        module system_icon_destructive__hint_button_right_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 517; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 518; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 521; ]
+        module confirmation_loc__hint_reject {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 521; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 522; @position = 18; ]
+            const x as Number = 17;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 523; @position = 18; ]
+            const y as Number = 300;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 524; @position = 18; ]
+            const horizontalJustification as String = "left";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 527; ]
+        module confirmation_icon_dark__hint_delete {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 527; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 528; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_delete.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 529; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 532; ]
+        module activity_color_dark__background {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 532; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 533; @position = 18; ]
+            const color as Number = 0x000000;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 534; @position = 18; ]
+            const background as Number = 0x000000;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 537; ]
+        module system_icon_light__hint_button_left_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 537; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 538; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__hint_button_left_bottom.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 539; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 542; ]
+        module system_icon_positive__hint_button_left_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 542; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 543; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_positive__hint_button_left_middle.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 544; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 547; ]
+        module system_size__menu_icon {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 547; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 548; @position = 18; ]
+            const scaleX as Number = 60;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 549; @position = 18; ]
+            const scaleY as Number = 60;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 550; @position = 18; ]
+            const scaleRelativeTo as String = "screen";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 553; ]
+        module system_icon_destructive__warning {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 553; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 554; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_destructive__warning.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 555; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 558; ]
+        module system_loc__hint_button_right_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 558; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 559; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 562; ]
+        module system_icon_dark__cancel {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 562; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 563; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__cancel.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 564; @position = 18; ]
+            const compress as String = "true";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 565; @position = 18; ]
+            const dithering as String = "none";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 566; @position = 18; ]
+            const automaticPalette as String = "true";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 569; ]
+        module prompt_size__body_with_title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 569; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 570; @position = 18; ]
+            const width as Number = 363;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 571; @position = 18; ]
+            const height as Number = 273;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 574; ]
+        module system_loc__hint_button_right_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 574; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 575; @position = 18; ]
+            const x as Number = 393;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 576; @position = 18; ]
+            const y as Number = 84;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 579; ]
+        module system_color_light__text {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 579; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 581 18 ]
+                %tmp.43 = getm $.Toybox.Graphics;
+                %tmp.44 = getv %tmp.43 :COLOR_TRANSPARENT;
+                putv self :background %tmp.44;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 580; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 581; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 584; ]
+        module system_icon_light__check {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 584; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 585; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__check.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 586; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 589; ]
+        module confirmation_input__reject {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 589; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 590 18 ]
+                %tmp.45 = getm $.Toybox.WatchUi;
+                %tmp.46 = getv %tmp.45 :KEY_DOWN;
+                putv self :button %tmp.46;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 590; @position = 18; ]
+            const button;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 593; ]
+        module system_icon_light__revert {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 593; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 594; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__revert.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 595; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 598; ]
+        module system_size__subwindow {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 598; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 599; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 602; ]
+        module system_icon_positive__hint_button_left_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 602; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 603; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_positive__hint_button_left_bottom.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 604; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 607; ]
+        module system_icon_dark__check {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 607; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 608; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__check.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 609; @position = 18; ]
+            const compress as String = "true";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 610; @position = 18; ]
+            const dithering as String = "none";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 611; @position = 18; ]
+            const automaticPalette as String = "true";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 614; ]
+        module confirmation_loc__hint_keep {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 614; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 615; @position = 18; ]
+            const x as Number = 17;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 616; @position = 18; ]
+            const y as Number = 300;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 617; @position = 18; ]
+            const horizontalJustification as String = "left";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 620; ]
+        module confirmation_loc__hint_delete {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 620; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 621; @position = 18; ]
+            const x as Number = 362;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 622; @position = 18; ]
+            const y as Number = 84;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 625; ]
+        module system_icon_positive__hint_action_menu {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 625; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 626; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_positive__hint_button_right_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 627; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 630; ]
+        module system_icon_positive__hint_button_right_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 630; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 631; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 634; ]
+        module system_icon_light__hint_button_left_middle {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 634; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 635; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__hint_button_left_middle.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 636; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 639; ]
+        module system_icon_dark__hint_button_right_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 639; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 640; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__hint_button_right_bottom.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 641; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 644; ]
+        module system_icon_positive__hint_button_right_bottom {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 644; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 645; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_positive__hint_button_right_bottom.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 646; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 649; ]
+        module system_icon_dark__revert {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 649; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 650; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__revert.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 651; @position = 18; ]
+            const compress as String = "true";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 652; @position = 18; ]
+            const dithering as String = "none";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 653; @position = 18; ]
+            const automaticPalette as String = "true";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 656; ]
+        module confirmation_icon_light__hint_delete {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 656; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 657; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_delete.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 658; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 661; ]
+        module system_icon_dark__question {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 661; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 662; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__question.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 663; @position = 18; ]
+            const compress as String = "true";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 664; @position = 18; ]
+            const dithering as String = "none";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 665; @position = 18; ]
+            const automaticPalette as String = "true";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 668; ]
+        module system_icon_light__discard {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 668; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 669; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__discard.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 670; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 673; ]
+        module device_info {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 673; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 675 18 ]
+                %tmp.47 = getm $.Toybox.System;
+                %tmp.48 = getv %tmp.47 :SCREEN_SHAPE_ROUND;
+                putv self :screenShape %tmp.48;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 674; @position = 18; ]
+            const screenWidth as Number = 454;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 675; @position = 18; ]
+            const screenShape;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 676; @position = 18; ]
+            const hasNightMode as Boolean = false;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 677; @position = 18; ]
+            const screenHeight as Number = 454;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 678; @position = 18; ]
+            const hasTouchScreen as Boolean = true;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 679; @position = 18; ]
+            const hasEnhancedReadabilityMode as Boolean = false;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 682; ]
+        module confirmation_icon_dark__hint_confirm {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 682; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 683; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_completion.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 684; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 687; ]
+        module prompt_font__body_no_title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 687; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 688 18 ]
+                %tmp.49 = getm $.Toybox.Graphics;
+                %tmp.50 = getv %tmp.49 :TEXT_JUSTIFY_CENTER;
+                %tmp.51 = getm $.Toybox.Graphics;
+                %tmp.52 = getv %tmp.51 :TEXT_JUSTIFY_VCENTER;
+                %tmp.53 = bitor %tmp.50 %tmp.52;
+                putv self :justification %tmp.53;
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 689 18 ]
+                %tmp.54 = getm $.Toybox.Graphics;
+                %tmp.55 = getv %tmp.54 :FONT_TINY;
+                putv self :font %tmp.55;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 688; @position = 18; ]
+            const justification;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 689; @position = 18; ]
+            const font;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 692; ]
+        module prompt_size__title_icon {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 692; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 693; @position = 18; ]
+            const scaleX as Float = 0.15;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 694; @position = 18; ]
+            const scaleRelativeTo as String = "screen";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 697; ]
+        module system_icon_dark__warning {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 697; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 698; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_dark__warning.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 699; @position = 18; ]
+            const compress as String = "true";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 700; @position = 18; ]
+            const dithering as String = "none";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 701; @position = 18; ]
+            const automaticPalette as String = "true";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 704; ]
+        module prompt_loc__title_icon {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 704; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 705; @position = 18; ]
+            const x as Number = 227;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 706; @position = 18; ]
+            const y as Number = 57;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 707; @position = 18; ]
+            const horizontalJustification as String = "center";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 708; @position = 18; ]
+            const verticalJustification as String = "center";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 711; ]
+        module prompt_font_enhanced_readability__title {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 711; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 712; @position = 18; ]
+            const exclude as Boolean = true;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 715; ]
+        module prompt_color_dark__body {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 715; ]
+            <init> {
+[ "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen" 717 18 ]
+                %tmp.56 = getm $.Toybox.Graphics;
+                %tmp.57 = getv %tmp.56 :COLOR_TRANSPARENT;
+                putv self :background %tmp.57;
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 716; @position = 18; ]
+            const color as Number = 0xFFFFFF;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 717; @position = 18; ]
+            const background;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 720; ]
+        module confirmation_icon__hint_delete {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 720; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 721; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/confirmation_icon__hint_delete.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 722; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 725; ]
+        module system_icon_light__hint_button_right_top {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 725; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 726; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_light__hint_button_right_top.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 727; @position = 18; ]
+            const dithering as String = "none";
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 730; ]
+        module confirmation_size__body {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 730; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 731; @position = 18; ]
+            const width as Number = 273;
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 732; @position = 18; ]
+            const height as Number = 273;
+        }
+        [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 735; ]
+        module system_icon_positive__check {
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 735; ]
+            <init> {
+            }
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 736; @position = 18; ]
+            const filename as String = "/Users/myneur/Library/Application Support/Garmin/ConnectIQ/Devices/descentmk351mm/system_icon_positive__check.svg";
+            [ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 737; @position = 18; ]
+            const dithering as String = "none";
+        }
+    }
 }
-[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B3289-00/source/Rez.mcgen"; @line = 1; ]
+[ @file = "/Users/myneur/Documents/garmin-connect-iq/late/bin/gen/006-B4223-00/source/Rez.mcgen"; @line = 1; ]
 <init> {
 }

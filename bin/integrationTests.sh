@@ -195,7 +195,7 @@ function testResolutionsPermutations(){
 		BACKGROUND=1
 		setVariables
 		TEST="allres-"
-		DEVICES=(venu2 venu venu2s fenix6xpro vivoactive4 fenix5 fenix5s fr45) # 416 390 360 280 260 240 218 208
+		DEVICES=(fr965 venu2 venu venu2s fenix6xpro vivoactive4 fenix5 fenix5s fr735xt fr45 vivoactive_hr) # 416 390 360 280 260 240 218 208
 		BACKGROUND=0
 		RECOMPILE=1
 		RELEASE=1
@@ -204,6 +204,23 @@ function testResolutionsPermutations(){
 		simulate
 		I=$((I+1))
 	done
+}
+
+# all resolutions with strong flavor
+function testStrongInAllReslutions(){
+	VARS="full-strong.vars.xml"
+	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
+	echo " < "$VARS
+	BACKGROUND=1
+	setVariables
+	TEST="strong-"
+	DEVICES=(fr965 venu2 venu venu2s fenix6xpro venusq fr945 vivoactive4 fenix5 fenix5s fr735xt fr45 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
+	RUN="_strong"
+	BACKGROUND=0
+	RECOMPILE=1
+	RELEASE=1
+	DONTSAVEPROPERTIES=0
+	simulate
 }
 
 # no data devices
@@ -240,23 +257,6 @@ function testFloorsAndMinutes(){
 	simulate
 }
 
-# all resolutions with strong flavor
-function testStrongInAllReslutions(){
-	VARS="full-strong.vars.xml"
-	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
-	echo " < "$VARS
-	BACKGROUND=1
-	setVariables
-	TEST="strong-"
-	DEVICES=(venu2 venu venu2s fenix6xpro venusq fr945 vivoactive4 fr745 fr735xt fr45 vivoactive_hr) # 416 390 360 280 260 240 rectangle 218 16c 180 semiround 208 CIQ1   rectangle
-	RUN="_strong"
-	BACKGROUND=0
-	RECOMPILE=1
-	RELEASE=1
-	DONTSAVEPROPERTIES=0
-	simulate
-}
-
 function testMonkeyJungleVariations(){
 	VARS="full-strong.vars.xml"
 	cp ../resources-tests-templates/$VARS ../resources-tests/test-variables.xml
@@ -273,17 +273,19 @@ function testMonkeyJungleVariations(){
 	simulate
 }
 
+# custom variables echoed to the test varaibles
 function testAdHocDebug(){
 	TEST="current-"
 	RELEASE=0
 	RECOMPILE=1
 	RUN="_debug"
-	VARS="full-strong.vars.xml"
-	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 1,"dialSize":0,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > ../resources-tests/test-variables.xml
-	DEVICES=(fenix6) 	
+	VARS="calendar-with-weather-shown.vars.xml"
+	echo '<resources><jsonData id="testData">{"Message":"Custom debug!","Reinitialize": true,"Properties": {"weather": true,"activity": 6,"dialSize":0,"location": [50.1,14.4],"calendar_ids": ["simply@myneur.eu","join@myneur.eu"]},"AfterLayoutCharProperties":{"lastLoad": "c"}}</jsonData></resources>' > ../resources-tests/test-variables.xml
+	DEVICES=(fr965) 	
 	BACKGROUND=0
 	simulate
 }
+
 
 # EVERY RELEASE to check that it does not get out of memory by loadinc many calendar events
 
@@ -300,7 +302,7 @@ function testAdHocDebug(){
 
 # SUPPORT FOR NEW DEVICES
 
-testNewResolutions
+#testNewResolutions
 #testNewResolutionsInStrong
 #testResolutionsPermutations
 #testStrongInAllReslutions
@@ -315,4 +317,4 @@ testNewResolutions
 #setVariables # used to init variables
 
 # AD HOC
-#testAdHocDebug
+testAdHocDebug

@@ -3,6 +3,7 @@ base.sourcePath = source
 
 resIQ2=$(base.resourcePath);resources-CIQ2	
 resBgIQ2=$(resIQ2);resources-backgrounddata
+resBgNoFloors=$(resBgIQ2);resources-exclude-floors-from-data
 
 sBg=source;source-backgrounddata
 
@@ -13,10 +14,11 @@ round-240x240.resourcePath = $(resBgIQ2);resources-240
 round-260x260.resourcePath = $(round-240x240.resourcePath)
 round-280x280.resourcePath = $(round-260x260.resourcePath);resources-280
 # OLED
+rectangle-320x360.resourcePath = $(resBgNoFloors);resources-280
 round-360x360.resourcePath = $(round-280x280.resourcePath);resources-390
 round-390x390.resourcePath = $(round-360x360.resourcePath)
 round-416x416.resourcePath = $(round-360x360.resourcePath)
-round-454x454.resourcePath = $(round-360x360.resourcePath)
+round-454x454.resourcePath = $(round-360x360.resourcePath);resources-454
 
 # SOURCE
 # bigger display or background data
@@ -27,6 +29,7 @@ round-280x280.sourcePath = $(sBg)
 # OLED
 round-390x390.sourcePath = $(sBg)
 round-360x360.sourcePath = $(sBg)
+rectangle-320x360.sourcePath = $(sBg)
 round-416x416.sourcePath = $(sBg)
 round-454x454.sourcePath = $(sBg)
 
@@ -38,6 +41,7 @@ round-260x260.excludeAnnotations = oled;nodata
 round-280x280.excludeAnnotations = oled;nodata
 # OLED with data
 rectangle-240x240.excludeAnnotations = nodata
+rectangle-320x360.excludeAnnotations = nodata
 round-360x360.excludeAnnotations = nodata
 round-390x390.excludeAnnotations = nodata
 round-416x416.excludeAnnotations = nodata

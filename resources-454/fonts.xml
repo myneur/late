@@ -1,0 +1,9 @@
+<!-- did not increase hours size and icons, because they have bigger display (1.4" over 1.3"), so just adding readability to smaller fonts-->
+<fonts>
+	<font id="Hours" filename="../resources/fonts/futura142.fnt" filter="0123456789:" antialias="true" />
+	<font id="HoursStrong" filename="../resources/fonts/futura202.fnt" filter="0123456789:" antialias="true" />
+	<font id="Small" filename="../resources/fonts/futura38mdscandi.fnt"  antialias="true" />
+	<font id="SmallStrong" filename="../resources/fonts/futura50mdscandi.fnt"  antialias="true" />
+	<font id="Condensed" filename="../resources/fonts/futura-condensed39i18nmajor.fnt"  antialias="true" />
+	<font id="Ico" filename="../resources/drawables/icons1x8.fnt" antialias="true" />
+</fonts>

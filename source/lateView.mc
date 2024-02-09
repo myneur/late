@@ -428,7 +428,8 @@ class lateView extends Ui.WatchFace {
 	(:nodata) function loadDataColors(mainColor, tone, app){ return false;}
 
 
-	function setBaseVars(){
+	function setBaseVars(){ /// part of vars that need to be reset by OLED in AOD
+		// add maincolor and cirlcewidth
 		var s=Sys.getDeviceSettings();
 		height = s.screenHeight;
 		centerX = s.screenWidth >> 1;
@@ -440,8 +441,12 @@ class lateView extends Ui.WatchFace {
 				dateY += 7;
 			}
 		} else {
-			dateY = (centerY-(radius+Gfx.getFontHeight(fontSmall))*1.17).toNumber();
+			//try {
+				dateY = (centerY-(radius+Gfx.getFontHeight(fontSmall))*1.17).toNumber();
+			//} catch(ex){ 
+			//var m = ex.getErrorMessage();showMessage({"msg"=>m.substring(0, m.length()/2), "msg2"=>m.substring(m.length()/2, null), "now"=>true});}
 		}
+		//Sys.println("MEM: "+Sys.getSystemStats().freeMemory);
 	}
 
 
@@ -467,7 +472,7 @@ class lateView extends Ui.WatchFace {
 				radius = centerX-15-circleWidth>>1;
 				sunR+=1;	
 			}
-			circleWidth=circleWidth*3; // TODO inify with AOD
+			circleWidth=circleWidth*3; // TODO unify with AOD
 			batteryY=height-14;
 
 			if(height<208){
@@ -552,21 +557,26 @@ class lateView extends Ui.WatchFace {
 	function onExitSleep(){
 		if(Sys.getDeviceSettings().requiresBurnInProtection){
 			burnInProtection=0;
-			
-			circleWidth = app.getProperty("boldness");
-			if(height>280){
-				circleWidth=circleWidth<<1;
+				
+			try { // WTF!!! OLED devices remove fonts and launch onExitSleep before initialize again
+	
+				circleWidth = app.getProperty("boldness");
+				if(height>280){
+					circleWidth=circleWidth<<1;
 				}
-			}
-			if(dialSize>0){
-				circleWidth*=3;
-			}
+				if(dialSize>0){
+					circleWidth*=3;
+				}
 
-			setBaseVars();
-			if(app.getProperty("tone")>2){
-				setColor(app.getProperty("mainColor"), app.getProperty("tone"));
+				setBaseVars();
+				if(app.getProperty("tone")>2){
+					setColor(app.getProperty("mainColor"), app.getProperty("tone"));
+				}
+			} catch (ex){
+				initialize();
 			}
-		
+		}
+	
 		//onShow();
 		//App.getApp().setProperty("l", App.getApp().getProperty("l")+"x");
 		//Sys.println(clockTime.min+"x");

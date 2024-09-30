@@ -1,4 +1,4 @@
-DEVICE=descentmk351mm
+DEVICE=fenix847mm
 # JSON resources for testing in test.monkey are supported only by some devices. 
 /usr/bin/automator KillDevice.workflow 	
 /usr/bin/automator QuitApp.workflow 	

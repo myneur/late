@@ -6,22 +6,27 @@
 			<!-- product parameters are in connectiq-sdk-mac/bin/devices.xml -->
 			<!-- groups by shape, resolution, memory and # colors, -->
 			<!-- round -->
+			
             <!-- 454x454 data OLED 1.4" -->
+            	<iq:product id="fenix847mm"/> <!-- = also AMOLED 51-->
                 <iq:product id="fr965"/> 
                 <iq:product id="descentmk351mm"/> 
                 <iq:product id="venu3"/> 
                 <iq:product id="epix2pro51mm"/>
                 <iq:product id="approachs7047mm"/>
 			<!-- 416x416 data -->
+				<iq:product id="fenixe"/>
+				<iq:product id="fenix843mm"/>
 				<iq:product id="epix2pro47mm"/> <!-- = quatix -->
-                <iq:product id="fr265"/>
-                
+                <iq:product id="fr265"/>               
 				<iq:product id="venu2"/> <!-- 1.3" -->
 				<iq:product id="venu2plus"/> 
 				<iq:product id="epix2"/>
 				<iq:product id="d2airx10"/>
 				<iq:product id="d2mach1"/>
 			<!-- 390x390 OLED 64c data -->
+					<iq:product id="fr165"/> 
+					<iq:product id="fr165m"/> 
 					<iq:product id="descentmk343mm"/> 
 					<iq:product id="venu3s"/> 
 					<iq:product id="epix2pro42mm"/> 
@@ -34,22 +39,25 @@
 				<iq:product id="d2air"/>
 				<iq:product id="marq2"/>
 				<iq:product id="marq2aviator"/>
-			<!-- 360x320 no Floors -->
-				<iq:product id="venusq2"/>
-				<iq:product id="venusq2m"/>
+			<!-- 360x320 -->
+			<!--<iq:product id="venusq2"/> not adapted to rectangular display yet + comment out monkey and test.jungle-->
 			<!-- 360x360 -->
 				<iq:product id="fr265s"/>
 			<iq:product id="venu2s"/>
 
 			<!-- 280x280 64 colors 94k memory -->
+				<iq:product id="fenix8solar51mm"/>
 				<iq:product id="fenix7xpro"/>
 				<iq:product id="fenix7xpronowifi"/>
-			<iq:product id="fenix7x"/> <!-- = enduro 2-->
-			<iq:product id="fenix6xpro"/>
-			<iq:product id="descentmk2"/>
-			<iq:product id="enduro"/>
+				<iq:product id="enduro3"/>
+				<iq:product id="fenix7x"/> <!-- = enduro 2-->
+				<iq:product id="fenix6xpro"/>
+				<iq:product id="descentmk2"/>
+				<iq:product id="enduro"/>
+				
 			
 			<!-- 260x260 with data 94k memory -->
+				<iq:product id="fenix8solar47mm"/>
 				<iq:product id="fenix7pro"/>
 				<iq:product id="fenix7pronowifi"/>	
 			<iq:product id="fenix7"/>

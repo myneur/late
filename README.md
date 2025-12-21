@@ -15,6 +15,8 @@
  
 [Do you want to contribute?](https://sl8.ch/contribute)
 
+Testing by `./try.sh` in `./bin` with your `developer_key.der` according to [Garmin Connect SDK doc](https://developer.garmin.com/connect-iq/connect-iq-basics/getting-started/). The app relies on Garmin’s duck-typing.
+
 ## Testing is essential
 
 Garimin's framework is extremely buggy, fragmented and unreliable as hell with tight memory limits. A framework bug can appear on any device independently even if it works perfectly on a different one. 
